@@ -1,6 +1,6 @@
 {
   "schema": 2,
-  "observed_at_utc": "2026-11-22T14:50:50.695150+00:00",
+  "observed_at_utc": "2026-11-22T14:51:41.371938+00:00",
   "queries": [
     "黑鏡",
     "神探夏洛克"
@@ -11,8 +11,8 @@
   "works_found": 33,
   "unique_media_candidates": 126,
   "hls_candidates": 126,
-  "manifests_parsed": 6,
-  "segment_sample_pass": 6,
+  "manifests_parsed": 2,
+  "segment_sample_pass": 2,
   "suspected_ad_cues": 0,
   "audited": 16,
   "errors": [
@@ -38,14 +38,18 @@
       "source_path_fingerprint": "cdfa973c21de6602a5544b7e",
       "url_comparison": "same_exact_url",
       "previous_manifest": "failed",
-      "previous_observed_at_utc": "2026-11-22T14:50:00.520385+00:00",
+      "previous_observed_at_utc": "2026-11-22T14:50:50.695150+00:00",
       "format": "m3u8",
       "manifest": "failed",
       "ad_cues": "unknown",
       "playback": "not-tested",
       "clean": "not-certified",
       "error": "HTTPError: HTTP Error 404: Not Found",
-      "failure_class": "http_404_missing_or_masked"
+      "failure_class": "http_404_missing_or_masked",
+      "status_transition": "stable_failure",
+      "health_checks": 1,
+      "health_pass": 0,
+      "sample_reliability": 0.3333
     },
     {
       "title": "神探夏洛克第三季",
@@ -55,14 +59,18 @@
       "source_path_fingerprint": "1f934cc39da5fa4239aac564",
       "url_comparison": "same_exact_url",
       "previous_manifest": "failed",
-      "previous_observed_at_utc": "2026-11-22T14:50:00.520385+00:00",
+      "previous_observed_at_utc": "2026-11-22T14:50:50.695150+00:00",
       "format": "m3u8",
       "manifest": "failed",
       "ad_cues": "unknown",
       "playback": "not-tested",
       "clean": "not-certified",
       "error": "HTTPError: HTTP Error 404: Not Found",
-      "failure_class": "http_404_missing_or_masked"
+      "failure_class": "http_404_missing_or_masked",
+      "status_transition": "stable_failure",
+      "health_checks": 1,
+      "health_pass": 0,
+      "sample_reliability": 0.3333
     },
     {
       "title": "神探夏洛克第二季",
@@ -72,14 +80,18 @@
       "source_path_fingerprint": "7115c98375eb888ce4723793",
       "url_comparison": "same_exact_url",
       "previous_manifest": "failed",
-      "previous_observed_at_utc": "2026-11-22T14:50:00.520385+00:00",
+      "previous_observed_at_utc": "2026-11-22T14:50:50.695150+00:00",
       "format": "m3u8",
       "manifest": "failed",
       "ad_cues": "unknown",
       "playback": "not-tested",
       "clean": "not-certified",
       "error": "HTTPError: HTTP Error 404: Not Found",
-      "failure_class": "http_404_missing_or_masked"
+      "failure_class": "http_404_missing_or_masked",
+      "status_transition": "stable_failure",
+      "health_checks": 1,
+      "health_pass": 0,
+      "sample_reliability": 0.3333
     },
     {
       "title": "神探夏洛克第四季",
@@ -89,14 +101,18 @@
       "source_path_fingerprint": "1a458dd6368fd3dd58b78aa2",
       "url_comparison": "same_exact_url",
       "previous_manifest": "failed",
-      "previous_observed_at_utc": "2026-11-22T14:50:00.520385+00:00",
+      "previous_observed_at_utc": "2026-11-22T14:50:50.695150+00:00",
       "format": "m3u8",
       "manifest": "failed",
       "ad_cues": "unknown",
       "playback": "not-tested",
       "clean": "not-certified",
       "error": "HTTPError: HTTP Error 404: Not Found",
-      "failure_class": "http_404_missing_or_masked"
+      "failure_class": "http_404_missing_or_masked",
+      "status_transition": "stable_failure",
+      "health_checks": 1,
+      "health_pass": 0,
+      "sample_reliability": 0.3333
     },
     {
       "title": "神探夏洛克第一季",
@@ -106,14 +122,18 @@
       "source_path_fingerprint": "5a7f4216bb36724f2a67c36d",
       "url_comparison": "same_exact_url",
       "previous_manifest": "failed",
-      "previous_observed_at_utc": "2026-11-22T14:50:00.520385+00:00",
+      "previous_observed_at_utc": "2026-11-22T14:50:50.695150+00:00",
       "format": "m3u8",
       "manifest": "failed",
       "ad_cues": "unknown",
       "playback": "not-tested",
       "clean": "not-certified",
       "error": "HTTPError: HTTP Error 404: Not Found",
-      "failure_class": "http_404_missing_or_masked"
+      "failure_class": "http_404_missing_or_masked",
+      "status_transition": "stable_failure",
+      "health_checks": 1,
+      "health_pass": 0,
+      "sample_reliability": 0.3333
     },
     {
       "title": "神探夏洛克第二季",
@@ -123,14 +143,18 @@
       "source_path_fingerprint": "a6d230e572ff244c7ac5b855",
       "url_comparison": "same_exact_url",
       "previous_manifest": "failed",
-      "previous_observed_at_utc": "2026-11-22T14:50:00.520385+00:00",
+      "previous_observed_at_utc": "2026-11-22T14:50:50.695150+00:00",
       "format": "m3u8",
       "manifest": "failed",
       "ad_cues": "unknown",
       "playback": "not-tested",
       "clean": "not-certified",
       "error": "HTTPError: HTTP Error 404: Not Found",
-      "failure_class": "http_404_missing_or_masked"
+      "failure_class": "http_404_missing_or_masked",
+      "status_transition": "stable_failure",
+      "health_checks": 1,
+      "health_pass": 0,
+      "sample_reliability": 0.3333
     },
     {
       "title": "神探夏洛克 第二季",
@@ -140,7 +164,7 @@
       "source_path_fingerprint": "8651a9548df1d1d93f247274",
       "url_comparison": "same_exact_url",
       "previous_manifest": "parsed",
-      "previous_observed_at_utc": "2026-11-22T14:50:00.520385+00:00",
+      "previous_observed_at_utc": "2026-11-22T14:50:50.695150+00:00",
       "format": "m3u8",
       "manifest": "parsed",
       "ad_cues": "none-detected",
@@ -175,7 +199,11 @@
           "content_type": "video/mp2t"
         }
       ],
-      "segment_sample": "pass"
+      "segment_sample": "pass",
+      "status_transition": "stable_healthy",
+      "health_checks": 1,
+      "health_pass": 1,
+      "sample_reliability": 0.6667
     },
     {
       "title": "神探夏洛克 第二季",
@@ -185,7 +213,7 @@
       "source_path_fingerprint": "4972276c51f7613aadec3c2f",
       "url_comparison": "same_exact_url",
       "previous_manifest": "parsed",
-      "previous_observed_at_utc": "2026-11-22T14:50:00.520385+00:00",
+      "previous_observed_at_utc": "2026-11-22T14:50:50.695150+00:00",
       "format": "m3u8",
       "manifest": "parsed",
       "ad_cues": "none-detected",
@@ -220,7 +248,11 @@
           "content_type": "video/mp2t"
         }
       ],
-      "segment_sample": "pass"
+      "segment_sample": "pass",
+      "status_transition": "stable_healthy",
+      "health_checks": 1,
+      "health_pass": 1,
+      "sample_reliability": 0.6667
     },
     {
       "title": "神探夏洛克第二季",
@@ -230,14 +262,18 @@
       "source_path_fingerprint": "5643c7d9dba4f918f64dbb89",
       "url_comparison": "same_exact_url",
       "previous_manifest": "failed",
-      "previous_observed_at_utc": "2026-11-22T14:50:00.520385+00:00",
+      "previous_observed_at_utc": "2026-11-22T14:50:50.695150+00:00",
       "format": "m3u8",
       "manifest": "failed",
       "ad_cues": "unknown",
       "playback": "not-tested",
       "clean": "not-certified",
       "error": "HTTPError: HTTP Error 403: Forbidden",
-      "failure_class": "http_access_restricted"
+      "failure_class": "http_access_restricted",
+      "status_transition": "stable_failure",
+      "health_checks": 1,
+      "health_pass": 0,
+      "sample_reliability": 0.3333
     },
     {
       "title": "神探夏洛克第二季",
@@ -247,14 +283,18 @@
       "source_path_fingerprint": "9b7c4266033bb0632f219175",
       "url_comparison": "same_exact_url",
       "previous_manifest": "failed",
-      "previous_observed_at_utc": "2026-11-22T14:50:00.520385+00:00",
+      "previous_observed_at_utc": "2026-11-22T14:50:50.695150+00:00",
       "format": "m3u8",
       "manifest": "failed",
       "ad_cues": "unknown",
       "playback": "not-tested",
       "clean": "not-certified",
       "error": "HTTPError: HTTP Error 403: Forbidden",
-      "failure_class": "http_access_restricted"
+      "failure_class": "http_access_restricted",
+      "status_transition": "stable_failure",
+      "health_checks": 1,
+      "health_pass": 0,
+      "sample_reliability": 0.3333
     },
     {
       "title": "神探夏洛克  第二季",
@@ -263,43 +303,19 @@
       "source_fingerprint": "5216deb695ab47b11f47a5c1",
       "source_path_fingerprint": "5216deb695ab47b11f47a5c1",
       "url_comparison": "same_exact_url",
-      "previous_manifest": "failed",
-      "previous_observed_at_utc": "2026-11-22T14:50:00.520385+00:00",
+      "previous_manifest": "parsed",
+      "previous_observed_at_utc": "2026-11-22T14:50:50.695150+00:00",
       "format": "m3u8",
-      "manifest": "parsed",
-      "ad_cues": "none-detected",
-      "playback": "requires-in-site-browser-test",
+      "manifest": "failed",
+      "ad_cues": "unknown",
+      "playback": "not-tested",
       "clean": "not-certified",
-      "segment_count": 1307,
-      "duration_sec": 5220.4,
-      "encrypted": false,
-      "segment_checks": [
-        {
-          "position": 0,
-          "ok": true,
-          "http": 206,
-          "signature": "mpeg-ts",
-          "sample_bytes": 4096,
-          "content_type": "video/mp2t"
-        },
-        {
-          "position": 653,
-          "ok": true,
-          "http": 206,
-          "signature": "mpeg-ts",
-          "sample_bytes": 4096,
-          "content_type": "video/mp2t"
-        },
-        {
-          "position": 1306,
-          "ok": true,
-          "http": 206,
-          "signature": "mpeg-ts",
-          "sample_bytes": 4096,
-          "content_type": "video/mp2t"
-        }
-      ],
-      "segment_sample": "pass"
+      "error": "HTTPError: HTTP Error 404: Not Found",
+      "failure_class": "http_404_missing_or_masked",
+      "status_transition": "regressed",
+      "health_checks": 1,
+      "health_pass": 0,
+      "sample_reliability": 0.3333
     },
     {
       "title": "神探夏洛克  第二季",
@@ -308,43 +324,19 @@
       "source_fingerprint": "8910504546d05d27cd05d809",
       "source_path_fingerprint": "8910504546d05d27cd05d809",
       "url_comparison": "same_exact_url",
-      "previous_manifest": "failed",
-      "previous_observed_at_utc": "2026-11-22T14:50:00.520385+00:00",
+      "previous_manifest": "parsed",
+      "previous_observed_at_utc": "2026-11-22T14:50:50.695150+00:00",
       "format": "m3u8",
-      "manifest": "parsed",
-      "ad_cues": "none-detected",
-      "playback": "requires-in-site-browser-test",
+      "manifest": "failed",
+      "ad_cues": "unknown",
+      "playback": "not-tested",
       "clean": "not-certified",
-      "segment_count": 1344,
-      "duration_sec": 5373.0,
-      "encrypted": false,
-      "segment_checks": [
-        {
-          "position": 0,
-          "ok": true,
-          "http": 206,
-          "signature": "mpeg-ts",
-          "sample_bytes": 4096,
-          "content_type": "video/mp2t"
-        },
-        {
-          "position": 672,
-          "ok": true,
-          "http": 206,
-          "signature": "mpeg-ts",
-          "sample_bytes": 4096,
-          "content_type": "video/mp2t"
-        },
-        {
-          "position": 1343,
-          "ok": true,
-          "http": 206,
-          "signature": "mpeg-ts",
-          "sample_bytes": 4096,
-          "content_type": "video/mp2t"
-        }
-      ],
-      "segment_sample": "pass"
+      "error": "HTTPError: HTTP Error 404: Not Found",
+      "failure_class": "http_404_missing_or_masked",
+      "status_transition": "regressed",
+      "health_checks": 1,
+      "health_pass": 0,
+      "sample_reliability": 0.3333
     },
     {
       "title": "黑镜第一季",
@@ -354,14 +346,18 @@
       "source_path_fingerprint": "00aeec242a6d45c7ce6ca446",
       "url_comparison": "same_exact_url",
       "previous_manifest": "failed",
-      "previous_observed_at_utc": "2026-11-22T14:50:00.520385+00:00",
+      "previous_observed_at_utc": "2026-11-22T14:50:50.695150+00:00",
       "format": "m3u8",
       "manifest": "failed",
       "ad_cues": "unknown",
       "playback": "not-tested",
       "clean": "not-certified",
       "error": "HTTPError: HTTP Error 404: Not Found",
-      "failure_class": "http_404_missing_or_masked"
+      "failure_class": "http_404_missing_or_masked",
+      "status_transition": "stable_failure",
+      "health_checks": 1,
+      "health_pass": 0,
+      "sample_reliability": 0.3333
     },
     {
       "title": "黑镜第一季",
@@ -371,14 +367,18 @@
       "source_path_fingerprint": "be9f9bd6819276f431fb1d79",
       "url_comparison": "same_exact_url",
       "previous_manifest": "failed",
-      "previous_observed_at_utc": "2026-11-22T14:50:00.520385+00:00",
+      "previous_observed_at_utc": "2026-11-22T14:50:50.695150+00:00",
       "format": "m3u8",
       "manifest": "failed",
       "ad_cues": "unknown",
       "playback": "not-tested",
       "clean": "not-certified",
       "error": "HTTPError: HTTP Error 404: Not Found",
-      "failure_class": "http_404_missing_or_masked"
+      "failure_class": "http_404_missing_or_masked",
+      "status_transition": "stable_failure",
+      "health_checks": 1,
+      "health_pass": 0,
+      "sample_reliability": 0.3333
     },
     {
       "title": "黑镜 第一季",
@@ -387,43 +387,19 @@
       "source_fingerprint": "a5fbe7a44c5d71f17021920f",
       "source_path_fingerprint": "a5fbe7a44c5d71f17021920f",
       "url_comparison": "same_exact_url",
-      "previous_manifest": "failed",
-      "previous_observed_at_utc": "2026-11-22T14:50:00.520385+00:00",
+      "previous_manifest": "parsed",
+      "previous_observed_at_utc": "2026-11-22T14:50:50.695150+00:00",
       "format": "m3u8",
-      "manifest": "parsed",
-      "ad_cues": "none-detected",
-      "playback": "requires-in-site-browser-test",
+      "manifest": "failed",
+      "ad_cues": "unknown",
+      "playback": "not-tested",
       "clean": "not-certified",
-      "segment_count": 683,
-      "duration_sec": 2726.04,
-      "encrypted": false,
-      "segment_checks": [
-        {
-          "position": 0,
-          "ok": true,
-          "http": 206,
-          "signature": "mpeg-ts",
-          "sample_bytes": 4096,
-          "content_type": "video/mp2t"
-        },
-        {
-          "position": 341,
-          "ok": true,
-          "http": 206,
-          "signature": "mpeg-ts",
-          "sample_bytes": 4096,
-          "content_type": "video/mp2t"
-        },
-        {
-          "position": 682,
-          "ok": true,
-          "http": 206,
-          "signature": "mpeg-ts",
-          "sample_bytes": 4096,
-          "content_type": "video/mp2t"
-        }
-      ],
-      "segment_sample": "pass"
+      "error": "HTTPError: HTTP Error 404: Not Found",
+      "failure_class": "http_404_missing_or_masked",
+      "status_transition": "regressed",
+      "health_checks": 1,
+      "health_pass": 0,
+      "sample_reliability": 0.3333
     },
     {
       "title": "黑镜 第一季",
@@ -432,49 +408,28 @@
       "source_fingerprint": "1eae08061df309152021876c",
       "source_path_fingerprint": "1eae08061df309152021876c",
       "url_comparison": "same_exact_url",
-      "previous_manifest": "failed",
-      "previous_observed_at_utc": "2026-11-22T14:50:00.520385+00:00",
+      "previous_manifest": "parsed",
+      "previous_observed_at_utc": "2026-11-22T14:50:50.695150+00:00",
       "format": "m3u8",
-      "manifest": "parsed",
-      "ad_cues": "none-detected",
-      "playback": "requires-in-site-browser-test",
+      "manifest": "failed",
+      "ad_cues": "unknown",
+      "playback": "not-tested",
       "clean": "not-certified",
-      "segment_count": 949,
-      "duration_sec": 3792.28,
-      "encrypted": false,
-      "segment_checks": [
-        {
-          "position": 0,
-          "ok": true,
-          "http": 206,
-          "signature": "mpeg-ts",
-          "sample_bytes": 4096,
-          "content_type": "video/mp2t"
-        },
-        {
-          "position": 474,
-          "ok": true,
-          "http": 206,
-          "signature": "mpeg-ts",
-          "sample_bytes": 4096,
-          "content_type": "video/mp2t"
-        },
-        {
-          "position": 948,
-          "ok": true,
-          "http": 206,
-          "signature": "mpeg-ts",
-          "sample_bytes": 4096,
-          "content_type": "video/mp2t"
-        }
-      ],
-      "segment_sample": "pass"
+      "error": "HTTPError: HTTP Error 404: Not Found",
+      "failure_class": "http_404_missing_or_masked",
+      "status_transition": "regressed",
+      "health_checks": 1,
+      "health_pass": 0,
+      "sample_reliability": 0.3333
     }
   ],
   "same_exact_url_count": 16,
   "changed_url_count": 0,
   "missing_baseline_count": 0,
-  "http_404_count": 8,
+  "http_404_count": 12,
+  "recovered_count": 0,
+  "regressed_count": 4,
+  "stable_healthy_count": 2,
   "alternative_candidates_audited": 0,
   "stages": {
     "discovery": "attempted",

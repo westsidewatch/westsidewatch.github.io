@@ -276,7 +276,15 @@ document.getElementById('close').onclick=()=>dialog.close();dialog.addEventListe
        };
        const continuity=urlStates[item.url_comparison]||'尚無網址身份證據';
        const issue=errorStates[item.failure_class]||'';
-       state.textContent=(item.provider||'來源待確認')+' / '+continuity+' / '+manifest+' / '+segments+(issue?' / '+issue:'')+' / 未證明全片無廣告';
+       const stateNames={recovered:'恢復可讀',regressed:'本輪轉為失效',
+         stable_healthy:'連續可讀',stable_failure:'連續失敗',
+         new_observation:'首次品質觀察'};
+       const trend=stateNames[item.status_transition]||'尚未建立跨輪趨勢';
+       const quality=Number.isFinite(item.sample_reliability)
+          ?' / 抽檢可靠性 '+Math.round(100*item.sample_reliability)+'%':'';
+       state.textContent=(item.provider||'來源待確認')+' / '+continuity+
+          ' / '+trend+quality+' / '+manifest+' / '+segments+
+          (issue?' / '+issue:'')+' / 未證明全片無廣告';
        cell.append(title,state);
        episodeResults.append(cell);
      }
@@ -292,9 +300,11 @@ document.getElementById('close').onclick=()=>dialog.close();dialog.addEventListe
    }
    const failures=Number(d.provider_queries_failed||0);
    const known=Number(d.same_exact_url_count||0),changed=Number(d.changed_url_count||0);
-   errors.textContent='來源查詢失敗 '+failures+' 次。已確認相同網址 '+known+
-     ' 條、網址已變 '+changed+' 條、媒體 404 '+Number(d.http_404_count||0)+
-     ' 條。沒有把 404 或清單解析成功當作全片可播證據。';
+   errors.textContent='來源查詢失敗 '+failures+' 次。相同網址 '+known+
+     ' 條、變更網址 '+changed+' 條、恢復 '+Number(d.recovered_count||0)+
+     ' 條、退化 '+Number(d.regressed_count||0)+
+     ' 條、404 '+Number(d.http_404_count||0)+
+     ' 條。可靠性百分比僅指已執行分段抽檢的歷史比例，不代表全片可播或無廣告。';
  }catch(err){
    observed.textContent='實測記錄暫時無法讀取：'+String(err.message).slice(0,80);
  }
