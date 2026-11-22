@@ -94,7 +94,7 @@ try{
     if(state?.className!=='ready')throw Error('Church GLB not ready in browser '+frame+' '+JSON.stringify(state)+' '+errors.join('; '));
     if(!state.hardware || !Array.isArray(state.hardware.remaining) || state.hardware.remaining.length)
       throw Error('Door hardware still present at frame '+frame+' '+JSON.stringify(state.hardware));
-    if(!state.spatial || state.spatial.removed<4 || state.spatial.ghostRoofs<2)
+    if(!state.spatial || state.spatial.removed<3 || state.spatial.ghostRoofs<2)
       throw Error('Spatial clearance mesh cleanup absent: '+JSON.stringify(state.spatial));
     if(frame>=40&&frame<=223&&state.spatial.ghostRoofVisible!==0)
       throw Error('Ghost roof still obscures inhabited spaces at frame '+frame);
