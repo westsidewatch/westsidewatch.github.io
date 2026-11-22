@@ -42,7 +42,7 @@ def lines_from_playlist(url):
         raise ValueError("Not a recognized M3U8 playlist")
     return [line.strip() for line in text.splitlines() if line.strip()], code, mime
 
-AD_PLAYLIST_TAG = re.compile(r'^#EXT-X-(?:CUE-OUT|CUE-IN|DATERANGE|SCTE35|OATCLS-SCTE35|ASSET)(?=[:\\s-]|$)', re.I)
+AD_PLAYLIST_TAG = re.compile(r'^#EXT-X-(?:CUE-OUT|CUE-IN|DATERANGE|SCTE35|OATCLS-SCTE35|ASSET)(?=[:\s-]|$)', re.I)
 AD_FILENAME = re.compile(r'(?:^|[/_.-])(?:ad|ads|advert|commercial|preroll|promo)(?:[/_.-]|$)', re.I)
 
 def ad_manifest_signals(lines):
