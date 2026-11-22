@@ -77,3 +77,18 @@ P2 01–04 不動 → 05 第一層 V9（保留） → 05 第二層
 GitHub Actions [run #45001795311](https://github.com/westsidewatch/westsidewatch.github.io/actions/runs/45001795311) 已實際跑完 449 個分片：Canonical 203448/21、Living 203448/21、封面實有 202428/407。Canon/Living 重複 ID 0、sha256 差異 0；封面 335 個 manifest count/sha256 漂移、對 Canonical 少 1020 Work ID，無重複 Work ID。圖像指標 200417，無圖 2011，未逐 URL 測試。
 
 現行 `scripts/audit-dawn-library-shards.cjs` v2 會產生 `coverReconciliation` 的逐 Work 和逐 shard 對賬清單，供原 Admission/Build pipeline 修復。P2 不能為求畫面整齊擅自改寫館藏權威或封面來源。
+
+## 2026-11-22 下一工程關卡：封面缺失 Work 的原權威修復候選（CI 已驗收）
+
+**根據 GitHub Actions v2 真實完整性報告**：1,020 個 canonical Work 缺少 Cover Preview 行；335 個分片 manifest 宣告 count/hash 漂移。v2 全名單 artifact: [run #45001956068](https://github.com/westsidewatch/westsidewatch.github.io/actions/runs/45001956068)。
+
+已新增 `scripts/stage-dawn-cover-reconciliation.cjs`，以 `canonical/root.json` 的原始 21 個 shard 的 metadata 為權威，讀取既有 407 個 Cover Preview shards，不覆寫它們；為 1,020 缺口建立與 canonical ID、原書名、作者、語言一致的 **text-only / dawn-placeholder** 預覽紀錄，不冒充已驗證封面，並計算正確 count/sha256/offset 的候選 root。
+
+**實際完成的候選驗收**：GitHub Actions [run #45003268137](https://github.com/westsidewatch/westsidewatch.github.io/actions/runs/45003268137) SUCCESS；產物 [dawn-cover-staged-reconciliation](https://github.com/westsidewatch/westsidewatch.github.io/actions/runs/45003268137/artifacts/14746433995)。已解析 artifact 實檔：
+- `covers-000408.json` 500 條；`covers-000409.json` 500 條；`covers-000410.json` 20 條。
+- 新候選 `root.json`：**410 shards / 203,448 Works / sum(shards[].count)=203,448**。保留既有 407 個分片原位元組，修正它們的 root metadata；新增 3 片僅包含缺失 Work。
+- `reconciliation-report.json` status PASS、original 202,428、missing 1,020、canonical total 203,448；有 ID 和真正原書名（如 OL100859W *Enlightened courage*）。
+- `manifestChangedShards=407` 表示候選根清單中 407 個舊分片的 metadata（offset、count 或 SHA）至少一項有變化，**不是 407 個原始 JSON 檔都需要覆寫**。
+- 候選 1,020 筆刻意不宣稱有真封面（`dawn-placeholder`）。這是「身份與館藏容量的修復候選」，不是「完成圖像修復」。
+
+**出版門檻**：目前 artifact 尚未被複製進 PR 的對外靜態根，也未接入 P2 runtime；必須先驗證每個候選 shard 與新 root 的 checksum、跨 410 分片瀏覽邊界、全文/圖像來源，以及 Cloudflare desktop/mobile，才允許在隔離分支受控發布。不得自動合併 main。
