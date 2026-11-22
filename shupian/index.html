@@ -179,13 +179,24 @@ async function trySource(token){
     if(!video.canPlayType('video/ogg')){fail('瀏覽器不支援 Ogg/Theora');return}
   }
   if(fmt==='m3u8'||/\.m3u8(?:$|[?#])/i.test(url)){
-    if(video.canPlayType('application/vnd.apple.mpegurl')){
-      video.src=url;video.load();return;
-    }
+    // Chromium may advertise native HLS while loading cross-origin media
+    // in no-CORS mode (ERR_BLOCKED_BY_RESPONSE.NotSameOrigin). Prefer MSE/hls.js
+    // wherever it is supported; reserve native HLS for Safari-only fallback.
     try{
+      if(typeof MediaSource==='undefined'||typeof MediaSource.isTypeSupported!=='function'){
+        if(video.canPlayType('application/vnd.apple.mpegurl')){
+          video.src=url;video.load();return;
+        }
+        fail('沒有可用的 HLS 解碼器');return;
+      }
       const Hls=await ensureHls();
       if(token!==playbackToken||attempt!==sourceAttempt)return;
-      if(!Hls.isSupported()){fail('此瀏覽器無法解碼 HLS');return}
+      if(!Hls.isSupported()){
+        if(video.canPlayType('application/vnd.apple.mpegurl')){
+          video.src=url;video.load();return;
+        }
+        fail('此瀏覽器無法解碼 HLS');return;
+      }
       const instance=new Hls({enableWorker:true,maxBufferLength:30});
       hls=instance;
       instance.on(Hls.Events.ERROR,(_,data)=>{
