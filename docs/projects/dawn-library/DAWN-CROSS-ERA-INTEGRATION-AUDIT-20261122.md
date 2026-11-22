@@ -118,3 +118,16 @@ P2 的 `p2-dawn-canonical-gallery.mjs` 已改為 `{shardIndex,indexInsideActualI
 Living 末尾 `wall-000021.json` 原始 `workRefs` 數為 **3448**，其 `bible.new-testament` 葉標引 **519** 筆。用真實分片執行新 P2 adapter，以 `limit=8` 抽樣的 Work IDs 與原始標引完全相符（8/8）；仍不是全 21 分片 E2E。
 
 **重要界限：** 本輪尚未取得 Actions 完整報告或實際瀏覽器截圖。不可把已查的五個封面分片外推成 407 個分片的完整統計；不能由 `cover.src` 存在推斷遠端網址可開啟、版權或封面與版本真正一致。直到 GitHub Actions 產出報告前，Gate G1/G2/G3 仍未「完成」。
+
+## 2026-11-22 GitHub Actions 全量完成之驗收證據
+
+CI run: https://github.com/westsidewatch/westsidewatch.github.io/actions/runs/45001795311 。檢驗器實際跑完 21 Canonical + 21 Living + 407 Cover Preview 分片，report `status=WARN`、**errorCount=0**、檢驗工作步驟 SUCCESS。
+
+- Canonical 203,448 Work、21 shards、duplicate 0、manifest SHA 漂移 0。
+- Living 203,448 WorkRefs、21 shards、duplicate 0、manifest SHA 漂移 0；至少有一條 root/leaf 分類的作品 **54,883**。
+- Cover Preview 實際 202,428 條、407 shards、duplicate 0；其中圖像 URL 指標 200,417、placeholder/無圖 2,011（網址是否可用及授權未驗）。
+- Cover Preview 宣告 `workCount=203448`，實際比 canonical 少 **1,020 條**；**335 個分片** 的 manifest counts 與 items 不符，**335 個** sha256 不符。這是追查源管道的真實資料差異，不是 P2 渲染器猜測。
+- **已完成 v2 差異報告施工**：同一只讀驗證器增加 `coverReconciliation.missingCanonicalWorkIds[]` 和 `shardCorrections[]`，將缺口與每片差異輸出到 Actions artifact；此版本的新 Actions run / artifact **尚待核實**，不得把第一輪 v1 artifact 說成已包含 v2 名單。
+- 未覆寫任何 canonical/living/cover 原分片，未放行 P2 #1411。
+
+以上全量檔案完整性 PASS（含 warnings）不代表圖片 HTTP 200、合法權利、同冊封面、翻譯完整、瀏覽器視覺驗收通過。
