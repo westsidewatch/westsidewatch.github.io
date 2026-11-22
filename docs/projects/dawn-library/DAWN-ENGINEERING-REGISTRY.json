@@ -1,0 +1,218 @@
+{
+  "schema": "dawn.library.unified-engineering-registry.v1",
+  "updated": "2026-11-22",
+  "parentIssue": 273,
+  "repository": "westsidewatch/westsidewatch.github.io",
+  "workingBranch": "work/p2-05-integration-repair-20261121",
+  "presentationPR": 1411,
+  "authority": "docs/projects/dawn-library/DAWN-UNIFIED-ENGINEERING-ROOT.md",
+  "method": "Entries are discovered lineage, not exhaustive repository audit. status separated from tests.",
+  "canonical": {
+    "path": "static/dawn-library/canonical/root.json",
+    "workCount": 203448,
+    "shards": 21,
+    "authorityBackedWorks": 201336,
+    "claimScope": "manifest"
+  },
+  "entries": [
+    {
+      "id": "genesis",
+      "kind": "governance",
+      "source": "https://github.com/westsidewatch/westsidewatch.github.io/issues/273",
+      "status": "content-verified",
+      "next": "connect related historical issues/PRs"
+    },
+    {
+      "id": "ingest",
+      "kind": "admission",
+      "source": "dore-core/knowledge/library/LIMING-LIVE-INGEST-CONTRACT-v1.md",
+      "status": "located",
+      "next": "confirm actual path, contract and current runtime"
+    },
+    {
+      "id": "formal",
+      "kind": "formal-edition",
+      "source": "docs/dawn-library-formal-edition/PHASE-01..08-AUDIT.md",
+      "branch": "dore/dawn-library-formal-edition",
+      "status": "located",
+      "next": "read each phase and runtime binding"
+    },
+    {
+      "id": "canonical",
+      "kind": "work-identity",
+      "source": "static/dawn-library/canonical/root.json",
+      "status": "content-verified",
+      "next": "audit all 21 shard hashes/unique IDs"
+    },
+    {
+      "id": "living",
+      "kind": "subject-projection",
+      "source": "static/dawn-library/living/root.json",
+      "status": "content-verified",
+      "next": "verify per-work classification membership"
+    },
+    {
+      "id": "cover",
+      "kind": "image-projection",
+      "source": "static/dawn-library/cover-preview/root.json",
+      "status": "located",
+      "next": "audit 407 shard count drift, URL, rights, same-work images"
+    },
+    {
+      "id": "cover-authority",
+      "kind": "image-verification",
+      "source": "static/dawn-library/cover-authority/authority-000001.json",
+      "branch": "dore/dawn-cover-integrity-cut",
+      "status": "located",
+      "next": "verify authority mapping and all legacy validators"
+    },
+    {
+      "id": "chinese",
+      "kind": "language",
+      "source": "static/dawn-library/chinese-collection.json",
+      "status": "located",
+      "next": "distinguish 47 public / 2994 language facet / actual translations"
+    },
+    {
+      "id": "translation",
+      "kind": "reading",
+      "source": "static/dawn-library/formal-edition/runtime/translation-surface.mjs",
+      "status": "located",
+      "next": "test materialized bilingual content, not UI contract"
+    },
+    {
+      "id": "reading-pointers",
+      "kind": "reading",
+      "source": "static/dawn-library/reading-pointer-map.json",
+      "status": "located",
+      "next": "verify licensed working reading pointers"
+    },
+    {
+      "id": "personal",
+      "kind": "reader-state",
+      "source": "static/dawn-library/formal-edition/runtime/personal-state.mjs",
+      "status": "content-verified-via-bridge",
+      "next": "verify import/export and origin migration"
+    },
+    {
+      "id": "dual-index",
+      "kind": "editorial-canon",
+      "source": "docs/projects/dawn-library/DUAL-INDEX-CANON.md",
+      "branch": "dawn/full-library-editorial-scan-v1",
+      "status": "content-verified",
+      "next": "materialize proven semantic joins in P2"
+    },
+    {
+      "id": "projection",
+      "kind": "editorial-canon",
+      "source": "docs/projects/dawn-library/EDITORIAL-PROJECTION-CANON.md",
+      "branch": "dawn/full-library-editorial-scan-v1",
+      "status": "content-verified",
+      "next": "bind projections with original Work IDs"
+    },
+    {
+      "id": "editorial-scan",
+      "kind": "research-pipeline",
+      "source": "docs/projects/dawn-library/FULL-LIBRARY-EDITORIAL-SCAN-V1.md",
+      "branch": "dawn/full-library-editorial-scan-v1",
+      "status": "content-verified",
+      "next": "reconcile P0/P1 ACTIVE P2-P6 QUEUED with newer work"
+    },
+    {
+      "id": "chinese-acquisition",
+      "kind": "ingest-pipeline",
+      "source": "docs/projects/dawn-library/CHINESE-ACQUISITION-PRODUCTION-LINE.md",
+      "branch": "dawn/full-library-editorial-scan-v1",
+      "status": "located",
+      "next": "inspect workflow and admission evidence"
+    },
+    {
+      "id": "iiif",
+      "kind": "image-runtime",
+      "source": "dore_core/capabilities/surface_mounts.py",
+      "branch": "dawn/step5-iiif-runtime-mount",
+      "status": "located",
+      "next": "inspect 4 ahead commits and IIIF tests"
+    },
+    {
+      "id": "visual-graph",
+      "kind": "visual-governance",
+      "branch": "dawn-library-visual-graph-phase1",
+      "status": "located",
+      "next": "trace rights/source/representation interfaces"
+    },
+    {
+      "id": "jerusalem",
+      "kind": "curation",
+      "source": "static/dawn-library/p2-exhibitions/jerusalem-3000.json",
+      "branch": "dawn/jerusalem-3000-curated-v2",
+      "status": "located",
+      "next": "validate 18 scenes with work/source IDs"
+    },
+    {
+      "id": "p2",
+      "kind": "surface",
+      "source": "static/experiments/p2-0105-dawn-preview.html",
+      "branch": "work/p2-05-integration-repair-20261121",
+      "pr": 1411,
+      "status": "integrated-not-approved",
+      "next": "browser regression and art acceptance"
+    },
+    {
+      "id": "p2-gallery",
+      "kind": "adapter",
+      "source": "static/js/p2-dawn-canonical-gallery.mjs",
+      "branch": "work/p2-05-integration-repair-20261121",
+      "status": "content-verified",
+      "next": "full-search beyond currently loaded 60 rows"
+    },
+    {
+      "id": "p2-personal",
+      "kind": "adapter",
+      "source": "static/js/p2-dawn-personal-bridge.mjs",
+      "branch": "work/p2-05-integration-repair-20261121",
+      "status": "content-verified",
+      "next": "cross-origin and complete user journeys"
+    },
+    {
+      "id": "dore-art",
+      "kind": "research",
+      "source": "docs/design/DAWN-DORÉ-EXPLORATION-20261122.md",
+      "branch": "work/p2-05-integration-repair-20261121",
+      "status": "content-verified",
+      "next": "source-rights and visual acceptance"
+    },
+    {
+      "id": "daily-bread",
+      "kind": "consumer",
+      "source": "https://github.com/westsidewatch/westsidewatch.github.io/issues/278",
+      "status": "located",
+      "next": "retain as #273 subproject"
+    },
+    {
+      "id": "historical-21k",
+      "kind": "secondary-catalogue",
+      "source": "static/dawn-library/catalogue/index.json",
+      "status": "located",
+      "next": "keep distinct from 203448 Work substrate"
+    }
+  ],
+  "auditGates": [
+    "historical-branch-and-pr-inventory",
+    "canonical-shard-hash-and-unique-work-id",
+    "subject-membership-joins",
+    "cover-shard-integrity-and-rights",
+    "translation-and-reading-materialization",
+    "personal-state-cross-origin",
+    "curation-provenance",
+    "p2-visual-regression",
+    "cloudflare-preview"
+  ],
+  "nonNegotiables": [
+    "never-use-Sites",
+    "never-overwrite-protected-branches",
+    "never-merge-P2-before-visual-approval",
+    "never-duplicate-canonical-Work",
+    "never-claim-coverage-from-manifest-alone"
+  ]
+}
