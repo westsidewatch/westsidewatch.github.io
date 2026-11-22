@@ -163,8 +163,14 @@
       "kind": "adapter",
       "source": "static/js/p2-dawn-canonical-gallery.mjs",
       "branch": "work/p2-05-integration-repair-20261121",
-      "status": "content-verified",
-      "next": "full-search beyond currently loaded 60 rows"
+      "status": "integrated-static-validated",
+      "next": "Real-browser QA of global indexed search including zero results, race conditions, book opening, pagination restore; index coverage not exhaustive corpus scan",
+      "evidence": {
+        "commit": "adbc0829f655a899c964dc5b66fd9784dcb0e360",
+        "glueCommit": "562d67bfca8fe8986c6e129e08db5a0c98c56310",
+        "syntax": "module/main script PASS by Function parse",
+        "browser": "NOT VERIFIED"
+      }
     },
     {
       "id": "p2-personal",
@@ -195,6 +201,14 @@
       "source": "static/dawn-library/catalogue/index.json",
       "status": "located",
       "next": "keep distinct from 203448 Work substrate"
+    },
+    {
+      "id": "p2-second-layer-workline",
+      "kind": "implementation-plan",
+      "source": "docs/projects/dawn-library/P2-SECOND-LAYER-COLLECTION-WORKLINE-20261122.md",
+      "branch": "work/p2-05-integration-repair-20261121",
+      "status": "content-planned",
+      "next": "Second layer second pass: real category membership instead of lexical search; visual and interaction QA"
     }
   ],
   "auditGates": [
