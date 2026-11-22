@@ -138,6 +138,23 @@ jobs:
           done
           grep -q 'id="grid"' public/shupian/index.html
           grep -q 'id="video"' public/shupian/index.html
+          node - <<'JS'
+          const fs = require('node:fs');
+          const vm = require('node:vm');
+          const html = fs.readFileSync('public/shupian/index.html','utf8');
+          const scripts = [...html.matchAll(/<script(\\s[^>]*)?>([\\s\\S]*?)<\\/script>/g)];
+          let executable = 0;
+          for (const [,attrs='',code] of scripts) {
+            if (/type=["']application\\/json["']/.test(attrs)) continue;
+            new vm.Script(code, {filename:'public/shupian/index.html'});
+            executable++;
+          }
+          if (!executable) throw new Error('No player scripts verified');
+          if (!html.includes('Hls.Events.MEDIA_ATTACHED')) throw new Error('HLS player lifecycle regressed');
+          if (!html.includes('sourceAttempt')) throw new Error('Source retry isolation regressed');
+          if (/<meta[^>]+http-equiv=["']refresh["']/i.test(html)) throw new Error('Cinema replaced by redirect');
+          console.log('Shupian inline player JavaScript syntax and lifecycle verified',executable);
+          JS
           python3 - <<'PY'
           import json
           from pathlib import Path
