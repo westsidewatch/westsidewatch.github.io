@@ -646,8 +646,8 @@ canvas.addEventListener("pointercancel", () => { pointerDown = false; });
 document.addEventListener("visibilitychange", () => { isVisible = !document.hidden; previousFrame = 0; });
 
 const lookAtVector = new Vector3();
-function animate(now) {
-  requestAnimationFrame(animate);
+function animate(now,forcedTime=null) {
+  if(forcedTime===null)requestAnimationFrame(animate);
   if (!isVisible) { previousFrame = now; return; }
   const dt = previousFrame ? Math.min(0.045, Math.max(0, (now - previousFrame) / 1000)) : 0;
   previousFrame = now;
@@ -658,9 +658,11 @@ function animate(now) {
   // A deterministic visual QA position, without adding any on-screen text.
   const params = new URLSearchParams(location.search);
   const proof = params.get("proofFrame");
-  const t = proof !== null && Number.isFinite(Number(proof))
-    ? Math.min(duration, Math.max(0, Number(proof)))
-    : (prefersReducedMotion ? duration : elapsed % (duration + 10));
+  const t=Number.isFinite(forcedTime)
+    ? Math.min(duration,Math.max(0,forcedTime))
+    : proof!==null && Number.isFinite(Number(proof))
+      ? Math.min(duration,Math.max(0,Number(proof)))
+      : (prefersReducedMotion ? duration : elapsed % (duration + 10));
   updateDaylight(t,duration);
   window.__churchFrameAudit={
     at:t,daylight:daylightAt(t),
@@ -697,6 +699,9 @@ function animate(now) {
 
 loadArchitecture().then(() => {
   document.body.classList.add("ready");
+  // Direct, synchronous proof rendering: capture the requested actual
+  // WebGL frame without reloading the architecture or guessing RAF timing.
+  window.__churchRenderProofFrame=at=>animate(performance.now(),at);
   requestAnimationFrame(animate);
 }).catch(error => {
   console.error("Virtual church model load failed", error);
