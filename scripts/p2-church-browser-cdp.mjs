@@ -138,6 +138,30 @@ try{
     writeFileSync(filename, Buffer.from(shot.data, 'base64'));
     console.log('P2_FRAME_PROOF='+filename);
   }
+  // Prove the public chapter URL starts *in the sanctuary* but continues
+  // the original animation normally. No proofFrame freeze on this request.
+  await send('Page.navigate',{
+    url:'http://127.0.0.1:8765/p2/church-tour.html?startAt=81'
+  });
+  let chapelReady=false;
+  for(let retry=0;retry<110;retry++){
+    await sleep(220);
+    try{
+      chapelReady=await evaluate("document.body?.classList.contains('ready')===true");
+      if(chapelReady)break;
+    }catch{}
+  }
+  if(!chapelReady)throw Error('Direct 3D sanctuary preview did not load');
+  await sleep(700);
+  const chapelClock=await evaluate('window.__churchFrameAudit');
+  if(!chapelClock || chapelClock.at<81 || chapelClock.at>86)
+    throw Error('Sanctuary preview did not start at chapter 81: '+JSON.stringify(chapelClock));
+  console.log('P2_DIRECT_CHAPEL_PREVIEW='+JSON.stringify(chapelClock));
+  const chapelShot=await send('Page.captureScreenshot',{
+    format:'jpeg',quality:65,captureBeyondViewport:false,fromSurface:true
+  });
+  if(!chapelShot.data)throw Error('Direct chapel preview returned no screenshot');
+  writeFileSync(proofDir+'/chapel-direct-preview.jpg',Buffer.from(chapelShot.data,'base64'));
 }finally{
   ws.close();
 }
