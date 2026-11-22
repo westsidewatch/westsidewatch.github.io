@@ -125,3 +125,13 @@ GitHub Actions [run #45001795311](https://github.com/westsidewatch/westsidewatch
 - 連續閱讀正文：`--ws-type-reading-zh` = Noto Serif TC；標準字重 `400`；`--ws-type-scale-reading` 和 `--ws-type-leading-reading:1.82`。正文不應被覆蓋成 Chiron 200，也不得降到極小的 micro/meta 字級。
 - 原已核實的經文方塊是特殊主視覺，其原版中文 900 重獨立保留，不受此修正污染；第二、三層不額外製作版塊大刊頭。
 - R65 已修改第二層分類卡/標題、個人書房標題的 900 殘留；只對指定正文段落設置 Noto Serif 400；修改 `tests/p2-dawn-os-visual-hierarchy.cjs` 以真實瀏覽器 computed style 分別驗證展示 200 / 閱讀 400。P2 01–04、原經文 SVG/iframe、原館藏資料保持不動。
+
+
+## R67｜中文館藏原書封面補完與空白分類修復
+
+- `static/dawn-library/chinese-collection.json` 保有原 **47 個 canonical Chinese Work IDs**；1 部《靈歷集光》沿用其 Project Gutenberg 指標，原 **46 部廣學會（CLSC）** 在此版全部從 Yale Divinity Library / HKBU CLSC **同一書籍的原掃描 PDF** 擷取封面或題名頁，生成實體 WebP 46 張於 `static/dawn-library/chinese-facsimile-covers/`。
+- 來源映射以 `https://adhoc.yalepages.org/Collections/HKBU/CLSC/clsc_list.js` 的 692 條 `title/author/year/filename` 明確索引，檔案由 `https://divinity-adhoc.library.yale.edu/HKBU/CLSC/` 讀取，兩個同名不同版《宗教道德教育學》（1920）／《基督之友》（1929）使用年份解歧。源檔、頁碼、掃描圖 SHA-256 全寫入 Work cover provenance，來源性質為 **原書封面／掃描題名頁，不可宣稱是現代商品封面**。
+- 真正二進位 GitHub 資產提交：`0e8487186019fc3977a4f931df22c691d29e52c1`；此來源只在 **PR #1411 隔離分支**，未覆寫主站。
+- `static/js/p2-0105-dawn-continuation.js` 接通中文單書卡與分類封面，禁止單書使用同名異版替代。修復先前 `for (const [i,[domain,items]] of subgroups.entries())` 的錯誤解構（導致 `domain.split is not a function` 和整面書牆清空），調整為 `[...subgroups.entries()].entries()`。分類卡首圖遇外站來源失敗時，可從 **本分類內其他已核實作品的原掃描** 選擇下一張，不會把其他類別封面混入該類，也不會改動單書的封面身份。
+- 真實 **R67** Chromium [中文 47 原書封面 gate #45034357332](https://github.com/westsidewatch/westsidewatch.github.io/actions/runs/45034357332) **SUCCESS**。檢查 46 本地 WebP 存在、HTTP 200、SHA-256 與各 Work provenance 一致、桌面與手機中文入口、子分類和單書圖片載入；證據 [browser artifact #14759140640](https://github.com/westsidewatch/westsidewatch.github.io/actions/runs/45034357332/artifacts/14759140640)。
+- [Cloudflare R67 隔離預覽](https://pr-1411.westsidewatch-github-io.pages.dev/experiments/p2-0105-dawn-preview.html?layer=catalogue&category=zh&d=28.4&v=r67) 已部署；獨立首頁 OS 視覺 gate 尚有失敗，**不可因此宣告整個 P2 已完成／可合併**。剩下 Gutenberg 單一外站封面 URL 的可用性並未獲本地 46-WebP 雜湊 gate 確認。
