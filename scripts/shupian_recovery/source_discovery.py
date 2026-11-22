@@ -96,7 +96,7 @@ def network_fetch(url, timeout=15):
             raise ValueError("API response too large")
         return json.loads(blob.decode("utf-8-sig"))
 
-def search(providers, queries=(), pages=3, limit=30, discover=False, fetch=network_fetch):
+def search(providers, queries=(), pages=3, limit=30, discover=False, fetch=network_fetch, type_hints=()):
     """Search every provider/page and hydrate list-only records via ac=detail.
 
     Native MacCMS ac=list normally omits vod_play_url. Search is a two-stage
@@ -108,14 +108,41 @@ def search(providers, queries=(), pages=3, limit=30, discover=False, fetch=netwo
     found, errors, probes = {}, [], []
     details_seen = set()
     for provider in providers:
-        for query in (tuple(queries) + (("",) if discover else ())):
+        base = provider["api"]
+        categories = [None]
+        # Ask each provider for its OWN categories: type_id values vary by site.
+        # Search category listings first; free-text keywords remain complementary.
+        if discover and type_hints:
+            class_url = base + ("&" if "?" in base else "?") + urllib.parse.urlencode({"ac": "list", "pg": 1})
+            try:
+                class_payload = fetch(class_url)
+                entries = class_payload.get("class", []) if isinstance(class_payload, dict) else []
+                selected = []
+                for entry in entries if isinstance(entries, list) else []:
+                    if not isinstance(entry, dict):
+                        continue
+                    name = str(entry.get("type_name") or "")
+                    if any(hint.casefold() in name.casefold() for hint in type_hints):
+                        type_id = entry.get("type_id")
+                        if type_id is not None:
+                            selected.append(str(type_id))
+                categories = list(dict.fromkeys(selected)) or [None]
+            except Exception as exc:
+                errors.append({"provider": provider["id"], "stage": "category-index",
+                               "error": str(exc)[:220]})
+        requests = [(query, None) for query in queries]
+        if discover:
+            requests.extend([("", category_id) for category_id in categories])
+        for query, category_id in requests:
             for page in range(1, max(1, pages) + 1):
                 params = {"ac": "detail" if query else "list", "pg": page}
                 if query:
                     params["wd"] = query
-                base = provider["api"]
+                if category_id is not None:
+                    params["t"] = category_id
                 url = base + ("&" if "?" in base else "?") + urllib.parse.urlencode(params)
-                status = {"provider": provider["id"], "query": query or "(broad)", "page": page}
+                status = {"provider": provider["id"], "query": query or "(broad)", "page": page,
+                          "category_id": category_id}
                 try:
                     payload = fetch(url)
                     records = payload.get("list", []) if isinstance(payload, dict) else []
@@ -163,6 +190,7 @@ def search(providers, queries=(), pages=3, limit=30, discover=False, fetch=netwo
                             "class": record.get("vod_class"),
                             "score": similarity(str(record.get("vod_name") or title), queries) if queries else None,
                             "groups": groups, "discovery_query": query or "(broad)",
+                            "discovery_type_id": category_id,
                             "status": "UNVERIFIED_CANDIDATE",
                         }
                     status["detail_hydrated"] = hydrated
@@ -173,7 +201,7 @@ def search(providers, queries=(), pages=3, limit=30, discover=False, fetch=netwo
                 probes.append(status)
                 # Never treat one provider's empty response as global absence.
     return {
-        "schema": 3, "strategy": "all-providers/all-query-variants/all-pages/list-to-detail-hydration",
+        "schema": 4, "strategy": "all-providers/provider-specific-type-IDs/fuzzy-queries/pagination/detail-hydration",
         "queries": list(queries), "discover": bool(discover), "probes": probes,
         "errors": errors, "candidates": sorted(
             found.values(), key=lambda x: (x["score"] if x["score"] is not None else 0),
