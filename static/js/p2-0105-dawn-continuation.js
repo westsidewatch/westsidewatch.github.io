@@ -744,18 +744,42 @@
   works.hidden=!visible;
   $('#dawn-catalogue .dawn-catalogue__more').hidden=!visible;
  }
+ let canonicalMode=false,canonicalGallery=null;
+ const canonicalOptions=()=>({container:works,total,status:pageStatus,prev:prevButton,next:more,search,openBook,
+  expectedWorkCount:classificationTree?.canonicalWorkCount});
+ async function showCanonical(offset=0){
+  try{
+   canonicalGallery ||= await import('/js/p2-dawn-canonical-gallery.mjs');
+   if(!canonicalMode||activePortal!=='all')return;
+   await canonicalGallery.show(canonicalOptions(),offset);
+  }catch(e){console.error('[Dawn canonical gallery]',e);pageStatus.textContent='館藏暫時無法載入';}
+ }
  function displayFullRecordIndex(){
   if(activePortal!=='all')return;
-  ++classificationTicket;
+  ++classificationTicket;canonicalMode=true;
   $('#dawn-primary-categories')?.removeAttribute('aria-current');
   $('#dawn-primary-chinese')?.removeAttribute('aria-current');
+  $('#dawn-primary-historical')?.removeAttribute('aria-current');
   $('#dawn-primary-records')?.setAttribute('aria-current','page');
   classificationCrumbs([{label:'全部書目',action:displayFullRecordIndex}]);
+  classificationFacets(false);
+  const tree=classificationWall();tree.hidden=true;
+  setFullRecordIndexVisible(true);search.value='';
+  void showCanonical(0);
+  $('#dawn-classification').scrollIntoView({block:'start',behavior:'instant'});
+ }
+ function displayHistoricalIndex(){
+  if(activePortal!=='all')return;
+  ++classificationTicket;canonicalMode=false;
+  $('#dawn-primary-categories')?.removeAttribute('aria-current');
+  $('#dawn-primary-chinese')?.removeAttribute('aria-current');
+  $('#dawn-primary-records')?.removeAttribute('aria-current');
+  $('#dawn-primary-historical')?.setAttribute('aria-current','page');
+  classificationCrumbs([{label:'歷史古籍',action:displayHistoricalIndex}]);
   classificationFacets(true);
   const tree=classificationWall();tree.hidden=true;
-  setFullRecordIndexVisible(true);
-  if(currentPage)renderWorks();
-  else void loadCatalogue();
+  setFullRecordIndexVisible(true);search.value='';
+  if(currentPage)renderWorks();else void loadCatalogue();
   $('#dawn-classification').scrollIntoView({block:'start',behavior:'instant'});
  }
  function classificationWall(){
@@ -780,6 +804,8 @@
   $('#dawn-primary-categories')?.setAttribute('aria-current','page');
   $('#dawn-primary-chinese')?.removeAttribute('aria-current');
   $('#dawn-primary-records')?.removeAttribute('aria-current');
+  $('#dawn-primary-historical')?.removeAttribute('aria-current');
+  canonicalMode=false;
   classificationCrumbs([]);classificationFacets(true);
   setFullRecordIndexVisible(false);
   const wall=classificationWall();startCategoryCoverMotion();
@@ -787,7 +813,8 @@
    wall.append(classificationSleeve(group.label,Number(group.workCount||0).toLocaleString('en-CA')+' 部作品',()=>displayClassificationGroup(group),i%2?'olive':'harvest',group.id));
   }
   wall.append(classificationSleeve('中文圖書',String(chineseLibrary.count||chineseLibrary.works?.length||0)+' 部藏書',displayChineseGroups,'chinese','zh'));
-  wall.append(classificationSleeve('全部書目','依年代與作者查閱',displayFullRecordIndex,'harvest','all'));
+  wall.append(classificationSleeve('全部書目','按作品閱覽',displayFullRecordIndex,'harvest','all'));
+  wall.append(classificationSleeve('歷史古籍','原始書目',displayHistoricalIndex,'olive','church-history'));
   refreshCategoryCovers(true);
  }
  function displayClassificationGroup(group){
@@ -1050,6 +1077,10 @@
   if(activePortal!=='all')openCollection();
   void renderCatalogueClassification().then(()=>displayFullRecordIndex());
  });
+ $('#dawn-primary-historical')?.addEventListener('click',()=>{
+  if(activePortal!=='all')openCollection();
+  void renderCatalogueClassification().then(()=>displayHistoricalIndex());
+ });
  wallGrid.addEventListener('click',e=>{
   const tile=e.target.closest('button');if(!tile)return;
   if(tile.dataset.dawnPortal)openCollection(tile.dataset.dawnPortal);
@@ -1137,7 +1168,9 @@
   works.replaceChildren(frag);
   pageStatus.textContent='第 '+currentPage+' / '+index.pageCount+' 頁 · 本頁符合 '+matches.length+' 筆 · 館藏索引共 '+Number(index.count).toLocaleString('en-CA')+' 筆';
  }
- more.addEventListener('click',()=>showPage(currentPage+1));prevButton.addEventListener('click',()=>showPage(currentPage-1));search.addEventListener('input',renderWorks);
+ more.addEventListener('click',()=>canonicalMode?void showCanonical(canonicalGallery?.nextOffset()||0):void showPage(currentPage+1));
+ prevButton.addEventListener('click',()=>canonicalMode?void showCanonical(canonicalGallery?.prevOffset()||0):void showPage(currentPage-1));
+ search.addEventListener('input',()=>canonicalMode?canonicalGallery?.render(canonicalOptions()):renderWorks());
  // Resume using the same Work ID. No new catalog, shadow Work or fabricated
  // edition is created by the personal library interface.
  window.addEventListener('dawn:p2:resume-book',async event=>{
