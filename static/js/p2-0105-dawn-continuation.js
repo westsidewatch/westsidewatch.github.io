@@ -606,7 +606,7 @@
    classificationPromise=(async()=>{
     const [classificationResponse,chineseResponse,livingResponse]=await Promise.all([
      fetch('/dawn-library/classification.json'),
-     fetch('/dawn-library/chinese-collection.json'),
+     fetch('/dawn-library/chinese-collection.json?covers=r66-yale-originals'),
      fetch('/dawn-library/living/root.json')
     ]);
     if(!classificationResponse.ok||!chineseResponse.ok||!livingResponse.ok)throw Error('Dawn authoritative classification sources unavailable');
@@ -702,7 +702,7 @@
     }
    }catch(e){console.warn('[Dawn sourced jacket pool]',e)}
    try{
-    const response=await fetch('/dawn-library/chinese-collection.json');
+    const response=await fetch('/dawn-library/chinese-collection.json?covers=r66-yale-originals');
     if(response.ok){
      const chinese=chineseLibrary||await response.json();
      for(const work of chinese.works||[]){
