@@ -58,7 +58,7 @@ fs.mkdirSync(out,{recursive:true});
     name+': primary category wall still looks empty: '+JSON.stringify(roots));
    console.log('PRIMARY_CATEGORY_COVER_QA',name,JSON.stringify(roots));
    await page.screenshot({path:path.join(out,name+'-primary-category-cover-wall.png')});
-   await page.goto(base+'/experiments/p2-0105-dawn-preview.html?layer=catalogue&category=zh&d=28.4&v=r68-category-preload',
+   await page.goto(base+'/experiments/p2-0105-dawn-preview.html?layer=catalogue&category=zh-archive&d=28.4&v=r68-category-preload',
     {waitUntil:'domcontentloaded',timeout:45000});
    await page.waitForFunction(()=>document.querySelectorAll('#dawn-classification-tree button.dawn-classification__sleeve').length>=2,
     null,{timeout:35000});
