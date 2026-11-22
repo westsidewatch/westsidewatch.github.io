@@ -21,7 +21,7 @@ jobs:
       - name: Install Chromium browser test
         run: |
           python -m pip install playwright
-          python -m playwright install --with-deps chromium
+          python -m playwright install --with-deps chromium firefox
       - name: Test actual deployed cinema against first published media source
         run: |
           python - <<'PY'
@@ -80,6 +80,34 @@ jobs:
               print(json.dumps(result,ensure_ascii=False))
               if result["status"]!="PASS":
                   raise SystemExit("Live site browser playback not verified")
+          asyncio.run(main())
+          PY
+      - name: Test actual deployed cinema in Firefox
+        run: |
+          python - <<'PY'
+          import asyncio,json
+          from playwright.async_api import async_playwright
+          async def main():
+              result={"browser":"Firefox","first_frame":False,"time_advanced":False}
+              async with async_playwright() as p:
+                  browser=await p.firefox.launch(headless=True)
+                  try:
+                      page=await browser.new_page()
+                      await page.goto("https://westsidewatch.github.io/shupian/?firefox-acceptance=1",wait_until="domcontentloaded",timeout=30000)
+                      await page.locator("#grid .poster").first.click()
+                      await page.locator("#video").evaluate("(v)=>{v.muted=true;v.play().catch(()=>{});}")
+                      for _ in range(25):
+                          await page.wait_for_timeout(1000)
+                          state=await page.locator("#video").evaluate("(v)=>({readyState:v.readyState,currentTime:v.currentTime,errorCode:v.error?.code||null})")
+                          result["first_frame"]|=state["readyState"]>=2
+                          result["time_advanced"]|=state["currentTime"]>0.8
+                          if result["time_advanced"]:break
+                      result["video"]=state
+                      result["player_status"]=(await page.locator("#status").inner_text())[:160]
+                  finally:
+                      await browser.close()
+              print(json.dumps(result,ensure_ascii=False))
+              assert result["first_frame"] and result["time_advanced"],"Firefox live cinema still fails"
           asyncio.run(main())
           PY
       - uses: actions/upload-artifact@v4
