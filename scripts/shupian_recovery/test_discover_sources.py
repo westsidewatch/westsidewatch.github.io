@@ -193,6 +193,37 @@ class DiscoveryTests(unittest.TestCase):
         self.assertEqual(result["audits"][0]["url_comparison"],"different_url")
         self.assertTrue(all("url" not in x for x in result["audits"]))
 
+    def test_rescan_budget_preserves_discovery_and_unselected_history(self):
+        providers=[{"id":"old","api":"https://old.example.com/vod"},
+                   {"id":"backup","api":"https://backup.example.com/vod"}]
+        def fetch(url):
+            provider="old" if "old.example" in url else "backup"
+            episodes="#".join("E%d$https://media.example.com/%s/%d.m3u8"%(i,provider,i)
+                              for i in range(1,17))
+            return {"list":[{"vod_name":"新片","vod_play_url":episodes}]}
+        prior={}
+        focus=set()
+        for i in range(1,17):
+            key=episode_key("old","新片","E%d"%i)
+            prior[key]={"provider":"old","title":"新片","episode":"E%d"%i,
+                        "source_fingerprint":url_fingerprint("https://media.example.com/old/%d.m3u8"%i),
+                        "manifest":"failed","health_checks":1,"health_pass":0}
+            focus.add(("old","新片","E%d"%i))
+        def probe(_):
+            return {"format":"m3u8","manifest":"parsed","segment_sample":"pass",
+                    "ad_cues":"none-detected","playback":"not-tested",
+                    "clean":"not-certified"}
+        report=scan(["新片"],providers,fetcher=fetch,probe=probe,
+                    max_audits=16,workers=1,focus=focus,previous_audits=prior)
+        self.assertEqual(report["audited"],16)
+        self.assertEqual(report["new_candidates_audited"],8)
+        self.assertEqual(report["alternative_candidates_audited"],8)
+        self.assertEqual({a["provider"] for a in report["audits"]},{"old","backup"})
+        self.assertEqual(len(report["tracked_sources"]),24)
+        self.assertTrue(all("url" not in a for a in report["tracked_sources"]))
+        # Eight unselected old sources retain their identities for the next run.
+        self.assertEqual(sum(x["provider"]=="old" for x in report["tracked_sources"]),16)
+
     def test_ad_marker_is_not_certified_clean(self):
         def fake_manifest(_):
             return {"master":False,"children":[],"segments":["https://example.com/seg.ts"],
