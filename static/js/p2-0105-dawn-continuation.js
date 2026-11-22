@@ -344,6 +344,9 @@
   if(work?.illustration?.url&&safeHttp(work.illustration.url))return {...work.illustration,url:safeHttp(work.illustration.url),kind:'illustration'};
   const cover=safeHttp(work?.cover?.url||storefront?.cover?.url);
   if(cover)return {url:cover,alt:'封面：'+(work.title||''),kind:'cover',source:safeHttp(storefront?.source?.url||work.sourceUrl)};
+  // For identified canonical Works, a title-only match is not a verified
+  // image identity, even if its generic visual metadata says verified.
+  if(/^(?:OL\\d+W|dawn:[\\w:-]+)$/.test(String(work?.workId||'')))return null;
   const visual=visualLookup?.get(normalizeTitle(work?.title));
   if(visual&&visual.verified)return {...visual,kind:'illustration'};
   return null;
@@ -509,29 +512,6 @@
  let classificationPromise=null,selectedCentury='',classificationTree=null,chineseLibrary=null,classificationTicket=0;
  const centuryLabel={'15c':'十五世紀','16c':'十六世紀','17c':'十七世紀','18c':'十八世紀','19c':'十九世紀'};
  const facetLabel={author:'作者',language:'語言',period:'時代','bible-book':'聖經書卷',tradition:'傳統','resource-type':'資源類型','reading-level':'閱讀程度','original-publication-era':'原始出版年代'};
- const taxonomyQueries={
-  'bible.text':'Biblical text','bible.translation':'Bible translation','bible.old-testament':'Old Testament',
-  'bible.new-testament':'New Testament','bible.book-study':'Bible commentary',
-  'exegesis.commentary':'Commentary','exegesis.hermeneutics':'Hermeneutics',
-  'exegesis.reference':'Bible dictionary','exegesis.biblical-theology':'Biblical theology',
-  'theology.systematic':'Systematic theology','theology.trinity':'Trinity',
-  'theology.christology':'Christ','theology.salvation':'Salvation',
-  'theology.spirit':'Holy Spirit','theology.church':'Church','theology.eschatology':'Revelation',
-  'biblical-world.jewish':'Jewish','biblical-world.second-temple':'Jerusalem',
-  'biblical-world.archaeology':'Archaeology','biblical-world.geography':'Holy Land',
-  'biblical-world.languages':'Hebrew','biblical-world.ane':'Ancient Near East',
-  'church-history.early':'Early Church','church-history.fathers':'Church Fathers',
-  'church-history.medieval':'Medieval Church','church-history.reformation':'Reformation',
-  'church-history.puritan':'Puritan','church-history.revival':'Revival',
-  'church-history.missions':'Mission',
-  'christian-life.prayer':'Prayer','christian-life.devotion':'Devotion',
-  'christian-life.discipleship':'Discipleship','christian-life.holiness':'Holiness',
-  'christian-life.suffering':'Suffering','christian-life.family':'Christian Family',
-  'christian-life.pastoral-care':'Pastoral',
-  'ministry.preaching':'Preaching','ministry.teaching':'Teaching',
-  'ministry.worship':'Worship','ministry.mission':'Missions',
-  'ministry.pastoral':'Pastoral','ministry.governance':'Church Government'
- };
  const ChineseCategoryLabel={
   'biography':'傳記','testimony':'見證','spiritual formation':'靈命塑造',
   'Christian ethics':'基督教倫理','Christian life':'基督徒生活','prayer':'禱告',
@@ -837,14 +817,19 @@
   const cover=document.createElement('span');cover.className='dawn-classification__book-art';
   // A visual must belong to this *specific* work; never substitute an
   // unrelated book's cover or an imaginary engraving.
-  const indexed=coverLookup?.get(normalizeTitle(book.title));
-  const visual=imageFor(book,indexed);
+  // A canonical Work ID must never borrow a same-titled but different edition's
+  // cover or a title-based illustration from another Work.
+  const canonical= /^(?:OL\\d+W|dawn:[\\w:-]+)$/.test(String(book.workId||''));
+  const visual=canonical
+    ? (safeHttp(book?.cover?.url)?{url:safeHttp(book.cover.url),kind:'cover'}:null)
+    : imageFor(book,coverLookup?.get(normalizeTitle(book.title)));
   const candidate=visual?.url;
   if(candidate){
    const img=document.createElement('img');img.src=candidate;
    img.alt=visual.kind==='illustration'?'原作內頁圖版：'+book.title:'原書封面：'+book.title;
    img.loading='lazy';img.decoding='async';img.referrerPolicy='no-referrer';
    img.onerror=()=>{
+    if(canonical){img.remove();return}
     const fallback=visualLookup?.get(normalizeTitle(book.title));
     if(fallback?.verified&&fallback.url!==candidate)img.src=fallback.url;
     else img.remove();
@@ -889,15 +874,15 @@
   const panel=$('#dawn-classification-results');panel.hidden=false;
   const waiting=document.createElement('p');waiting.className='dawn-classification__empty';waiting.textContent='正在查找相關書名…';panel.append(waiting);
   try{
-   const {resourceSearch}=await import('/js/resource-fabric-client.mjs');
-   const query=taxonomyQueries[child.id]||child.label;
-   const [found]=await Promise.all([resourceSearch(query),loadCatalogueCoverLookup(),loadVisualLookup()]);
-   if(ticket!==classificationTicket)return;
-   const entries=found.slice(0,36).map(work=>({
-    workId:work.workId,title:work.title,creator:(work.authors||[]).join(' · '),
-    cover:work.cover,authorityIds:work.authorityIds,edition:work.edition
-   }));
-   displayClassificationBooks(child.label,entries,trail,'相關書名檢索 · '+query+'。書名檢索不等同於完成逐冊學科標引。',()=>displayClassificationGroup(group));
+   const {livingSubjectBooks}=await import('/js/p2-dawn-living-membership.mjs');
+   const found=await livingSubjectBooks(child.id,{
+    limit:36,isCurrent:()=>ticket===classificationTicket
+   });
+   if(ticket!==classificationTicket||!found)return;
+   const description='依 Dawn Living Library 原始逐書分類關聯選取 · '+
+    '展示 '+found.books.length+' 部作品'+
+    (found.sampleComplete?' · 已讀取全部分類分片':' · 目前為分類樣本');
+   displayClassificationBooks(child.label,found.books,trail,description,()=>displayClassificationGroup(group));
   }catch(err){
    if(ticket!==classificationTicket)return;
    displayClassificationBooks(child.label,[],trail,'目前無法取得相關書名。',()=>displayClassificationGroup(group));
