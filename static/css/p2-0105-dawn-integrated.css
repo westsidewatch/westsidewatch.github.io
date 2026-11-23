@@ -3077,3 +3077,73 @@
 @media(prefers-reduced-motion:reduce){
  #dawn-second .dawn-reading-list__featured-book{transition:none}
 }
+
+
+/* R84 / The visual square IS the image. These are not bookshop cards.
+   A sourced plate may replace the verified same-edition cover once admitted.
+   Retain the original vinyl grid, accessible book labels, and reading route. */
+#dawn-second .dawn-reading-list__featured-book{
+ position:relative!important;display:block!important;
+ aspect-ratio:1!important;height:100%!important;width:100%!important;
+ overflow:hidden!important;padding:0!important;border:0!important;
+ isolation:isolate!important;
+ background:var(--ws-paper)!important;
+}
+#dawn-second .dawn-reading-list__featured-image{
+ position:absolute!important;inset:0!important;
+ display:block!important;flex:none!important;width:100%!important;height:100%!important;
+ overflow:hidden!important;padding:0!important;
+ background:color-mix(in srgb,var(--ws-harvest) 10%,var(--ws-paper))!important;
+}
+#dawn-second .dawn-reading-list__featured-image img{
+ position:absolute!important;inset:0!important;display:none!important;
+ width:100%!important;height:100%!important;
+ object-fit:cover!important;object-position:center!important;
+ mix-blend-mode:normal!important;
+ filter:contrast(1.02) saturate(.95);
+}
+#dawn-second .dawn-reading-list__featured-book--image-ready .dawn-reading-list__featured-image img{
+ display:block!important;
+}
+#dawn-second .dawn-reading-list__featured-image .dawn-reading-list__featured-fallback{
+ position:absolute!important;inset:0!important;
+ display:flex!important;align-items:center;justify-content:center;
+ padding:clamp(7px,1vw,16px)!important;
+ font:600 clamp(12px,1vw,18px)/1.3 var(--ws-type-display-zh)!important;
+ text-align:center;color:var(--ws-ink);
+}
+#dawn-second .dawn-reading-list__featured-book--image-ready .dawn-reading-list__featured-fallback{
+ display:none!important;
+}
+#dawn-second .dawn-reading-list__featured-book-label{display:none!important}
+#dawn-second .dawn-reading-list__featured-overlay{
+ position:absolute!important;z-index:2;pointer-events:none;
+ inset:auto 0 0!important;display:flex!important;flex-direction:column;
+ gap:clamp(2px,.23vw,4px)!important;
+ padding:clamp(8px,.85vw,15px)!important;
+ background:linear-gradient(to top,rgba(23,27,23,.85),rgba(23,27,23,.46) 60%,transparent)!important;
+ color:var(--ws-paper)!important;
+}
+#dawn-second .dawn-reading-list__featured-kicker{
+ display:block;color:var(--ws-paper)!important;opacity:.91;
+ font:200 clamp(8px,.66vw,11px)/1.3 var(--ws-type-display-zh);
+ letter-spacing:.02em;
+}
+#dawn-second .dawn-reading-list__featured-title{
+ color:var(--ws-paper)!important;
+ font:600 clamp(11px,.9vw,16px)/1.25 var(--ws-type-display-zh);
+ letter-spacing:-.015em;overflow-wrap:break-word;word-break:normal;
+ display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+ text-shadow:0 1px 4px rgba(0,0,0,.32);
+}
+#dawn-second .dawn-reading-list__featured-book:focus-visible{
+ outline:2px solid var(--ws-ink)!important;outline-offset:3px!important;
+}
+@media(max-width:650px){
+ #dawn-second .dawn-reading-list__featured-overlay{padding:8px!important}
+ #dawn-second .dawn-reading-list__featured-title{font-size:clamp(11px,3vw,14px)!important}
+ #dawn-second .dawn-reading-list__featured-kicker{font-size:9px!important}
+}
+@media(prefers-reduced-motion:reduce){
+ #dawn-second .dawn-reading-list__featured-book{transition:none!important}
+}
