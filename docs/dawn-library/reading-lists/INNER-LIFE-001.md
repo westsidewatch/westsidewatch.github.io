@@ -1,15 +1,17 @@
 # 內在生活：從認識自己到在日常中與神同行
 
+> 黎明書局第一輪比較性選書研究（2026-11-23）｜**尚未完成逐部全書審讀或獨立評委簽核，非已出版的精品榜。** 本文只判斷作品價值，暫不搜集免費取得入口。
+
 **選書方法：**跨時代靈修思想的比較性選讀  
 **面向讀者：**已有基本信仰、願意閱讀並反省的中文讀者；牧養及小組領袖  
 **不提供：**尋找即刻見效公式，或以書本替代醫療／心理照護的讀者  
-**讀者問題：**一個人如何既有真實的內在生活，又不把信仰縮成自我感覺或孤獨修行？  
+**讀者問題：**一個人如何既有真實的內在生活，又不把信仰縮成自我感覺或孤獨修行？
 
 ## 編輯論點
 
-從恩典與自我認識、日常與神相交、群體操練和現代生活，重構內在生活的閱讀；不以神秘體驗強度判定屬靈程度。
+從恩典與自我認識、日常與神相交、群體操練和現代生活，重構內在生活的閱讀；不以神秘體驗強度判定屬靈程度。 在華語閱讀語境中，不能讓英文譯著壟斷靈修的解釋權，因此安排周學信原創的跨傳統靈修史導讀。
 
-**閱讀秩序：**當代易讀敘事 → 日常操練 → 群體平衡 → 歷史經典 → 祈禱深化 → 神學檢討。這個次序按理解方式而非書籍年代或出版社編排；困難作品可以慢讀、跳讀、重讀。
+**閱讀秩序：**當代易讀敘事 → 日常操練 → 群體平衡 → 華人學者跨傳統領讀 → 歷史經典 → 祈禱深化 → 神學檢討。這個次序按理解方式而非書籍年代、出版社或下載來源編排；困難作品可以慢讀、跳讀、重讀。
 
 ## 作品的獨立編輯位置
 
@@ -53,7 +55,17 @@
 **建議閱讀層級：**中階。  
 **證據／文本審讀狀態：**publisher_summary_and_edition_history_only（不代表已完成全書審讀）。
 
-### 5. 《懺悔錄》｜奧古斯丁（Augustine of Hippo）
+### 5. 《靜水流深：基督信仰靈修大師八講》｜周學信
+
+**為何選：**這不是為了配額而補一個華人作者：周學信以八位跨世紀人物構成比較性閱讀，能幫助中文讀者理解『靈修』並非同一種經驗與做法；對本書單是方法論上的關鍵補位。
+
+**擔任的角色：**華語領讀｜讓中文作者在不同靈修傳統間作思想與歷史的橋樑。  
+**應當注意：**它是研究者對靈修經典的導讀，不應冒充八位人物的一手著作；其跨傳統視野仍需對其取材與評議作批判性閱讀。  
+**與其他入選作品比較：**在進入奧古斯丁與大德蘭等較難經典前，先由華人學者建立跨時代的語彙和讀法；不取代原著。  
+**建議閱讀層級：**中階。  
+**證據／文本審讀狀態：**detailed_chapter_outline_and_author_essay_not_full_book（不代表已完成全書審讀）。
+
+### 6. 《懺悔錄》｜奧古斯丁（Augustine of Hippo）
 
 **為何選：**不是把一本古典著作縮成『悔改見證』；它以自己的記憶、語言和意志提出關於人與神的深刻問題。
 
@@ -63,7 +75,7 @@
 **建議閱讀層級：**中高階。  
 **證據／文本審讀狀態：**sample_primary_book_viii_and_catalogue（不代表已完成全書審讀）。
 
-### 6. 《效法基督（又譯：師主篇）》｜多瑪斯・肯培（Thomas à Kempis）
+### 7. 《效法基督（又譯：師主篇）》｜多瑪斯・肯培（Thomas à Kempis）
 
 **為何選：**使當代讀者看見靈命話語有漫長歷史，不只從現代心理語言出發；適合在讀過當代作品後細讀。
 
@@ -73,7 +85,7 @@
 **建議閱讀層級：**中高階。  
 **證據／文本審讀狀態：**curator_notes_and_secondary_context_only（不代表已完成全書審讀）。
 
-### 7. 《七寶樓臺》｜大德蘭（Teresa of Ávila）
+### 8. 《七寶樓臺》｜大德蘭（Teresa of Ávila）
 
 **為何選：**不只是神秘體驗指南，更是一套圖像化的靈修語言；可讓偏理性與實用的中文閱讀重新面對祈禱傳統的難度。
 
@@ -83,7 +95,7 @@
 **建議閱讀層級：**高階。  
 **證據／文本審讀狀態：**original_first_mansion_excerpt_and_bibliography（不代表已完成全書審讀）。
 
-### 8. 《靈性操練真諦》｜魏樂德（Dallas Willard）
+### 9. 《靈性操練真諦》｜魏樂德（Dallas Willard）
 
 **為何選：**不是增加第八部同樣的實用靈修作品，而是提出操練的思想解釋，讓書單以批評與反省收束。
 
@@ -105,6 +117,7 @@
 2. 安靜與獨處是否會忽略共同體？
 3. 祈禱的經驗能否被當作每位讀者必須達到的標準？
 4. 靈命操練是否會滑向以表現取代恩典？
+5. 中文讀者如何區分靈修、敬虔、成聖與日常生活，而不把差異寫成同義詞？
 
 ## 已核對資料與開放問題
 
@@ -112,6 +125,7 @@
 - inner-02 **《操練與神同在》**｜[書誌／研究／原典證據](https://www.gutenberg.org/cache/epub/5657/pg5657-images.html)、[書誌／研究／原典證據](https://ccicebookstore.net/products/%E6%93%8D%E7%B7%B4%E8%88%87%E7%A5%9E%E5%90%8C%E5%9C%A8-the-practice-of-the-presence-of-god)；樣本檢視：`source_text_excerpts_and_editorial_history`。
 - inner-03 **《靈命操練禮讚（舊譯：屬靈操練禮讚）》**｜[書誌／研究／原典證據](https://shop.campus.org.tw/ProductDetails.aspx?productID=000530323)、[書誌／研究／原典證據](https://openlibrary.org/works/OL1896213W/Celebration_of_discipline)；樣本檢視：`chapter_outline_and_editorial_summary_only`。
 - inner-04 **《團契生活》**｜[書誌／研究／原典證據](https://www.cclc.org.hk/product/%E5%9C%98%E5%A5%91%E7%94%9F%E6%B4%BB/)、[書誌／研究／原典證據](https://www.cclc.org.hk/product/%E5%9C%98%E5%A5%91%E7%94%9F%E6%B4%BB%EF%BC%88%E6%96%B0%E8%AD%AF%E4%BF%AE%E8%A8%82%E6%9C%AC%EF%BC%89/)；樣本檢視：`publisher_summary_and_edition_history_only`。
+- inner-05-chinese **《靜水流深：基督信仰靈修大師八講》**｜[書誌／研究／原典證據](https://shop.campus.org.tw/ProductDetails.aspx?ProductID=000616607)、[書誌／研究／原典證據](https://shop.campus.org.tw/ReadingBanquet/19SpiritualityBanquet/Part2/Chou.htm)；樣本檢視：`detailed_chapter_outline_and_author_essay_not_full_book`。
 - inner-05 **《懺悔錄》**｜[書誌／研究／原典證據](https://www.gutenberg.org/files/77585/77585-h/77585-h.htm)、[書誌／研究／原典證據](https://renovare.org/booklists/25-books-every-christian-should-read)；樣本檢視：`sample_primary_book_viii_and_catalogue`。
 - inner-06 **《效法基督（又譯：師主篇）》**｜[書誌／研究／原典證據](https://renovare.org/booklists/richard-foster-12-book-starter-kit)、[書誌／研究／原典證據](https://shop.campus.org.tw/ProductDetails.aspx?productID=000616607)；樣本檢視：`curator_notes_and_secondary_context_only`。
 - inner-07 **《七寶樓臺》**｜[書誌／研究／原典證據](https://www.kcg.org.tw/detailcata.php?c=46&cc=902)、[書誌／研究／原典證據](https://www.ccel.org/ccel/teresa/castle2.v.i.html)；樣本檢視：`original_first_mansion_excerpt_and_bibliography`。
