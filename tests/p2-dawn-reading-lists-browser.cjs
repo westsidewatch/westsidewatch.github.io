@@ -98,6 +98,24 @@ const cases=[['gospel-essentials',6,1],['inner-life',9,0],['church-history',7,0]
     },null,{timeout:20000});
     assert.equal(await page.locator('#dawn-reading-list-featured .dawn-reading-list__featured-book--image-ready').count()>=2,true,
       device+': even the two existing original-edition local covers failed to render');
+    const imageSquares=await page.locator('#dawn-reading-list-featured .dawn-reading-list__featured-book').evaluateAll(cards=>cards.map(card=>{
+      const image=card.querySelector('.dawn-reading-list__featured-image');
+      const img=card.querySelector('img');
+      const overlay=card.querySelector('.dawn-reading-list__featured-overlay');
+      const r=card.getBoundingClientRect(),a=image.getBoundingClientRect();
+      return {title:card.getAttribute('aria-label'),
+        type:card.dataset.visualType,
+        bleed:Math.abs(a.width-r.width)<3&&Math.abs(a.height-r.height)<3,
+        coverFit:img?getComputedStyle(img).objectFit:null,
+        overlay:!!overlay&&getComputedStyle(overlay).position==='absolute',
+        labelIsOverlay:!card.querySelector('.dawn-reading-list__featured-book-label'),
+        imageReady:card.classList.contains('dawn-reading-list__featured-book--image-ready'),
+        caption:overlay?.innerText};
+    }));
+    assert(imageSquares.every(x=>x.bleed&&x.coverFit==='cover'&&x.overlay&&x.labelIsOverlay),
+      device+': four actual square images must be full-bleed, not shrink-wrapped bookshop covers '+JSON.stringify(imageSquares));
+    assert(imageSquares.every(x=>x.type==='edition-cover'&&x.caption?.length>2),
+      device+': unverified interior illustration or missing editorial label '+JSON.stringify(imageSquares));
     await page.screenshot({path:path.join(out,device+'-native-reading-contents.png'),animations:'disabled',timeout:30000});
     const labelRects=await section.locator('button[data-dawn-reading-list]').evaluateAll(cards=>cards.map(el=>{
       const caption=el.querySelector('.dawn-reading-list__caption'),face=el.querySelector('.dawn-reading-list__face');
