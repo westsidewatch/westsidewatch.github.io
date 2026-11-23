@@ -58,12 +58,17 @@ const screens=[{name:'desktop',width:1440,height:900},{name:'phone',width:390,he
            glyphFit:glyphs.length>0&&glyphs.every(g=>g.left>=p.left-6&&g.right<=p.right+6&&g.top>=p.top-6&&g.bottom<=p.bottom+6),
            font:fonts,quoteFont,
            scope:getComputedStyle(root).getPropertyValue('--ws-interior-accent').trim(),
-           gallery:document.querySelectorAll('.ws-interior__feature-art').length
+           gallery:document.querySelectorAll('.ws-interior__feature-art').length,
+           imageReady:(()=>{
+             const im=document.querySelector('.ws-interior__feature-art>img');
+             return !im||im.complete&&im.naturalWidth>0;
+           })()
          };
        });
        if(screen.name==='desktop')console.log('SEVENFOLD_METRICS',realm,JSON.stringify(m));
        assert(m.root===realm&&m.nav===7&&m.selected===1,realm+' must belong to complete 7-node navigation '+JSON.stringify(m));
        assert(m.links>=3&&m.linksValid&&m.gallery===1,realm+' needs real contents and feature');
+       assert(m.imageReady,realm+' uses an unrenderable/404 illustration '+JSON.stringify(m));
        assert(m.square&&m.width>240&&m.headingInside,realm+' square/heading invalid '+JSON.stringify(m));
        assert(!m.overlap,realm+' title/verse overlap '+JSON.stringify(m));
        assert(m.vertical&&m.unrotated&&m.glyphFit,realm+' canonical Chinese vertical type clipping '+JSON.stringify(m));
