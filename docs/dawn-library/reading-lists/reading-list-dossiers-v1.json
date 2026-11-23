@@ -1,0 +1,325 @@
+{
+  "schema": "dawn.editorial-reading-dossiers.v1",
+  "date": "2026-11-23",
+  "stage": "editorial_research_not_publication",
+  "basis": "reader-question-first; no provider-based scoring",
+  "selectionConsequence": "booklist shortlist does not imply free access",
+  "lists": [
+    {
+      "id": "DL-LIST-INNER-001",
+      "title": "內在生活：從認識自己到在日常中與神同行",
+      "slug": "inner-life",
+      "method": "跨時代靈修思想的比較性選讀",
+      "readerQuestion": "一個人如何既有真實的內在生活，又不把信仰縮成自我感覺或孤獨修行？",
+      "thesis": "從恩典與自我認識、日常與神相交、群體操練和現代生活，重構內在生活的閱讀；不以神秘體驗強度判定屬靈程度。",
+      "audience": "已有基本信仰、願意閱讀並反省的中文讀者；牧養及小組領袖",
+      "nonAudience": "尋找即刻見效公式，或以書本替代醫療／心理照護的讀者",
+      "editorialSequence": "當代易讀敘事 → 日常操練 → 群體平衡 → 歷史經典 → 祈禱深化 → 神學檢討",
+      "reviewStatus": "research_shortlist_with_primary_text_spotchecks",
+      "primaryTextSpotchecks": [
+        "《懺悔錄》卷八部分文字（Augustine / Project Gutenberg 承襲譯本）",
+        "《操練神的同在》對話與書信文本及傳承說明",
+        "《七寶樓臺》第一層與七層結構原典節選"
+      ],
+      "excluded": [
+        {
+          "work": "蓋恩夫人《更深經歷耶穌基督》",
+          "reason": "不是否認其歷史影響，而是第一冊的八部已涵蓋深度祈禱；其靜觀語言與所處教會爭議需要專冊處理，不以篇幅湊數。"
+        },
+        {
+          "work": "Frank Laubach《Letters by a Modern Mystic》",
+          "reason": "日常與神交談的主題與勞倫斯重疊；可在後續現代靈修書單作正面比較，不因傅士德亦薦讀便雙收。"
+        },
+        {
+          "work": "只提供速成『靈性成功』的實用小冊",
+          "reason": "無文本深度、缺少歷史及神學視角，不能以標題帶入名單。"
+        }
+      ],
+      "readingQuestions": [
+        "自我省察與自責有什麼區別？",
+        "安靜與獨處是否會忽略共同體？",
+        "祈禱的經驗能否被當作每位讀者必須達到的標準？",
+        "靈命操練是否會滑向以表現取代恩典？"
+      ],
+      "books": [
+        {
+          "id": "inner-01",
+          "title": "浪子回頭：一個歸家的故事",
+          "workTitle": "The Return of the Prodigal Son",
+          "author": "盧雲（Henri J. M. Nouwen）",
+          "role": "入口｜以敘事與繪畫引入歸家、被接納及內心轉向",
+          "judgement": "從熟悉的比喻開始，降低讀者對抽象靈修概念的門檻；它的優勢在於讓讀者先注意渴望、羞恥與接納。",
+          "counterpoint": "個人默想不等於路加福音15章的完整釋經；須將作者的藝術默想與聖經文本分開。",
+          "comparison": "比先讀《七寶樓臺》更容易進入；但並不取代後者的祈禱神學。",
+          "readerLevel": "初中階",
+          "evidence": [
+            "https://shop.campus.org.tw/EBookDetails.aspx?ProductID=000525633"
+          ],
+          "textReviewed": "catalogue_and_summary_only"
+        },
+        {
+          "id": "inner-02",
+          "title": "操練與神同在",
+          "workTitle": "The Practice of the Presence of God",
+          "author": "勞倫斯弟兄（Brother Lawrence）；後人編纂",
+          "role": "日常｜在廚房、工作與分心中學習轉向神",
+          "judgement": "讓『內在』走出特別的宗教空間，成為日常勞作中的注意力和愛；有助於修正靈修只發生在安靜時段的印象。",
+          "counterpoint": "文字包含談話紀錄與書信，不是當代意義的作者親筆整體專著；不可把編者筆觸與作者原話混同。",
+          "comparison": "與盧雲的敘事相對：前者教讀者回到普通日常，後者以一幅畫打開情感與身份。",
+          "readerLevel": "入門",
+          "evidence": [
+            "https://www.gutenberg.org/cache/epub/5657/pg5657-images.html",
+            "https://ccicebookstore.net/products/%E6%93%8D%E7%B7%B4%E8%88%87%E7%A5%9E%E5%90%8C%E5%9C%A8-the-practice-of-the-presence-of-god"
+          ],
+          "textReviewed": "source_text_excerpts_and_editorial_history"
+        },
+        {
+          "id": "inner-03",
+          "title": "靈命操練禮讚（舊譯：屬靈操練禮讚）",
+          "workTitle": "Celebration of Discipline",
+          "author": "傅士德（Richard J. Foster）",
+          "role": "實踐｜將默想、禁食、簡樸等操練放入整體門徒生活",
+          "judgement": "可回答『如何操練』，又讓讀者看到不同傳統；需和更重思想辨析的作品並讀以避免誤作速成手冊。",
+          "counterpoint": "實踐清單不可當成救恩階梯；不同群體或有不同神學判斷。兩個中文譯名屬同一 Work，不應重複計數。",
+          "comparison": "和魏樂德互補：傅士德偏重操練地圖，魏樂德偏重操練的思想基礎。",
+          "readerLevel": "初中階",
+          "evidence": [
+            "https://shop.campus.org.tw/ProductDetails.aspx?productID=000530323",
+            "https://openlibrary.org/works/OL1896213W/Celebration_of_discipline"
+          ],
+          "textReviewed": "chapter_outline_and_editorial_summary_only"
+        },
+        {
+          "id": "inner-04",
+          "title": "團契生活",
+          "workTitle": "Life Together",
+          "author": "潘霍華（Dietrich Bonhoeffer）",
+          "role": "制衡｜提醒內在生活不可切斷共同敬拜、認罪、傾聽與相處",
+          "judgement": "這部書不一定最符合狹義『內在靈修』標籤，卻是本書單最重要的編輯補位：避免八本書把信仰變成私人自我工程。",
+          "counterpoint": "文本發源於特定教會處境與共同生活經驗；不可以小團體結構強套所有讀者。2026有新譯，仍需辨識不同 Edition。",
+          "comparison": "它與《操練與神同在》構成主題對照：個人獨處與共處都不可被取消。",
+          "readerLevel": "中階",
+          "evidence": [
+            "https://www.cclc.org.hk/product/%E5%9C%98%E5%A5%91%E7%94%9F%E6%B4%BB/",
+            "https://www.cclc.org.hk/product/%E5%9C%98%E5%A5%91%E7%94%9F%E6%B4%BB%EF%BC%88%E6%96%B0%E8%AD%AF%E4%BF%AE%E8%A8%82%E6%9C%AC%EF%BC%89/"
+          ],
+          "textReviewed": "publisher_summary_and_edition_history_only"
+        },
+        {
+          "id": "inner-05",
+          "title": "懺悔錄",
+          "workTitle": "Confessions",
+          "author": "奧古斯丁（Augustine of Hippo）",
+          "role": "根源｜從記憶、欲望、恩典和轉向理解內在生命",
+          "judgement": "不是把一本古典著作縮成『悔改見證』；它以自己的記憶、語言和意志提出關於人與神的深刻問題。",
+          "counterpoint": "文類包含向上帝的祈禱、敘事及哲學神學沉思；不能當成逐日精準傳記；英文選讀無法代表中文版次。",
+          "comparison": "與《浪子回頭》同談歸回，卻從個人沉思推向記憶、時間及存在更深的問題。",
+          "readerLevel": "中高階",
+          "evidence": [
+            "https://www.gutenberg.org/files/77585/77585-h/77585-h.htm",
+            "https://renovare.org/booklists/25-books-every-christian-should-read"
+          ],
+          "textReviewed": "sample_primary_book_viii_and_catalogue"
+        },
+        {
+          "id": "inner-06",
+          "title": "效法基督（又譯：師主篇）",
+          "workTitle": "The Imitation of Christ",
+          "author": "多瑪斯・肯培（Thomas à Kempis）",
+          "role": "傳承｜理解中世紀的謙卑、內省及效法基督",
+          "judgement": "使當代讀者看見靈命話語有漫長歷史，不只從現代心理語言出發；適合在讀過當代作品後細讀。",
+          "counterpoint": "第四部特別涉及聖餐；天主教聖事語境與新教讀者需加註，不可刪去而假裝同一套教義。中文別名不應當成不同作品。",
+          "comparison": "與傅士德形成差異：前者以內心效法語言承載傳統，後者嘗試跨傳統描述操練。",
+          "readerLevel": "中高階",
+          "evidence": [
+            "https://renovare.org/booklists/richard-foster-12-book-starter-kit",
+            "https://shop.campus.org.tw/ProductDetails.aspx?productID=000616607"
+          ],
+          "textReviewed": "curator_notes_and_secondary_context_only"
+        },
+        {
+          "id": "inner-07",
+          "title": "七寶樓臺",
+          "workTitle": "The Interior Castle",
+          "author": "大德蘭（Teresa of Ávila）",
+          "role": "深化｜以七重居所的隱喻閱讀祈禱、靈魂與上帝的聯合",
+          "judgement": "不只是神秘體驗指南，更是一套圖像化的靈修語言；可讓偏理性與實用的中文閱讀重新面對祈禱傳統的難度。",
+          "counterpoint": "祈禱階段不是每個信徒的量化等級表；需明確標注加爾默羅會與天主教背景。中文題名有『臺／台』版本。",
+          "comparison": "《操練與神同在》是廚房裏的簡樸注意；《七寶樓臺》則用深厚神學與寓言描述內在祈禱。",
+          "readerLevel": "高階",
+          "evidence": [
+            "https://www.kcg.org.tw/detailcata.php?c=46&cc=902",
+            "https://www.ccel.org/ccel/teresa/castle2.v.i.html"
+          ],
+          "textReviewed": "original_first_mansion_excerpt_and_bibliography"
+        },
+        {
+          "id": "inner-08",
+          "title": "靈性操練真諦",
+          "workTitle": "The Spirit of the Disciplines",
+          "author": "魏樂德（Dallas Willard）",
+          "role": "辨析｜思考操練為何能與門徒生命連在一起",
+          "judgement": "不是增加第八部同樣的實用靈修作品，而是提出操練的思想解釋，讓書單以批評與反省收束。",
+          "counterpoint": "作者的哲學框架不等於所有傳統共識；若與傅士德視角重疊，需要在導言清楚解釋二者的不同任務。",
+          "comparison": "相較《靈命操練禮讚》的操練概覽，本書承擔思想追問。",
+          "readerLevel": "中高階",
+          "evidence": [
+            "https://shop.campus.org.tw/ProductDetails.aspx?productID=000551731"
+          ],
+          "textReviewed": "publisher_description_only"
+        }
+      ]
+    },
+    {
+      "id": "DL-LIST-HISTORY-001",
+      "title": "教會歷史：誰記錄了教會的過去？",
+      "slug": "church-history",
+      "method": "原始史料、通史與華人史學互證",
+      "readerQuestion": "當我們談論『教會歷史』時，哪些聲音是原始證人、哪些是後來的敘事者、誰可能被遺忘？",
+      "thesis": "讓一部早期自我敘述、一部廣域教會通史、天主教入華文本、近代華人史著及台灣現場證言相互檢驗，而不是把教會史寫成不斷勝利的名人榜。",
+      "audience": "希望掌握教會歷史縱深的中文信徒、主日學／查經帶領者、文化研究者",
+      "nonAudience": "只要人物年表或確證自己宗派永遠正確的讀者",
+      "editorialSequence": "先有全球通史地圖 → 讀早期史學源頭 → 進入明清與台灣史料 → 轉至華人史家與近現代辯論",
+      "reviewStatus": "research_shortlist_with_primary_text_spotchecks",
+      "primaryTextSpotchecks": [
+        "優西比烏《教會史》卷一第1章的史學意圖",
+        "優西比烏《教會史》卷十第1–3章的君士坦丁時期敘事"
+      ],
+      "excluded": [
+        {
+          "work": "祁伯爾《歷史的軌跡：二千年教會史》",
+          "reason": "適合易讀通史，但首冊已有岡薩雷斯《基督教史》擔任全球通史；避免兩部概覽掩蓋中文第一手史料，保留為閱讀程度替代選項。"
+        },
+        {
+          "work": "只以西方宗派興衰為主的歷史暢銷榜",
+          "reason": "不能代表中國、東方教會與原住民族等地方歷史主體。"
+        },
+        {
+          "work": "沒有一手來源的宣教英雄傳奇",
+          "reason": "作信仰見證可能感人，但不宜替代史料考證。"
+        }
+      ],
+      "readingQuestions": [
+        "歷史記載與神學詮釋之間如何互相影響？",
+        "中文教會史由誰書寫，西方／本土視角何以不同？",
+        "同一歷史事件中哪些人的見證沒有被記錄？",
+        "如何在尊重信仰見證的同時保持史學批判？"
+      ],
+      "books": [
+        {
+          "id": "history-01",
+          "title": "基督教史（上、下卷）",
+          "workTitle": "The Story of Christianity",
+          "author": "胡斯托・岡薩雷斯（Justo L. González）",
+          "role": "地圖｜提供跨時代的全球敘事輪廓",
+          "judgement": "先用廣角歷史建立年代與地域框架，之後才可辨識一手史料在哪些問題上有選擇。",
+          "counterpoint": "通史的便利也可能令複雜地方史被壓縮；兩卷為同一作品／版本層級的卷次，不能當兩部入選。",
+          "comparison": "相較祁伯爾易讀總覽，本冊優先選擇更明確觸及婦女、全球南方與不同信仰相遇的修訂版。",
+          "readerLevel": "入門→中階",
+          "evidence": [
+            "https://library.citc.org.uk/book/%E5%9F%BA%E7%9D%A3%E6%95%99%E5%8F%B2-%E4%B8%8A%E5%8D%B7-%E8%83%A1%E6%96%AF%E6%89%98-%E5%B2%A1%E8%96%A9%E9%9B%B7%E6%96%AF-justo-l-gonzalez-%E8%91%97-%E8%B6%99%E5%9F%8E%E8%97%9D-%E8%AD%AF/",
+            "https://www.sanmin.com.tw/product/index/005623262"
+          ],
+          "textReviewed": "bibliography_and_publisher_contents_only"
+        },
+        {
+          "id": "history-02",
+          "title": "教會史",
+          "workTitle": "Ecclesiastical History",
+          "author": "優西比烏（Eusebius of Caesarea）",
+          "role": "史料｜理解早期教會如何向後世書寫自己",
+          "judgement": "最有價值的不只是早期事件資訊，而是作者如何選擇使徒傳承、殉道與異端等材料，並使其形成有神學意圖的敘事。",
+          "counterpoint": "卷一第1章作者自述挑選史料；卷十對教會獲和平的頌揚尤其提醒讀者考慮權力與敘事的關係；『早』不等於中立。",
+          "comparison": "與岡薩雷斯並讀，讀者可直接比較『早期參與者』和『現代史學者』對事件的不同敘述目的。",
+          "readerLevel": "進階",
+          "evidence": [
+            "https://www.newadvent.org/fathers/250101.htm",
+            "https://www.newadvent.org/fathers/250110.htm",
+            "https://www.saet.ac.uk/Christianity/EusebiusofCaesarea"
+          ],
+          "textReviewed": "primary_book_i_ch1_and_book_x_ch1_to3"
+        },
+        {
+          "id": "history-03",
+          "title": "利瑪竇中國札記",
+          "workTitle": "De Christiana expeditione apud Sinas / Ricci manuscripts mediated by Trigault",
+          "author": "利瑪竇（Matteo Ricci），金尼閣（Nicolas Trigault）整理／翻譯",
+          "role": "史料｜明代文化遭遇、知識轉譯與耶穌會入華敘事",
+          "judgement": "它讓教會史從歐洲制度史走向明代中國的語言、知識與日常交流，也同時暴露外來觀察者的偏見。",
+          "counterpoint": "1615年拉丁文印本經金尼閣整理，不能稱為利瑪竇未經編修的逐日原稿；中文譯本又經其他語文傳遞，必須標明譯源。",
+          "comparison": "和馬偕敘事並讀，可比較十七世紀天主教與十九世紀新教如何分別理解中文世界。",
+          "readerLevel": "中高階",
+          "evidence": [
+            "https://mingqing.sinica.edu.tw/Project_Plan/1122",
+            "https://www.chunghwabook.com.hk/book/detail/id/1378029545429738886"
+          ],
+          "textReviewed": "historical_textual_origin_and_bibliography_only"
+        },
+        {
+          "id": "history-04",
+          "title": "中國基督教史綱",
+          "workTitle": "中國基督教史綱",
+          "author": "王治心",
+          "role": "史學｜回到20世紀前半中國作者自己的歷史敘述",
+          "judgement": "不只是後來學者研究中國基督教的對象，更可觀察一位中國基督教史家如何為自己的傳統組織歷史脈絡。",
+          "counterpoint": "原版1940，後有重刊與影印；不可用現在史學的分類不加說明地稱其為『全面正史』，亦不可將重印年份當原著年代。",
+          "comparison": "與梁家麟的近代史敘述對讀，可看出不同世代華人基督教史學的問題意識。",
+          "readerLevel": "高階",
+          "evidence": [
+            "https://ge.nii.ac.jp/ncid/BA48848174",
+            "https://search.worldcat.org/title/302084092"
+          ],
+          "textReviewed": "historical_bibliography_and_contents_only"
+        },
+        {
+          "id": "history-05",
+          "title": "福臨中華：中國近代教會史十講",
+          "workTitle": "福臨中華",
+          "author": "梁家麟",
+          "role": "近代通史｜把1807–1957年的中國教會史寫成可進入的敘事",
+          "judgement": "讓中文讀者由華人作者建立近代史的主要坐標；對讀者最大的好處，是開始用史學方法追問自己所熟悉的教會見證。",
+          "counterpoint": "時間段與近代新教史的聚焦應清楚說明，不能誤認等於中國基督教全史，也不能取代天主教與更早歷史。",
+          "comparison": "若只先讀一本華人作者的近代教會史導論，暫以本書優先於更專門的段琦研究。",
+          "readerLevel": "入門→中階",
+          "evidence": [
+            "https://www.cc-us.org/shop/c9789622081666/",
+            "https://books.google.com/books/about/%E7%A6%8F%E8%87%A8%E4%B8%AD%E8%8F%AF.html?id=yeBCCgAAQBAJ"
+          ],
+          "textReviewed": "bibliography_and_editorial_description_only"
+        },
+        {
+          "id": "history-06",
+          "title": "福爾摩沙紀事：馬偕台灣回憶錄",
+          "workTitle": "From Far Formosa",
+          "author": "馬偕（George Leslie Mackay）；歷次編譯者另記",
+          "role": "地方現場｜藉台灣日常、教育、宣教與族群接觸閱讀歷史",
+          "judgement": "值得入選，恰恰因為它既是一位宣教者的珍貴見證，也是一份需要旁證的外來觀察材料。",
+          "counterpoint": "不同中文譯名《台灣遙寄》《台灣六記》《福爾摩沙紀事》等可能對應同 Work 的不同 Edition；族群與殖民語言須配合台灣本地及原住民族史料。",
+          "comparison": "與《利瑪竇中國札記》並讀，不是證明兩種宣教有同一模式，而是看不同時代他者如何描述地方社會。",
+          "readerLevel": "中高階",
+          "evidence": [
+            "https://indigenapedia-alcd.nccu.edu.tw/detail?cat=0&id=10206&race=19&search=&writer=",
+            "https://collections.nmth.gov.tw/CollectionContent.aspx?a=132&rno=2001.008.0061"
+          ],
+          "textReviewed": "archival_bibliography_and_structure_only"
+        },
+        {
+          "id": "history-07",
+          "title": "奮進的歷程：中國基督教的本色化",
+          "workTitle": "奮進的歷程：中國基督教的本色化",
+          "author": "段琦",
+          "role": "批評｜由本色化爭論重新理解本土教會形成",
+          "judgement": "把書單帶出宣教成就史，閱讀中國基督教怎樣在政治、文化與教會主體之間形成自己的身份與辯論。",
+          "counterpoint": "非信徒學術視角與信徒史家不是誰天然勝出，應按各自資料、問題、價值取向作比較；2004與後續版次分開。",
+          "comparison": "與王治心、梁家麟構成三代中文作者的不同寫作位置，形成此書單最重要的對照。",
+          "readerLevel": "高階",
+          "evidence": [
+            "https://www.cp.com.cn/book/7-100-04138-4_46.html",
+            "https://www.cp.com.cn/book/be8233d6-c.html"
+          ],
+          "textReviewed": "publisher_introduction_and_research_context_only"
+        }
+      ]
+    }
+  ]
+}
