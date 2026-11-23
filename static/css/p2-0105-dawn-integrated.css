@@ -2885,10 +2885,10 @@
 #dawn-second .dawn-reading-list__tile .dawn-reading-list__face{
  align-items:flex-start!important;justify-content:center!important;
  flex-direction:column!important;gap:clamp(3px,.4vw,8px);
- padding:clamp(8px,1vw,18px) 0!important;
+ padding:clamp(3px,.5vw,8px) 0!important;
 }
 #dawn-second .dawn-reading-list__tile .dawn-reading-list__face>.dawn-reading-list__quantity{
- display:block!important;font:400 clamp(64px,6.8vw,116px)/.91 var(--ws-type-display-en-sc,var(--ws-type-display-en))!important;
+ display:block!important;font:400 clamp(52px,4.4vw,78px)/.91 var(--ws-type-display-en-sc,var(--ws-type-display-en))!important;
  letter-spacing:-.055em;overflow:visible!important;
 }
 #dawn-second .dawn-reading-list__tile .dawn-reading-list__face>i{
@@ -2933,7 +2933,7 @@
  #dawn-second .dawn-reading-list__marker-count strong{font-size:clamp(28px,8vw,36px)}
  #dawn-second .dawn-reading-list__series-grid>.dawn-reading-list__tile{padding:11px!important}
  #dawn-second .dawn-reading-list__tile .dawn-reading-list__face>.dawn-reading-list__quantity{
-  font-size:clamp(62px,17vw,92px)!important;
+  font-size:clamp(48px,13vw,72px)!important;
  }
  #dawn-second .dawn-reading-list__tile .dawn-reading-list__caption>strong{font-size:clamp(17px,4.8vw,21px)!important}
  #dawn-second .dawn-reading-list__tile .dawn-reading-list__caption>small{font-size:clamp(10px,2.6vw,12px)!important}
