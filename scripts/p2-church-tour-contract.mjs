@@ -23,7 +23,8 @@ assert(!/<h[1-6]\b|<p\b|<button\b|<aside\b/i.test(html), "No visible UI or engin
 assert(html.includes("/css/p2-church-ministry.css") &&
        html.includes("/js/p2-church-ministry.js") &&
        script.includes("window.__churchGuide={") &&
-       script.includes("if (!prefersReducedMotion && !guidePaused) elapsed += dt;"),
+       script.includes("if (!prefersReducedMotion && !guidePaused)") &&
+       script.includes("guideClockAnchor?guideCurrentSeconds(now):elapsed+dt"),
   "P2 second layer must reuse the established native camera renderer");
 assert(ministryGuide.includes("query.get('entry')!=='p2'") &&
        ministryGuide.includes("window.__churchGuide") &&
