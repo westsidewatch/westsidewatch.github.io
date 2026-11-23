@@ -7,7 +7,7 @@ const base=process.env.CHURCH_TEST_ORIGIN||'http://127.0.0.1:4174';
  fs.mkdirSync('artifacts/church-visitor',{recursive:true});
  const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
  try{
-  for(const screen of [{label:'desktop',width:1440,height:900},{label:'phone',width:390,height:844},{label:'small',width:320,height:720}]){
+  for(const screen of [{label:'desktop',width:1440,height:900},{label:'laptop',width:1024,height:768},{label:'tablet',width:768,height:900},{label:'phone',width:390,height:844},{label:'small',width:320,height:720}]){
    const page=await browser.newPage({viewport:{width:screen.width,height:screen.height},deviceScaleFactor:1});
    const errors=[];page.on('pageerror',e=>errors.push(e.message));
    await page.goto(base+'/church/visit/',{waitUntil:'domcontentloaded',timeout:30000});
@@ -43,6 +43,45 @@ const base=process.env.CHURCH_TEST_ORIGIN||'http://127.0.0.1:4174';
          zhRect.width>200 && zhRect.height>10 && enRect.top>=zhRect.bottom-2 &&
          en.textContent.trim()==='P.A.O.C. Living Water Assembly West';
       })(),
+      geometry:(()=>{
+        const box=node=>node.getBoundingClientRect();
+        const region=document.querySelector('.church-visit__invitation');
+        const heading=region.querySelector('h2');
+        const headingText=document.createRange();headingText.selectNodeContents(heading);
+        const ht=headingText.getBoundingClientRect();
+        const cards=[...region.querySelectorAll('.church-visit__intake-grid article')].map(box);
+        const intrudes=cards.some(rect=>ht.right>rect.left+1&&ht.left<rect.right-1
+          &&ht.bottom>rect.top+1&&ht.top<rect.bottom-1);
+        const headingFitsViewport=ht.left>=-2&&ht.right<=innerWidth+2;
+        const tile=document.querySelector('.church-visit__scripture-tile');
+        const tileBox=box(tile);
+        const content=[...tile.querySelectorAll('.church-visit__tile-index,.church-visit__tile-chapter,blockquote,cite')].map(box);
+        const tileContentFits=content.every(x=>x.top>=tileBox.top-2&&x.bottom<=tileBox.bottom+2);
+        const tileOrderValid=content.every((x,i)=>i===0||content[i-1].bottom<=x.top+2);
+        const translation=box(document.querySelector('.church-visit__scripture-translation'));
+        const orphanCards=[...region.querySelectorAll('.church-visit__intake-grid h3')].filter(node=>{
+          const text=node.firstChild;
+          if(!text||text.nodeType!==Node.TEXT_NODE)return false;
+          const lines=new Map();
+          for(let i=0;i<text.length;i++){
+            const range=document.createRange();
+            range.setStart(text,i);range.setEnd(text,i+1);
+            const rect=range.getBoundingClientRect();
+            const key=Math.round(rect.top/3);
+            lines.set(key,(lines.get(key)||0)+1);
+          }
+          return [...lines.values()].some(v=>v===1)&&text.length>2;
+        }).map(x=>x.textContent.trim());
+        return {
+          tileWidth:tileBox.width,tileHeight:tileBox.height,
+          tileContentFits,tileOrderValid,
+          translationBelow:translation.top>=tileBox.bottom-2,
+          invitationTitleOverlapsCards:intrudes,
+          invitationTitleFitsViewport:headingFitsViewport,
+          orphanCards,
+          maxHeadingRight:Math.round(ht.right)
+        };
+      })(),
       archive:story?.textContent?.includes('歷史主日程序'),
       sunday:story?.querySelectorAll('.ws-church-sunday-row').length,
       ministries:document.querySelectorAll('.church-visit__ministry').length,
@@ -54,6 +93,13 @@ const base=process.env.CHURCH_TEST_ORIGIN||'http://127.0.0.1:4174';
    assert(metrics.width<=screen.width+2,screen.label+' horizontal overflow '+JSON.stringify(metrics));
    assert(metrics.identity&&metrics.archive&&metrics.sunday===7&&metrics.ministries===7&&metrics.gatherings===4);
    assert(metrics.osGlass,screen.label+' visitor glass blur + OS typography not active '+JSON.stringify(metrics));
+   const g=metrics.geometry;
+   assert(Math.abs(g.tileWidth-g.tileHeight)<=2,screen.label+' opening Scripture must be 1:1 square '+JSON.stringify(g));
+   assert(g.tileContentFits&&g.tileOrderValid&&g.translationBelow,
+     screen.label+' square Scripture clips text or KJV translation '+JSON.stringify(g));
+   assert(!g.invitationTitleOverlapsCards&&g.invitationTitleFitsViewport,
+     screen.label+' invitation heading crushed or exceeds viewport '+JSON.stringify(g));
+   assert.deepEqual(g.orphanCards,[],screen.label+' one-character CJK orphan card heading '+JSON.stringify(g));
    assert.equal(metrics.qr.length,4);assert(metrics.qr.every(q=>q.w===164&&q.h===164&&q.painted));
    for(const type of ['join','decision','newcomer','prayer'])
      assert(metrics.allLinks.includes('/church/forms/?type='+type),screen.label+' missing '+type);
@@ -97,6 +143,6 @@ const base=process.env.CHURCH_TEST_ORIGIN||'http://127.0.0.1:4174';
   assert.equal(await form.locator('[name="response"]').getAttribute('required'),'','Decision selection must be explicit');
   await form.screenshot({path:'artifacts/church-visitor/decision-form.png',fullPage:true});
   await form.close();
-  console.log('CHURCH_VISITOR_BROWSER_PASS: full readable pages, archive guard, seven ministries, four offline QRs, editor and fail-closed forms');
+  console.log('CHURCH_VISITOR_BROWSER_PASS: correct 1:1 verse square, no invitation collision/CJK orphans (1440/1024/768/390/320), original identity, seven ministries, four QRs');
  }finally{await browser.close();}
 })().catch(error=>{console.error(error);process.exitCode=1;});
