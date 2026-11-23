@@ -6,4 +6,5 @@ os_editorial: true
 editorial_key: "cinema"
 build:
   render: always
+  list: never
 ---
