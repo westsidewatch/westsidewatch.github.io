@@ -31,8 +31,11 @@ for(const key of expected){
  assert.ok(existsSync(file),'Missing real Hugo interior: '+file);
  const page=read(file);
  assert.ok(page.includes('layout: "ws-editorial-interior"')&&page.includes('os_editorial: true')&&page.includes('editorial_key: "'+key+'"'));
+ assert.ok(page.includes('list: never'),'Experimental folios must not alter existing canonical navigation');
+ assert.ok(item.art&&item.art.startsWith('/images/'),'Each chapter must reuse actual verified repository imagery');
  assert.ok(css.includes('data-ws-editorial-realm="'+key+'"'),'Missing scoped material for '+key);
 }
 assert.ok(master.includes('ws-interior__church-art'),'Preserve original church art, never typeset logo');
+assert.ok(master.includes('src="{{ $item.art }}"'),'Use same shared artwork renderer for all seven realms');
 assert.ok(read('static/p2/living-water.html').includes('church-schedule'),'Prior P2 untouched');
 console.log('SEVENFOLD_EDITORIAL_CONTRACT_PASS: single OS, single Hugo master, all seven real folios, canonical P2 untouched');
