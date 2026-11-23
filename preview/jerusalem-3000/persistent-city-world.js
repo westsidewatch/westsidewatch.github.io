@@ -26,37 +26,39 @@ function equalGeometry(a,b){
 // Sharing an identical GPU buffer is a display optimisation, NEVER historical reuse.
 export function createPersistentCityWorld({parent,phases,build,publish}){
  if(!parent?.isObject3D||!phases?.length||new Set(phases).size!==phases.length||typeof build!=='function'||typeof publish!=='function')throw new Error('Invalid persistent city world');
- const allowed=new Set(phases),entries=new Map(),pool=new Map();let active=null,builds=0,hits=0,disposed=false;
+ const allowed=new Set(phases),entries=new Map(),pool=new Map();let active=null,builds=0,hits=0,disposed=false;const timings=new Map();let lastActivation=null;
  const releaseRaw=runtime=>{for(const mesh of runtime?.meshes||[]){mesh.removeFromParent();mesh.geometry.dispose();}runtime?.disposeMaterials?.();};
  function activate(phase){
   if(disposed)throw new Error('Persistent city world disposed');
   if(phase!==null&&!allowed.has(phase))throw new Error(`Unsupported persistent phase: ${phase}`);
+  const started=performance.now();let cacheHit=false;
   let next=phase===null?null:entries.get(phase);
   if(phase!==null&&!next){
    const group=new THREE.Group();group.name=`j3k-world:${phase}`;group.visible=false;let runtime;
    try{
-    runtime=build(group,phase);
+    const buildStarted=performance.now();runtime=build(group,phase);const buildMilliseconds=performance.now()-buildStarted;
     if(runtime.phaseId!==phase||!runtime.meshes?.length||runtime.meshes.some(m=>m.parent!==group))throw new Error('Invalid persistent phase runtime');
-    const binding=publish(runtime);
+    const publishStarted=performance.now(),binding=publish(runtime),publicationMilliseconds=performance.now()-publishStarted,dedupStarted=performance.now();
     for(const mesh of runtime.meshes){
      const raw=mesh.geometry,key=signature(raw),bucket=pool.get(key)||[],existing=bucket.find(g=>equalGeometry(g,raw));
      if(existing){mesh.geometry=existing;raw.dispose();}else{bucket.push(raw);pool.set(key,bucket);}
     }
+    timings.set(phase,{buildMilliseconds,publicationMilliseconds,deduplicationMilliseconds:performance.now()-dedupStarted,totalMilliseconds:performance.now()-started});
     next={group,runtime,binding};parent.add(group);entries.set(phase,next);builds++;
    }catch(error){group.removeFromParent();releaseRaw(runtime);throw error;}
-  }else if(next)hits++;
+  }else if(next){hits++;cacheHit=true;}
   // Build and validate first: a failed target must leave the current city intact.
   if(active)active.group.visible=false;
   active=next;if(active)active.group.visible=true;
-  return next;
+  lastActivation={phase,cacheHit,milliseconds:performance.now()-started};return next;
  }
  return {
   activate,
   diagnostics(){
    const geometries=[...pool.values()].flat(),instances=[...entries.values()].flatMap(e=>e.runtime.meshes);
-   return {activePhase:active?.runtime.phaseId||null,phaseCapacity:allowed.size,cachedPhases:[...entries.keys()],builds,cacheHits:hits,meshInstances:instances.length,uniqueGeometries:geometries.length,geometryBufferBytes:geometries.reduce((n,g)=>n+geometryBytes(g),0),sameGeometryIsHistoricalReuse:false,historicalContinuityAccepted:false};
+   return {generationTimings:Object.fromEntries([...timings].map(([k,v])=>[k,{...v}])),lastActivation:lastActivation?{...lastActivation}:null,timingScope:'synchronous CPU build/publication/deduplication only; not fetch, GPU or first visible frame',activePhase:active?.runtime.phaseId||null,phaseCapacity:allowed.size,cachedPhases:[...entries.keys()],builds,cacheHits:hits,meshInstances:instances.length,uniqueGeometries:geometries.length,geometryBufferBytes:geometries.reduce((n,g)=>n+geometryBytes(g),0),sameGeometryIsHistoricalReuse:false,historicalContinuityAccepted:false};
   },
   inspectPhase(phase){const entry=entries.get(phase);return entry?{groupId:entry.group.uuid,meshIds:entry.runtime.meshes.map(m=>m.uuid),geometryIds:entry.runtime.meshes.map(m=>m.geometry.uuid)}:null;},
-  dispose(){if(disposed)return;disposed=true;for(const entry of entries.values()){entry.group.removeFromParent();entry.runtime.disposeMaterials?.();}for(const g of [...pool.values()].flat())g.dispose();entries.clear();pool.clear();active=null;}
+  dispose(){if(disposed)return;disposed=true;for(const entry of entries.values()){entry.group.removeFromParent();entry.runtime.disposeMaterials?.();}for(const g of [...pool.values()].flat())g.dispose();entries.clear();pool.clear();timings.clear();lastActivation=null;active=null;}
  };
 }

@@ -27,6 +27,7 @@ for(const phase of ['outside-walls','modern']){
  assert.equal(blocks.length,ottoman.size);assert.ok(blocks.every(b=>ottoman.has(JSON.stringify(b.geometry.polygon))),'same authored old city must have same block geometry across expansion pair');
 }
 const before=world.diagnostics();assert.equal(before.builds,8);assert.equal(before.cachedPhases.length,8);assert.ok(before.cacheHits>=8);assert.ok(before.uniqueGeometries<before.meshInstances);assert.ok(before.geometryBufferBytes>0);assert.equal(before.sameGeometryIsHistoricalReuse,false);
+assert.equal(Object.keys(before.generationTimings).length,8);for(const t of Object.values(before.generationTimings)){for(const n of Object.values(t))assert.ok(Number.isFinite(n)&&n>=0);assert.ok(t.totalMilliseconds>=t.buildMilliseconds+t.publicationMilliseconds);}assert.equal(before.lastActivation.cacheHit,true);const changed=world.diagnostics();changed.generationTimings.modern.totalMilliseconds=-1;assert.ok(world.diagnostics().generationTimings.modern.totalMilliseconds>=0,'timings are inspection copies');
 const active=before.activePhase;assert.throws(()=>world.activate('not-a-phase'));assert.equal(world.diagnostics().activePhase,active);
 world.activate(null);assert.equal(parent.children.filter(g=>g.visible).length,0);assert.equal(core.validate().ok,true);
 let released=0;const geometries=new Set([...entries.values()].flatMap(e=>e.runtime.meshes.map(m=>m.geometry)));for(const g of geometries)g.addEventListener('dispose',()=>released++);

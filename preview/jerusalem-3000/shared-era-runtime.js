@@ -48,6 +48,7 @@ function createParcelRuntime(parent, { reference, footprint, terrain, materials,
     parent.add(group);
     const controller = new AbortController();
     const task = { controller, group, publication:null };
+    const requestStarted=performance.now();
     pending = task;
     state = { status: 'generating', completed: 0, total: 0 };
     task.promise = (async () => {
@@ -62,16 +63,19 @@ function createParcelRuntime(parent, { reference, footprint, terrain, materials,
         // The whole sanctuary reserves housing space; authored approach roads end at its edge.
         // Treating that envelope as a road obstacle would cut the final approach segment.
         const exclusions=[...roadExclusions, ...(registration.reservations || [])];
+        const parcelsStarted=performance.now();
         const districtResults = registration.districts.map(district => buildEraParcelCore(core, terrain, {
           exclusions, phaseId, registration, districtId: district.id,
           dataset: registration.independentLayout ? 'first-temple-persian.spatial.v1' : `provisional-${generationPhase}-footprint-not-surveyed`,
         }));
         const parcels = {parcels:districtResults.flatMap(r=>r.parcels), blocks:districtResults.flatMap(r=>r.blocks),
           count:districtResults.reduce((n,r)=>n+r.count,0), blockCount:districtResults.reduce((n,r)=>n+r.blockCount,0)};
+        const parcelMilliseconds=performance.now()-parcelsStarted,architectureStarted=performance.now();
         const architecture = await buildEraParcelArchitectureAsync(group, core, sharedMaterials, terrain, {
           phaseId, destroyedPhase,overview, signal: controller.signal,
           onProgress: progress => { state = { status: 'generating', ...progress }; onProgress(progress); },
         });
+        const architectureWallMilliseconds=performance.now()-architectureStarted,finalizationStarted=performance.now();
         if (!architecture.buildings || !core.validate().ok) throw new Error('Shared era generated no valid architecture');
         // Carry the SAME records into the successor period as hypothetical ruins.
         // Do not claim Persian road continuity, burial depths or rebuilding links.
@@ -89,7 +93,7 @@ function createParcelRuntime(parent, { reference, footprint, terrain, materials,
           phaseStates: retainedPhase ? { [retainedPhase]: { state: 'retained-ruin', ruin: 1 } } : {},
         });
         city = { group, core, parcels, architecture, projection, publication:task.publication };
-        state = { status: 'ready', completed: architecture.buildings, total: architecture.buildings,
+        state = { status: 'ready', generationTimings:{parcelMilliseconds,architectureWallMilliseconds,finalizationMilliseconds:performance.now()-finalizationStarted,requestToReadyMilliseconds:performance.now()-requestStarted,scope:'wall time through publication; includes architecture yields, excludes GPU and first visible frame'}, completed: architecture.buildings, total: architecture.buildings,
           yields: architecture.yields, maxBatchMs: architecture.maxBatchMs, elapsedMs: architecture.elapsedMs, authority: registration.authority, independentLayout: registration.independentLayout === true,
           infillMode:registration.generation.infillMode||'street-front-scaffold',
           districtCounts:districtResults.map((r,i)=>({id:registration.districts[i].id,blocks:r.blockCount,parcels:r.count})),
@@ -158,6 +162,7 @@ export function createSharedEraRuntime(parent, options) {
         completed: active().diagnostics().completed, total: active().diagnostics().total,
         error: active().diagnostics().error || (current === RETAINED_PHASE ? earlier.error : undefined),
         activeResidential:active().diagnostics().residentialLedger,
+        generationTimings:active().diagnostics().generationTimings,
         successor: later,
         expansion: expansion.diagnostics(),
         historicalRegistrationVerified: false };
