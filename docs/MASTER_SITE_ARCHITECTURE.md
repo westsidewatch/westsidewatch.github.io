@@ -103,25 +103,37 @@ The Library is a continuously accumulating knowledge/resource system, not a Jour
 
 **工作次序：** 提出讀者問題 → 獨立選書與比讀 → 找到正確中文版封面／圖版 → 寫成具可讀性的雜誌導讀 → 緊接著匹配館藏與合法閱讀通路 → 檢查閱讀、封面載入、連結與桌面／手機版面 → 發表與持續維護。出版成品的第一層可早於來源完整而成立；但未獲授權的圖版不可擅自複製或發佈，未驗證的下載入口不可宣稱可讀。
 
-**編輯面貌的分工：**
-- 書單：**為何讀這些書、如何閱讀、每本書帶來什麼？** 雜誌式書封和導讀可單獨成立。
-- 三晨星：**此時最值得留下及推薦的是什麼？** 單次精選與週期主題。
-- 光譜：**它們與經文、思想、歷史及其他資源如何相連？** 知識脈絡。
-- 策展集：**沿著什麼跨媒介的學習道路走下去？** 多資源策展旅程。
+**持續編輯的出版循環（editorial-led, not source-led）：**
+
+```text
+持續工作的精品書單編輯室
+  ├─ 每期書單：選書／真封面／推薦理由／閱讀指南／合法圖文
+  │     └─ 緊接書局閱讀支持：Work／中文版 Edition／真正可用的連結
+  ├─ 三晨星：從已審議書單自然提煉的當期精品精選
+  ├─ 光譜：由書單引發的聖經研究、歷史神學與講道預備的深度論述
+  └─ 策展集：資料累積充分後成立的跨媒介大型主題
+             例：《耶路撒冷3000年》
+    ↑         │
+    └─ 研究所得與讀者問題回流下一輪書單選題
+```
+
+這不是要求每份書單都硬生出三顆晨星、一套策展集或一篇光譜。書單是**內容發動機與讀者入口**；另外三種產出是編輯研究累積後，自然經不同深度門檻決定的結果。可以彼此交叉引用、使用同一 canonical Work，但不能將同一批卡片改名複製當作三種新作品。
+
+**各自的成品標準：**
+- **書單**：讀者看得見的雜誌出版物。選了哪些中文書／中譯本（少量英文書）、為何值得讀、怎樣讀、真實書封和可依法使用的圖文，讀者看完就有收穫；免費閱讀連結是隨後加上的服務而不是入選條件。
+- **三晨星**：從書單與編輯審議成果中精挑最值得此刻推薦的作品／資源，必須有獨立而精煉的推薦理由、讀者情境與時間主題。不是自動抽出排名前三本，也不是三個來源網站的集合。
+- **光譜**：厚實的思想、聖經與知識研究文章，追究經文脈絡、釋經分歧、原文、教會史、歷史地理、思想傳承及學術來源；可作講道或主日學預備的知識裝備，但不能直接以閱讀書單頂替研究，亦不代替講道或以未经验证的引文冒充經文。
+- **策展集**：如《耶路撒冷3000年》，依足量且可靠的文獻、圖像、史料、地圖、考古材料等，形成有主題論證與觀展路徑的**大型多媒介策展**。不是某份書單書多就自動升級，不是把幾個閱讀清單合併。
+
+**四種不同的編輯門檻：** 書單驗收選書論證＋導讀＋版次真封面；三晨星驗收精選判斷與當期推薦的編輯理由；光譜驗收研究問題、引文脈絡、論證及不確定性；策展集驗收跨媒介資料充分性、史料來源及策展敘事路徑。各項應獨立發表／覆核與更新，不因任何一條來源未找到免費版本而中止其他編輯價值。
 
 **編輯規範：** [精品書單編輯章程](dawn-library/EDITORIAL-READING-LISTS-CHARTER-V1.md)；首批實際選書研究存於 `docs/dawn-library/reading-lists/`。本節屬黎明書局原有領域內的出版能力，不擅自調動 P2／其他版塊，不建立平行 Design OS。
 
-#### The three-layer editorial model
+#### Three editorial outcomes of the continuing booklist studio
 
-```text
-Morning Star / 三晨星
-        ↓
-Spectrum / 光譜
-        ↓
-Collection / 策展集
-```
+**三晨星、光譜、策展集是書單編輯研究所孕育的三種不同成果，不是「三晨星→光譜→策展集」固定順序的生產線。** Each retains its own editorial logic and can cite existing canonical Works or accumulated research independently, but booklist curation is the continuing lead activity.
 
-These are three distinct underlying editorial logics:
+These are three distinct output logics:
 
 - **三晨星 Morning Star —「什麼值得留下？」**
   - Not popularity, traffic, clicks, or usage ranking.
@@ -148,9 +160,10 @@ Knowledge context is not a fourth peer layer replacing the three-layer model. It
 The distinction is:
 
 ```text
-三晨星：判斷價值
-光譜：建立／看見知識脈絡與真理結構
-策展集：把知識脈絡轉化為可行走的學習道路
+持續精品書單編輯：不斷形成並出版「值得讀、為何讀、怎麼讀」的選書判斷
+三晨星：提煉並向讀者推薦此時值得注意的精品
+光譜：針對經文、思想、歷史與知識脈絡形成厚實的研究與講論
+策展集：資料與論點充分後，建立跨媒介大型主題展覽與學習路徑
 ```
 
 This means a resource can be understood not only by its metadata or category, but by its relationships to Scripture, other resources, historical development, concepts, people, places, disciplines, and levels of study. Over time, this accumulated knowledge context becomes one of the Library's most important forms of intellectual capital and supports ONE、 多雷搜索、Journal、字幕插件等 downstream systems.
@@ -160,19 +173,15 @@ This means a resource can be understood not only by its metadata or category, bu
 一般資源盤點可遵循下方的發現→選取流程；**精品書單**遵循上方「選書與雜誌導讀先完成、書局來源緊接其後」的兩層出版流程。絕不可讓書源是否方便取得回頭決定選書的內容。
 
 ```text
-Candidate Resource Pool
-        ↓
-Editorial Selection
-        ↓
-Morning Star / 三晨星
-        ↓
-Spectrum / 光譜／知識脈絡
-        ↓
-Collection / 策展集
-        ↓
-Resource Card
-        ↓
-Dawn Library collection
+一般資源（另有盤點流程）         精品書單（主導編輯流程）
+Candidate Resource Pool         讀者與閱讀問題 → 選書／版本與封面
+        ↓                                  ↓
+Editorial Selection              雜誌式中文書單／推薦理由／導讀
+        ↓                                  ↓
+Work / Edition / Source           緊接閱讀支援匹配 Work / Edition / Source
+        ↓                                  ↓
+Resource Card                    三晨星精選／光譜研究／大型策展集（各獨立達標）
+        └──────────── 同一 canonical 館藏及研究脈絡 ────────────┘
 ```
 
 The Library must not collapse into:
