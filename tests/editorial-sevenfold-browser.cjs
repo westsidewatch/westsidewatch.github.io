@@ -77,6 +77,27 @@ const screens=[{name:'desktop',width:1440,height:900},{name:'phone',width:390,he
          realm+' failed shared OS font role '+JSON.stringify(m));
        assert.equal(errors.length,0,realm+' browser runtime errors: '+errors.join('\n'));
        if(screen.name!=='small'){
+         const img=page.locator('.ws-interior__feature-art img');
+         if(await img.count()){
+           await img.scrollIntoViewIfNeeded();
+           await img.evaluate(async element=>{
+             element.loading='eager';
+             if(element.decode)await element.decode();
+           });
+           const art=await img.evaluate(element=>{
+             const b=element.getBoundingClientRect(),s=getComputedStyle(element);
+             return {width:b.width,height:b.height,opacity:s.opacity,display:s.display,
+               visibility:s.visibility,src:element.currentSrc,loaded:element.naturalWidth>0};
+           });
+           assert(art.loaded&&art.width>70&&art.height>70&&art.display!=='none'&&art.visibility==='visible'&&Number(art.opacity)>.25,
+             realm+' editorial artwork must actually be visible '+JSON.stringify(art));
+           console.log('SEVENFOLD_ARTWORK',realm,JSON.stringify(art));
+         }
+         await page.locator('.ws-interior__feature-art').screenshot({
+           path:'artifacts/sevenfold-editorial/'+realm+'-'+screen.name+'-feature.png',
+           animations:'disabled',timeout:90000
+         });
+         await page.evaluate(()=>window.scrollTo(0,0));
          await page.screenshot({path:'artifacts/sevenfold-editorial/'+realm+'-'+screen.name+'.png',fullPage:true,animations:'disabled',timeout:90000});
          await page.locator('.ws-interior__opening').screenshot({
            path:'artifacts/sevenfold-editorial/'+realm+'-'+screen.name+'-opening.png',animations:'disabled',timeout:90000});
