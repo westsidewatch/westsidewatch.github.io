@@ -11,7 +11,7 @@
     return p.year+'-'+p.month+'-'+p.day;
   };
   const label=d=>String(d.date||'').replace(/-/g,'/');
-  const isArchived=d=>d.status!=='current'||!/^\\d{4}-\\d{2}-\\d{2}$/.test(d.date||'')||d.date<dateOfToronto();
+  const isArchived=d=>d.status!=='current'||!/^\d{4}-\d{2}-\d{2}$/.test(d.date||'')||d.date<dateOfToronto();
   const statusText=d=>isArchived(d)?'歷史主日程序 · '+label(d)+'（非本週，請向教會確認最新安排）':'本週主日 · '+label(d);
   const address=d=>d.location||'請聯絡教會確認聚會地點';
   const makeRow=(r,variant,i)=>{
@@ -23,7 +23,7 @@
     const row=make('div','worship-row');row.append(make('time','',r.time));
     const copy=make('div');copy.append(make('strong','',r.title),make('p','',r.detail));row.append(copy);return row;
   };
-  const valid=d=>d&&typeof d==='object'&&/^\\d{4}-\\d{2}-\\d{2}$/.test(d.date||'')&&
+  const valid=d=>d&&typeof d==='object'&&/^\d{4}-\d{2}-\d{2}$/.test(d.date||'')&&
     Array.isArray(d.schedule)&&d.schedule.length===7&&d.schedule.every(x=>x.time&&x.title&&typeof x.detail==='string')&&Array.isArray(d.scriptures);
   const ready=fetch(source,{cache:'no-store'}).then(async response=>{
     if(!response.ok)throw new Error('schedule HTTP '+response.status);
