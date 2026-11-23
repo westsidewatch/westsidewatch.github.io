@@ -20,13 +20,28 @@
  function paint(){queued=false;const d=progress(),p=entryProgress;
 
   // THE ORIGINAL 01–04 FILES REMAIN UNMODIFIED AND BEHIND THEIR OWN STAGE.
-  prior.contentWindow?.postMessage({type:'westside-p2-home-pose',distance:Math.min(d,26.3),legacyProgress:clamp(d/26.3),active:d<27.3},location.origin);
-  const appear=ease((d-26.23)/1.22),settled=ease((d-27.35)/.44);
-  realm.style.visibility=appear>.001?'visible':'hidden';
+  // 04 must stay visible behind the two incoming 05 image masks until
+  // the MERSI handoff fully owns the stage. Never opacity-fade an image world.
+  prior.contentWindow?.postMessage({type:'westside-p2-home-pose',distance:Math.min(d,26.3),legacyProgress:clamp(d/26.3),active:d<27.72},location.origin);
+  // Reuse the original 03→04 MERSI grammar: RIGHT reveals from below first,
+  // LEFT from above second. Both use the same reversible scroll distance.
+  const phase=clamp((d-26.23)/1.30);
+  const rightReveal=ease(phase/.55),leftReveal=ease((phase-.52)/.48);
+  const settled=ease((d-27.53)/.18);
+  realm.style.visibility=phase>.00001?'visible':'hidden';
   realm.inert=settled<.98||p>.001;
   realm.setAttribute('aria-hidden',settled<.98||p>.001?'true':'false');
   realm.style.pointerEvents=settled>.98&&p<.001?'auto':'none';
-  world.style.opacity=String(appear);
+  world.style.opacity='1';
+  // Clip original full-height image panels, INCLUDING their paper backing;
+  // no empty full-screen layer may obscure Olive 04 during this split.
+  const leftPage=$('#dawn-page-left'),rightPage=$('#dawn-page-right');
+  leftPage.style.clipPath=leftReveal>=.99999?'none':`inset(0 0 ${((1-leftReveal)*100).toFixed(3)}% 0)`;
+  rightPage.style.clipPath=rightReveal>=.99999?'none':`inset(${((1-rightReveal)*100).toFixed(3)}% 0 0 0)`;
+  stage.dataset.p205MerciEntry=phase.toFixed(4);
+  stage.dataset.p205MerciLeft=leftReveal.toFixed(4);
+  stage.dataset.p205MerciRight=rightReveal.toFixed(4);
+  stage.dataset.p205MerciMethod='opposed-top-down-bottom-up';
   twins.style.visibility=settled>.02?'visible':'hidden';
    // Keep the original paired masthead rendered above the image stage.
    squares.forEach(square=>{square.style.visibility='visible';square.style.opacity='1';});
@@ -239,10 +254,11 @@
  function paintWorld(d){
   // Two independently staggered visual strips, with scroll-owned MERSI-like
   // sliding masks. Motion stops on stationary scroll and reverses precisely.
-  const base=Math.max(0,d-27.65);
+  const base=Math.max(0,d-27.72);
   for(const side of imageSides){
    const scenes=gospelScenes[side.key];if(!scenes.length)continue;
-   const s=base*(side.key==='left'?1.18:1.12)+(side.key==='right'?.42:0);
+   // Do not start the right image's NEXT print before the 04→05 reveal ends.
+   const s=base*(side.key==='left'?1.18:1.12)+(side.key==='right'?ease(base/.8)*.42:0);
    const step=Math.floor(Math.max(0,s)),fraction=ease(s-Math.floor(s));
    const i=step%scenes.length,ni=(i+1)%scenes.length;
    if(side.index!==i){
@@ -281,8 +297,13 @@
     side.current.style.clipPath='none';side.next.style.clipPath='inset(0 0 100% 0)';
     shown=scenes[i];
    }
-   side.current.style.transform='none';
-   side.next.style.transform='none';
+   // Travel stays inside the original two opposing clip apertures:
+   // the upper image descends to rest, the lower image rises to rest.
+   const reveal=side.key==='left'?ease((clamp((d-26.23)/1.30)-.52)/.48):
+    ease(clamp((d-26.23)/1.30)/.55);
+   const offset=(1-reveal)*(side.key==='left'?-8:8);
+   side.current.style.transform=reveal>=.99999?'none':`translate3d(0,${offset.toFixed(3)}%,0)`;
+   side.next.style.transform=side.current.style.transform;
    if(side.node.href!==shown.href){
     side.node.href=shown.href;
     side.node.target='_blank';side.node.rel='noopener noreferrer';
