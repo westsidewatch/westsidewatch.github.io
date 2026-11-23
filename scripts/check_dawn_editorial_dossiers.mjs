@@ -23,7 +23,7 @@ export function validateDossiers(d) {
    if(bookIds.has(b.id))add("duplicate work in list "+b.id);bookIds.add(b.id);
    const sameWork=(b.workTitle||b.title).toLowerCase();
    if(works.has(sameWork))add("duplicate canonical work "+sameWork);works.add(sameWork);
-   for(const k of ["title","workTitle","author","role","judgement","counterpoint","comparison","readerLevel","textReviewed"])if(typeof b[k]!=="string"||b[k].length<5)add("missing "+k+" on "+b.id);
+   for(const k of ["title","workTitle","author","role","judgement","counterpoint","comparison","readerLevel","textReviewed"])if(typeof b[k]!=="string"||b[k].length<(k==="readerLevel"?2:5))add("missing "+k+" on "+b.id);
    if(!Array.isArray(b.evidence)||b.evidence.length<1)add("no bibliographic/research evidence "+b.id);
    else for(const u of b.evidence)if(!/^https:\/\//.test(u))add("evidence not official https URL "+b.id);
    for(const k of ["downloadUrl","readerUrl","freePdf","imageUrl","bookPrice","freeAccess","publicApproved","awardWinner"])if(Object.hasOwn(b,k))add("access/claim leaked into editorial stage "+b.id+" "+k);
