@@ -19,7 +19,7 @@ export function checkReadingListProofs(dossiers,covers,pages){
     if(!page.includes('id="'+b.id+'"'))fail("book absent from magazine page "+b.id);
     if(!b.judgement||!page.includes(b.judgement))fail("lost recommendation rationale "+b.id);
     if(!b.counterpoint||!page.includes(b.counterpoint))fail("lost reading guide "+b.id);
-    if(r.cover.src&&!/^https:\/\//.test(r.cover.src))fail("invalid cover URL "+b.id);
+    if(r.cover.src&&!(/^https:\/\//.test(r.cover.src)||/^\/dawn-library\/reading-room\/assets\//.test(r.cover.src)))fail("invalid cover URL "+b.id);
     if(r.cover.src&&(!r.cover.credit||!r.cover.sourceStatus))fail("unattributed cover "+b.id);
     if(r.cover.src&&!page.includes(r.cover.src.replaceAll("&","&amp;")))fail("verified cover reference absent from HTML "+b.id);
     if(r.cover.reusePermission==="approved"&&r.cover.renderVerified!==true)fail("unearned publication clearance "+b.id);
