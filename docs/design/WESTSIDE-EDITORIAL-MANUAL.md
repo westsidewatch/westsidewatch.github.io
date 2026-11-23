@@ -137,6 +137,16 @@ The P2 split composition preserves its water engraving, rise and opening doors o
 
 **Quality:** Use Chiron Hei HK, Bodoni Moda SC, OS tokens, fine borders, narrow interactive index and a subtle chapter caption. Minimise/hide guide when desired. Maintain existing native camera route, open doors, maple seasons, daylight and cruciform light. Test desktop/mobile, keyboard, reduced motion, P2 links, pause/seek/play and the unchanged pure-camera route.
 
+### 7.13 2026-11-23 — P2 3D 導覽 R45：日程與「你們是世上的光」並存、手機滑動閱讀
+
+**指定修正：** 最後第 07 章的兩個完整獨立內容方塊必須同時存在，且固定**上＝七段主日程序表，下＝馬太福音 5:14–16《你們是世上的光》完整和合本＋KJV 經文**。不可再以主日程序取代經文。保留 OS 黎明金與活水藍、直角玻璃天井色散設計。
+
+**手機版空間優先：** 第 248 秒定格首先保留完整的教會外觀、暖光十字架；不得讓日程、經文大塊疊在教會上。手機透過原生頁面垂直捲動／手指滑動到首屏下方，依序閱讀七段程序和完整中英經文，並可使用微型「向下滑閱」以及「返回教會全景」控制。手機文稿不得靠遮蔽、截斷、剪裁以避過版面驗收。原獨立的純 3D 入口及非結尾六個章節不受影響。
+
+**精準中文排版：** 中文方塊標題、七個日程欄名保持完整不拆字，長經文須保持完整，遵循嚴格漢字禁則與美觀換行，尤其不可讓單獨一個漢字落在新行。中英文在 390px 手機、1366px 桌面和小視窗均不可水平溢出。驗收程式應量度最後經文與七段主日中文文字的真實字形行位置，而非只檢查文字是否存在。
+
+**交付憑據：** 檢查第一屏教會全景不受遮擋、日程和經文在下方自然文檔流中的位置、上下兩方塊同時存在、桌面上下順序、手機向下滑動與返回、7 段時間文字、全部中文和 KJV 經文、以及同時保留南門與樓梯幾何回歸。所有修改只可在 GitHub 主站原碼執行，不可使用 Sites。
+
 ### 7.12 2026-11-23 — P2 虛擬教會第二頁 R42：完整經文、OS 玻璃方塊、光與主日程序
 
 **本輪授權內容：** 只在既有 P2 第二頁 `/p2/church-tour.html?entry=p2` 改動敘事層、選定的鏡頭停格和必要的樓梯幾何簡化。P2 前段水紋、刊頭、主日程序、白模生長及其轉場不能動；`/p2/church-tour.html` 的直接純 3D 導覽不得顯示任何編輯疊層。
