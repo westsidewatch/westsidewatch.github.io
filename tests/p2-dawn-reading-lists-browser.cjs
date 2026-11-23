@@ -41,6 +41,17 @@ const cases=[['gospel-essentials',6,1],['inner-life',9,0],['church-history',7,0]
     assert(style.firstListTop>=style.portalBottom-8,device+': reading lists displayed before the original three editorial portals '+JSON.stringify(style));
     assert(style.pageOverflow<18,device+': second layer horizontal overflow '+style.pageOverflow);
     await page.screenshot({path:path.join(out,device+'-native-reading-contents.png'),animations:'disabled',timeout:30000});
+    const labelRects=await section.locator('button[data-dawn-reading-list]').evaluateAll(cards=>cards.map(el=>{
+      const caption=el.querySelector('.dawn-reading-list__caption'),face=el.querySelector('.dawn-reading-list__face');
+      return {id:el.dataset.dawnReadingList,clippedCaption:caption.scrollHeight-caption.clientHeight,
+        clippedFace:face.scrollHeight-face.clientHeight,cardWidth:el.getBoundingClientRect().width};
+    }));
+    for(const label of labelRects){
+      assert(label.cardWidth>120&&label.clippedCaption<4&&label.clippedFace<4,
+        device+': native vinyl square lost its Chinese label '+JSON.stringify(label));
+    }
+    await section.locator('button[data-dawn-reading-list="gospel-essentials"]').scrollIntoViewIfNeeded();
+    await page.screenshot({path:path.join(out,device+'-native-vinyl-list-squares.png'),animations:'disabled',timeout:30000});
     for(const [slug,count,bookIndex] of cases){
       await page.locator('button[data-dawn-reading-list="'+slug+'"]').click();
       await page.waitForFunction(n=>document.querySelectorAll('#dawn-works button.dawn-catalogue__cover-card').length===n,count,{timeout:30000});
