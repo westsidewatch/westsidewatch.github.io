@@ -1389,7 +1389,7 @@ function animate(now,forcedTime=null) {
   // composed still camera. Continuous walking and all pure-tour routes
   // retain the original sampled eye path, safety checks and seven day cycles.
   const ministryStop=entryParams.get("entry")==="p2"&&guidePaused
-    ?[{at:43,p:[8.70,2.35,-9.30],look:[7.45,2.12,-9.20]}, // maple through glazing
+    ?[{at:43,p:[9.45,1.95,-9.85],look:[7.52,2.52,-7.55]}, // actual CC0 maple crown x6.1..8.9,z-9.0..-6.2
       {at:94,p:[15.0,1.82,-9.65],look:[15.0,3.65,-.19]}, // pews + luminous cross
       {at:151,p:[3.65,-.08,-10.60],look:[5.65,-.20,-9.15]} // shared lower courtyard
       ].find(p=>Math.abs(p.at-t)<.07)
