@@ -9,7 +9,7 @@ try{
  for(let index=0;index<18;index++){
   const early=await sample(index+.02),middle=await sample(index+.35),full=await sample(index+.96);assert.ok(full.presentation.objects>0);assert.equal(full.presentation.waiting,0);assert.equal(full.presentation.growing,0);assert.equal(full.presentation.historicalSurvivalInferred,false);
   if(![5,9].includes(index)){assert.ok(middle.presentation.growing>0||middle.presentation.displayKept===middle.presentation.objects,`phase${index} must visibly construct or retain the same display`);assert.ok(full.presentation.complete>early.presentation.complete||early.presentation.displayKept===early.presentation.objects);}
-  if(index>0){assert.equal(early.dissolve.visible,true,`phase${index} must overlap the captured outgoing frame`);assert.ok(early.dissolve.opacity>.9);assert.equal(full.dissolve.visible,false);}
+  if(index>0){assert.equal(early.dissolve.visible,true,`phase${index} must overlap the captured outgoing frame`);assert.ok(early.dissolve.opacity>.9);assert.equal(full.dissolve.visible,false);assert.equal(middle.dissolve.visible,true);assert.ok(middle.dissolve.opacity>.7,'mid construction must retain the outgoing city instead of an empty jump');}
   if([11,12,13,14,15].includes(index))assert.ok(middle.presentation.growingByRole.core>0,'later public cores must be partially built, not complete at entry');
   if(index>=16)assert.ok(early.presentation.displayKept>0,'unchanged late city display must not rebuild from zero');
   if([3,4,10,11,15,16,17].includes(index)){await sample(index+.35);await page.screenshot({path:`${output}/stage-${index}-middle.png`,fullPage:true});await sample(index+.96);}

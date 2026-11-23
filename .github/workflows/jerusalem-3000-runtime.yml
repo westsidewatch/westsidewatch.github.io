@@ -107,6 +107,7 @@ jobs:
           node scripts/verify_jerusalem_3000_shared_places.mjs
           node scripts/verify_jerusalem_3000_persistent_world.mjs
           node scripts/verify_jerusalem_3000_async_later_generation.mjs
+          node scripts/verify_jerusalem_3000_transition_envelope.mjs
           node scripts/verify_jerusalem_3000_independent_later.mjs
           node scripts/verify_jerusalem_3000_landmark_chronology.mjs
           node scripts/verify_jerusalem_3000_module_shapes.mjs
