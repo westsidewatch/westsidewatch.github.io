@@ -51,6 +51,16 @@ assert(html.indexOf('id="dawn-reading-list-featured"')>html.indexOf('class="dawn
 assert(css.includes('R83 — right-hand sourced book covers')&&css.includes('grid-column:5 / span 2!important'),'Featured covers must occupy actual right-most 2x2 vinyl squares on desktop');
 assert(js.includes("const featuredKeys=['gospel-02','inner-05-chinese','history-01','inner-05']"),'Curated four same-edition references missing');
 assert(js.includes('void mountFeaturedReadingCovers()'),'Featured covers cannot be left unmounted');
+assert(js.includes("overlay.className='dawn-reading-list__featured-overlay'"),
+ 'A full-square image needs a light editorial title overlay, not a fixed shop-label strip');
+assert(js.includes("button.dataset.visualType=hasSourcedPlate?plate.kind:'edition-cover'"),
+ 'Visual source must distinguish verified interior plates from original edition covers');
+assert(js.includes("typeof plate.credit==='string'")&&js.includes("['interior-plate','engraving','map','title-page']"),
+ 'An unrelated image cannot be passed off as an illustrated page of the actual book');
+assert(css.includes('R84 / The visual square IS the image')&&css.includes('object-fit:cover!important'),
+ 'The four actual image tiles must be full-bleed square artwork, not contain-fit book products');
+assert(css.includes('.dawn-reading-list__featured-book-label{display:none!important}'),
+ 'Remove the original fixed caption zone taking space away from images');
 assert(js.includes("openReadingList(list.id,book.editorialKey)"),'Featured book jackets must link to exact book, not a generic list');
 assert(js.includes('selectBookPreview(works,li,items[idx])'),'Selected cover must open the original book preview');
 for(const key of ['gospel-02','inner-05-chinese','history-01','inner-05']){
