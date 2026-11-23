@@ -15,6 +15,7 @@ on:
       - 'tests/p2-dawn-expanding-preview.cjs'
       - 'tests/p2-dawn-os-visual-hierarchy.cjs'
       - 'tests/p2-dawn-reading-lists-browser.cjs'
+      - 'tests/p2-dawn-merci-0405-browser.cjs'
       - 'static/dawn-library/p2-reading-lists-issue-01.json'
       - '.github/workflows/first-look-branch-preview.yml'
   workflow_dispatch:
@@ -64,6 +65,22 @@ jobs:
             --commit-message="First Look isolated preview"
           echo "### Branch preview (no merge required)" >> "$GITHUB_STEP_SUMMARY"
           echo "https://${PREVIEW_BRANCH}.westsidewatch-github-io.pages.dev/experiments/sevenfold-first-to-second.html" >> "$GITHUB_STEP_SUMMARY"
+      - name: Verify approved MERSI 04-to-05 opposed image transition (desktop and phone)
+        run: |
+          npm install --no-save --no-package-lock playwright
+          npx playwright install chromium
+          python3 -m http.server 4173 --directory public >/tmp/p2-0405-mersi.log 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          node tests/p2-dawn-merci-0405-browser.cjs
+      - name: Save MERSI original 04-to-05 motion screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p2-olive-dawn-merci-0405
+          path: artifacts/p2-dawn-merci-0405/
+          if-no-files-found: warn
+          retention-days: 14
       - name: Verify native Dawn editorial booklists in Chromium on desktop and phone
         run: |
           npm install --no-save --no-package-lock playwright
