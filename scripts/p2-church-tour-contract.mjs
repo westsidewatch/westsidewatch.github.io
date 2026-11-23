@@ -11,6 +11,7 @@ const ministryGuide = read("static/js/p2-church-ministry.js");
 const ministryStyle = read("static/css/p2-church-ministry.css");
 const folio = read("static/p2/living-water.html");
 const interaction = read("static/js/p2-living-water.js");
+const growth = read("static/js/p2-church-growth-maquette.js");
 const firstLayer = read("static/p2-maquette/index.html");
 const legacyDomain = /chatgpt\.site/i;
 for (const [name, source] of [
@@ -41,14 +42,29 @@ assert((ministryGuide.match(/"kjv":/g)||[]).length===7 &&
        ministryStyle.includes("backdrop-filter:blur(22px)") &&
        ministryStyle.includes("text-wrap:pretty"),
   "Seven full CUV/KJV passages, complete Sunday finale and OS square skylight glass must remain");
+assert(ministryGuide.includes("sundayObserver") &&
+       ministryGuide.includes("is-sunday-visible") &&
+       ministryStyle.includes("@keyframes ws-sunday-appear") &&
+       ministryStyle.includes("@keyframes ws-sunday-line-appear") &&
+       ministryStyle.includes("animation-delay:calc(.35s + var(--sunday-row-order,0)*.095s)") &&
+       ministryStyle.includes("flex:0 0 auto") &&
+       ministryStyle.includes("max-height:none"),
+  "Sunday finale needs soft timed entrance, seven staggered rows and independent content-sized folio");
 assert(ministryGuide.includes("query.get('entry')!=='p2'") &&
        ministryGuide.includes("window.__churchGuide") &&
        ministryGuide.includes("chapters.length") &&
        ministryGuide.includes("前往第") &&
        ministryStyle.includes(".ws-ministry-story__rail"),
   "Only visitors entering from P2 see the 3D ministry editorial chapters");
-assert((folio.match(/\/p2\/church-tour\.html\?entry=p2/g)||[]).length===3,
-  "All three P2 church text/model links lead to the same second layer");
+assert((folio.match(/\/p2\/church-tour\.html\?entry=p2/g)||[]).length===3 &&
+       interaction.includes("entry.href=magazineProgress>=.5?'/journal/':'/p2/church-tour.html?entry=p2'"),
+  "Both church names, native maquette and existing compact 01 entry must lead to the SAME 3D church page");
+assert(interaction.includes("const buildStart=2.41,buildEnd=3.22") &&
+       interaction.includes("opening=smooth((vh-1.72)/.65)") &&
+       interaction.includes("root.dataset.p2ChurchBuildPhase") &&
+       interaction.includes("const magazineStart=3.36") &&
+       growth.includes("const active=pose>=2.41&&pose<5.19"),
+  "Red Sea must finish at 2.37 before real GLB white-maquette growth starts 2.41, ends 3.22 and holds before original Magazine at 3.36");
 assert(script.includes("entranceHinge.rotation.y"), "A real scene door must open");
 assert(script.includes('const southDoor = mesh("TALL SINGLE WHITE PIVOT DOOR")') &&
        script.includes("entranceHinge.attach(southDoor)"),

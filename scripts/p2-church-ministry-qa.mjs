@@ -118,8 +118,16 @@ try{
   const desktopFinale=await evaluate(`(()=>{
     const sunday=document.querySelector(".ws-ministry-story__sunday").getBoundingClientRect();
     const scripture=document.querySelector(".ws-ministry-story__panel").getBoundingClientRect();
+    const schedule=document.querySelector(".ws-ministry-story__sunday");
+    const rows=schedule.querySelector(".ws-ministry-story__sunday-rows");
+    const all=[...rows.querySelectorAll(".ws-ministry-story__sunday-row")];
     return {sunday:sunday.toJSON(),scripture:scripture.toJSON(),
-      sundayDisplay:getComputedStyle(document.querySelector(".ws-ministry-story__sunday")).display,
+      sundayDisplay:getComputedStyle(schedule).display,
+      sundayAnimation:getComputedStyle(schedule).animationName,
+      firstLineAnimation:getComputedStyle(all[0]).animationName,
+      lastLineDelay:getComputedStyle(all[6]).animationDelay,
+      rowsFullyVisible:rows.scrollHeight<=rows.clientHeight+2,
+      lastProgrammeRowBottom:all[6].getBoundingClientRect().bottom,
       scriptureDisplay:getComputedStyle(document.querySelector(".ws-ministry-story__panel")).display,
       scriptureText:document.querySelector("[data-story-zh]").textContent,
       kjvText:document.querySelector("[data-story-kjv]").textContent};
@@ -128,8 +136,14 @@ try{
      desktopFinale.sunday.bottom>desktopFinale.scripture.top-6||
      desktopFinale.sunday.top<0||desktopFinale.scripture.bottom>851||
      !desktopFinale.scriptureText.includes("你們是世上的光")||
-     !desktopFinale.kjvText.includes("Ye are the light of the world"))
+     !desktopFinale.kjvText.includes("Ye are the light of the world")||
+     desktopFinale.sundayAnimation!=="ws-sunday-appear"||
+     desktopFinale.firstLineAnimation!=="ws-sunday-line-appear"||
+     desktopFinale.lastLineDelay==="0s"||
+     !desktopFinale.rowsFullyVisible||
+     desktopFinale.lastProgrammeRowBottom>desktopFinale.sunday.bottom+2)
     throw Error("Desktop finale must stack Sunday ABOVE the complete light scripture, both visible "+JSON.stringify(desktopFinale));
+  await sleep(1400);
   await shot("03b-desktop-sunday-above-scripture");
   // Return to the actual upper gallery so pause/resume regression still
   // checks the original continuous camera from that existing chapter.
