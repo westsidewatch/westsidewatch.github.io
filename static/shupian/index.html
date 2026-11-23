@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="zh-Hant"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#f4f1eb"><title>数片 · Cinema Reale</title>
-<meta name="description" content="数片｜中英雙語電影與劇集典藏。">
+<meta name="theme-color" content="#f4f1eb"><title>數片兒 · Cinema Reale</title>
+<meta name="description" content="數片兒｜中英雙語電影與劇集典藏。">
 <style>
 :root{--paper:#f4f1eb;--ink:#262420;--red:#b93430;--mute:#76726c;--line:#d3cec5}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:14px/1.6 -apple-system,BlinkMacSystemFont,"Helvetica Neue","PingFang TC","Noto Sans CJK TC",sans-serif}a{color:inherit}button,input{font:inherit}button{cursor:pointer}header{padding:20px max(22px,4vw);border-bottom:1px solid var(--ink);display:flex;justify-content:space-between;gap:20px;align-items:center}.logo{font-size:31px;font-weight:900;letter-spacing:-.12em}.logo b{color:var(--red)}.upper{font:600 10px/1.5 Arial,sans-serif;letter-spacing:.2em}.hero{padding:65px max(22px,4vw) 55px;border-bottom:1px solid var(--ink)}.hero h1{font:normal clamp(58px,12vw,165px)/.92 Georgia,serif;letter-spacing:-.075em;margin:20px 0 25px}.hero em{color:var(--red)}.hero p{max-width:640px;color:var(--mute);font-size:15px}.accent{color:var(--red)}nav{position:sticky;top:0;z-index:5;background:var(--paper);border-bottom:1px solid var(--line);padding:15px max(22px,4vw);display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}.tabs{display:flex;gap:15px;flex-wrap:wrap}.tabs button{background:none;border:0;border-bottom:2px solid transparent;padding:7px 1px;color:var(--mute);font-size:12px;font-weight:600}.tabs button[aria-pressed=true]{color:var(--red);border-bottom-color:var(--red)}input{border:0;border-bottom:1px solid var(--ink);padding:8px;background:none;min-width:180px;max-width:100%;outline:none}main{padding:35px max(22px,4vw) 110px}.head{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:12px;margin-bottom:25px;gap:12px}.head h2{font:normal clamp(24px,4vw,39px) Georgia,serif;margin:0}.head h2 i{color:var(--red)}.grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:32px 17px}
 .grid.single{grid-template-columns:minmax(220px,340px) minmax(0,1fr);gap:clamp(30px,6vw,95px);align-items:start}
@@ -25,11 +25,11 @@
 @media(max-width:700px){.engine-results{grid-template-columns:1fr}}
 </style>
 </head><body>
-<header><div class="logo">数<b>片</b></div><div class="upper">CINEMA REALE / FILM ARCHIVE</div></header>
+<header><div class="logo">數<b>片兒</b></div><div class="upper">CINEMA REALE / FILM ARCHIVE</div></header>
 <section class="hero"><div class="upper accent">CINEMA · ARCHIVE · 2026</div><h1>Cinema<br><em>reale.</em></h1><p>光影之間，留給每部電影自己的時刻。</p></section>
 <nav><div class="tabs"><button data-category="all" aria-pressed="true">全部作品</button><button data-category="film" aria-pressed="false">電影</button><button data-category="series" aria-pressed="false">劇集</button></div><input id="search" type="search" placeholder="搜尋片名 / Search" aria-label="搜尋作品"></nav>
 <main><div class="head"><h2>Selected works <i>/</i> 片庫</h2><span id="totals" class="upper">0 TITLES</span></div><div id="grid" class="grid"></div><div id="empty" class="empty" hidden>目前暫無放映。</div></main>
-<footer>数片 / CINEMA REALE — 光影典藏。</footer>
+<footer>數片兒 / CINEMA REALE — 光影典藏。</footer>
 <dialog id="player"><div class="playerhead"><div><div class="upper accent">CINEMA REALE</div><h2 id="player-title">影片</h2></div><button id="close" aria-label="關閉">×</button></div><div class="playerbody"><div class="screen"><video id="video" controls playsinline preload="metadata"></video><p id="status" role="status" aria-live="polite"></p><p><a id="source" target="_blank" rel="noopener noreferrer">影片資訊 ↗</a></p></div><aside class="episodebar"><div class="upper">選集</div><div id="episodes"></div></aside></div></dialog>
 <script id="catalog" type="application/json">[]</script>
 <script>
