@@ -168,8 +168,31 @@
     progress=root.querySelector('.ws-ministry-story__progress-fill');
   let active=-1,manual=false,paused=false,queued=null;
   const mobileFinale=window.matchMedia('(max-width:680px)');
+  // First settle on the whole church, then let the Sunday programme
+  // emerge at reading pace. On phones it emerges only when the reader
+  // actually scrolls to the lower content, never over the building.
+  const sundayRows=[...root.querySelectorAll('.ws-ministry-story__sunday-row')];
+  sundayRows.forEach((row,i)=>row.style.setProperty('--sunday-row-order',String(i)));
+  const sundayObserver='IntersectionObserver' in window
+    ?new IntersectionObserver(entries=>{
+      if(entries.some(entry=>entry.isIntersecting)&&root.classList.contains('is-finale')){
+        root.classList.add('is-sunday-visible');
+      }
+    },{threshold:0.12})
+    :null;
+  if(sundayObserver)sundayObserver.observe(sunday);
   function setFinaleMode(finale){
+    const previouslyFinale=root.classList.contains('is-finale');
     root.classList.toggle('is-finale',finale);
+    if(!finale){
+      root.classList.remove('is-sunday-visible');
+    }else if(!mobileFinale.matches||!sundayObserver){
+      root.classList.add('is-sunday-visible');
+    }else if(!previouslyFinale){
+      // On mobile, a new finale starts with an unobstructed full-screen
+      // scene. IntersectionObserver starts the stagger after scroll.
+      root.classList.remove('is-sunday-visible');
+    }
     const scrollFinale=finale&&mobileFinale.matches;
     document.documentElement.classList.toggle('church-finale-scroll',scrollFinale);
     document.body.classList.toggle('church-finale-scroll',scrollFinale);
@@ -280,6 +303,7 @@
     chapterSeconds:chapters.map(c=>c.at),manual,paused,
     fullVerses:chapters.every(c=>c.zh.length>10&&c.kjv.length>20),
     scheduleRows:7,sundayVisible:root.classList.contains('is-finale'),
+    sundayRevealStarted:root.classList.contains('is-sunday-visible'),
     scriptureVisible:root.classList.contains('is-finale') &&
       getComputedStyle(root.querySelector('.ws-ministry-story__panel')).display!=='none',
     scrollFinale:document.body.classList.contains('church-finale-scroll')
