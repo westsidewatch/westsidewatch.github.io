@@ -52,3 +52,11 @@
 .dawn-reads .dl-issue-footer p{font:400 var(--ws-type-scale-ui)/1.8 var(--ws-type-reading-zh)}
 @media(max-width:900px){.dawn-reads .dl-issue-hero{grid-template-columns:1fr;min-height:0;padding:4rem 0}.dawn-reads .dl-cover-cluster{max-width:520px;width:100%;margin:auto}.dawn-reads .dl-suite-grid{grid-template-columns:1fr 1fr}.dawn-reads .dl-suite-grid .dl-suite-card:last-child{grid-column:span 2;max-width:460px}.dawn-reads .dl-issue-title{font-size:clamp(3rem,8vw,5.5rem)}}
 @media(max-width:650px){.dawn-reads .dl-suite-grid,.dawn-reads .dl-suite-bottom,.dawn-reads .dl-exhibit-grid{grid-template-columns:1fr}.dawn-reads .dl-suite-grid .dl-suite-card:last-child{grid-column:auto;max-width:none}.dawn-reads .dl-cover-cluster{height:350px;max-width:360px}.dawn-reads .dl-cover-cluster figure{width:47%}.dawn-reads .dl-cover-cluster img{max-height:240px}.dawn-reads .dl-suite-section{padding:3rem 0}.dawn-reads .dl-suite-feature{min-height:230px}.dawn-reads .dl-artifact figure{min-height:150px}.dawn-reads .dl-lead{padding:4rem 0}.dawn-reads .dl-lead h1{font-size:clamp(2.2rem,9vw,3.7rem)}}
+
+/* Compact mobile editorial masthead: one-line scrolling topics, not a tall navigation stack. */
+@media(max-width:650px){
+  .dawn-reads .dl-head{display:block;padding:12px 20px}
+  .dawn-reads .dl-head .name{display:inline-block;font-size:var(--ws-type-scale-meta)}
+  .dawn-reads .dl-head .links{display:flex;flex-direction:row;flex-wrap:nowrap;align-items:center;justify-content:flex-start;gap:1rem;white-space:nowrap;max-width:100%;overflow-x:auto;scrollbar-width:thin;padding:.4rem 0 .2rem;margin-top:.25rem}
+  .dawn-reads .dl-head .links a{flex:0 0 auto;font-size:var(--ws-type-scale-meta);line-height:1.5}
+}
