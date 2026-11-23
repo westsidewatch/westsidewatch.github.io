@@ -16,6 +16,11 @@ const base=process.env.CHURCH_TEST_ORIGIN||'http://127.0.0.1:4174';
     &&document.querySelectorAll('#church-gathering-list article').length===4
     &&document.querySelectorAll('#church-sunday-live .ws-church-sunday-row').length===7
     &&document.querySelectorAll('[data-church-qr] canvas').length===4,null,{timeout:20000});
+   await page.waitForFunction(()=>{
+     const doc=document.querySelector('#church-letterpress')?.contentDocument;
+     return doc?.body?.classList.contains('p2ChurchHorizontal')&&
+       doc.querySelectorAll('#formeEn .column>.piece.zh').length>0;
+   },null,{timeout:60000});
    const metrics=await page.evaluate(()=>{
     const story=document.querySelector('#church-sunday-live');
     const cards=[...document.querySelectorAll('[data-church-qr] canvas')];
@@ -82,6 +87,20 @@ const base=process.env.CHURCH_TEST_ORIGIN||'http://127.0.0.1:4174';
           maxHeadingRight:Math.round(ht.right)
         };
       })(),
+      motherForm:(()=>{
+        const doc=document.querySelector('#church-letterpress')?.contentDocument;
+        if(!doc)return {ready:false};
+        const original=cls=>[...doc.querySelectorAll('#formeEn .piece.'+cls)].map(n=>n.dataset.original||n.textContent).join('');
+        const plate=doc.querySelector('#plateEn');
+        const box=plate.getBoundingClientRect();
+        const glyphs=[...doc.querySelectorAll('#formeEn .column>.piece')].map(n=>n.getBoundingClientRect());
+        return {ready:true,mode:doc.body.classList.contains('p2ChurchHorizontal'),
+          rotated:doc.querySelector('#formeEn').style.transform.includes('rotate(-90deg)'),
+          zh:original('zh').slice(0,70),en:original('en').slice(0,100),
+          glyphsFit:glyphs.every(x=>x.left>=box.left-5&&x.top>=box.top-5&&
+            x.right<=box.right+5&&x.bottom<=box.bottom+5),
+          firstHidden:getComputedStyle(doc.querySelector('.impression:first-child')).display==='none'};
+      })(),
       archive:story?.textContent?.includes('歷史主日程序'),
       sunday:story?.querySelectorAll('.ws-church-sunday-row').length,
       ministries:document.querySelectorAll('.church-visit__ministry').length,
@@ -93,6 +112,11 @@ const base=process.env.CHURCH_TEST_ORIGIN||'http://127.0.0.1:4174';
    assert(metrics.width<=screen.width+2,screen.label+' horizontal overflow '+JSON.stringify(metrics));
    assert(metrics.identity&&metrics.archive&&metrics.sunday===7&&metrics.ministries===7&&metrics.gatherings===4);
    assert(metrics.osGlass,screen.label+' visitor glass blur + OS typography not active '+JSON.stringify(metrics));
+   assert(metrics.motherForm.ready&&metrics.motherForm.mode&&metrics.motherForm.rotated&&metrics.motherForm.firstHidden,
+     screen.label+' failed to reuse V60 horizontal Chinese mother forme '+JSON.stringify(metrics.motherForm));
+   assert(metrics.motherForm.zh.includes('信我的人')&&metrics.motherForm.en.includes('He that believeth'),
+     screen.label+' mother forme verse mismatch '+JSON.stringify(metrics.motherForm));
+   assert(metrics.motherForm.glyphsFit,screen.label+' letterpress clipping '+JSON.stringify(metrics.motherForm));
    const g=metrics.geometry;
    assert(Math.abs(g.tileWidth-g.tileHeight)<=2,screen.label+' opening Scripture must be 1:1 square '+JSON.stringify(g));
    assert(g.tileContentFits&&g.tileOrderValid&&g.translationBelow,
@@ -104,6 +128,7 @@ const base=process.env.CHURCH_TEST_ORIGIN||'http://127.0.0.1:4174';
    for(const type of ['join','decision','newcomer','prayer'])
      assert(metrics.allLinks.includes('/church/forms/?type='+type),screen.label+' missing '+type);
    assert.deepEqual(errors,[],screen.label+' JS errors');
+   await page.locator('.church-visit__scripture-group').screenshot({path:'artifacts/church-visitor/'+screen.label+'-letterpress.png',animations:'disabled'});
    await page.screenshot({path:'artifacts/church-visitor/'+screen.label+'.png',fullPage:true,animations:'disabled'});
    await page.close();
   }
@@ -140,6 +165,25 @@ const base=process.env.CHURCH_TEST_ORIGIN||'http://127.0.0.1:4174';
   assert(collision.spans===2&&!collision.overlap,
     'Gospel title must split into two lines without overlapping Scripture '+JSON.stringify(collision));
   assert.equal(await form.locator('.church-form__gospel-step').count(),3,'Love, Cross and Faith steps required');
+  assert.equal(await form.locator('.church-form__scripture-pair .church-form__scripture-hint').count(),2,'Decision must have two Scripture squares');
+  assert.match(await form.locator('.church-form__scripture-hint--nahum').textContent(),/耶和華本為善.*認得那些投靠他的人/s);
+  assert.match(await form.locator('.church-form__scripture-hint--nahum').textContent(),/The LORD is good, a strong hold in the day of trouble/);
+  for(const width of [1280,390,320]){
+    await form.setViewportSize({width,height:850});
+    await form.evaluate(()=>document.fonts.ready);
+    const squareMetrics=await form.evaluate(()=>[...document.querySelectorAll('.church-form__scripture-pair figure')].map(n=>{
+      const b=n.getBoundingClientRect();
+      const t=[...n.querySelectorAll('figcaption,blockquote,p,cite')].map(x=>x.getBoundingClientRect());
+      return {width:b.width,height:b.height,contentFits:t.every(x=>
+        x.left>=b.left-3&&x.right<=b.right+3&&x.top>=b.top-3&&x.bottom<=b.bottom+3)};
+    }));
+    assert(squareMetrics.length===2&&squareMetrics.every(s=>Math.abs(s.width-s.height)<2&&s.contentFits),
+      width+'px decision Scripture squares clip '+JSON.stringify(squareMetrics));
+    await form.locator('.church-form__scripture-pair').screenshot({
+      path:'artifacts/church-visitor/decision-verses-'+width+'.png',animations:'disabled'
+    });
+  }
+  await form.setViewportSize({width:1280,height:720});
   assert.equal(await form.locator('[name="response"]').getAttribute('required'),'','Decision selection must be explicit');
   await form.screenshot({path:'artifacts/church-visitor/decision-form.png',fullPage:true});
   await form.close();
