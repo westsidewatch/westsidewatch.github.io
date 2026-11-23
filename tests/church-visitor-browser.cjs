@@ -22,15 +22,14 @@ const base=process.env.CHURCH_TEST_ORIGIN||'http://127.0.0.1:4174';
     return {
       width:document.documentElement.scrollWidth,viewport:innerWidth,
       identity:(()=>{
-       const zh=document.querySelector('.church-visit__name'),en=document.querySelector('.church-visit__english');
+       const zh=document.querySelector('.church-visit__official-artwork');
+       const en=document.querySelector('.church-visit__identity-lockup .church-visit__english');
        if(!zh||!en)return false;
-       const zhType=getComputedStyle(zh),enType=getComputedStyle(en);
        const zhRect=zh.getBoundingClientRect(),enRect=en.getBoundingClientRect();
-       const panes=!((zhRect.right>enRect.left+8)&&(zhRect.left<enRect.right));
-       return zhType.fontFamily.includes('Chiron')&&zhType.fontWeight==='900'&&
-         enType.fontFamily.includes('Bodoni Moda SC')&&
-         zh.textContent.includes('活水堂')&&en.textContent.includes('Assembly West')&&
-         (innerWidth<=355||panes);
+       const mask=getComputedStyle(zh).maskImage;
+       return mask.includes('/images/living-water-west-church-name.png') &&
+         zhRect.width>200 && zhRect.height>10 && enRect.top>=zhRect.bottom-2 &&
+         en.textContent.trim()==='P.A.O.C. Living Water Assembly West';
       })(),
       archive:story?.textContent?.includes('歷史主日程序'),
       sunday:story?.querySelectorAll('.ws-church-sunday-row').length,
