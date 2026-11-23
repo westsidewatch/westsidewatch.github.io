@@ -8,7 +8,7 @@
     <a class="ws-interior__brand" href="/" aria-label="Westside Watch 首頁">
       <img src="/images/westside-watch-masthead-landscape.svg" alt="Westside Watch" decoding="async">
     </a>
-    <p class="ws-interior__edition" lang="en">Sevenfold <span> / </span> An Editorial Edition</p>
+    <p class="ws-interior__edition" lang="en">Watch for the Dawn <span> / </span> An Editorial Collection</p>
     <a class="ws-interior__root-link" href="{{ $item.source }}">返回版塊 <span aria-hidden="true">↗</span></a>
   </header>
   <nav class="ws-interior__chapters" aria-label="七重疊：七個版塊的編輯內頁">
@@ -21,9 +21,9 @@
     {{ end }}
   </nav>
   <div class="ws-interior__folio-line" aria-hidden="true">
-    <span lang="en">WESTSIDE WATCH / SEVENFOLD</span>
+    <span lang="en">WESTSIDE WATCH / EDITORIAL</span>
     <span lang="en">{{ $item.number }} / 07</span>
-    <span lang="en">THE EDITORIAL FOLIO</span>
+    <span lang="en">WATCH FOR THE DAWN</span>
   </div>
   <section class="ws-interior__opening" aria-label="版塊導讀">
     <div class="ws-interior__opening-text">
@@ -79,10 +79,8 @@
     <div class="ws-interior__feature-art" aria-hidden="true">
       {{ if eq $key "church" }}
         <span class="ws-interior__feature-stamp ws-interior__feature-stamp--church"></span>
-      {{ else if eq $key "journal" }}
-        <img src="/images/westside-watch-morning-star.svg" alt="" loading="lazy">
-      {{ else }}
-        <span class="ws-interior__feature-stamp" lang="en">{{ $item.number }}</span>
+      {{ else if $item.art }}
+        <img src="{{ $item.art }}" alt="" loading="lazy" decoding="async">
       {{ end }}
       <span class="ws-interior__feature-art-label" lang="en">{{ $item.eyebrow }}</span>
     </div>
