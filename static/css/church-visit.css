@@ -437,3 +437,10 @@ body.church-visit{
  font:var(--ws-weight-air) var(--ws-type-scale-meta)/1.5 var(--ws-type-display-zh);
  color:var(--ws-first-light);letter-spacing:.07em;
 }
+
+/* Scripture cross-references contain Chinese book names. Never force
+   Bodoni-only glyph coverage onto those Han characters. */
+.church-visit .ws-church-scriptures small{
+ font:var(--ws-weight-standard) var(--ws-type-scale-meta)/1.5 var(--ws-type-display-zh);
+ color:var(--ws-first-light);font-style:normal;
+}
