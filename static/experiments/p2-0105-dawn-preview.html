@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex,nofollow">
 <title>黎明書局 · Westside Watch</title>
 <link rel="stylesheet" href="/css/westside-design-os.css">
-<link rel="stylesheet" href="/css/p2-0105-dawn-integrated.css?v=r84-full-bleed-visual-squares-20261123">
+<link rel="stylesheet" href="/css/p2-0105-dawn-integrated.css?v=r85-no-giant-top-nav-20261123">
 </head>
 <body data-ws-scope="p2">
 <main class="p205-track" id="p205-track" aria-label="Westside Watch 連續閱讀">
@@ -81,21 +81,11 @@
   </section>
   <div class="dawn-handoff" id="dawn-handoff" aria-hidden="true"></div>
   <section class="dawn-second" id="dawn-second" data-ws-scope="dawn-library" inert aria-hidden="true">
-   <nav class="dawn-second__global-nav" aria-label="黎明書局導航">
+   <nav class="dawn-second__global-nav" aria-label="返回上一層">
     <button type="button" class="dawn-second__return" id="dawn-return" aria-label="返回黎明書局第一層">
       <span class="dawn-second__return-mark" aria-hidden="true">↖</span>
       <span class="dawn-second__nav-zh">返回</span>
     </button>
-    <div class="dawn-second__nav-actions">
-      <button type="button" class="dawn-second__all-works" id="dawn-open-catalogue-top">
-        <span class="dawn-second__nav-en" lang="en">THE COLLECTION</span>
-        <span class="dawn-second__nav-zh">全部館藏 <span aria-hidden="true">↗</span></span>
-      </button>
-      <button type="button" class="dawn-second__personal" id="dawn-personal-open" aria-haspopup="dialog" aria-controls="dawn-personal-dialog">
-        <span class="dawn-second__nav-en" lang="en">MY LIBRARY</span>
-        <span class="dawn-second__nav-zh">我的書房 <span id="dawn-personal-count">0</span></span>
-      </button>
-    </div>
    </nav>
    <div class="dawn-second__press dawn-second__press--motherform" aria-label="經文鉛字母版 · 詩篇 119:18">
     <iframe class="dawn-second__motherform" title="Scripture Studio · 黎明書局縱橫鉛字經文母版" src="/experiments/scripture-studio-motherform-live.html?embed=1&amp;section=05&amp;layout=dawn-spread&amp;r38=1" loading="eager"></iframe>
@@ -160,7 +150,10 @@
       </nav>
       <p class="dawn-reading-room__department-status" id="dawn-department-status" role="status" aria-live="polite"></p>
     </section>
-    <div class="dawn-wall__tail"><button type="button" id="dawn-open-catalogue">全部館藏 <span aria-hidden="true">＋</span></button></div>
+    <div class="dawn-wall__tail">
+     <button type="button" id="dawn-open-catalogue">全部館藏 <span aria-hidden="true">＋</span></button>
+     <button type="button" class="dawn-wall__personal" id="dawn-personal-open" aria-haspopup="dialog" aria-controls="dawn-personal-dialog">我的書房 <span id="dawn-personal-count">0</span></button>
+    </div>
    </section>
    <section class="dawn-catalogue" id="dawn-catalogue" aria-label="黎明書局館藏" hidden>
     <button type="button" class="dawn-catalogue__back" id="dawn-close-catalogue">返回館藏</button>
@@ -222,8 +215,8 @@
   </section>
  </div>
 </main>
-<script src="/js/p2-0105-dawn-continuation.js?v=r84-full-bleed-visual-squares-20261123"></script>
-<script type="module" src="/js/p2-dawn-personal-bridge.mjs?v=r84-full-bleed-visual-squares-20261123"></script>
-<script type="module" src="/js/p2-dawn-editorial-art.mjs?v=r84-full-bleed-visual-squares-20261123"></script>
+<script src="/js/p2-0105-dawn-continuation.js?v=r85-no-giant-top-nav-20261123"></script>
+<script type="module" src="/js/p2-dawn-personal-bridge.mjs?v=r85-no-giant-top-nav-20261123"></script>
+<script type="module" src="/js/p2-dawn-editorial-art.mjs?v=r85-no-giant-top-nav-20261123"></script>
 </body>
 </html>
