@@ -1,86 +1,209 @@
-/* Westside Watch / P2 church second-layer editorial introduction.
-   The WebGL tour owns the screen. These narrow paper fragments disappear
-   entirely for the direct, camera-only /p2/church-tour.html route. */
+/* P2 ministry editorial glass / OS source colours. Native tour untouched. */
 body[data-church-entry="p2"]{font-family:var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif)}
 body[data-church-entry="p2"] #church-canvas{touch-action:none}
-.ws-ministry-story{--sheet:rgba(239,235,223,.94);--ink:#282e2b;--gold:#8b7042;--rule:rgba(77,70,57,.25);
- position:fixed;inset:0;z-index:15;pointer-events:none;color:var(--ink);
- -webkit-font-smoothing:antialiased}
+.ws-ministry-story{
+  --dawn:var(--ws-first-light,rgb(162 135 42));
+  --water:var(--ws-water,rgb(91 143 168));
+  --ink:rgb(33 52 57);
+  --hairline:color-mix(in srgb,var(--water) 48%,transparent);
+  position:fixed;inset:0;z-index:15;pointer-events:none;color:var(--ink);
+  -webkit-font-smoothing:antialiased;font-synthesis:none;
+}
+.ws-ministry-story *, .ws-ministry-story *::before, .ws-ministry-story *::after{box-sizing:border-box}
 .ws-ministry-story button,.ws-ministry-story a{pointer-events:auto;-webkit-tap-highlight-color:transparent}
-.ws-ministry-story button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+.ws-ministry-story button{font:inherit;border:0;background:transparent;color:inherit;cursor:pointer}
 .ws-ministry-story button:focus-visible,.ws-ministry-story a:focus-visible{
- outline:2px solid var(--gold);outline-offset:4px}
-.ws-ministry-story__rail{position:absolute;left:clamp(15px,2.2vw,42px);top:clamp(20px,3.4vh,46px);
- width:min(252px,27vw);background:var(--sheet);padding:20px 20px 17px;
- box-shadow:0 14px 42px rgba(60,54,44,.09);pointer-events:auto;
- border-top:1px solid var(--gold);backdrop-filter:blur(12px)}
-.ws-ministry-story__eyebrow{font:400 10px/1.35 var(--ws-type-display-en-sc,"Bodoni Moda SC",serif);
- letter-spacing:.16em;color:#685e51}
-.ws-ministry-story__heading{font:200 clamp(18px,1.35vw,23px)/1.3 var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);
- letter-spacing:.09em;margin:7px 0 0}
-.ws-ministry-story__rule{height:1px;background:var(--rule);margin:18px 0 7px}
+  outline:2px solid var(--dawn);outline-offset:3px
+}
+/* The panes read as rectilinear light wells, never rounded paper cards.
+   Warm OS gold catches the edge, living-water blue passes through the pane. */
+.ws-ministry-story__rail,.ws-ministry-story__panel,.ws-ministry-story__sunday,.ws-ministry-story__minimal{
+  background:
+    linear-gradient(133deg,rgba(255,255,255,.73) 0%,rgba(255,255,255,.32) 22%,transparent 49%),
+    linear-gradient(158deg,color-mix(in srgb,var(--water) 23%,transparent),
+      rgba(237,246,247,.56) 49%,rgba(249,245,231,.68) 100%);
+  border:1px solid var(--hairline);border-top:2px solid var(--dawn);
+  border-radius:0!important;
+  box-shadow:0 17px 58px rgba(34,75,91,.13),inset 0 1px 0 rgba(255,255,255,.72);
+  -webkit-backdrop-filter:blur(22px) saturate(1.35);
+  backdrop-filter:blur(22px) saturate(1.35);
+}
+.ws-ministry-story__rail,.ws-ministry-story__panel,.ws-ministry-story__sunday{
+  position:absolute;pointer-events:auto;isolation:isolate
+}
+.ws-ministry-story__rail::before,.ws-ministry-story__panel::before,.ws-ministry-story__sunday::before{
+  content:"";position:absolute;inset:5px 5px auto auto;width:39%;height:20%;
+  border-top:1px solid rgba(255,255,255,.76);
+  border-right:1px solid rgba(255,255,255,.56);
+  pointer-events:none;z-index:-1
+}
+.ws-ministry-story__rail{
+  left:clamp(15px,2.2vw,42px);top:clamp(20px,3.4vh,46px);
+  width:clamp(222px,19vw,272px);padding:21px 19px 17px
+}
+.ws-ministry-story__eyebrow{
+  color:var(--dawn);font:400 10px/1.35 var(--ws-type-display-en-sc,"Bodoni Moda SC",serif);
+  letter-spacing:.09em;white-space:normal;word-break:keep-all;text-wrap:balance
+}
+.ws-ministry-story__heading{
+  font:200 clamp(18px,1.35vw,23px)/1.3 var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);
+  letter-spacing:.06em;margin:7px 0 0;word-break:keep-all;text-wrap:balance
+}
+.ws-ministry-story__rule{height:1px;background:var(--hairline);margin:17px 0 7px}
 .ws-ministry-story__index{display:flex;flex-direction:column;gap:0}
-.ws-ministry-story__chapter{display:grid;grid-template-columns:23px 1fr 13px;align-items:center;
- column-gap:11px;text-align:left;padding:9px 0;border-bottom:1px solid var(--rule)!important;
- opacity:.68;transition:opacity .35s,color .35s;min-height:36px}
+.ws-ministry-story__chapter{
+  display:grid;grid-template-columns:22px minmax(0,1fr) 11px;align-items:center;
+  column-gap:10px;text-align:left;padding:9px 0;min-height:35px;
+  border-bottom:1px solid var(--hairline)!important;
+  opacity:.77;transition:opacity .25s,color .25s
+}
 .ws-ministry-story__chapter:hover,.ws-ministry-story__chapter[aria-current="step"]{opacity:1}
-.ws-ministry-story__chapter[aria-current="step"]{color:#785e2f}
-.ws-ministry-story__chapter-number{font:400 11px/1 var(--ws-type-display-en-sc,"Bodoni Moda SC",serif);font-variant-numeric:tabular-nums}
-.ws-ministry-story__chapter-title{font:400 12px/1.5 var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);letter-spacing:.04em}
+.ws-ministry-story__chapter[aria-current="step"]{color:var(--dawn)}
+.ws-ministry-story__chapter-number{
+  font:400 11px/1 var(--ws-type-display-en-sc,"Bodoni Moda SC",serif);font-variant-numeric:tabular-nums
+}
+.ws-ministry-story__chapter-title{
+  font:400 12px/1.45 var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);
+  letter-spacing:.02em;white-space:nowrap;word-break:keep-all
+}
 .ws-ministry-story__chapter-mark{height:1px;width:10px;background:currentColor;opacity:0}
 .ws-ministry-story__chapter[aria-current="step"] .ws-ministry-story__chapter-mark{opacity:1}
-.ws-ministry-story__rail-footer{display:flex;justify-content:space-between;gap:6px;align-items:center;
- margin-top:14px}
-.ws-ministry-story__control{font:400 10px/1.5 var(--ws-type-display-en,"Bodoni Moda",serif)!important;
- letter-spacing:.08em;padding:4px 0!important;color:#625b51!important}
-.ws-ministry-story__back{font:400 10px/1.5 var(--ws-type-display-en,"Bodoni Moda",serif);
- text-decoration:none;letter-spacing:.12em;color:#625b51}
-.ws-ministry-story__panel{position:absolute;right:clamp(18px,3vw,58px);bottom:clamp(24px,5.3vh,64px);
- width:min(345px,31vw);padding:20px 23px 21px;
- background:var(--sheet);border-top:1px solid var(--gold);pointer-events:auto;
- box-shadow:0 16px 46px rgba(60,54,44,.1);backdrop-filter:blur(12px)}
-.ws-ministry-story__meta{display:flex;align-items:center;justify-content:space-between;gap:12px;
- color:var(--gold);font:400 10px/1.2 var(--ws-type-display-en-sc,"Bodoni Moda SC",serif);
- letter-spacing:.13em}
-.ws-ministry-story__title{font:200 clamp(24px,2.2vw,36px)/1.25 var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);
- letter-spacing:.045em;margin:13px 0 10px}
-.ws-ministry-story__description{font:400 clamp(13px,1vw,15px)/1.8 var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);
- letter-spacing:.035em;margin:0;max-width:30ch}
-.ws-ministry-story__reference{display:block;border-top:1px solid var(--rule);margin-top:17px;padding-top:11px;
- color:#665c4c;font:400 11px/1.5 var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);
- letter-spacing:.04em}
-.ws-ministry-story__progress{position:absolute;left:0;bottom:0;width:100%;height:2px;background:rgba(106,95,77,.12)}
-.ws-ministry-story__progress-fill{height:100%;width:0;background:#9e854c;transition:width .25s linear}
-.ws-ministry-story__minimal{position:absolute;left:clamp(15px,2.2vw,42px);bottom:clamp(24px,5.3vh,64px);
- display:none;padding:10px 15px!important;background:var(--sheet)!important;
- border-top:1px solid var(--gold)!important;font-size:12px!important;letter-spacing:.05em;
- box-shadow:0 10px 30px rgba(60,54,44,.1)}
+.ws-ministry-story__rail-footer{
+  display:flex;justify-content:space-between;gap:7px;align-items:center;margin-top:14px;
+  flex-wrap:wrap
+}
+.ws-ministry-story__control,.ws-ministry-story__back{
+  font:400 11px/1.5 var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif)!important;
+  white-space:nowrap;word-break:keep-all;letter-spacing:.01em;padding:3px 0!important;
+  color:var(--ink)!important;text-decoration:none
+}
+.ws-ministry-story__panel,.ws-ministry-story__sunday{
+  right:clamp(15px,3vw,58px);bottom:clamp(18px,4.5vh,64px);
+  width:min(430px,35vw);aspect-ratio:1/1;
+  max-height:min(73svh,570px);min-height:0;
+  padding:21px clamp(20px,2vw,29px);
+  display:flex;flex-direction:column;overflow:hidden;
+}
+.ws-ministry-story__meta{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  color:var(--dawn);font:400 11px/1.3 var(--ws-type-display-en-sc,"Bodoni Moda SC",serif);
+  letter-spacing:.08em;white-space:nowrap
+}
+.ws-ministry-story__title{
+  font:200 clamp(24px,2vw,34px)/1.18 var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);
+  letter-spacing:.035em;margin:13px 0 8px;word-break:keep-all;text-wrap:balance;
+}
+.ws-ministry-story__description{
+  font:400 clamp(12px,.95vw,14px)/1.75 var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);
+  margin:0 0 12px;letter-spacing:.025em;word-break:normal;text-wrap:pretty
+}
+.ws-ministry-story__scripture{
+  min-height:0;flex:1 1 auto;overflow-y:auto;overscroll-behavior:contain;
+  padding:12px 8px 1px 0;border-top:1px solid var(--hairline);
+  scrollbar-width:thin;scrollbar-color:var(--water) transparent
+}
+.ws-ministry-story__verse-zh{
+  font:400 clamp(13px,1.05vw,15px)/1.82 var(--ws-type-reading-zh,"Noto Serif TC",serif);
+  letter-spacing:.02em;white-space:normal;word-break:normal;line-break:strict;
+  overflow-wrap:break-word;text-wrap:pretty;
+}
+.ws-ministry-story__verse-en{
+  margin-top:13px;color:color-mix(in srgb,var(--ink) 84%,var(--water));
+  font:400 clamp(12px,.89vw,14px)/1.64 var(--ws-type-display-en,"Bodoni Moda",serif);
+  letter-spacing:.007em;word-break:normal;overflow-wrap:normal;hyphens:none;
+  white-space:normal;text-wrap:pretty
+}
+.ws-ministry-story__reference{
+  display:block;margin-top:14px;padding-top:9px;border-top:1px solid var(--hairline);
+  color:var(--dawn);font:400 11px/1.5 var(--ws-type-display-en-sc,"Bodoni Moda SC",serif);
+  letter-spacing:.03em;word-break:keep-all;text-wrap:pretty
+}
+.ws-ministry-story__sunday{display:none;padding:20px 23px 16px}
+.ws-ministry-story__sunday-head{border-bottom:1px solid var(--hairline);padding-bottom:12px}
+.ws-ministry-story__sunday-head h2{
+  margin:9px 0 0;font:200 28px/1.2 var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);
+  letter-spacing:.04em
+}
+.ws-ministry-story__sunday-head h2 span{
+  display:block;color:var(--dawn);font:400 12px/1.3 var(--ws-type-display-en-sc,"Bodoni Moda SC",serif);
+  letter-spacing:.08em;margin-top:2px
+}
+.ws-ministry-story__sunday-rows{display:flex;flex-direction:column;min-height:0;flex:1;overflow:auto}
+.ws-ministry-story__sunday-row{
+  display:grid;grid-template-columns:95px minmax(0,1fr);gap:10px;align-items:baseline;
+  padding:7px 0;border-bottom:1px solid var(--hairline)
+}
+.ws-ministry-story__sunday-row time{
+  color:var(--dawn);white-space:nowrap;font:400 11px/1.3 var(--ws-type-display-en,"Bodoni Moda",serif)
+}
+.ws-ministry-story__sunday-row strong{
+  display:block;font:400 12px/1.35 var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);
+  word-break:keep-all;text-wrap:pretty
+}
+.ws-ministry-story__sunday-row small{
+  display:block;font:400 10px/1.4 var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);
+  color:color-mix(in srgb,var(--ink) 70%,var(--water));margin-top:2px;
+  word-break:normal;text-wrap:pretty
+}
+.ws-ministry-story__sunday footer{
+  padding-top:10px;font:400 10px/1.35 var(--ws-type-display-en-sc,"Bodoni Moda SC",serif);
+  color:var(--dawn);white-space:normal
+}
+.ws-ministry-story.is-finale .ws-ministry-story__panel{display:none}
+.ws-ministry-story.is-finale .ws-ministry-story__sunday{display:flex}
+.ws-ministry-story__progress{position:absolute;left:0;bottom:0;width:100%;height:2px;
+ background:color-mix(in srgb,var(--water) 20%,transparent)}
+.ws-ministry-story__progress-fill{
+  height:100%;width:0;background:var(--dawn);transition:width .2s linear
+}
+.ws-ministry-story__minimal{
+  position:absolute;left:clamp(15px,2.2vw,42px);bottom:clamp(18px,4.5vh,64px);
+  display:none;padding:11px 15px!important;font-size:12px!important;
+  letter-spacing:.025em;word-break:keep-all
+}
 .ws-ministry-story.is-minimal .ws-ministry-story__rail,
-.ws-ministry-story.is-minimal .ws-ministry-story__panel{display:none}
+.ws-ministry-story.is-minimal .ws-ministry-story__panel,
+.ws-ministry-story.is-minimal .ws-ministry-story__sunday{display:none}
 .ws-ministry-story.is-minimal .ws-ministry-story__minimal{display:block}
-@media(max-width:880px){
- .ws-ministry-story__rail{width:min(215px,29vw);padding:14px 15px}
- .ws-ministry-story__chapter{padding:7px 0}
- .ws-ministry-story__panel{width:min(310px,42vw)}
+@media(max-width:950px){
+  .ws-ministry-story__rail{width:218px;padding:15px}
+  .ws-ministry-story__panel,.ws-ministry-story__sunday{width:min(360px,44vw)}
 }
 @media(max-width:680px){
- .ws-ministry-story__rail{left:10px;top:10px;width:calc(100% - 20px);padding:10px 13px 8px;
-  border-top:1px solid var(--gold)}
- .ws-ministry-story__heading{font-size:15px;margin-top:3px}
- .ws-ministry-story__rule{margin:8px 0 3px}
- .ws-ministry-story__index{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px}
- .ws-ministry-story__chapter{min-height:35px;padding:5px 2px;display:flex;flex-direction:column;
-  gap:3px;justify-content:center;border-bottom:0!important}
- .ws-ministry-story__chapter-number{font-size:10px}
- .ws-ministry-story__chapter-title{font-size:9px;white-space:nowrap;letter-spacing:0}
- .ws-ministry-story__chapter-mark{display:none}
- .ws-ministry-story__rail-footer{margin-top:4px}
- .ws-ministry-story__panel{left:10px;right:10px;bottom:14px;width:auto;
-  padding:12px 15px 16px}
- .ws-ministry-story__title{font-size:21px;margin:6px 0 4px}
- .ws-ministry-story__description{font-size:12px;line-height:1.65;max-width:none}
- .ws-ministry-story__reference{font-size:10px;margin-top:8px;padding-top:7px}
- .ws-ministry-story__minimal{left:10px;bottom:14px}
+  .ws-ministry-story__rail{
+    left:10px;top:10px;width:calc(100% - 20px);
+    padding:10px 13px 8px;max-height:30svh;overflow:auto
+  }
+  .ws-ministry-story__heading{font-size:15px;margin-top:3px}
+  .ws-ministry-story__eyebrow{font-size:9px}
+  .ws-ministry-story__rule{margin:8px 0 3px}
+  .ws-ministry-story__index{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px}
+  .ws-ministry-story__chapter{
+    min-height:37px;padding:4px 1px;display:flex;flex-direction:column;
+    gap:3px;justify-content:center;border-bottom:0!important
+  }
+  .ws-ministry-story__chapter-number{font-size:10px}
+  .ws-ministry-story__chapter-title{font-size:9px;white-space:nowrap;letter-spacing:0}
+  .ws-ministry-story__chapter-mark{display:none}
+  .ws-ministry-story__rail-footer{margin-top:4px}
+  .ws-ministry-story__panel,.ws-ministry-story__sunday{
+    left:10px;right:10px;bottom:12px;width:calc(100% - 20px);
+    aspect-ratio:auto;height:auto;max-height:min(55svh,492px);
+    min-height:min(36svh,300px);padding:14px 16px 17px
+  }
+  .ws-ministry-story__title{font-size:22px;margin:8px 0 5px}
+  .ws-ministry-story__description{font-size:12px;line-height:1.65;margin-bottom:8px}
+  .ws-ministry-story__verse-zh{font-size:13px;line-height:1.65}
+  .ws-ministry-story__verse-en{font-size:12px;line-height:1.55}
+  .ws-ministry-story__reference{font-size:10px}
+  .ws-ministry-story__sunday-head h2{font-size:22px}
+  .ws-ministry-story__sunday-row{padding:6px 0;grid-template-columns:92px minmax(0,1fr)}
+  .ws-ministry-story__minimal{left:10px;bottom:12px}
 }
-@media(max-width:400px){.ws-ministry-story__chapter-title{font-size:8px}}
-@media(prefers-reduced-motion:reduce){.ws-ministry-story *{transition:none!important;animation:none!important}}
+@media(max-width:400px){
+  .ws-ministry-story__chapter-title{font-size:8px}
+  .ws-ministry-story__panel,.ws-ministry-story__sunday{max-height:56svh}
+}
+@media(prefers-reduced-motion:reduce){
+  .ws-ministry-story *{transition:none!important;animation:none!important}
+}
