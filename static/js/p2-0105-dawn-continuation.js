@@ -423,12 +423,16 @@
   if(/^(?:OL\d+W|dawn:[\w:-]+)$/.test(actualWorkId)){
    p2BookCache.set(actualWorkId,work);
   }
-  window.dispatchEvent(new CustomEvent('dawn:p2:work-opened',{detail:{
-   workId:actualWorkId,title:work.title,creator:work.creator||work.author||''
-  }}));
+  if(/^(?:OL\d+W|dawn:[\w:-]+)$/.test(actualWorkId)){
+   window.dispatchEvent(new CustomEvent('dawn:p2:work-opened',{detail:{
+    workId:actualWorkId,title:work.title,creator:work.creator||work.author||''
+   }}));
+  }
   detailEdition.textContent=work.date?String(work.date):'';
-  const source=coverLookup?.get(normalizeTitle(work.title));
-  const visual=imageFor(work,source);
+  const source=work.editorialKey?null:coverLookup?.get(normalizeTitle(work.title));
+  const visual=work.editorialKey
+   ?(safeHttp(work.cover?.url)?{url:safeHttp(work.cover.url),alt:'中文版書封：'+work.title,kind:'cover'}:null)
+   :imageFor(work,source);
   setDetailImage(visual);
   const sourceUrl=safeHttp(work.sourceUrl||work.source?.url||source?.source?.url||visual?.workSource||visual?.source);
   const sourceHint=$('#dawn-book-source-hint');
@@ -448,9 +452,10 @@
   }
   second.scrollTo({top:detail.offsetTop,behavior:'instant'});
   // Optional source-backed trial text appears only when genuinely present.
+  if(!/^(?:OL\d+W|dawn:[\w:-]+)$/.test(actualWorkId))return;
   try{
    const reader=await import('/js/dawn-reading-resolver.mjs');
-   const pack=await reader.localReadingPack(work.workId||work.id);
+   const pack=await reader.localReadingPack(actualWorkId);
    if(ticket!==detailTicket)return;
    if(pack?.segments?.length)appendReadingExtract(pack);
   }catch(error){console.debug('[Dawn editorial reading pack]',error)}
@@ -561,7 +566,7 @@
     workId:entry.libraryWorkId||undefined,
     date:entry.edition||'',cover:entry.image?{url:entry.image}:undefined,
     imageCredit:entry.imageCredit||'',
-    editorialKey:entry.editorialKey,
+    editorialKey:entry.editorialKey,readingRole:entry.role.split('｜')[0],
     editorialParagraphs:[
      '為什麼推薦：'+entry.judgement,
      '怎樣閱讀：'+entry.counterpoint,
@@ -1312,9 +1317,11 @@
   clearBookPreview();
   const frag=document.createDocumentFragment();
   items.forEach((work,i)=>{
-   const li=document.createElement('li');li.className='dawn-catalogue__sleeve';
-   const source=coverLookup?.get(normalizeTitle(work.title));
-   const art=imageFor(work,source);
+   const li=document.createElement('li');li.className='dawn-catalogue__sleeve'+(kind==='書單'?' dawn-reading-list__sleeve':'');
+   const source=kind==='書單'?null:coverLookup?.get(normalizeTitle(work.title));
+   const art=kind==='書單'
+    ?(safeHttp(work.cover?.url)?{url:safeHttp(work.cover.url),alt:'中文版書封：'+work.title,kind:'cover'}:null)
+    :imageFor(work,source);
    const card=document.createElement('button');card.type='button';
    card.className='dawn-catalogue__cover-card'+(art?' dawn-catalogue__cover-card--image':' dawn-catalogue__cover-card--unresolved');
    card.setAttribute('aria-label','閱讀：'+work.title);
@@ -1327,7 +1334,7 @@
    const num=document.createElement('small');num.textContent=String(i+1).padStart(2,'0');
    const title=document.createElement('strong');title.textContent=work.title;
    const author=document.createElement('span');author.textContent=work.creator||'';
-   const year=document.createElement('small');year.textContent=work.date||'';
+   const year=document.createElement('small');year.textContent=kind==='書單'?(work.readingRole||''):work.date||'';
    copy.append(num,title,author,year);card.append(copy);
    card.addEventListener('click',()=>selectBookPreview(works,li,work));
    li.append(card);frag.append(li);
