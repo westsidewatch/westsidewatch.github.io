@@ -39,7 +39,11 @@ assert(!html.includes('dawn-reading-room__reading-lists'),'Oversized parallel re
 assert(!html.includes('id="dawn-issue-contents"'),'Duplicate large reading masthead has reappeared');
 assert.equal((html.match(/class="dawn-wall__tile dawn-reading-list__tile/g)||[]).length,3,'Three guided list sleeves must use existing wall tiles');
 assert(html.indexOf('data-dawn-portal="光譜"')<html.indexOf('data-dawn-reading-list="gospel-essentials"'),'Booklists must follow the original three editorial portals');
-assert(html.includes('dawn-reading-list__issue'),'Quiet journal imprint missing inside original grid');
+assert(html.includes('class="dawn-reading-list__series" aria-labelledby="dawn-reading-list-heading"'),'Reading lists need an independent named chapter in the original vinyl wall');
+assert(html.includes('<h2 id="dawn-reading-list-heading">書單</h2>'),'Visible Chinese 書單 wayfinding missing');
+assert(!html.includes('dawn-reading-list__issue'),'Invisible tiny English-only strip must not return');
+assert((html.match(/<span class="dawn-reading-list__serial">書單 /g)||[]).length===3,'Each list square must say 書單, not resemble an individual book');
+assert(css.includes('.dawn-reading-list__series-grid')&&css.includes('grid-column:1 / -1!important'),'Guided group must occupy a whole record-wall row without mixing with original covers');
 assert(html.includes('class="dawn-reading-room__departments" aria-labelledby="dawn-departments-heading" hidden'),'Seven subjects should not compete on editorial opening');
 assert(js.includes("works.prepend(guide)"),'Guided question square must precede original books');
 assert(js.includes("guide.className='dawn-reading-list__guide'"),'2x2 guide not rendered inside existing catalogue');
