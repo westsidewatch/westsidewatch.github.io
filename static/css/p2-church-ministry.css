@@ -26,7 +26,7 @@ body[data-church-entry="p2"] #church-canvas{touch-action:none}
 .ws-ministry-story__chapter:hover,.ws-ministry-story__chapter[aria-current="step"]{opacity:1}
 .ws-ministry-story__chapter[aria-current="step"]{color:#785e2f}
 .ws-ministry-story__chapter-number{font:400 11px/1 var(--ws-type-display-en-sc,"Bodoni Moda SC",serif);font-variant-numeric:tabular-nums}
-.ws-ministry-story__chapter-title{font:200 12px/1.5 var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);letter-spacing:.04em}
+.ws-ministry-story__chapter-title{font:400 12px/1.5 var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);letter-spacing:.04em}
 .ws-ministry-story__chapter-mark{height:1px;width:10px;background:currentColor;opacity:0}
 .ws-ministry-story__chapter[aria-current="step"] .ws-ministry-story__chapter-mark{opacity:1}
 .ws-ministry-story__rail-footer{display:flex;justify-content:space-between;gap:6px;align-items:center;
@@ -44,7 +44,7 @@ body[data-church-entry="p2"] #church-canvas{touch-action:none}
  letter-spacing:.13em}
 .ws-ministry-story__title{font:200 clamp(24px,2.2vw,36px)/1.25 var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);
  letter-spacing:.045em;margin:13px 0 10px}
-.ws-ministry-story__description{font:200 clamp(13px,.95vw,15px)/1.9 var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);
+.ws-ministry-story__description{font:400 clamp(13px,1vw,15px)/1.8 var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);
  letter-spacing:.035em;margin:0;max-width:30ch}
 .ws-ministry-story__reference{display:block;border-top:1px solid var(--rule);margin-top:17px;padding-top:11px;
  color:#665c4c;font:400 11px/1.5 var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);

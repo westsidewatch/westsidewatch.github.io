@@ -1325,6 +1325,12 @@ const startSeconds=requestedStart!==null&&Number.isFinite(Number(requestedStart)
   ?Math.min(route[route.length-1].at,Math.max(0,Number(requestedStart))):0;
 let elapsed = startSeconds, previousFrame = 0, isVisible = !document.hidden;
 let guidePaused=false;
+let guideClockAnchor=null;
+function guideCurrentSeconds(now){
+  return guideClockAnchor
+    ?guideClockAnchor.elapsed+Math.max(0,now-guideClockAnchor.started)/1000
+    :elapsed;
+}
 let pointerDown = false, pointerX = 0, pointerY = 0;
 let yawOffset = 0, pitchOffset = 0;
 canvas.addEventListener("pointerdown", event => {
@@ -1339,7 +1345,15 @@ canvas.addEventListener("pointermove", event => {
 });
 canvas.addEventListener("pointerup", () => { pointerDown = false; });
 canvas.addEventListener("pointercancel", () => { pointerDown = false; });
-document.addEventListener("visibilitychange", () => { isVisible = !document.hidden; previousFrame = 0; });
+document.addEventListener("visibilitychange", () => {
+  isVisible=!document.hidden;previousFrame=0;
+  if(!isVisible&&guideClockAnchor){
+    elapsed=guideCurrentSeconds(performance.now());
+    guideClockAnchor=null;
+  }else if(isVisible&&!guidePaused&&!prefersReducedMotion&&entryParams.get("entry")==="p2"){
+    guideClockAnchor={elapsed,started:performance.now()};
+  }
+});
 
 const lookAtVector = new Vector3();
 function animate(now,forcedTime=null) {
@@ -1347,7 +1361,8 @@ function animate(now,forcedTime=null) {
   if (!isVisible) { previousFrame = now; return; }
   const dt = previousFrame ? Math.min(0.045, Math.max(0, (now - previousFrame) / 1000)) : 0;
   previousFrame = now;
-  if (!prefersReducedMotion && !guidePaused) elapsed += dt;
+  if (!prefersReducedMotion && !guidePaused)
+    elapsed=guideClockAnchor?guideCurrentSeconds(now):elapsed+dt;
   const duration = route[route.length - 1].at;
   // Do not reset early: perform the entire route, including the third level
   // and the final aerial, before restarting after a short panoramic hold.
@@ -1430,22 +1445,34 @@ loadArchitecture().then(() => {
   // WebGL frame without reloading the architecture or guessing RAF timing.
   window.__churchRenderProofFrame=at=>animate(performance.now(),at);
   // This opt-in editorial controller uses the established 3D GLB route.
+  // P2 uses wall-clock playback; camera-only routes retain original timing.
+  if(entryParams.get("entry")==="p2"&&!prefersReducedMotion)
+    guideClockAnchor={elapsed,started:performance.now()};
   window.__churchGuide={
     seek(seconds){
       const t=Number(seconds);
       if(!Number.isFinite(t))return false;
       elapsed=Math.min(route[route.length-1].at,Math.max(0,t));
+      if(guideClockAnchor)guideClockAnchor={elapsed,started:performance.now()};
       previousFrame=0;
       yawOffset=0;pitchOffset=0;
       animate(performance.now(),elapsed);
       return true;
     },
-    pause(){guidePaused=true;},
-    play(){guidePaused=false;previousFrame=0;},
+    pause(){
+      if(!guidePaused)elapsed=guideCurrentSeconds(performance.now());
+      guidePaused=true;guideClockAnchor=null;
+    },
+    play(){
+      guidePaused=false;previousFrame=0;
+      if(!prefersReducedMotion)guideClockAnchor={elapsed,started:performance.now()};
+    },
     status(){
       const duration=route[route.length-1].at;
+      const position=(!guidePaused&&!prefersReducedMotion)
+        ?guideCurrentSeconds(performance.now()):elapsed;
       return {ready:document.body.classList.contains("ready"),
-        at:Math.min(duration,elapsed%(duration+20)),paused:guidePaused,duration};
+        at:Math.min(duration,position%(duration+20)),paused:guidePaused,duration};
     }
   };
   requestAnimationFrame(animate);
