@@ -90,8 +90,7 @@ try{
     throw Error('Invalid or incomplete video duration');
   }
   const seekTo=Math.min(120,Math.floor(beforeSeek.duration/2));
-  await player.evaluate(async (target) => {
-    const v=document.getElementById('video');
+  await player.evaluate(async (v, target) => {
     await new Promise((resolve,reject) => {
       const timer=setTimeout(() => reject(Error('Seek timed out')),30000);
       v.addEventListener('seeked',()=>{clearTimeout(timer);resolve()}, {once:true});
