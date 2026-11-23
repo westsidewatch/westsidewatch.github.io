@@ -438,6 +438,7 @@
   const sourceUrl=safeHttp(work.sourceUrl||work.source?.url||source?.source?.url||visual?.workSource||visual?.source);
   const sourceHint=$('#dawn-book-source-hint');
   sourceHint.hidden=!sourceUrl;
+  sourceHint.textContent=work.editorialKey?'版本資訊於新分頁開啟。':'原書於新分頁開啟。';
   detailSource.target='_blank';detailSource.rel='noopener noreferrer';
   detailSource.textContent=work.sourceLabel||'閱讀原書 ↗';
   if(sourceUrl){detailSource.href=sourceUrl;detailSource.hidden=false}else{detailSource.hidden=true;detailSource.removeAttribute('href')}
