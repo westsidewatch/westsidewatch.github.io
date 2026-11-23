@@ -70,7 +70,12 @@ fs.mkdirSync(out,{recursive:true});
         });
         results.push({page:label,viewport:viewport.name,http:response?.status(),...data});
         if(response?.status()!==200)failures.push(viewport.name+" "+label+" HTTP "+response?.status());
-        if(data.scrollWidth>data.width+5)failures.push(viewport.name+" "+label+" horizontal overflow");
+        if(data.scrollWidth>data.width+5){
+          const offenders=await page.evaluate(()=>[...document.querySelectorAll("main *")].filter(el=>{
+            const rect=el.getBoundingClientRect();return rect.width>0&&rect.right>innerWidth+5;
+          }).slice(0,7).map(el=>({tag:el.tagName,className:String(el.className).slice(0,55),width:Math.round(el.getBoundingClientRect().width),right:Math.round(el.getBoundingClientRect().right)})));
+          failures.push(viewport.name+" "+label+" horizontal overflow "+JSON.stringify(offenders));
+        }
         if(!data.threeLists)failures.push(viewport.name+" "+label+" missing one of three reading lists");
         await page.screenshot({path:path.join(out,viewport.name+"-"+label+".png"),fullPage:true,animations:"disabled",timeout:30000});
         await page.locator('a[href="/dawn-library/reading-room/gospel-essentials.html"]').first().click({timeout:15000});
