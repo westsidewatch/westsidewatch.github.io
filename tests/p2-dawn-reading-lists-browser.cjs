@@ -65,6 +65,39 @@ const cases=[['gospel-essentials',6,1],['inner-life',9,0],['church-history',7,0]
     assert(style.firstListTop>=style.portalBottom-8,device+': reading lists displayed before the original three editorial portals '+JSON.stringify(style));
     assert(style.bookStartsAfterSeries,device+': actual book jackets intrude into the guided-list group '+JSON.stringify(style));
     assert(style.pageOverflow<18,device+': second layer horizontal overflow '+style.pageOverflow);
+    await page.locator('#dawn-reading-list-featured .dawn-reading-list__featured-book').first().waitFor({state:'visible',timeout:30000});
+    assert.equal(await page.locator('#dawn-reading-list-featured .dawn-reading-list__featured-book').count(),4,
+      device+': four authentic book-cover selections did not fill the right-hand empty grid');
+    const shelf=await page.locator('.dawn-reading-list__series').evaluate(el=>{
+      const left=el.querySelector('.dawn-reading-list__series-grid').getBoundingClientRect();
+      const right=el.querySelector('#dawn-reading-list-featured').getBoundingClientRect();
+      const cards=[...el.querySelectorAll('.dawn-reading-list__featured-book')];
+      return {left:{x:left.x,y:left.y,right:left.right,bottom:left.bottom},
+       right:{x:right.x,y:right.y,width:right.width,height:right.height},
+       sizes:cards.map(n=>{const r=n.getBoundingClientRect();return {w:r.width,h:r.height}}),
+       keys:cards.map(n=>n.dataset.dawnFeaturedWork),
+       overflow:document.querySelector('#dawn-second').scrollWidth-document.querySelector('#dawn-second').clientWidth};
+    });
+    assert.deepEqual(shelf.keys,['gospel-02','inner-05-chinese','history-01','inner-05'],
+      device+': featured jackets have lost their source-verified editorial identity');
+    assert(shelf.sizes.every(r=>Math.abs(r.w-r.h)<8&&r.w>100),
+      device+': sourced book jacket tiles must be square '+JSON.stringify(shelf));
+    if(width>1100){
+      assert(shelf.right.x>=shelf.left.right-6&&Math.abs(shelf.right.y-shelf.left.y)<10,
+        device+': source book covers must actually occupy the empty area to the right '+JSON.stringify(shelf));
+      assert(Math.abs(shelf.right.width-shelf.right.height)<12,
+        device+': right hand 2x2 book-cover matrix not square '+JSON.stringify(shelf));
+    }else{
+      assert(shelf.right.y>=shelf.left.bottom-10,
+        device+': narrow screens should reveal source covers below booklist tiles '+JSON.stringify(shelf));
+    }
+    assert(shelf.overflow<18,device+': featured cover row causes horizontal scrolling '+JSON.stringify(shelf));
+    await page.waitForFunction(()=>{
+      const local=[...document.querySelectorAll('#dawn-reading-list-featured img')].filter(n=>n.src.includes('/dawn-library/reading-room/assets/'));
+      return local.length===2&&local.every(n=>n.complete);
+    },null,{timeout:20000});
+    assert.equal(await page.locator('#dawn-reading-list-featured .dawn-reading-list__featured-book--image-ready').count()>=2,true,
+      device+': even the two existing original-edition local covers failed to render');
     await page.screenshot({path:path.join(out,device+'-native-reading-contents.png'),animations:'disabled',timeout:30000});
     const labelRects=await section.locator('button[data-dawn-reading-list]').evaluateAll(cards=>cards.map(el=>{
       const caption=el.querySelector('.dawn-reading-list__caption'),face=el.querySelector('.dawn-reading-list__face');
@@ -78,6 +111,7 @@ const cases=[['gospel-essentials',6,1],['inner-life',9,0],['church-history',7,0]
     await section.locator('#dawn-reading-list-heading').scrollIntoViewIfNeeded();
     await page.screenshot({path:path.join(out,device+'-native-vinyl-list-squares.png'),animations:'disabled',timeout:30000});
     await section.locator('.dawn-reading-list__series').screenshot({path:path.join(out,device+'-complete-booklist-series.png'),animations:'disabled',timeout:30000});
+    await page.locator('#dawn-reading-list-featured').screenshot({path:path.join(out,device+'-featured-book-jackets.png'),animations:'disabled',timeout:30000});
     for(const [slug,count,bookIndex] of cases){
       await page.locator('button[data-dawn-reading-list="'+slug+'"]').click();
       await page.waitForFunction(n=>document.querySelectorAll('#dawn-works button.dawn-catalogue__cover-card').length===n,count,{timeout:30000});
@@ -123,6 +157,19 @@ const cases=[['gospel-essentials',6,1],['inner-life',9,0],['church-history',7,0]
       await page.locator('#dawn-close-catalogue').click();
       assert(await page.locator('#dawn-wall').isVisible(),device+': original second-layer bookwall lost '+slug);
     }
+    // A featured book cover must reach the SAME underlying booklist and
+    // original Codrops expansion rather than creating a parallel book detail.
+    await page.locator('#dawn-reading-list-featured [data-dawn-featured-work="inner-05-chinese"]').click();
+    await page.locator('#dawn-book-expanding-preview .dawn-expander__read').waitFor({state:'visible',timeout:20000});
+    assert(await page.locator('#dawn-catalogue').isVisible(),device+': sourced cover did not enter its own booklist');
+    assert((await page.locator('#dawn-book-expanding-preview .dawn-expander__title').innerText()).includes('靜水流深'),
+      device+': selected cover does not open the matching editorial work');
+    await page.locator('#dawn-book-expanding-preview .dawn-expander__read').click();
+    await page.locator('#dawn-book-detail').waitFor({state:'visible',timeout:20000});
+    assert((await page.locator('#dawn-book-title').innerText()).includes('靜水流深'),
+      device+': source book cover entered an unrelated book detail');
+    await page.locator('#dawn-book-back').click();
+    await page.locator('#dawn-close-catalogue').click();
     assert.equal(await page.locator('#dawn-wall-grid .dawn-feature').count(),3);
     assert(errors.length===0,device+': javascript errors '+errors.join('; '));
     results.push({device,lists:3,books:22,nativeReturn:true,originalPortals:3});
