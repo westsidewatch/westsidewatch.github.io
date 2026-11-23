@@ -497,6 +497,8 @@
   second.scrollTo({top:catalogue.offsetTop,behavior:'instant'});
   const ticket=++portalTicket;
   if(activePortal==='all'){
+   $('#dawn-catalogue .dawn-catalogue__nav').hidden=false;
+   $('#dawn-catalogue .dawn-catalogue__more').hidden=false;
    portalTopics?.remove();portalTopics=null;editorialWorks=[];
    // The vinyl classification is the complete-collection landing.
    // The unclassified historical page set remains a navigable sub-collection.
@@ -544,12 +546,9 @@
    if(!list)throw Error('Reading list unavailable');
    const title=$('#dawn-catalogue-title');
    if(title)title.textContent=list.title;
-   catalogueFocus.textContent=list.question;
-   portalIntro.replaceChildren();
-   for(const paragraph of [list.introduction,'閱讀次序：'+list.sequence]){
-    const p=document.createElement('p');p.textContent=paragraph;portalIntro.append(p);
-   }
-   portalIntro.hidden=false;
+   // Reader's question belongs to the first 2x2 sleeve, not a duplicate masthead.
+   catalogueFocus.textContent='';
+   portalIntro.replaceChildren();portalIntro.hidden=true;
    portalTopics?.remove();
    const bar=document.createElement('nav');
    bar.className='dawn-catalogue__reading-index';
@@ -580,6 +579,22 @@
    }));
    editorialWorks=items;
    renderPortalWorks(items,'書單');
+   // The full question, context and reading order are the first native
+   // two-by-two vinyl sleeve. All actual book sleeves remain original.
+   const guide=document.createElement('li');
+   guide.className='dawn-reading-list__guide';
+   guide.setAttribute('aria-label',list.title+'導讀');
+   const slug=document.createElement('small');
+   slug.textContent='READING LIST / '+list.number+'   ·   '+String(items.length).padStart(2,'0')+' WORKS';
+   const heading=document.createElement('h3');heading.textContent=list.title;
+   const question=document.createElement('p');
+   question.className='dawn-reading-list__question';question.textContent=list.question;
+   const essay=document.createElement('p');
+   essay.className='dawn-reading-list__essay';essay.textContent=list.introduction;
+   const sequence=document.createElement('p');
+   sequence.className='dawn-reading-list__sequence';sequence.textContent='閱讀次序：'+list.sequence;
+   guide.append(slug,heading,question,essay,sequence);
+   works.prepend(guide);
    $('#dawn-catalogue .dawn-catalogue__nav').hidden=true;
    $('#dawn-catalogue .dawn-catalogue__more').hidden=true;
    pageStatus.textContent=String(items.length)+' 部作品';
