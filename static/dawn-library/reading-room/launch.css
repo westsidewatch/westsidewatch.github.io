@@ -69,3 +69,8 @@
 .dawn-reads .dl-suite-card .dl-route strong{font-weight:600}
 .dawn-reads .dl-reading-bridge{margin-top:2.5rem;max-width:56em;padding:1.1rem 0;border-top:1px solid color-mix(in srgb,var(--ws-harvest) 36%,transparent)}
 .dawn-reads .dl-reading-bridge p{font:400 var(--ws-type-scale-ui)/1.85 var(--ws-type-reading-zh)}
+
+/* Three editorial departments use one unmistakable harvest-paper family. */
+.dawn-reads .dl-suite-section:nth-of-type(3) .dl-suite-card{padding:clamp(1.1rem,2.2vw,2rem);background:color-mix(in srgb,var(--ws-harvest) 16%,var(--ws-paper));border:1px solid color-mix(in srgb,var(--ws-harvest) 48%,transparent);border-top:2px solid var(--ws-harvest);min-height:275px}
+.dawn-reads .dl-suite-section:nth-of-type(3) .dl-suite-card>a{border:0}
+@media(max-width:650px){.dawn-reads .dl-suite-section:nth-of-type(3) .dl-suite-card{min-height:0}}
