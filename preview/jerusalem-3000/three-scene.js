@@ -188,7 +188,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       transparent: true,
       opacity: name === 'disputed' ? 0.5 : 0.82,
     });
-  let pendingCityFrame=false,lastGenerationPaint=0;
+  let pendingCityFrame=false,lastGenerationPaint=0;const pendingFrameCaptures=[],frameCaptureCanvas=document.createElement('canvas');
   let playbackPresentation=false,playbackDisplayPosition=null,renderedPlaybackPhase=null,renderedPlaybackReady=false;
   const presentationProgress=()=>playbackPresentation?Math.min(1,Math.max(0,(playbackDisplayPosition??timelinePosition)-Math.floor(timelinePosition))/.8):1;
   let currentProgress = 0,
@@ -794,6 +794,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
         phaseDissolve.before({phaseId:currentPhaseId,index:phaseIndex,fraction,active:playbackPresentation,ready:phaseReady,destructive:['babylonian-destruction','roman-destruction'].includes(currentPhaseId)});
         const batchPrepareStarted=performance.now();housingBatches.apply({camera,phase:currentPhaseId,matricesReady:true});const renderSubmitStarted=performance.now();
         try{renderer.render(scene,camera);}finally{housingBatches.restore();}const renderSubmitFinished=performance.now();
+        if(cityGenerationStatus()==='ready'&&pendingFrameCaptures.length){const captures=pendingFrameCaptures.splice(0);try{frameCaptureCanvas.width=renderer.domElement.width;frameCaptureCanvas.height=renderer.domElement.height;const ctx=frameCaptureCanvas.getContext('2d');ctx.fillStyle=getComputedStyle(mount).getPropertyValue('--paper').trim()||'#eee9df';ctx.fillRect(0,0,frameCaptureCanvas.width,frameCaptureCanvas.height);ctx.drawImage(renderer.domElement,0,0);const dataUrl=frameCaptureCanvas.toDataURL('image/png');for(const c of captures){clearTimeout(c.timeout);c.resolve({dataUrl,width:renderer.domElement.width,height:renderer.domElement.height,camera:camera.position.toArray(),target:controls.target.toArray(),phase:currentPhaseId,evidenceMode:currentEvidenceMode});}}catch(error){for(const c of captures){clearTimeout(c.timeout);c.reject(error);}}}
         phaseDissolve.after(renderer.domElement,{phaseId:currentPhaseId,fraction,ready:phaseReady&&playbackPresentation});
         frameCount++;
         const sharedState = sharedEraRuntime?.diagnostics();
@@ -951,6 +952,9 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     focusSacredRidgeChapter,
     cancelGuidedCamera,
     guidedCameraMoving(){return !!guidedCamera;},
+    comparisonBounds(){root.updateMatrixWorld(true);const box=new THREE.Box3();root.traverse(m=>{if(!m.isMesh||!m.userData.cityObject||m.userData.displayAnnotation)return;for(let p=m;p;p=p.parent)if(!p.visible)return;box.expandByObject(m);});if(box.isEmpty())throw new Error('目前篩選下沒有可比較的城市量體');return {min:box.min.toArray(),max:box.max.toArray()};},
+    frameComparison(bounds){const corners=[];for(const b of bounds)for(const x of[b.min[0],b.max[0]])for(const y of[b.min[1],b.max[1]])for(const z of[b.min[2],b.max[2]])corners.push(new THREE.Vector3(x,y,z));const frame=fitCityOverview({points:corners,aspect:camera.aspect,fov:34});guidedCamera=null;pendingCityFrame=false;camera.fov=34;camera.updateProjectionMatrix();camera.position.copy(frame.position);controls.target.copy(frame.target);controls.minDistance=20;controls.maxDistance=Math.max(controls.maxDistance,frame.distance*1.2);controls.autoRotate=false;controls.update();needsFrame=true;},
+    captureCityFrame(){return new Promise((resolve,reject)=>{const capture={resolve,reject,timeout:null};capture.timeout=setTimeout(()=>{const i=pendingFrameCaptures.indexOf(capture);if(i>=0)pendingFrameCaptures.splice(i,1);reject(new Error('City capture timed out'));},15000);pendingFrameCaptures.push(capture);needsFrame=true;});},
     focusCityOverview(){pendingCityFrame=false;return frameCurrentCity();},
     focusRoyalRelief(){pendingCityFrame=false;if(currentPhaseId!=='david-solomon')return false;frameRoyalRelief();return true;},
     setTerrainOverview(enabled){
@@ -1067,6 +1071,8 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     dispose() {
       cancelAnimationFrame(raf);
       ro.disconnect();
+      for(const c of pendingFrameCaptures.splice(0)){clearTimeout(c.timeout);c.reject(new Error('City disposed'));}
+      frameCaptureCanvas.width=frameCaptureCanvas.height=0;
       controls.dispose();
       housingBatches.dispose();constructionPresentation.dispose();phaseDissolve.dispose();
       templeSection.dispose();residentialDistance.dispose();visualHierarchy.dispose();

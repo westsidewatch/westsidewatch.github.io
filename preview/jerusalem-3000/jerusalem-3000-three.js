@@ -1,3 +1,4 @@
+import {createEraComparisonView} from './era-comparison-view.js';
 import {SACRED_RIDGE_START,SACRED_RIDGE_END,SACRED_RIDGE_CHAPTERS,sacredRidgeChapter} from './sacred-ridge-guide.js';
 import {residentialEraProfile} from './residential-era-profiles.js';
 import {createDefenseTimelineView} from './defense-timeline-view.js';
@@ -434,6 +435,12 @@ try {
     play.setAttribute('aria-pressed', 'true');
     raf = requestAnimationFrame(frame);
   }
+  const eraComparisonView=createEraComparisonView({toolbar,stage,phases,currentIndex:()=>Math.floor(Number(slider.value)),
+    begin:()=>{stop();leaveGuide();terrainOverview(false);three.setTempleSection(false);templeSectionButton.setAttribute('aria-pressed','false');three.setPlaybackPresentation(true);},
+    prepare:async index=>{const v=index+.96;slider.value=String(Math.min(v,time.max));three.setPlaybackDisplayPosition(v);update(Math.min(v,time.max));const started=performance.now();while(true){await new Promise(r=>requestAnimationFrame(r));const ready=three.playbackReadiness();if(ready.phase!==phases[index].id)throw new Error('年代已變更，請重新比較');if(ready.status==='error')throw new Error('城市生成失敗');if(ready.ready)break;if(performance.now()-started>30000)throw new Error('城市準備逾時');}},
+    bounds:()=>three.comparisonBounds(),frame:b=>three.frameComparison(b),capture:()=>three.captureCityFrame(),
+    end:()=>{if(play.getAttribute('aria-pressed')!=='true')three.setPlaybackPresentation(false);},
+    onState:value=>window.__JERUSALEM3000__.eraComparison=value});
   slider.addEventListener('input', () => {
     stop();leaveGuide();playbackPosition=Number(slider.value);three.setPlaybackPresentation(false);
     update(Number(slider.value));
@@ -489,7 +496,7 @@ try {
   stage.dataset.phaseAudit = phaseAudit.complete ? 'pass' : phaseAudit.ok ? 'deferred' : 'fail';
   if (!phaseAudit.ok) console.error('[Jerusalem 3000 phase audit]', phaseAudit.emptyPhases);
   update(0);
-  play.disabled=false;play.removeAttribute('aria-busy');play.textContent='▶ 建城';guideButton.disabled=false;
+  play.disabled=false;play.removeAttribute('aria-busy');play.textContent='▶ 建城';guideButton.disabled=false;eraComparisonView.enable();
   window.__JERUSALEM3000__.status = 'ready';
   const production = auditProductionReadiness(window.__JERUSALEM3000__);
   window.__JERUSALEM3000__.production = production;
