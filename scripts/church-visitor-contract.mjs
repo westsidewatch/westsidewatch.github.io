@@ -32,6 +32,15 @@ assert.ok(read('static/js/p2-living-water.js').includes('const buildStart=2.50,b
 assert.ok(p2.includes('href="/p2/church-tour.html?entry=p2"'));
 assert.ok(ministry.includes('data-story-link')&&ministry.includes('/data/church/ministries.json'));
 assert.ok(overview.includes('id="sunday"')&&overview.includes('id="gatherings"')&&overview.includes('id="invitation"'));
+const churchGlass=read('static/css/church-visit.css');
+const formGlass=read('static/css/church-forms.css');
+for(const [label,css] of [['church',churchGlass],['decision',formGlass]]){
+ assert.ok(css.includes('var(--ws-branch)')||css.includes('--ws-branch:var(--ws-water)'),label+' must consume church OS');
+ assert.ok(css.includes('var(--ws-type-scale-'),label+' must consume shared OS typography');
+ assert.ok(css.includes('backdrop-filter:blur('),label+' must preserve true backdrop blur');
+ assert.ok(!/--visit-|--form-|#[0-9a-f]{3,8}\b/i.test(css),label+' must not ship a parallel color system');
+}
+
 assert.ok(overview.includes('church-visit__identity-lockup')&&overview.includes('church-visit__scripture-tile'));
 assert.ok(overview.includes('church-visit__official-artwork')&&
   overview.includes('P.A.O.C. Living Water Assembly West'),'Official P2 glyphs and English must form one lockup');
