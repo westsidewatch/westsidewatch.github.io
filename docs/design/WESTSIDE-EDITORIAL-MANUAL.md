@@ -137,6 +137,22 @@ The P2 split composition preserves its water engraving, rise and opening doors o
 
 **Quality:** Use Chiron Hei HK, Bodoni Moda SC, OS tokens, fine borders, narrow interactive index and a subtle chapter caption. Minimise/hide guide when desired. Maintain existing native camera route, open doors, maple seasons, daylight and cruciform light. Test desktop/mobile, keyboard, reduced motion, P2 links, pause/seek/play and the unchanged pure-camera route.
 
+### 7.12 2026-11-23 — P2 虛擬教會第二頁 R42：完整經文、OS 玻璃方塊、光與主日程序
+
+**本輪授權內容：** 只在既有 P2 第二頁 `/p2/church-tour.html?entry=p2` 改動敘事層、選定的鏡頭停格和必要的樓梯幾何簡化。P2 前段水紋、刊頭、主日程序、白模生長及其轉場不能動；`/p2/church-tour.html` 的直接純 3D 導覽不得顯示任何編輯疊層。
+
+**七個場景的完整主題經文：** 依序為約 7:38、徒 2:42、羅 15:5–6、腓 4:6–7、約 13:34–35、雅 1:22、太 5:14–16；提供繁體中文和合本與英文 KJV 的完整篇幅，不得以工程短語、摘句或單純出處替代。英文採不拆字、避免孤字掉行的排版；長經文在方塊內縱向捲動，不得刪字來遷就版面。
+
+**設計系統：** 使用原生 `--ws-first-light` 黎明金及 `--ws-water` 活水藍；透光玻璃天井的毛玻璃層、內側細光線、薄邊、直角方塊。右下介紹沿用全站方塊而非圓角卡片；手機保留可操作的七章導航、完整段落和足夠視野。
+
+**鏡頭：** 主日敬拜停在 94 秒的十字架有光與會眾視野，而非早前 83 秒；中庭楓葉停格 43 秒、下層共享愛宴空間 151 秒有各自構圖。精選停格**僅在 P2 手動選章暫停時生效**，不得改掉原有連續 251 秒行走的鏡頭路線。經文與鏡頭相配，講述的是教會事工，不宣稱場景就是現實房間的特定用途。
+
+**樓梯：** 保留原始八個踏板，撤去後加的兩條外露輔助梯樑及七組額外踢面；改用單一隱藏式斜向承托。相機碰撞需以真實斜形表面合理處理，不得把整條斜面以空氣也算作實心的 AABB 推回鏡頭；不可破壞北門接地台階、原始路線或南門 101 點防回溯。
+
+**結尾定格：** 246 秒起，整座教會的暮色十字架照亮時，在原右下方塊位置呈現源自 P2 既有七個主日崇拜環節的時間程序（10:30–13:30），不用舊週日期冒充本週。最後節目表屬靜態既有程序，不可虛構特定講員、最新主日日期或已驗證的活動。
+
+**驗收：** 需實際 WebGL 和 Chromium 的 94 秒十字架、43 秒楓樹、151 秒愛宴、248 秒主日程序的構圖截圖，390px 手機中英完整經文不橫向溢出，最後七行節目可見；並保留既有全程、南門、北門和簡化樓梯的工程驗收。靜態契約成功不代表視覺成熟。
+
 ### 7.10 2026-11-21 — R14 correction: original Virtual Church ≠ Architectural Maquette
 
 **Critical correction of R12/R13:** the project had a distinct, previously created `Living Water West 3D Viewer` (its historical deployed URL was `https://living-water-west-3d-viewer.chenjingyu1948302.chatgpt.site/`). The R12 `/p2/church-tour.html` incorrectly loaded `/p2-maquette/index.html?tour=1` — merely orbiting the decorative architectural white maquette — **not** the existing virtual church camera walkthrough. The user's original 2026-11-18 charter differentiates A = white architectural maquette from B = Virtual Church with camera journey/room navigation. They must never again be conflated.
