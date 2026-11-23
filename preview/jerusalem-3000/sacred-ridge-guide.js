@@ -8,7 +8,7 @@ export const SACRED_RIDGE_CHAPTERS=Object.freeze([
  {at:3.75,id:'first-near',title:'第一聖殿：建築群近看',text:'從山脊關係推近殿院與宮殿區；推定位置和建築細節不等於實測復原。',view:'first-near'},
  {at:4,id:'first-late',title:'第一聖殿晚期：城市擴展',text:'保留聖殿山脊方向，觀察城市擴展；不把示意模型視為考古定案。',view:'first-near'},
  {at:5,id:'destruction',title:'巴比倫毀城：延續中的斷裂',text:'在同一觀察區域看毀壞；不跳過第一聖殿與第二聖殿之間的斷裂。',view:'first-near'},
- {at:6,id:'second',title:'重建：早期第二聖殿',text:'同一山脊上的重建，不代表沿用第一聖殿的原牆或地基。',view:'second'},
+ {at:6,id:'second',title:'同機位重建：早期第二聖殿',text:'先沿用毀城時的觀察方向，看聖區與周邊街區逐步形成，再推近重建後的殿院；分段為示意，不代表原牆或地基沿用。',view:'first-near'},
  {at:6.55,id:'second-near',title:'第二聖殿：重建後的殿院',text:'推近早期第二聖殿的主殿、院落與入口，與其後希律擴建作比較。',view:'second-near'},
  {at:7,id:'hasmonean',title:'第二聖殿：希臘化與哈斯蒙尼',text:'第二聖殿時期仍在發展；希律工程是其後的大規模改建與擴建。',view:'second-near'},
  {at:8,id:'herodian',title:'希律：第二聖殿的擴建',text:'拉開至整個聖殿建築群，觀看院落、柱廊與南西側通道；希律聖殿屬第二聖殿的改建階段。',view:'herodian'},

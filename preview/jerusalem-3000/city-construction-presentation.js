@@ -32,12 +32,12 @@ export function createCityConstructionPresentation({root,getRecord}){
   const ranks=new Map();for(const kind of ['infrastructure','core','housing']){
    const list=[...groups.values()].filter(g=>g.kind===kind&&!keptIds.has(g.id)).sort((a,b)=>(a.box.min.x+a.box.min.z)-(b.box.min.x+b.box.min.z)||a.id.localeCompare(b.id));list.forEach((g,i)=>ranks.set(g.id,i/Math.max(1,list.length-1)));
   }
-  const fraction=position-phaseIndex;let growing=0,complete=0,waiting=0,kept=0;const counts={infrastructure:0,core:0,housing:0},growingByRole={infrastructure:0,core:0,housing:0};
+  const reconstruction=['persian-nehemiah','aelia'].includes(phaseId),fraction=position-phaseIndex;let growing=0,complete=0,waiting=0,kept=0;const counts={infrastructure:0,core:0,housing:0},growingByRole={infrastructure:0,core:0,housing:0};
   landmarks=[];
   for(const g of groups.values()){
    const r=ranks.get(g.id)??0,same=keptIds.has(g.id);
    const offsets=(g.record.lifecycle?.events||[]).filter(e=>e.phase===phaseId&&['build','rebuild','transform','expand'].includes(e.state)&&(e.offset||0)<=fraction).map(e=>e.offset||0),offset=Math.max(0,...offsets);
-   const base=g.kind==='housing'?.08+r*.42:g.kind==='core'?.06+r*.18:.01+r*.08,duration=g.kind==='core'?.38:.22;
+   const base=reconstruction?(g.kind==='housing'?.32+r*.26:g.kind==='core'?.08+r*.08:.01+r*.06):(g.kind==='housing'?.08+r*.42:g.kind==='core'?.06+r*.18:.01+r*.08),duration=reconstruction?(g.kind==='core'?.36:g.kind==='housing'?.24:.16):(g.kind==='core'?.38:.22);
    const start=Math.max(base,offset),end=Math.min(.95,Math.max(start+.08,start+duration));
    const amount=!active||ruin||same||g.items.every(m=>m.userData.defenseMode==='ruin')?1:smooth((fraction-start)/(end-start));
    if(same)kept++;if(amount>=1)complete++;else if(amount>0){growing++;growingByRole[g.kind]++;}else waiting++;
@@ -46,7 +46,7 @@ export function createCityConstructionPresentation({root,getRecord}){
    for(const mesh of g.items){if(active){const e=entry(mesh);e.plane.constant=amount>=1?1e9:g.box.min.y-.01+amount*(g.box.max.y-g.box.min.y+.02);}else if(entries.has(mesh))entries.get(mesh).plane.constant=1e9;}
   }
   phases.set(phaseId,{index:phaseIndex,descriptors,defenseDescriptors:new Set([...groups.values()].filter(g=>g.record.metadata?.defenseTimeline).map(g=>descriptors.get(g.id)))});
-  stats={phase:phaseId,active,fraction,objects:groups.size,complete,growing,waiting,displayKept:kept,visibleByRole:counts,growingByRole,ownedMaterials:[...entries.values()].reduce((n,e)=>n+e.materials.length,0),historicalSurvivalInferred:false,geometryTransformsChanged:false};
+  stats={phase:phaseId,active,fraction,presentationSequence:reconstruction?'ruin-context-public-core-neighborhood':'common-city-staging',stagingIsHistoricalChronology:false,objects:groups.size,complete,growing,waiting,displayKept:kept,visibleByRole:counts,growingByRole,ownedMaterials:[...entries.values()].reduce((n,e)=>n+e.materials.length,0),historicalSurvivalInferred:false,geometryTransformsChanged:false};
   return stats;
  }
  return {apply,releaseMaterials,landmarks:()=>structuredClone(landmarks),diagnostics:()=>structuredClone(stats),dispose(){releaseMaterials();phases.clear();}};

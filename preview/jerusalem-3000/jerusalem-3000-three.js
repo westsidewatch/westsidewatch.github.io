@@ -209,6 +209,7 @@ try {
     );
     destructionStory.hidden=!['babylonian-destruction','roman-destruction'].includes(p.id);
     destructionStory.textContent=p.label+' · '+({'standing-hold':'毀城前的城市',destruction:'聖殿與街區逐步毀壞','ruin-hold':'廢墟停留，尚未重建'}[transformation.presentationStage])+'（毀壞過程為示意）';
+    if(['persian-nehemiah','aelia'].includes(p.id)){destructionStory.hidden=false;destructionStory.textContent=p.label+' · '+(localProgress<.12?'從廢墟銜接新階段':localProgress<.32?'公共核心逐步形成':'周邊街區逐步形成')+'（分段呈現為示意）';}
     three.setRuinProgress(transformation.ruin);
     three.setTemporalCityState?.(cityObjects, state.position, p.id);
     updateRoyalRelief(p.id,cityObjects.find(o=>o.id==='j3k:object:first-temple')?.state);
