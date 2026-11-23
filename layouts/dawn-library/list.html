@@ -22,6 +22,21 @@
 @media(max-width:860px){.sites-dawn-library .dawn-curation-intro{grid-template-columns:1fr}.sites-dawn-library .dawn-curation-list{grid-template-columns:1fr}.sites-dawn-library .dawn-list-leaf{min-height:0}.sites-dawn-library .dawn-curation-prologue{margin:2rem 1rem}.sites-dawn-library .dawn-curation-continuation a{display:block;margin:.6rem 0 0}}
 @view-transition{navigation:auto}
 @media(prefers-reduced-motion:reduce){.sites-dawn-library .dawn-list-leaf{transition:none}.sites-dawn-library .dawn-list-leaf:hover,.sites-dawn-library .dawn-list-leaf:focus-visible{transform:none}}
+
+/* Editorial hierarchy: the bookstore identity is secondary to the reading lists. */
+.sites-section-dawn-library .sites-dawn-library .fl-header h1{
+ font:400 clamp(1.7rem,2.5vw,2.5rem)/1.3 var(--ws-type-display-en);
+ letter-spacing:-.01em;display:flex;align-items:baseline;flex-wrap:wrap;gap:.4em 1em;
+}
+.sites-section-dawn-library .sites-dawn-library .fl-header h1 span[lang="zh-Hant"]{
+ font:200 .7em/1.3 var(--ws-type-display-zh);white-space:nowrap;
+}
+@media(max-width:760px){
+ .sites-section-dawn-library .sites-dawn-library{margin-top:clamp(3.5rem,12vw,5.5rem)}
+ .sites-section-dawn-library .sites-dawn-library .fl-header{display:block}
+ .sites-section-dawn-library .sites-dawn-library .fl-header h1{font-size:clamp(1.5rem,6.4vw,2.1rem);line-height:1.35;gap:.25em .7em}
+ .sites-section-dawn-library .sites-dawn-library .fl-header h1 span[lang="zh-Hant"]{font-size:.72em;white-space:nowrap}
+}
 </style>
 <section class="dawn-curation-prologue" aria-labelledby="dawn-curation-heading">
 <div class="dawn-curation-overline">DAWN LIBRARY / THE READING LISTS</div>
