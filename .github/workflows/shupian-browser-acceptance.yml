@@ -97,3 +97,36 @@ jobs:
             git commit -m 'deploy(shupian): verified playable film'
             git push origin HEAD:gh-pages
           fi
+      - name: Record browser acceptance job outcome for engineering review
+        if: always()
+        env:
+          ACCEPTANCE_JOB_STATUS: ${{ job.status }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p reports
+          python3 - <<'PY'
+          import json,os
+          from pathlib import Path
+          report=Path('reports/shupian-browser-acceptance.json')
+          details=json.loads(report.read_text()) if report.is_file() else {}
+          outcome={
+            "workflow_run_id":os.environ.get('GITHUB_RUN_ID'),
+            "commit":os.environ.get('GITHUB_SHA'),
+            "job_status":os.environ.get('ACCEPTANCE_JOB_STATUS','unknown'),
+            "browser_test":details.get('status','NOT_RUN'),
+            "reason":details.get('reason') or (
+                'Test not started or setup failed' if not details else None),
+            "checked_at":details.get('checkedAt')
+          }
+          Path('reports/shupian-browser-last-outcome.json').write_text(
+              json.dumps(outcome,ensure_ascii=False,indent=2)+'\n')
+          print(json.dumps(outcome,ensure_ascii=False))
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add reports/shupian-browser-last-outcome.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'data(shupian): persist last browser acceptance outcome [skip ci]'
+            git push origin HEAD:main || (git pull --rebase origin main && git push origin HEAD:main)
+          fi
