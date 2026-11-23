@@ -2772,3 +2772,7 @@
 @media(prefers-reduced-motion:reduce){
  #dawn-second .dawn-reading-list__tile{transition:none!important}
 }
+
+/* Subject choices remain complete in the native collection, not thirteen
+   equally weighted second-layer wall entrances. */
+#dawn-second .dawn-reading-room__departments[hidden]{display:none!important}
