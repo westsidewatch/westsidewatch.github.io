@@ -46,6 +46,16 @@ assert((html.match(/<span class="dawn-reading-list__serial">書單 /g)||[]).leng
 assert(html.includes('dawn-reading-list__marker-count')&&html.includes('22</strong><span>部作品'),'Main square must identify a group of 22 works, not a single jacket');
 assert.deepEqual([...html.matchAll(/class="dawn-reading-list__quantity" lang="en">(\d+)<\/span>/g)].map(m=>m[1]),['06','09','07'],'List sleeves must show visible multi-work counts, not book-like titles');
 assert(html.includes('dawn-wall__collection-divider')&&html.includes('館藏選讀'),'Historical book wall must begin a separate clearly identified chapter');
+assert(html.includes('id="dawn-reading-list-featured"'),'Featured original book cover gallery missing from right-hand blank space');
+assert(html.indexOf('id="dawn-reading-list-featured"')>html.indexOf('class="dawn-reading-list__series-grid"'),'Featured books must share the same editorial chapter');
+assert(css.includes('R83 — right-hand sourced book covers')&&css.includes('grid-column:5 / span 2!important'),'Featured covers must occupy actual right-most 2x2 vinyl squares on desktop');
+assert(js.includes("const featuredKeys=['gospel-02','inner-05-chinese','history-01','inner-05']"),'Curated four same-edition references missing');
+assert(js.includes('void mountFeaturedReadingCovers()'),'Featured covers cannot be left unmounted');
+assert(js.includes("openReadingList(list.id,book.editorialKey)"),'Featured book jackets must link to exact book, not a generic list');
+assert(js.includes('selectBookPreview(works,li,items[idx])'),'Selected cover must open the original book preview');
+for(const key of ['gospel-02','inner-05-chinese','history-01','inner-05']){
+ assert(json.lists.some(l=>l.works.some(w=>w.editorialKey===key&&w.image&&w.imageCredit)),'Featured cover not backed by edition citation '+key);
+}
 assert(css.includes('R82 — visual hierarchy')&&css.includes('grid-column:1 / span 2!important'),'A true 2x2 editorial square is required, not border decoration');
 assert(css.includes('.dawn-reading-list__series-grid')&&css.includes('grid-column:1 / -1!important'),'Guided group must occupy a whole record-wall row without mixing with original covers');
 assert(html.includes('class="dawn-reading-room__departments" aria-labelledby="dawn-departments-heading" hidden'),'Seven subjects should not compete on editorial opening');
