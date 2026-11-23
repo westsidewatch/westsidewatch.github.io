@@ -8,7 +8,9 @@
    node.replaceChildren();
    data.items.forEach(item=>{
      const art=E('article','church-visit__gathering');
-     art.append(E('span','',(item.day||'')+' / '+(item.mode||'')),E('h3','',item.name),E('p','',(item.time||'')+(item.timeVerified?'':' · 詳細時間請確認')),E('small','',item.note||''));
+     const metadata=E('span','',(item.day||'')+' / '+(item.mode||''));
+     metadata.lang='zh-Hant';
+     art.append(metadata,E('h3','',item.name),E('p','',(item.time||'')+(item.timeVerified?'':' · 詳細時間請確認')),E('small','',item.note||''));
      node.append(art);
    });
  };
