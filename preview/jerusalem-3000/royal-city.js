@@ -1,3 +1,4 @@
+import {ruinSilhouetteProfile,ruinHeightFactor,stagedRuinAmount} from './ruin-silhouette.js';
 import {wallPrismGeometry,wallJoinSkew,gateHeaderGeometry} from './fortification-architecture.js';
 import {royalPrecinctHallLayouts,buildRoyalPrecinctHalls} from './royal-precinct-halls.js';
 import {firstTempleOuterCourt} from './temple-context-layout.js';
@@ -249,15 +250,15 @@ export function createRoyalCity(parent,{data,terrain,core}) {
         const record=core.get(m.userData.cityObject.objectId),state=stateAt(record.id,position);
         m.userData.cityObject.lifecycleState=state;
         m.visible=['build','transform','ruin'].includes(state)&&evidenceAllowed(record.confidence);group.visible ||= m.visible;
-        const factor=state==='ruin'?1-.82*Math.max(0,Math.min(1,ruin)):1;
+        if(!m.userData.ruinSilhouetteProfile){m.geometry.computeBoundingBox();const b=m.geometry.boundingBox;m.userData.ruinSilhouetteProfile=ruinSilhouetteProfile((b.min.x+b.max.x)/2,(b.min.z+b.max.z)/2);}const profile=m.userData.ruinSilhouetteProfile,amount=state==='ruin'?Math.max(0,Math.min(1,ruin)):0,factor=1-(1-profile.residual)*stagedRuinAmount(amount,profile);
         if(m.userData.factor!==factor){
           const p=m.geometry.attributes.position,rest=m.userData.restPositions,ground=m.userData.groundHeights;
-          for(let i=0;i<p.count;i++)p.setY(i,factor===1?rest[i*3+1]:ground[i]+(rest[i*3+1]-ground[i])*factor);
+          for(let i=0;i<p.count;i++)p.setY(i,factor===1?rest[i*3+1]:ground[i]+(rest[i*3+1]-ground[i])*ruinHeightFactor(amount,rest[i*3],rest[i*3+2],profile));
           p.needsUpdate=true;m.geometry.computeVertexNormals();m.userData.factor=factor;
         }
       }
     },
-    diagnostics(){return {stage,position:currentPosition,spatialAuthority:spatial.authority,spatialRegions:spatial.regions.map(r=>r.id),reachableDestinations:spatial.reachable(stage),visibleGates:meshes.filter(m=>m.visible&&m.userData.cityObject.kind==='city-gate').length,visibleRoads:meshes.filter(m=>m.visible&&m.userData.cityObject.kind==='city-road').length,visibleWalls:meshes.filter(m=>m.visible&&m.userData.cityObject.kind==='city-wall').length,visibleTemple:meshes.filter(m=>m.visible&&m.userData.cityObject.kind==='first-temple').length,visiblePalace:meshes.filter(m=>m.visible&&m.userData.cityObject.kind==='royal-palace').length,templeState:stateAt('j3k:object:first-temple',currentPosition),templeCompressionFactor:bindings.get('j3k:object:first-temple')[0].userData.factor,bindingIds:[...bindings.keys()],componentIdentity:meshes.map(m=>m.userData.cityObject.componentId).join('|'),wallCircuitVerified:false,palaceGeometryVerified:false,templeDimensionsMetres:[l,w,h],geometryReuseVerified:false,ruinAuthority:'schematic-vertex-compression-not-excavated-collapse'};},
+    diagnostics(){return {stage,position:currentPosition,spatialAuthority:spatial.authority,spatialRegions:spatial.regions.map(r=>r.id),reachableDestinations:spatial.reachable(stage),visibleGates:meshes.filter(m=>m.visible&&m.userData.cityObject.kind==='city-gate').length,visibleRoads:meshes.filter(m=>m.visible&&m.userData.cityObject.kind==='city-road').length,visibleWalls:meshes.filter(m=>m.visible&&m.userData.cityObject.kind==='city-wall').length,visibleTemple:meshes.filter(m=>m.visible&&m.userData.cityObject.kind==='first-temple').length,visiblePalace:meshes.filter(m=>m.visible&&m.userData.cityObject.kind==='royal-palace').length,templeState:stateAt('j3k:object:first-temple',currentPosition),templeCompressionFactor:bindings.get('j3k:object:first-temple')[0].userData.factor,bindingIds:[...bindings.keys()],componentIdentity:meshes.map(m=>m.userData.cityObject.componentId).join('|'),wallCircuitVerified:false,palaceGeometryVerified:false,templeDimensionsMetres:[l,w,h],geometryReuseVerified:false,ruinAuthority:'schematic-staggered-silhouette-not-excavated-collapse'};},
     dispose(){meshes.forEach(m=>m.geometry.dispose());[stone,templeStone,roof,bronze,doorway,pathMaterial].forEach(m=>m.dispose());group.removeFromParent();}
   };
 }

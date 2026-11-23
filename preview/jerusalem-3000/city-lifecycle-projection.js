@@ -1,3 +1,4 @@
+import {ruinSilhouetteProfile,ruinHeightFactor,stagedRuinAmount} from './ruin-silhouette.js';
 // One generated city, projected through time without replacing its objects.
 // Aelia Capitolina is a replanned Roman city, not a surviving Herodian residential layer.
 const CORE_PHASES = new Set(['herodian-jesus', 'roman-destruction']);
@@ -13,6 +14,7 @@ export function createCityProjection(group, meshes, {
   const activePhases = new Set(phaseIds);
   const snapshots = meshes.map((mesh) => ({
     mesh,
+    ruinProfile:(()=>{if(mesh.geometry&&!mesh.geometry.boundingBox)mesh.geometry.computeBoundingBox();const b=mesh.geometry?.boundingBox;return ruinSilhouetteProfile((b?(b.min.x+b.max.x)/2:0)+mesh.position.x,(b?(b.min.z+b.max.z)/2:0)+mesh.position.z);})(),
     id:cityObjectIdForMesh(mesh),
     position: { x: mesh.position.x, y: mesh.position.y, z: mesh.position.z },
     scaleY: mesh.scale.y,
@@ -31,22 +33,23 @@ export function createCityProjection(group, meshes, {
       const retained = policy?.state === 'retained-ruin';
       const amount =
         phaseId === standingPhase ? 0 : Math.max(0, Math.min(1, policy?.ruin ?? ruin));
-      const scale = 1 - 0.82 * amount;
+
       group.visible = active && (!retained || retainedVisible);
       const visible = new Set(),districtVisible=new Map(),lifecycleStates=new Map();
       for (const item of snapshots) {
         const { mesh, position, ground } = item;
         if(stateForObject&&(!item.infrastructure||stateForInfrastructure)&&!lifecycleStates.has(item.id))lifecycleStates.set(item.id,stateForObject(item.id,phaseId));
         const ledgerState=lifecycleStates.get(item.id);
-        const objectScale = item.infrastructure ? 1 : scale;
+        const objectScale = item.infrastructure ? 1 : 1-(1-item.ruinProfile.residual)*stagedRuinAmount(amount,item.ruinProfile);
         mesh.visible = group.visible && evidenceAllowed(item.confidence) && (phaseId!==standingPhase||!buildOrder.has(item.id)||constructionProgress>=buildOrder.get(item.id)) &&
           !(retained && item.infrastructure) && (!stateForObject||(item.infrastructure&&!stateForInfrastructure)||['build','rebuild','transform','ruin','expand'].includes(ledgerState));
         mesh.position.x = position.x;
         mesh.position.z = position.z;
         if(mesh.userData.restPositions&&mesh.userData.groundHeights){
           mesh.position.y=position.y;mesh.scale.y=item.scaleY;
-          if(mesh.userData.cityRuinFactor!==objectScale){const p=mesh.geometry.attributes.position,rest=mesh.userData.restPositions,heights=mesh.userData.groundHeights;for(let i=0;i<p.count;i++)p.setY(i,objectScale===1?rest[i*3+1]:heights[i]+(rest[i*3+1]-heights[i])*objectScale);p.needsUpdate=true;mesh.geometry.computeVertexNormals();mesh.userData.cityRuinFactor=objectScale;}
+          if(mesh.userData.cityRuinFactor!==objectScale){const p=mesh.geometry.attributes.position,rest=mesh.userData.restPositions,heights=mesh.userData.groundHeights;for(let i=0;i<p.count;i++)p.setY(i,objectScale===1?rest[i*3+1]:heights[i]+(rest[i*3+1]-heights[i])*ruinHeightFactor(amount,rest[i*3]+position.x,rest[i*3+2]+position.z,item.ruinProfile));p.needsUpdate=true;mesh.geometry.computeVertexNormals();mesh.userData.cityRuinFactor=objectScale;}
         }else{mesh.position.y = ground + (position.y - ground) * objectScale;mesh.scale.y = item.scaleY * objectScale;}
+        mesh.userData.cityRuinFactor=objectScale;
         mesh.userData.cityObject.buildingId = item.id;
         mesh.userData.cityObject.lifecycleState =
           retained ? 'retained-ruin' : item.infrastructure
@@ -78,6 +81,7 @@ export function createCityProjection(group, meshes, {
         objects: new Set(snapshots.map((item) => item.id)).size,
         components: snapshots.length,
         identityPolicy: 'same-objects-through-ruin',
+        ruinPresentation:'spatially-staggered-uneven-residual-height',destructionSequenceHistoricallyVerified:false,
         identityFingerprint: fingerprint((item) => item.id),
         transformFingerprint: fingerprint((item) =>
           JSON.stringify([

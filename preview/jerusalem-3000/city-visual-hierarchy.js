@@ -22,13 +22,14 @@ export function hierarchyColor(color,role,confidence){
 }
 export function createCityVisualHierarchy({root,getRecord}){
  const bases=new Map(),variants=new Map(),originals=new Map(),owned=new Set();let enabled=true,stats={};
- function styled(material,role,confidence){
+ function styled(material,role,confidence,damage=0){
   if(!material?.color)return material;
-  if(material.userData.j3kVisualHierarchy)return material;
-  bases.set(material.uuid,material);const key=`${material.uuid}:${role}:${confidence}`;
+  if(material.userData.j3kVisualHierarchy&&material.userData.j3kVisualHierarchy.damage===damage)return material;
+  if(material.userData.j3kVisualHierarchy)material=bases.get(material.userData.j3kVisualHierarchy.base)||material;
+  bases.set(material.uuid,material);const key=`${material.uuid}:${role}:${confidence}:${damage}`;
   if(!variants.has(key)){
    const copy=material.clone();copy.onBeforeCompile=material.onBeforeCompile;copy.customProgramCacheKey=material.customProgramCacheKey.bind(material);
-   copy.userData.j3kVisualHierarchy={base:material.uuid,role,confidence};variants.set(key,copy);owned.add(copy);
+   copy.userData.j3kVisualHierarchy={base:material.uuid,role,confidence,damage};variants.set(key,copy);owned.add(copy);
   }
   return variants.get(key);
  }
@@ -40,10 +41,11 @@ export function createCityVisualHierarchy({root,getRecord}){
    counts[role]++;ids[role].add(id);if(role==='uncertain')return;
    if(!originals.has(mesh))originals.set(mesh,{material:mesh.material,castShadow:mesh.castShadow});
    const original=originals.get(mesh);mesh.castShadow=role==='housing'&&enabled?false:original.castShadow;if(role==='housing'&&enabled&&original.castShadow)suppressedShadows++;
-   mesh.material=Array.isArray(mesh.material)?mesh.material.map(m=>styled(m,role,record.confidence)):styled(mesh.material,role,record.confidence);
+   const ruinPhase=['babylonian-destruction','roman-destruction'].includes(phase),factor=mesh.userData.cityRuinFactor??mesh.userData.factor??1,damage=ruinPhase&&['housing','core'].includes(role)?Math.round(Math.max(0,Math.min(1,1-factor))*4)/4:0;
+   mesh.material=Array.isArray(mesh.material)?mesh.material.map(m=>styled(m,role,record.confidence,damage)):styled(mesh.material,role,record.confidence,damage);
    for(const material of Array.isArray(mesh.material)?mesh.material:[mesh.material]){
     if(updated.has(material))continue;updated.add(material);const tag=material.userData.j3kVisualHierarchy,base=tag&&bases.get(tag.base);if(!base?.color)continue;
-    material.color.copy(enabled?hierarchyColor(base.color,tag.role,tag.confidence):base.color);
+    material.color.copy(enabled?hierarchyColor(base.color,tag.role,tag.confidence):base.color);if(enabled&&tag.damage)material.color.multiplyScalar(1-.5*tag.damage);
    }
   });
   stats={phase,enabled,meshes:counts,objects:Object.fromEntries(Object.entries(ids).map(([k,v])=>[k,v.size])),suppressedHousingShadows:suppressedShadows,ownedMaterialVariants:owned.size,geometryChanged:false,evidenceReclassified:false,missingGeometryAdded:false,historicalGeometryAccepted:false};return stats;
