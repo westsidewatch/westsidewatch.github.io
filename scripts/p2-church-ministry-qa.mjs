@@ -81,6 +81,11 @@ try{
      first.audit.fullVerses!==true||first.audit.scheduleRows!==7)
     throw Error("P2 must publish seven COMPLETE bilingual scripture passages and seven worship rows "+JSON.stringify(first));
   await shot("01-p2-arrival");
+  await evaluate('document.querySelector(\'[data-chapter="1"]\').click()');
+  const maple=await evaluate("window.__churchMinistryFramingAudit");
+  if(maple?.label!=="maple")
+    throw Error("Courtyard fellowship must compose against the actual seasonal maple "+JSON.stringify(maple));
+  await shot("01b-courtyard-maple");
   await evaluate('document.querySelector(\'[data-chapter="2"]\').click()');
   await sleep(240);
   const worship=await evaluate('({state:window.__churchGuide.status(),audit:window.__churchMinistryAudit()})');
@@ -98,6 +103,11 @@ try{
      !scriptureAtCross.source.includes("15:5–6"))
     throw Error("Worship full CUV/KJV text missing "+JSON.stringify(scriptureAtCross));
   await shot("02-worship-3d");
+  await evaluate('document.querySelector(\'[data-chapter="4"]\').click()');
+  const loveFeast=await evaluate("window.__churchMinistryFramingAudit");
+  if(loveFeast?.label!=="fellowship-cafe")
+    throw Error("Care/love-feast chapter must frame the shared lower hall "+JSON.stringify(loveFeast));
+  await shot("02b-love-feast-courtyard");
   await evaluate('document.querySelector(\'[data-chapter="5"]\').click()');
   const discipleship=await evaluate('({state:window.__churchGuide.status(),audit:window.__churchMinistryAudit()})');
   if(Math.abs(discipleship.state.at-211)>.1||discipleship.audit.selected!==5)
