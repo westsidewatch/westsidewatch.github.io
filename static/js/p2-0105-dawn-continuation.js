@@ -519,7 +519,7 @@
  const portalIntro=$('#dawn-catalogue-introduction');
  // The first-issue reading lists are editorial chapters inside the existing
  // P2 05 collection and book-detail surfaces, not a second storefront.
- let readingIssuePromise=null,activeReadingSlug='gospel-essentials';
+ let readingIssuePromise=null,activeReadingSlug='gospel-essentials',requestedFeaturedKey=null;
  async function loadReadingIssue(){
   if(!readingIssuePromise)readingIssuePromise=(async()=>{
    const response=await fetch('/dawn-library/p2-reading-lists-issue-01.json');
@@ -533,11 +533,68 @@
   })().catch(error=>{readingIssuePromise=null;throw error});
   return readingIssuePromise;
  }
- function openReadingList(slug){
+ function openReadingList(slug,featuredKey=null){
   if(!['gospel-essentials','inner-life','church-history'].includes(slug))return;
   activeReadingSlug=slug;
+  requestedFeaturedKey=featuredKey;
   openCollection('書單');
  }
+ // Four current-issue editorial picks, including at least one sourced cover
+ // from each of the three lists. These are direct references to existing
+ // edition records, never duplicate or invented Work IDs.
+ async function mountFeaturedReadingCovers(){
+  const shelf=$('#dawn-reading-list-featured');if(!shelf||shelf.dataset.loaded==='true')return;
+  try{
+   const issue=await loadReadingIssue();
+   const featuredKeys=['gospel-02','inner-05-chinese','history-01','inner-05'];
+   const selected=featuredKeys.map(key=>{
+    for(const list of issue.lists){
+     const book=list.works.find(item=>item.editorialKey===key);
+     if(book)return {list,book};
+    }
+    return null;
+   }).filter(Boolean);
+   if(selected.length!==4||selected.some(({book})=>!book.image))
+    throw Error('Featured list edition images not verified');
+   const fragment=document.createDocumentFragment();
+   selected.forEach(({list,book})=>{
+    const button=document.createElement('button');button.type='button';
+    button.className='dawn-reading-list__featured-book';
+    button.dataset.dawnFeaturedWork=book.editorialKey;
+    button.dataset.dawnFeaturedList=list.id;
+    button.setAttribute('aria-label','從'+list.title+'書單預覽《'+book.title+'》');
+    const art=document.createElement('span');art.className='dawn-reading-list__featured-image';
+    const fallback=document.createElement('span');fallback.className='dawn-reading-list__featured-fallback';
+    fallback.textContent=book.title;
+    art.append(fallback);
+    const src=safeHttp(book.image);
+    if(src){
+     const img=document.createElement('img');
+     img.alt=book.title+'，'+list.title+'書單核實版本的封面';
+     img.loading='eager';img.decoding='async';img.referrerPolicy='no-referrer';
+     img.addEventListener('load',()=>{
+      if(img.naturalWidth>100&&img.naturalHeight>100)
+       button.classList.add('dawn-reading-list__featured-book--image-ready');
+      else img.remove();
+     });
+     img.addEventListener('error',()=>{img.remove();button.classList.remove('dawn-reading-list__featured-book--image-ready')});
+     img.src=src;art.append(img);
+    }
+    const label=document.createElement('span');label.className='dawn-reading-list__featured-book-label';
+    const title=document.createElement('strong');title.textContent=book.title;
+    const origin=document.createElement('small');origin.textContent=list.title+' · 選讀 ↗';
+    label.append(title,origin);
+    button.append(art,label);
+    button.addEventListener('click',()=>openReadingList(list.id,book.editorialKey));
+    fragment.append(button);
+   });
+   shelf.replaceChildren(fragment);shelf.dataset.loaded='true';
+  }catch(error){
+   console.warn('[Dawn reading picks]',error);
+   // Keep an honest edition-title fallback; never invent a different jacket.
+  }
+ }
+ void mountFeaturedReadingCovers();
  async function showReadingList(ticket){
   try{
    const issue=await loadReadingIssue();
@@ -595,6 +652,20 @@
    sequence.className='dawn-reading-list__sequence';sequence.textContent='閱讀次序：'+list.sequence;
    guide.append(slug,heading,question,essay,sequence);
    works.prepend(guide);
+   // Cover on the right enters the SAME reading-list grid and opens the
+   // original Codrops preview for the exact selected title.
+   const featuredKey=requestedFeaturedKey;
+   requestedFeaturedKey=null;
+   if(featuredKey){
+    const idx=items.findIndex(item=>item.editorialKey===featuredKey);
+    if(idx>=0){
+     const li=works.querySelectorAll('li.dawn-reading-list__sleeve')[idx];
+     if(li)requestAnimationFrame(()=>{
+      if(ticket!==portalTicket||activePortal!=='書單'||catalogue.hidden)return;
+      void selectBookPreview(works,li,items[idx]);
+     });
+    }
+   }
    $('#dawn-catalogue .dawn-catalogue__nav').hidden=true;
    $('#dawn-catalogue .dawn-catalogue__more').hidden=true;
    pageStatus.textContent=String(items.length)+' 部作品';
