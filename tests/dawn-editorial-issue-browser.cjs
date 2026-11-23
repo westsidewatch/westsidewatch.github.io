@@ -66,7 +66,16 @@ fs.mkdirSync(out,{recursive:true});
           return {width:innerWidth,scrollWidth:document.documentElement.scrollWidth,
             heading:document.querySelector("main h1")?.textContent||"",
             threeLists:["gospel-essentials","inner-life","church-history"].every(slug=>links.some(a=>a.getAttribute("href").includes(slug+".html"))),
-            listLinks:links.length};
+            listLinks:links.length,
+            identityOverlap:(()=>{
+              const nav=document.querySelector(".sites-layer-header")?.getBoundingClientRect();
+              const title=document.querySelector(".sites-dawn-library .fl-header h1")?.getBoundingClientRect();
+              return !!(nav&&title&&title.top<nav.bottom-2);
+            })(),
+            chineseOrphan:(()=>{
+              const name=document.querySelector('.sites-dawn-library .fl-header h1 span[lang="zh-Hant"]');
+              return !!(name&&getComputedStyle(name).whiteSpace!=="nowrap");
+            })()};
         });
         results.push({page:label,viewport:viewport.name,http:response?.status(),...data});
         if(response?.status()!==200)failures.push(viewport.name+" "+label+" HTTP "+response?.status());
@@ -77,6 +86,8 @@ fs.mkdirSync(out,{recursive:true});
           failures.push(viewport.name+" "+label+" horizontal overflow "+JSON.stringify(offenders));
         }
         if(!data.threeLists)failures.push(viewport.name+" "+label+" missing one of three reading lists");
+        if(data.identityOverlap)failures.push(viewport.name+" "+label+" bookstore identity overlaps global navigation");
+        if(data.chineseOrphan)failures.push(viewport.name+" "+label+" Chinese identity can wrap a single character");
         await page.screenshot({path:path.join(out,viewport.name+"-"+label+".png"),fullPage:true,animations:"disabled",timeout:30000});
         await page.locator('a[href="/dawn-library/reading-room/gospel-essentials.html"]').first().click({timeout:15000});
         await page.waitForURL("**/dawn-library/reading-room/gospel-essentials.html",{timeout:15000});
