@@ -391,6 +391,7 @@ body[data-church-entry="p2"] #church-canvas{touch-action:none}
   }
   .ws-ministry-story.is-finale .ws-ministry-story__return-to-scene{
     display:block;
+    order:2;
     align-self:center;
     width:max-content;
     min-height:36px;

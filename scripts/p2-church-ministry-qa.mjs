@@ -188,6 +188,7 @@ try{
     viewportHeight:innerHeight,
     sunday:document.querySelector(".ws-ministry-story__sunday").getBoundingClientRect().toJSON(),
     scripture:document.querySelector(".ws-ministry-story__panel").getBoundingClientRect().toJSON(),
+    returnLink:document.querySelector(".ws-ministry-story__return-to-scene").getBoundingClientRect().toJSON(),
     church:document.querySelector("main").getBoundingClientRect().toJSON(),
     scrollLink: getComputedStyle(document.querySelector(".ws-ministry-story__scroll-invitation")).display
   })`);
@@ -196,6 +197,7 @@ try{
      finale.documentHeight<finale.viewportHeight+450||
      finale.sunday.top<finale.viewportHeight-2||
      finale.scripture.top<finale.sunday.bottom+9||
+     finale.returnLink.top<finale.scripture.bottom+8||
      finale.church.top<-.1||finale.church.height<finale.viewportHeight-3||
      finale.scrollLink==="none")
     throw Error("Mobile church MUST fill first screen; Sunday+scripture follow BELOW it in a scrollable page "+JSON.stringify(finale));
