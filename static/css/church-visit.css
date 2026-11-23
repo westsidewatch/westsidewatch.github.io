@@ -235,7 +235,7 @@ body.church-visit{
  .church-visit__hero-grid{display:flex;flex-direction:column;min-height:0;padding:20px 18px 34px;gap:35px}
  .church-visit__hero-copy{padding:28px 0 0}
  .church-visit__seal{margin-bottom:25px}
- .church-visit__identity-lockup{grid-template-columns:1fr 1fr;column-gap:10px}
+ .church-visit__identity-lockup{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);column-gap:10px}
  .church-visit__name{font-size:clamp(48px,9vw,72px)!important;line-height:1.1!important}
  .church-visit__english{font-size:clamp(24px,5.4vw,40px);padding-left:12px}
  .church-visit__intro{font-size:clamp(18px,4.3vw,26px)}
@@ -272,8 +272,9 @@ body.church-visit{
  .church-visit__footer{padding:27px 18px 60px}
 }
 @media(max-width:355px){
+ .church-visit__identity-lockup{grid-template-columns:1fr;row-gap:18px}
  .church-visit__top nav{gap:7px}.church-visit__top nav a{font-size:12px}
- .church-visit__name{font-size:43px!important}
+ .church-visit__name{font-size:54px!important}
  .church-visit__english{font-size:19px}
  .church-visit__formal-divider{padding:0 5px}
  .church-visit__scripture-tile{min-height:405px}
