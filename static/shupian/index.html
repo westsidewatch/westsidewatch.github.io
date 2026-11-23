@@ -263,7 +263,7 @@ document.getElementById('close').onclick=()=>dialog.close();dialog.addEventListe
 render();
 (async function loadApprovedFilms(){
   try{
-    const response=await fetch('catalog.json',{cache:'no-store'});
+    const response=await fetch('screenings.json',{cache:'no-store'});
     if(!response.ok)throw new Error('Catalog unavailable');
     const payload=await response.json();
     candidates=Array.isArray(payload)?payload:[];
