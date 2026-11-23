@@ -18,8 +18,8 @@ const base=process.env.CHURCH_TEST_ORIGIN||'http://127.0.0.1:4174';
     &&document.querySelectorAll('[data-church-qr] canvas').length===4,null,{timeout:20000});
    await page.waitForFunction(()=>{
      const doc=document.querySelector('#church-letterpress')?.contentDocument;
-     return doc?.body?.classList.contains('p2ChurchHorizontal')&&
-       doc.querySelectorAll('#formeEn .column>.piece.zh').length>0;
+     return doc?.body?.classList.contains('p2ChurchVertical')&&
+       doc.querySelectorAll('#formeZh .column>.piece.zh').length>0;
    },null,{timeout:60000});
    const metrics=await page.evaluate(()=>{
     const story=document.querySelector('#church-sunday-live');
@@ -90,16 +90,22 @@ const base=process.env.CHURCH_TEST_ORIGIN||'http://127.0.0.1:4174';
       motherForm:(()=>{
         const doc=document.querySelector('#church-letterpress')?.contentDocument;
         if(!doc)return {ready:false};
-        const original=cls=>[...doc.querySelectorAll('#formeEn .piece.'+cls)].map(n=>n.dataset.original||n.textContent).join('');
-        const plate=doc.querySelector('#plateEn');
+        const original=cls=>[...doc.querySelectorAll('#formeZh .piece.'+cls)].map(n=>n.dataset.original||n.textContent).join('');
+        const plate=doc.querySelector('#plateZh');
         const box=plate.getBoundingClientRect();
-        const glyphs=[...doc.querySelectorAll('#formeEn .column>.piece')].map(n=>n.getBoundingClientRect());
-        return {ready:true,mode:doc.body.classList.contains('p2ChurchHorizontal'),
-          rotated:doc.querySelector('#formeEn').style.transform.includes('rotate(-90deg)'),
+        const glyphs=[...doc.querySelectorAll('#formeZh .column>.piece')].map(n=>n.getBoundingClientRect());
+        const form=doc.querySelector('#formeZh');
+        const zn=doc.querySelector('#formeZh .piece.zh');
+        return {
+          ready:true,mode:doc.body.classList.contains('p2ChurchVertical'),
+          unrotated:form.style.transform.includes('scale(')&&!form.style.transform.includes('rotate('),
+          verticalWriting:getComputedStyle(zn).writingMode==='vertical-rl',
           zh:original('zh').slice(0,70),en:original('en').slice(0,100),
-          glyphsFit:glyphs.every(x=>x.left>=box.left-5&&x.top>=box.top-5&&
+          glyphsFit:glyphs.length>0&&glyphs.every(x=>x.left>=box.left-5&&x.top>=box.top-5&&
             x.right<=box.right+5&&x.bottom<=box.bottom+5),
-          firstHidden:getComputedStyle(doc.querySelector('.impression:first-child')).display==='none'};
+          secondHidden:getComputedStyle(doc.querySelector('.impression:nth-child(2)')).display==='none',
+          firstVisible:getComputedStyle(doc.querySelector('.impression:first-child')).display!=='none'
+        };
       })(),
       archive:story?.textContent?.includes('歷史主日程序'),
       sunday:story?.querySelectorAll('.ws-church-sunday-row').length,
@@ -112,8 +118,9 @@ const base=process.env.CHURCH_TEST_ORIGIN||'http://127.0.0.1:4174';
    assert(metrics.width<=screen.width+2,screen.label+' horizontal overflow '+JSON.stringify(metrics));
    assert(metrics.identity&&metrics.archive&&metrics.sunday===7&&metrics.ministries===7&&metrics.gatherings===4);
    assert(metrics.osGlass,screen.label+' visitor glass blur + OS typography not active '+JSON.stringify(metrics));
-   assert(metrics.motherForm.ready&&metrics.motherForm.mode&&metrics.motherForm.rotated&&metrics.motherForm.firstHidden,
-     screen.label+' failed to reuse V60 horizontal Chinese mother forme '+JSON.stringify(metrics.motherForm));
+   assert(metrics.motherForm.ready&&metrics.motherForm.mode&&metrics.motherForm.unrotated&&
+     metrics.motherForm.verticalWriting&&metrics.motherForm.secondHidden&&metrics.motherForm.firstVisible,
+     screen.label+' failed to reuse V60 Chinese VERTICAL mother forme '+JSON.stringify(metrics.motherForm));
    assert(metrics.motherForm.zh.includes('信我的人')&&metrics.motherForm.en.includes('He that believeth'),
      screen.label+' mother forme verse mismatch '+JSON.stringify(metrics.motherForm));
    assert(metrics.motherForm.glyphsFit,screen.label+' letterpress clipping '+JSON.stringify(metrics.motherForm));
