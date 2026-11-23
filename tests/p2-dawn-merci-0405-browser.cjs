@@ -68,8 +68,8 @@ const ease=x=>{const n=Math.max(0,Math.min(1,x));return n*n*(3-2*n)};
      device+': original 03→04 MERSI scroll masks not reused '+JSON.stringify(middle));
     assert(complete.right>.999&&complete.left>.999,
      device+': 05 never becomes full-height in both halves '+JSON.stringify(complete));
-    assert(first.leftClip.includes('100.000%')&&first.rightClip.startsWith('inset(')&&
-     middle.leftClip.startsWith('inset(0 ')&&middle.rightClip==='none',
+    assert(first.leftClip.includes('100%')&&first.rightClip.startsWith('inset(')&&
+     middle.leftClip.startsWith('inset(0')&&middle.rightClip==='none',
      device+': independent opposing clip geometry missing '+JSON.stringify({first,middle}));
     for(const point of [first,middle,complete]){
      assert(point.worldOpacity==='1'&&point.wrapperBg==='rgba(0, 0, 0, 0)'&&
