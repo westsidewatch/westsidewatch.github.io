@@ -49,3 +49,7 @@
 @media(max-width:540px){.church-visit__top{padding:15px 18px;flex-wrap:wrap}.church-visit__top nav{order:3;width:100%;justify-content:space-between}.church-visit__hero{padding:45px 20px}.church-visit__identity{max-height:85px}.church-visit__section{padding:48px 20px}.church-visit__about-grid,.church-visit__gatherings,.church-visit__ministries,.church-visit__contact-grid{grid-template-columns:1fr}.church-visit__intake-grid{grid-template-columns:1fr 1fr}.church-visit__intake-grid h3{font-size:18px}.church-visit__intake-grid img{width:98px;height:98px}.ws-church-sunday-row{grid-template-columns:100px 1fr;gap:10px}}
 @media(max-width:345px){.church-visit__intake-grid{grid-template-columns:1fr}.church-visit__top nav{gap:7px}.church-visit__top nav a{font-size:11px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+.church-visit__qr{display:block;background:#fff;border:8px solid #fff;width:116px;height:116px;max-width:100%;margin-top:6px}
+.church-visit__qr canvas{display:block;image-rendering:pixelated;width:100%;height:100%}
+@media(max-width:540px){.church-visit__qr{width:98px;height:98px}}
