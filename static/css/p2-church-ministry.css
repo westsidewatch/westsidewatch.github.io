@@ -269,13 +269,20 @@ body[data-church-entry="p2"] #church-canvas{touch-action:none}
    The full building occupies the first viewport, with both folios BELOW it.
    Swipe up/scroll down to read; a discreet link also scrolls to the folios. */
 @media(max-width:680px){
-  html.church-finale-scroll,
-  body.church-finale-scroll{
+  /* Exactly one document scroller: the HTML viewport.  Giving both
+     html and body overflow:auto creates nested scroll roots in Chrome,
+     so the page stays at scrollY=0 when the reading link is activated. */
+  html.church-finale-scroll{
     height:auto!important;
     min-height:100svh;
     overflow-x:hidden!important;
     overflow-y:auto!important;
     scroll-behavior:smooth;
+  }
+  body.church-finale-scroll{
+    height:auto!important;
+    min-height:100svh;
+    overflow:visible!important;
   }
   body.church-finale-scroll{
     background:linear-gradient(180deg,

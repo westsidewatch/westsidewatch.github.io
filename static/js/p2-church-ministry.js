@@ -216,11 +216,21 @@
     root.classList.remove('is-minimal');
   });
   const readingStack=root.querySelector('.ws-ministry-story__final-stack');
+  function jumpInDocument(top){
+    const scrolling=document.scrollingElement;
+    if(!scrolling)return;
+    // An immediate native-document scroll does not depend on WebGL frame
+    // delivery. Smooth-scroll animations can stall during heavy GLB draws.
+    scrolling.style.scrollBehavior='auto';
+    scrolling.scrollTop=Math.max(0,top);
+    scrolling.style.removeProperty('scroll-behavior');
+  }
   root.querySelector('[data-action="read-finale"]').addEventListener('click',()=>{
-    readingStack.scrollIntoView({behavior:'smooth',block:'start'});
+    const scrolling=document.scrollingElement;
+    jumpInDocument(readingStack.getBoundingClientRect().top+(scrolling?.scrollTop||0));
   });
   root.querySelector('[data-action="return-scene"]').addEventListener('click',()=>{
-    window.scrollTo({top:0,behavior:'smooth'});
+    jumpInDocument(0);
   });
   let finalePinned=false;
   play.addEventListener('click',()=>{
