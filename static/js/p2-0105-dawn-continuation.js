@@ -489,6 +489,7 @@
   clearBookPreview();
   wall.hidden=true;catalogue.hidden=false;activePortal=origin==='館藏總索引'?'all':origin;
   catalogue.dataset.view=activePortal==='all'?'index':'editorial';
+  catalogue.dataset.readingList=activePortal==='書單'?'true':'false';
   catalogueFocus.textContent=activePortal==='all'?'':origin;
   const catalogueTitle=$('#dawn-catalogue-title');
   if(catalogueTitle)catalogueTitle.textContent=activePortal==='all'?'':origin;
