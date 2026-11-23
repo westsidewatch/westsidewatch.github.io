@@ -283,3 +283,40 @@ body.church-visit{
 @media(prefers-reduced-motion:reduce){
  .church-visit *, .church-visit *:before,.church-visit *:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
 }
+/* R3 / authoritative CHURCH NAME. Exact P2 composition:
+   approved Chinese artwork ABOVE a single official English line.
+   The PNG is the existing P2 export of the artwork; never typeset it anew. */
+.church-visit__identity-lockup{
+ display:flex;flex-direction:column;align-items:center;justify-content:center;
+ width:min(100%,950px);max-width:100%;gap:0;
+}
+.church-visit__name{
+ display:block!important;width:100%!important;height:auto!important;margin:0!important;
+ line-height:1!important;padding:0!important;overflow:visible!important
+}
+.church-visit__official-artwork{
+ display:block!important;width:100%;aspect-ratio:1800/193;
+ background:var(--visit-dawn);
+ -webkit-mask:url("/images/living-water-west-church-name.png") center/contain no-repeat;
+ mask:url("/images/living-water-west-church-name.png") center/contain no-repeat;
+}
+.church-visit__identity-lockup .church-visit__english{
+ display:block!important;align-self:center;text-align:center;width:100%;min-width:0;
+ border:0!important;padding:0!important;margin:clamp(7px,1.1vw,18px) 0 0!important;
+ font:400 clamp(16px,1.8vw,29px)/1.22 var(--ws-type-display-en-sc,"Bodoni Moda SC",serif)!important;
+ white-space:normal;letter-spacing:0!important;
+}
+.church-visit__identity-lockup .church-visit__formal{
+ align-self:center;text-align:center;margin:clamp(10px,1.2vw,17px) 0 0!important;
+ font:italic 400 clamp(11px,.86vw,15px)/1.5 var(--ws-type-display-en,"Bodoni Moda",serif);
+ color:color-mix(in srgb,var(--visit-ink) 68%,var(--visit-water));
+}
+@media(max-width:760px){
+ .church-visit__identity-lockup{width:100%;max-width:100%;gap:0}
+ .church-visit__identity-lockup .church-visit__english{font-size:clamp(14px,3.35vw,21px)!important;letter-spacing:0!important}
+ .church-visit__identity-lockup .church-visit__formal{font-size:clamp(10px,2.4vw,13px)}
+}
+@media(max-width:355px){
+ .church-visit__identity-lockup{display:flex!important;flex-direction:column;row-gap:0}
+ .church-visit__identity-lockup .church-visit__english{font-size:13px!important}
+}
