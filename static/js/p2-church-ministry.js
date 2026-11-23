@@ -107,6 +107,10 @@
         <a class="ws-ministry-story__back" href="/" aria-label="返回 Westside Watch 主站">返回</a>
       </div>
     </div>
+    <div class="ws-ministry-story__final-identity" aria-label="教會正式名稱">
+      <strong>神召會活水堂西區教會</strong>
+      <span lang="en">P.A.O.C. Living Water Assembly West</span>
+    </div>
     <div class="ws-ministry-story__final-stack">
     <section class="ws-ministry-story__panel" aria-live="polite" aria-atomic="true" aria-label="當前事工介紹">
       <div class="ws-ministry-story__meta"><span data-story-en>WELCOME</span>
@@ -117,6 +121,7 @@
         <div class="ws-ministry-story__verse-zh" lang="zh-Hant" data-story-zh></div>
         <div class="ws-ministry-story__verse-en" lang="en" data-story-kjv></div>
         <span class="ws-ministry-story__reference" data-story-reference></span>
+        <a class="ws-ministry-story__content-link" data-story-link href="/church/visit/#ministries">了解教會生活</a>
       </div>
     </section>
     <section class="ws-ministry-story__sunday" aria-label="教會主日崇拜程序表" aria-hidden="true">
@@ -155,6 +160,19 @@
       <div class="ws-ministry-story__progress-fill"></div>
     </div>`;
   document.body.append(root);
+  // The same source powers P2 and this 3D finale; this page has no separate Sunday editor.
+  window.WestsideSunday?.mountTour(root);
+  const ministryAction=root.querySelector('[data-story-link]');
+  let ministryItems=null;
+  const syncMinistryAction=i=>{
+    const item=ministryItems?.[i];
+    ministryAction.href=item?.href||'/church/visit/#ministries';
+    ministryAction.textContent=item?.action||'了解教會生活';
+  };
+  fetch('/data/church/ministries.json',{cache:'no-store'}).then(r=>r.ok?r.json():null)
+    .then(d=>{if(d&&Array.isArray(d.items)&&d.items.length===7)ministryItems=d.items;syncMinistryAction(active>=0?active:0);})
+    .catch(()=>{});
+
   const buttons=[...root.querySelectorAll('[data-chapter]')];
   const en=root.querySelector('[data-story-en]'),
     number=root.querySelector('[data-story-index]'),
@@ -202,6 +220,7 @@
     if(index===active)return;
     const chapter=chapters[index];
     active=index;
+    syncMinistryAction(index);
     en.textContent=chapter.en;
     number.textContent=String(index+1).padStart(2,'0')+' / 07';
     title.textContent=chapter.title;
