@@ -21,6 +21,17 @@ const base=process.env.CHURCH_TEST_ORIGIN||'http://127.0.0.1:4174';
     const cards=[...document.querySelectorAll('[data-church-qr] canvas')];
     return {
       width:document.documentElement.scrollWidth,viewport:innerWidth,
+      osGlass:(()=>{
+        const tile=document.querySelector('.church-visit__scripture-tile');
+        const card=document.querySelector('.church-visit__gathering');
+        const os=getComputedStyle(document.body);
+        const t=getComputedStyle(tile),g=getComputedStyle(card);
+        const blur=s=>((s.backdropFilter||s.webkitBackdropFilter||'').includes('blur('));
+        const heading=getComputedStyle(document.querySelector('.church-visit__section-head h2'));
+        return blur(t)&&blur(g)&&
+          heading.fontFamily.includes('Chiron')&&
+          os.getPropertyValue('--ws-branch').trim().length>0;
+      })(),
       identity:(()=>{
        const zh=document.querySelector('.church-visit__official-artwork');
        const en=document.querySelector('.church-visit__identity-lockup .church-visit__english');
@@ -41,6 +52,7 @@ const base=process.env.CHURCH_TEST_ORIGIN||'http://127.0.0.1:4174';
    });
    assert(metrics.width<=screen.width+2,screen.label+' horizontal overflow '+JSON.stringify(metrics));
    assert(metrics.identity&&metrics.archive&&metrics.sunday===7&&metrics.ministries===7&&metrics.gatherings===4);
+   assert(metrics.osGlass,screen.label+' visitor glass blur + OS typography not active '+JSON.stringify(metrics));
    assert.equal(metrics.qr.length,4);assert(metrics.qr.every(q=>q.w===164&&q.h===164&&q.painted));
    for(const type of ['join','decision','newcomer','prayer'])
      assert(metrics.allLinks.includes('/church/forms/?type='+type),screen.label+' missing '+type);
@@ -61,6 +73,13 @@ const base=process.env.CHURCH_TEST_ORIGIN||'http://127.0.0.1:4174';
   assert.equal(await form.locator('#church-submit').isDisabled(),true,'No backend: form must fail closed');
   assert.equal(await form.locator('#form-title').textContent(),'信仰回應與決志');
   assert.equal(await form.locator('#church-gospel').isVisible(),true,'Gospel editorial pathway must be visible on decision');
+  const formGlass=await form.evaluate(()=>{
+    const panel=getComputedStyle(document.querySelector('.church-form__gospel-step'));
+    const title=getComputedStyle(document.querySelector('.church-form__gospel-head h2'));
+    return (panel.backdropFilter||panel.webkitBackdropFilter||'').includes('blur(')
+      &&title.fontFamily.includes('Chiron');
+  });
+  assert(formGlass,'Decision panels must use OS typography and backdrop blur');
   assert.equal(await form.locator('.church-form__gospel-step').count(),3,'Love, Cross and Faith steps required');
   assert.equal(await form.locator('[name="response"]').getAttribute('required'),'','Decision selection must be explicit');
   await form.screenshot({path:'artifacts/church-visitor/decision-form.png',fullPage:true});
