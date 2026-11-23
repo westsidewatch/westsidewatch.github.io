@@ -5,6 +5,11 @@ body.church-visit{
  --ws-branch:var(--ws-water);
  --ws-surface:var(--ws-paper);
  --ws-text:var(--ws-ink);
+ /* OS semantic roles must be resolved inside the church scope;
+    inherited root --ws-deep was previously evaluated with journal gold. */
+ --ws-deep:color-mix(in oklab,var(--ws-water) 68%,var(--ws-ink));
+ --ws-interaction:color-mix(in oklab,var(--ws-water) 86%,var(--ws-ink));
+ --ws-raised:color-mix(in oklab,var(--ws-water) 4%,var(--ws-surface));
  margin:0;min-width:0;overflow-x:clip;background:var(--ws-surface);color:var(--ws-text);
  font-family:var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);font-synthesis:none;
 }
@@ -425,4 +430,10 @@ body.church-visit{
  .church-visit__ministry:nth-child(1),.church-visit__intake-grid article:nth-child(2){
   background:var(--ws-deep);
  }
+}
+
+/* Gathering metadata is Chinese content, never Bodoni SC glyph substitution. */
+.church-visit__gathering>span{
+ font:var(--ws-weight-air) var(--ws-type-scale-meta)/1.5 var(--ws-type-display-zh);
+ color:var(--ws-first-light);letter-spacing:.07em;
 }
