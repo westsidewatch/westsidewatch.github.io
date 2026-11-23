@@ -783,6 +783,11 @@ function buildCameraSafetyBoxes(building){
   building.traverse(mesh=>{
     if(!mesh.isMesh||!mesh.visible)return;
     const n=modelName(mesh.name);
+    // A single sloped, narrow step soffit occupies only its inclined prism;
+    // its axis-aligned AABB includes several cubic metres of empty air and
+    // would incorrectly push the eye off the original upper stair route.
+    // The eight actual GLB treads remain physical and independently checked.
+    if(/^v26 original upper flight single simple supporting soffit/.test(n))return;
     // The former detector still used the CLOSED door's AABB even when its
     // mesh had pivoted fully open. At t=106s it snapped the camera 1.29m
     // backwards. Static boxes must NEVER contain animated door leaves.
