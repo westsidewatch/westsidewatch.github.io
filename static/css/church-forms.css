@@ -276,3 +276,10 @@ body[data-intake-type=decision] .church-form__intro h1>span{
 @media(max-width:780px){
  body[data-intake-type=decision] .church-form__intro h1{font-size:var(--ws-type-scale-title-lg)!important}
 }
+
+/* Gospel section is a chapter heading, not another first-layer billboard. */
+body[data-intake-type=decision] .church-form__gospel-head h2{
+ font-size:var(--ws-type-scale-title-lg)!important;
+ line-height:var(--ws-type-leading-title,1.12)!important;
+ letter-spacing:.02em;
+}
