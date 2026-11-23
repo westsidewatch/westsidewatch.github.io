@@ -46,6 +46,22 @@ jobs:
               print('SOURCE_DIMENSIONS',src.size,'THUMBNAIL_DIMENSIONS',cover.size)
           print('THUMBNAIL_BYTES',target.stat().st_size)
           print('THUMBNAIL_SHA256',hashlib.sha256(target.read_bytes()).hexdigest())
+          # Exact 2024 Chinese Christian Mission Confessions cover (ISBN 9781634202176).
+          import requests, io
+          cover_url='https://cdn.store-assets.com/s/734831/i/86387665.jpeg'
+          try:
+              r=requests.get(cover_url,timeout=25,headers={'User-Agent':'Mozilla/5.0'})
+              print('CONFESSIONS_COVER_FETCH',r.status_code,len(r.content))
+              r.raise_for_status()
+              with Image.open(io.BytesIO(r.content)) as source:
+                  if min(source.size)<150: raise ValueError('small image')
+                  new=ImageOps.exif_transpose(source).convert('RGB')
+                  new.thumbnail((300,440),Image.Resampling.LANCZOS)
+                  dest=Path('static/dawn-library/reading-room/assets/cover-9781634202176.jpg')
+                  new.save(dest,format='JPEG',quality=78,optimize=True,progressive=True)
+                  print('CACHED_CONFESSIONS',new.size,dest.stat().st_size)
+          except Exception as e:
+              print('CONFESSIONS_IMAGE_NOT_CACHED',str(e)[:150])
           PY
       - name: Commit real small editorial book-cover thumbnail to isolated PR branch
         run: |
@@ -53,6 +69,7 @@ jobs:
           git config user.name 'Dawn Editorial Asset Automation'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
           git add static/dawn-library/reading-room/assets/cover-9789577276551.jpg
+          test ! -f static/dawn-library/reading-room/assets/cover-9781634202176.jpg || git add static/dawn-library/reading-room/assets/cover-9781634202176.jpg
           if git diff --cached --quiet; then
             echo 'Cover already up to date; no commit needed'
             exit 0
