@@ -47,13 +47,14 @@ jobs:
           print('THUMBNAIL_BYTES',target.stat().st_size)
           print('THUMBNAIL_SHA256',hashlib.sha256(target.read_bytes()).hexdigest())
           # Exact 2024 Chinese Christian Mission Confessions cover (ISBN 9781634202176).
-          import requests, io
+          import urllib.request, io
           cover_url='https://cdn.store-assets.com/s/734831/i/86387665.jpeg'
           try:
-              r=requests.get(cover_url,timeout=25,headers={'User-Agent':'Mozilla/5.0'})
-              print('CONFESSIONS_COVER_FETCH',r.status_code,len(r.content))
-              r.raise_for_status()
-              with Image.open(io.BytesIO(r.content)) as source:
+              req=urllib.request.Request(cover_url,headers={'User-Agent':'Mozilla/5.0'})
+              with urllib.request.urlopen(req,timeout=25) as r:
+                  image_bytes=r.read()
+                  print('CONFESSIONS_COVER_FETCH',r.status,len(image_bytes))
+              with Image.open(io.BytesIO(image_bytes)) as source:
                   if min(source.size)<150: raise ValueError('small image')
                   new=ImageOps.exif_transpose(source).convert('RGB')
                   new.thumbnail((300,440),Image.Resampling.LANCZOS)
@@ -75,4 +76,11 @@ jobs:
             exit 0
           fi
           git commit -m 'assets(dawn): original publisher Chinese book-cover thumbnail for editorial review'
-          git push origin HEAD:dawn/editorial-curation-core-v1-20261122
+          for attempt in 1 2 3 4; do
+            git fetch origin dawn/editorial-curation-core-v1-20261122
+            git rebase origin/dawn/editorial-curation-core-v1-20261122
+            if git push origin HEAD:dawn/editorial-curation-core-v1-20261122; then exit 0; fi
+            sleep 3
+          done
+          echo '::error::Unable to safely push after concurrent changes'
+          exit 1
