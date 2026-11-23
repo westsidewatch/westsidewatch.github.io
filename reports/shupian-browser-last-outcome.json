@@ -1,8 +1,8 @@
 {
-  "workflow_run_id": "45109198110",
-  "commit": "00b24c23873fef5c8bcc49e6e1659bb285dba86c",
+  "workflow_run_id": "45110104854",
+  "commit": "ccc8f9095d7d9735bd4cc08d3fae7b320e39e0cf",
   "job_status": "failure",
   "browser_test": "FAILED",
-  "reason": "locator.evaluate: NotSupportedError: Failed to load because no supported source was found.",
-  "checked_at": "2026-11-23T04:00:31.490Z"
+  "reason": "locator.evaluate: TypeError: Failed to set the 'currentTime' property on 'HTMLMediaElement': The provided double value is non-finite.\n    at eval (eval at evaluate (:290:30), <anonymous>:6:20)\n    at new Promise (<anonymous>)\n    at eval (eval at evaluate (:290:30), <anonymous>:3:11)\n    at UtilityScript.evaluate (<anonymous>:292:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+  "checked_at": "2026-11-23T04:09:42.320Z"
 }
