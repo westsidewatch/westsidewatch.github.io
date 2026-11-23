@@ -93,16 +93,23 @@ Root principle:
 
 The Library is a continuously accumulating knowledge/resource system, not a Journal issue-by-issue publication. Its resources may serve Journal, ONE, 多雷搜索、Church、Social、Visual research and other functions.
 
-#### 中文讀者的精品書單｜書目先於來源（Editorial-first booklists）
+#### 精品中文書單｜黎明書局的雜誌式編輯面貌
 
-This is a **core Dawn editorial capability**, not an additional public channel or a supplier-feed importer. Its sole task upstream of 三晨星、光譜、策展集 is to ask which books deserve serious reading and recommendation for Chinese-language readers, *independently of where a free copy may be found*.
+**書單 (Editorial Reading Lists) 是黎明書局直接面向讀者的出版形態之一。** 它與「三晨星／光譜／策展集」相互重疊、共享同一 canonical Work、編輯判斷和讀者研究，但不被降為三者的內部候選池，也不替代任何既有欄目。
 
-- **First: independent editorial question.** Develop a meaningful reading proposition (e.g. 內在生活、教會歷史、名牧薦書、歷代經典、華人原創神學、文學中的福音), reader context, comparative selection criteria, dissenting or excluded works, and a provenance standard for named recommendations.
-- **Second: assess the Work itself.** Evaluate theological, historical, literary and reader-fit merits, including tradition and critical context. Distinguish independently read judgments from candidate-level hypotheses. A publisher shelf, award list, church curriculum or search result is a research lead, not a substitute for judgment.
-- **Third: resolve the Chinese edition.** Only *after* making the editorial choice do we verify Chinese titles, translators, editions, rights, cover images and legitimate access. Prefer completely free, no-login reading. Optional free-subscription aggregators are secondary; lack of a free edition cannot retroactively disqualify a high-value book.
-- **Fourth: hand the reviewed Work to existing outputs.** 三晨星 judges present recommendation, 光譜 visualizes knowledge links, 策展集 composes study journeys. The same Work is never duplicated simply because it appears on different lists.
+**第一層：選書、封面、導讀，本身就是作品。** 以清楚的閱讀命題展開一篇可獨立閱讀的雜誌式專題；經編輯挑選的中文著作與中文譯本為主，可適量穿插英文原典。書單依編輯目的形成篇章、節奏、封面構圖、書介、推薦理由、比較閱讀、讀者指引、歷史／神學語境與必要的經授權或法定允許的短摘錄及圖版。真實封面必須核對**所展示的中文 Edition**，不能使用同名他書、英文原版、錯版，也不得以純色文字方塊冒充書封。尚未查得可用圖版時，保留文章位置與編輯文字，標記圖版待核，不偽造。
 
-**Canonical operating specification:** [精品書單編輯室 V1](dawn-library/EDITORIAL-READING-LISTS-CHARTER-V1.md); independently checkable method inventory [editorial-booklist-studio.v1.json](dawn-library/editorial-booklist-studio.v1.json). These are editorial research documents, not published lists and not a parallel design authority. No automated assignment of literary/theological quality is permitted.
+**第二層：書局的閱讀支持，緊接編輯內容。** 書單中每個作品再對應已核定 Work／Edition／Source：優先尋找合法、真正完全免費、無須登入的中文全文，之後是授權的免費註冊來源、圖書館借閱或出版方書目；必要時可提供英文原典。每一種按實際狀況顯示為「免費閱讀／免費註冊閱讀／圖書館借閱／查看版本」，不得把售書頁或版權不明掃描說成免費閱讀。這些入口是**編輯稿的延伸**，不是第一層內容的入選前提。某書暫無閱讀連結，不撤銷其推薦理由。
+
+**工作次序：** 提出讀者問題 → 獨立選書與比讀 → 找到正確中文版封面／圖版 → 寫成具可讀性的雜誌導讀 → 緊接著匹配館藏與合法閱讀通路 → 檢查閱讀、封面載入、連結與桌面／手機版面 → 發表與持續維護。出版成品的第一層可早於來源完整而成立；但未獲授權的圖版不可擅自複製或發佈，未驗證的下載入口不可宣稱可讀。
+
+**編輯面貌的分工：**
+- 書單：**為何讀這些書、如何閱讀、每本書帶來什麼？** 雜誌式書封和導讀可單獨成立。
+- 三晨星：**此時最值得留下及推薦的是什麼？** 單次精選與週期主題。
+- 光譜：**它們與經文、思想、歷史及其他資源如何相連？** 知識脈絡。
+- 策展集：**沿著什麼跨媒介的學習道路走下去？** 多資源策展旅程。
+
+**編輯規範：** [精品書單編輯章程](dawn-library/EDITORIAL-READING-LISTS-CHARTER-V1.md)；首批實際選書研究存於 `docs/dawn-library/reading-lists/`。本節屬黎明書局原有領域內的出版能力，不擅自調動 P2／其他版塊，不建立平行 Design OS。
 
 #### The three-layer editorial model
 
