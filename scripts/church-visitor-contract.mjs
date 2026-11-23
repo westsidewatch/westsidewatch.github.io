@@ -23,7 +23,7 @@ assert.ok(ministries.items.every(x=>x.href.startsWith('/')&&x.action));
 assert.ok(p2.includes('/js/church-sunday.js')&&tour.includes('/js/church-sunday.js'));
 assert.ok(ministry.includes('window.WestsideSunday?.mountTour(root)'));
 assert.ok(app.includes("fetch(source,{cache:'no-store'})")&&app.includes("const source='/data/church/current-sunday.json'"));
-assert.ok(app.includes("data.status!=='current'"),'Expired calendar dates must not be silently current');
+assert.ok(app.includes("d.status!=='current'"),'Expired calendar dates must not be silently current');
 assert.ok(scene.includes("southWallName.position.set(9.35,5.75,0.16)"));
 assert.ok(scene.includes("神召會活水堂西區教會")&&scene.includes("P.A.O.C. Living Water Assembly West"));
 assert.ok(scene.includes("crossAperture={x:15,y:3.65"),'Never overwrite cross geometry');
