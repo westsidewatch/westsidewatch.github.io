@@ -418,6 +418,7 @@
   const ticket=++detailTicket;
   returnTo=from||(!catalogue.hidden?'catalogue':'wall');returnScroll=second.scrollTop;activeBook=work;
   wall.hidden=true;catalogue.hidden=true;detail.hidden=false;
+  detail.dataset.readingList=work.editorialKey?'true':'false';
   detailTitle.textContent=work.title;detailAuthor.textContent=work.creator||work.author||'';
   const actualWorkId=String(work.workId||work.id||'');
   if(/^(?:OL\d+W|dawn:[\w:-]+)$/.test(actualWorkId)){
