@@ -1,6 +1,9 @@
 /* Living Water / Gospel response — an editorial continuation of Westside Design OS. */
 body[data-ws-scope="church"]{
  --ws-branch:var(--ws-water);--ws-surface:var(--ws-paper);--ws-text:var(--ws-ink);
+ --ws-deep:color-mix(in oklab,var(--ws-water) 68%,var(--ws-ink));
+ --ws-interaction:color-mix(in oklab,var(--ws-water) 86%,var(--ws-ink));
+ --ws-raised:color-mix(in oklab,var(--ws-water) 4%,var(--ws-surface));
  margin:0;background:var(--ws-surface);color:var(--ws-text);
  font:var(--ws-weight-standard) var(--ws-type-scale-ui)/1.85 var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);font-synthesis:none;
 }
@@ -257,4 +260,19 @@ body[data-intake-type=decision] .church-form__formarea{
   background:var(--ws-surface);box-shadow:none
  }
  .church-form__gospel-step:nth-child(2){background:var(--ws-deep)}
+}
+
+/* Split the decision headline by its editorial phrase, without CJK glyph-by-glyph
+   breaking or collision with the adjacent scripture-glass folio. */
+body[data-intake-type=decision] .church-form__intro h1{
+ font-size:var(--ws-type-scale-display-md)!important;
+ line-height:var(--ws-type-leading-title,1.12)!important;
+ word-break:normal!important;overflow-wrap:normal!important;
+ max-width:100%!important;
+}
+body[data-intake-type=decision] .church-form__intro h1>span{
+ display:block;white-space:nowrap;max-width:100%;
+}
+@media(max-width:780px){
+ body[data-intake-type=decision] .church-form__intro h1{font-size:var(--ws-type-scale-title-lg)!important}
 }
