@@ -434,6 +434,7 @@
   const sourceHint=$('#dawn-book-source-hint');
   sourceHint.hidden=!sourceUrl;
   detailSource.target='_blank';detailSource.rel='noopener noreferrer';
+  detailSource.textContent=work.sourceLabel||'閱讀原書 ↗';
   if(sourceUrl){detailSource.href=sourceUrl;detailSource.hidden=false}else{detailSource.hidden=true;detailSource.removeAttribute('href')}
   drawBookIntroduction(work,source);
   // Featured editions receive source-grounded editorial introductions; the
@@ -501,10 +502,86 @@
    prevButton.disabled=true;more.disabled=true;
    works.replaceChildren();
    pageStatus.textContent='';
-   showPortalCollection(activePortal,ticket);
+   if(activePortal==='書單')void showReadingList(ticket);
+   else showPortalCollection(activePortal,ticket);
   }
  }
  const portalIntro=$('#dawn-catalogue-introduction');
+ // The first-issue reading lists are editorial chapters inside the existing
+ // P2 05 collection and book-detail surfaces, not a second storefront.
+ let readingIssuePromise=null,activeReadingSlug='gospel-essentials';
+ async function loadReadingIssue(){
+  if(!readingIssuePromise)readingIssuePromise=(async()=>{
+   const response=await fetch('/dawn-library/p2-reading-lists-issue-01.json');
+   if(!response.ok)throw Error('Reading issue unavailable');
+   const issue=await response.json();
+   if(issue.schema!=='dawn.p2.editorial-reading-issue.v1'||
+      !Array.isArray(issue.lists)||issue.lists.length!==3||
+      issue.lists.reduce((n,list)=>n+(list.works?.length||0),0)!==22)
+      throw Error('Reading issue editorial integrity');
+   return issue;
+  })().catch(error=>{readingIssuePromise=null;throw error});
+  return readingIssuePromise;
+ }
+ function openReadingList(slug){
+  if(!['gospel-essentials','inner-life','church-history'].includes(slug))return;
+  activeReadingSlug=slug;
+  openCollection('書單');
+ }
+ async function showReadingList(ticket){
+  try{
+   const issue=await loadReadingIssue();
+   if(ticket!==portalTicket||activePortal!=='書單')return;
+   const list=issue.lists.find(row=>row.id===activeReadingSlug);
+   if(!list)throw Error('Reading list unavailable');
+   const title=$('#dawn-catalogue-title');
+   if(title)title.textContent=list.title;
+   catalogueFocus.textContent=list.question;
+   portalIntro.replaceChildren();
+   for(const paragraph of [list.introduction,'閱讀次序：'+list.sequence]){
+    const p=document.createElement('p');p.textContent=paragraph;portalIntro.append(p);
+   }
+   portalIntro.hidden=false;
+   portalTopics?.remove();
+   const bar=document.createElement('nav');
+   bar.className='dawn-catalogue__reading-index';
+   bar.setAttribute('aria-label','切換本期書單');
+   for(const entry of issue.lists){
+    const button=document.createElement('button');button.type='button';
+    button.textContent=entry.number+' / '+entry.title;
+    button.setAttribute('aria-current',String(entry.id===list.id));
+    button.addEventListener('click',()=>openReadingList(entry.id));
+    bar.append(button);
+   }
+   works.before(bar);portalTopics=bar;
+   // Only carry canonical Work IDs when the original library has verified
+   // its work/edition match. The editorial ID is never a fake Work ID.
+   const items=list.works.map(entry=>({
+    title:entry.title,creator:entry.creator,
+    workId:entry.libraryWorkId||undefined,
+    date:entry.edition||'',cover:entry.image?{url:entry.image}:undefined,
+    imageCredit:entry.imageCredit||'',
+    editorialKey:entry.editorialKey,
+    editorialParagraphs:[
+     '為什麼推薦：'+entry.judgement,
+     '怎樣閱讀：'+entry.counterpoint,
+     '與其他作品並讀：'+entry.comparison
+    ],
+    sourceUrl:entry.freeChineseUrl||entry.versionUrl||null,
+    sourceLabel:entry.freeChineseUrl?'閱讀免費中文版 ↗':'查看中文版本 ↗'
+   }));
+   editorialWorks=items;
+   renderPortalWorks(items,'書單');
+   $('#dawn-catalogue .dawn-catalogue__nav').hidden=true;
+   $('#dawn-catalogue .dawn-catalogue__more').hidden=true;
+   pageStatus.textContent=String(items.length)+' 部作品';
+  }catch(error){
+   if(ticket!==portalTicket||activePortal!=='書單')return;
+   console.error('[Dawn reading lists]',error);
+   pageStatus.textContent='本期書單暫時無法開啟，請返回閱讀室。';
+  }
+ }
+
  const channelCopy={
   '三晨星':[
    '三晨星不是按銷量、年代或書架位置排列的暢銷榜，而是從書局作品中挑選值得反覆閱讀的三部著作。每一次推薦都應能回答：這部書提出什麼重要問題，它如何幫助我們理解信仰、歷史與生命？',
@@ -1275,6 +1352,9 @@
  $('#dawn-primary-historical')?.addEventListener('click',()=>{
   if(activePortal!=='all')openCollection();
   void renderCatalogueClassification().then(()=>displayHistoricalIndex());
+ });
+ wall.querySelectorAll('[data-dawn-reading-list]').forEach(button=>{
+  button.addEventListener('click',()=>openReadingList(button.dataset.dawnReadingList));
  });
  wallGrid.addEventListener('click',e=>{
   const tile=e.target.closest('button');if(!tile)return;
