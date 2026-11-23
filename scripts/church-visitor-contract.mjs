@@ -33,7 +33,7 @@ assert.ok(p2.includes('href="/p2/church-tour.html?entry=p2"'));
 assert.ok(ministry.includes('data-story-link')&&ministry.includes('/data/church/ministries.json'));
 assert.ok(overview.includes('id="sunday"')&&overview.includes('id="gatherings"')&&overview.includes('id="invitation"'));
 assert.ok(overview.includes('/images/living-water-west-church-name.png'));
-assert.ok(overview.includes('/api/dore/assets/site-file?code=SITE-WECHAT-QR'));
+assert.ok(overview.includes('href="/join/"'),'Original Gate remains accessible without its broken historical QR');
 assert.ok(!overview.includes('一座可以走進去的教會，也是一個可以繼續參與的教會'));
 for(const kind of ['join','decision','newcomer','prayer']){
  assert.ok(forms.includes('name="consent"'));
