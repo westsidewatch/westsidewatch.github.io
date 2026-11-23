@@ -43,6 +43,10 @@ assert(html.includes('class="dawn-reading-list__series" aria-labelledby="dawn-re
 assert(html.includes('<h2 id="dawn-reading-list-heading">書單</h2>'),'Visible Chinese 書單 wayfinding missing');
 assert(!html.includes('dawn-reading-list__issue'),'Invisible tiny English-only strip must not return');
 assert((html.match(/<span class="dawn-reading-list__serial">書單 /g)||[]).length===3,'Each list square must say 書單, not resemble an individual book');
+assert(html.includes('dawn-reading-list__marker-count')&&html.includes('22</strong><span>部作品'),'Main square must identify a group of 22 works, not a single jacket');
+assert.deepEqual([...html.matchAll(/class="dawn-reading-list__quantity" lang="en">(\d+)<\/span>/g)].map(m=>m[1]),['06','09','07'],'List sleeves must show visible multi-work counts, not book-like titles');
+assert(html.includes('dawn-wall__collection-divider')&&html.includes('館藏選讀'),'Historical book wall must begin a separate clearly identified chapter');
+assert(css.includes('R82 — visual hierarchy')&&css.includes('grid-column:1 / span 2!important'),'A true 2x2 editorial square is required, not border decoration');
 assert(css.includes('.dawn-reading-list__series-grid')&&css.includes('grid-column:1 / -1!important'),'Guided group must occupy a whole record-wall row without mixing with original covers');
 assert(html.includes('class="dawn-reading-room__departments" aria-labelledby="dawn-departments-heading" hidden'),'Seven subjects should not compete on editorial opening');
 assert(js.includes("works.prepend(guide)"),'Guided question square must precede original books');
