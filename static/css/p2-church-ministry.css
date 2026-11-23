@@ -292,6 +292,7 @@ body[data-church-entry="p2"] #church-canvas{touch-action:none}
   body.church-finale-scroll #church-canvas{touch-action:pan-y}
   .ws-ministry-story.is-finale{
     position:relative;
+    display:flow-root;
     inset:auto;
     height:auto;
     min-height:100svh;
@@ -396,4 +397,12 @@ body[data-church-entry="p2"] #church-canvas{touch-action:none}
   }
   .ws-ministry-story.is-finale .ws-ministry-story__progress{display:none}
   .ws-ministry-story.is-finale.is-minimal .ws-ministry-story__scroll-invitation{display:none}
+}
+
+/* Collapsed reading mode must continue to hide BOTH finale folios and
+   leave the scene intact. It takes precedence over the finale flex rules. */
+.ws-ministry-story.is-finale.is-minimal .ws-ministry-story__final-stack,
+.ws-ministry-story.is-finale.is-minimal .ws-ministry-story__panel,
+.ws-ministry-story.is-finale.is-minimal .ws-ministry-story__sunday{
+  display:none!important;
 }
