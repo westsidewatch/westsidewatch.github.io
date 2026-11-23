@@ -114,7 +114,15 @@ try{
     throw Error("Discipleship chapter did not reach original gallery "+JSON.stringify(discipleship));
   await shot("03-discipleship-3d");
   await evaluate('document.querySelector(\'[data-chapter="6"]\').click()');
-  await sleep(220);
+  // Verify the CSS animation was actually armed, but measure readability
+  // only after the gentle 1.1s entrance and seven 95ms stagger have settled.
+  const openingMotion=await evaluate(`({
+    pane:getComputedStyle(document.querySelector(".ws-ministry-story__sunday")).animationName,
+    first:getComputedStyle(document.querySelector(".ws-ministry-story__sunday-row")).animationName
+  })`);
+  if(openingMotion.pane!=="ws-sunday-appear"||openingMotion.first!=="ws-sunday-line-appear")
+    throw Error("Sunday programme must open softly with staggered lines "+JSON.stringify(openingMotion));
+  await sleep(1770);
   const desktopFinale=await evaluate(`(()=>{
     const sunday=document.querySelector(".ws-ministry-story__sunday").getBoundingClientRect();
     const scripture=document.querySelector(".ws-ministry-story__panel").getBoundingClientRect();
@@ -126,7 +134,12 @@ try{
       sundayAnimation:getComputedStyle(schedule).animationName,
       firstLineAnimation:getComputedStyle(all[0]).animationName,
       lastLineDelay:getComputedStyle(all[6]).animationDelay,
-      rowsFullyVisible:rows.scrollHeight<=rows.clientHeight+2,
+      rowsFullyVisible:all.every(x=>{
+        const b=x.getBoundingClientRect();
+        return b.top>=sunday.top-2&&b.bottom<=sunday.bottom-3;
+      }),
+      programmeScrollHeight:rows.scrollHeight,
+      programmeClientHeight:rows.clientHeight,
       lastProgrammeRowBottom:all[6].getBoundingClientRect().bottom,
       scriptureDisplay:getComputedStyle(document.querySelector(".ws-ministry-story__panel")).display,
       scriptureText:document.querySelector("[data-story-zh]").textContent,
@@ -143,7 +156,6 @@ try{
      !desktopFinale.rowsFullyVisible||
      desktopFinale.lastProgrammeRowBottom>desktopFinale.sunday.bottom+2)
     throw Error("Desktop finale must stack Sunday ABOVE the complete light scripture, both visible "+JSON.stringify(desktopFinale));
-  await sleep(1400);
   await shot("03b-desktop-sunday-above-scripture");
   // Return to the actual upper gallery so pause/resume regression still
   // checks the original continuous camera from that existing chapter.
