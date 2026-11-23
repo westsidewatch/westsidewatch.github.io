@@ -1,0 +1,101 @@
+{{/* Westside Design OS | the ONE editorial interior renderer for all seven chapters.
+     Source: data/editorial/sevenfold.json. No alternate route-specific HTML/CSS. */}}
+{{ $records := site.Data.editorial.sevenfold }}
+{{ $key := .Params.editorial_key }}
+{{ $item := index $records.sections $key }}
+<article class="ws-interior" data-ws-editorial-realm="{{ $key }}" data-ws-editorial-kind="magazine-interior" aria-labelledby="ws-interior-heading">
+  <header class="ws-interior__masthead">
+    <a class="ws-interior__brand" href="/" aria-label="Westside Watch 首頁">
+      <img src="/images/westside-watch-masthead-landscape.svg" alt="Westside Watch" decoding="async">
+    </a>
+    <p class="ws-interior__edition" lang="en">Sevenfold <span> / </span> An Editorial Edition</p>
+    <a class="ws-interior__root-link" href="{{ $item.source }}">返回版塊 <span aria-hidden="true">↗</span></a>
+  </header>
+  <nav class="ws-interior__chapters" aria-label="七重疊：七個版塊的編輯內頁">
+    {{ range $records.sequence }}
+      {{ $part := index $records.sections . }}
+      <a href="/{{ $part.key }}/folio/"{{ if eq $part.key $key }} aria-current="page"{{ end }}>
+        <span class="ws-interior__nav-number" lang="en">{{ $part.number }}</span>
+        <span class="ws-interior__nav-name" lang="zh-Hant">{{ $part.nameZh }}</span>
+      </a>
+    {{ end }}
+  </nav>
+  <div class="ws-interior__folio-line" aria-hidden="true">
+    <span lang="en">WESTSIDE WATCH / SEVENFOLD</span>
+    <span lang="en">{{ $item.number }} / 07</span>
+    <span lang="en">THE EDITORIAL FOLIO</span>
+  </div>
+  <section class="ws-interior__opening" aria-label="版塊導讀">
+    <div class="ws-interior__opening-text">
+      <p class="ws-interior__eyebrow" lang="en">{{ $item.eyebrow }}</p>
+      {{ if eq $key "church" }}
+        <h1 id="ws-interior-heading" class="ws-interior__church-title" data-ws-typography-lock>
+          <span class="ws-interior__church-art" role="img" aria-label="{{ $item.nameZh }}"></span>
+          <span class="ws-interior__church-en" lang="en">P.A.O.C. Living Water Assembly West</span>
+        </h1>
+      {{ else }}
+        <h1 id="ws-interior-heading" class="ws-interior__title" data-ws-typography-lock>
+          <span class="ws-interior__title-en" lang="en">{{ $item.nameEn }}</span>
+          <span class="ws-interior__title-zh" lang="zh-Hant">{{ $item.nameZh }}</span>
+        </h1>
+      {{ end }}
+      <p class="ws-interior__declaration">{{ $item.lede }}</p>
+      <div class="ws-interior__opening-actions">
+        <a href="#ws-interior-contents">目錄 <span aria-hidden="true">↓</span></a>
+        <a href="{{ $item.source }}">進入正式版塊 <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="ws-interior__opening-foot" lang="en"><span>{{ $item.number }}</span><span>{{ $item.featureLabel }}</span></div>
+    </div>
+    <div class="ws-interior__opening-art">
+      <div class="ws-interior__verse-frame">
+        <iframe class="ws-interior__verse-composition"
+          src="/experiments/scripture-studio-motherform-live.html?embed=1&amp;section={{ $item.p2 }}&amp;layout=sevenfold-vertical"
+          title="{{ $item.nameZh }} · {{ $item.refZh }} · 原有 V60 中文豎排鉛字"
+          loading="eager" scrolling="no" referrerpolicy="same-origin"></iframe>
+        <blockquote class="ws-interior__verse-alt">{{ $item.quoteZh }} <cite>{{ $item.refZh }}</cite></blockquote>
+      </div>
+      <div class="ws-interior__verse-note"><span lang="zh-Hant">{{ $item.refZh }}</span><span lang="en">{{ $item.refEn }}</span></div>
+      <p class="ws-interior__verse-english" lang="en">{{ $item.quoteEn }}</p>
+    </div>
+  </section>
+  <section class="ws-interior__index" id="ws-interior-contents" aria-labelledby="ws-interior-index-heading">
+    <div class="ws-interior__index-heading">
+      <p class="ws-interior__eyebrow" lang="en">Index / {{ $item.number }}</p>
+      <h2 id="ws-interior-index-heading" data-ws-typography-lock>目錄 <span lang="en">Contents</span></h2>
+      <p>沿著編輯線索，走向真實內容和完整頁面。</p>
+    </div>
+    <ol class="ws-interior__index-list">
+      {{ range $i, $link := $item.links }}
+      <li><a href="{{ $link.href }}">
+        <span class="ws-interior__list-index" lang="en">{{ printf "%02d" (add $i 1) }}</span>
+        <strong>{{ $link.label }}</strong>
+        <span class="ws-interior__index-detail">{{ $link.detail }}</span>
+        <span class="ws-interior__index-arrow" aria-hidden="true">↗</span>
+      </a></li>
+      {{ end }}
+    </ol>
+  </section>
+  <section class="ws-interior__feature" aria-label="編輯專題">
+    <div class="ws-interior__feature-art" aria-hidden="true">
+      {{ if eq $key "church" }}
+        <span class="ws-interior__feature-stamp ws-interior__feature-stamp--church"></span>
+      {{ else if eq $key "journal" }}
+        <img src="/images/westside-watch-morning-star.svg" alt="" loading="lazy">
+      {{ else }}
+        <span class="ws-interior__feature-stamp" lang="en">{{ $item.number }}</span>
+      {{ end }}
+      <span class="ws-interior__feature-art-label" lang="en">{{ $item.eyebrow }}</span>
+    </div>
+    <div class="ws-interior__feature-text">
+      <p class="ws-interior__eyebrow" lang="en">{{ $item.featureLabel }}</p>
+      <h2 data-ws-typography-lock>{{ $item.featureTitle }}</h2>
+      <p>{{ $item.featureText }}</p>
+      <a href="{{ $item.source }}">閱讀與探索 <span aria-hidden="true">↗</span></a>
+    </div>
+  </section>
+  <footer class="ws-interior__colophon">
+    <p lang="en">Westside Watch <span>·</span> Watch for the Dawn</p>
+    <p>{{ $item.nameZh }} <span aria-hidden="true">/</span> <span lang="en">{{ $item.nameEn }}</span></p>
+    <a href="{{ $item.source }}">進入版塊 <span aria-hidden="true">↗</span></a>
+  </footer>
+</article>
