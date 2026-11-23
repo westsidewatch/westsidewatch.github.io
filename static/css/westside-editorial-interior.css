@@ -246,7 +246,7 @@ body.ws-editorial-context>main#main{
  content:"";position:absolute;inset:19px;
  border:1px solid color-mix(in srgb,var(--ws-interior-accent) 27%,transparent);pointer-events:none
 }
-.ws-interior__feature-art>img{display:block;max-width:84%;max-height:360px;object-fit:contain;filter:none}
+.ws-interior__feature-art>img{display:block;flex:0 0 auto;width:min(84%,420px);height:min(330px,63vw);max-width:84%;max-height:360px;object-fit:contain;filter:none}
 .ws-interior[data-ws-editorial-realm="olive"] .ws-interior__feature-art>img{max-width:66%;max-height:370px}
 .ws-interior[data-ws-editorial-realm="emmaus"] .ws-interior__feature-art>img{max-width:94%;max-height:85%}
 .ws-interior[data-ws-editorial-realm="journal"] .ws-interior__feature-art>img{max-width:80%;max-height:350px}
