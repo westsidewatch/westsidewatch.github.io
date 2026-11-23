@@ -4,6 +4,10 @@ on:
   push:
     branches: ["main"]
   workflow_dispatch:
+  workflow_run:
+    workflows: ["Shupian real-browser film acceptance"]
+    branches: ["main"]
+    types: [completed]
 
 permissions:
   contents: read
@@ -16,6 +20,7 @@ concurrency:
 
 jobs:
   build:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     env:
       HUGO_VERSION: "0.167.0"
@@ -128,12 +133,12 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          for file in index.html styles.css app.js catalog.json health.html; do
+          for file in index.html styles.css app.js catalog.json screenings.json health.html; do
             test -s "static/shupian/$file"
           done
           mkdir -p public/shupian
           cp -a static/shupian/. public/shupian/
-          for file in index.html styles.css app.js catalog.json health.html; do
+          for file in index.html styles.css app.js catalog.json screenings.json health.html; do
             cmp "static/shupian/$file" "public/shupian/$file"
           done
           grep -q 'id="grid"' public/shupian/index.html
@@ -171,10 +176,17 @@ jobs:
           assert 'youtube' not in str(titles).lower(), 'YouTube media is prohibited'
           front=Path('public/shupian/index.html').read_text()
           import re
-          match=re.search(r'<script id="catalog" type="application/json">(.*?)</script>',front,re.S)
-          assert match, '数片 inline catalog is missing'
-          inline=json.loads(match.group(1))
-          assert inline == titles, '数片 HTML catalog differs from deployed catalog.json'
+          assert re.search(r"""fetch\(['"]screenings\.json['"]""",front), 'Shupian page must load screenings.json'
+          screenings=json.loads(Path('public/shupian/screenings.json').read_text())
+          assert isinstance(screenings,list), 'Shupian screenings must be an array'
+          for work in screenings:
+              assert work['licence'].get('spdx') and work['licence'].get('attribution'), 'Missing screening licence'
+              assert work['episodes'], 'Screening has no episodes'
+              for episode in work['episodes']:
+                  assert episode['sources'], 'Screening episode has no sources'
+                  for source in episode['sources']:
+                      proof=source['playbackVerification']
+                      assert proof['status']=='passed' and proof['videoStarted'] is True and proof['seekSucceeded'] is True, 'Missing browser playback proof'
           assert len({x['id'] for x in titles}) == len(titles), '数片 duplicate work IDs'
           assert all('id' in x and x.get('title') and x.get('episodes') for x in titles), '数片 incomplete work data'
           assert 'grid.single' in front and 'feature-detail' in front, '数片 editorial feature layout regressed'
