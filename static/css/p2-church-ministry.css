@@ -516,3 +516,15 @@ body[data-church-entry="p2"] #church-canvas{touch-action:none}
  .ws-ministry-story__final-identity strong{font-size:15px}
  .ws-ministry-story__final-identity span{font-size:11px}
 }
+
+/* Canonical church identity: same original P2 silhouette, not a newly rendered font. */
+.ws-ministry-story__final-artwork{
+ display:block!important;width:100%;aspect-ratio:1800/193;
+ background:#a2872a;
+ -webkit-mask:url("/images/living-water-west-church-name.png") center/contain no-repeat;
+ mask:url("/images/living-water-west-church-name.png") center/contain no-repeat;
+}
+.ws-ministry-story__final-identity span[lang=en]{
+ display:block;text-align:center;margin-top:8px;
+ font:400 clamp(11px,.9vw,14px)/1.35 var(--ws-type-display-en-sc,serif);
+}
