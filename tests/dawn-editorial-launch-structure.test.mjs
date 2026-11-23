@@ -57,3 +57,21 @@ test("access support follows editorial content",()=>{
   const s=html[n];assert.ok(s.indexOf('class="dl-support"')>s.indexOf('class="dl-end"'),"support precedes review "+n);
  }
 });
+
+test("booklists are the bookstore's entrance, not an isolated page",()=>{
+ const hugo=read("layouts/dawn-library/list.html");
+ const product=read("static/dawn-library/product/index.html");
+ for(const slug of ["gospel-essentials","inner-life","church-history"]){
+  assert.ok(hugo.includes("/dawn-library/reading-room/"+slug+".html"),"Hugo entry lacks "+slug);
+  assert.ok(product.includes("/dawn-library/reading-room/"+slug+".html"),"Catalogue lacks "+slug);
+  assert.ok(html["index.html"].includes("./"+slug+".html"),"Studio lacks "+slug);
+  assert.ok(html[slug+".html"].includes('class="dl-trail"'),slug+" lacks return trail");
+  assert.ok(html[slug+".html"].includes('class="dl-next-reading"'),slug+" lacks next reading");
+ }
+ assert.ok(hugo.includes('data-ws-first-look="shared"'),"Original book reader missing");
+ assert.ok(html["index.html"].includes("dl-route"),"Editorial reading sequence missing");
+});
+test("public book pages exclude internal technical release notes",()=>{
+ const terms=["PENDING CI","Core Contract","PR #","Chromium","封面使用與實際載入仍需上線前核對","沿用已保存的18景策展資料","工程驗收","本地圖片素材"];
+ for(const [name,s] of Object.entries(html)) for(const term of terms) assert.equal(s.includes(term),false,name+" contains internal phrase "+term);
+});
