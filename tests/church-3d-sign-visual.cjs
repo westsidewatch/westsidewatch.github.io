@@ -20,6 +20,9 @@ const base=process.env.CHURCH_TEST_ORIGIN||'http://127.0.0.1:4176';
    assert.equal(identity?.wall,'south');
    assert.equal(identity?.exactChinese,'神召會活水堂西區教會');
    assert.equal(identity?.exactEnglish,'P.A.O.C. Living Water Assembly West');
+   await page.waitForFunction(()=>window.__churchSouthNameAudit?.artworkLoaded===true,null,{timeout:25000});
+   assert.equal((await page.evaluate(()=>window.__churchSouthNameAudit.artworkSource)),
+     '/images/living-water-west-church-name.png','Façade must use P2 Chinese artwork, not canvas font');
    for(const t of [0,12,248]){
      const audit=await page.evaluate(time=>{
        window.__churchRenderProofFrame(time);
