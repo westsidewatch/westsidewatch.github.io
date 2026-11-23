@@ -2828,3 +2828,113 @@
 /* Subject choices remain complete in the native collection, not thirteen
    equally weighted second-layer wall entrances. */
 #dawn-second .dawn-reading-room__departments[hidden]{display:none!important}
+
+
+/* R82 — visual hierarchy, not border weight:
+   an editorial 2×2 question/series identity followed by three 1×1
+   multi-work selections, within the already-approved original vinyl wall.
+   Its underlying four-column subgrid preserves 1×1 / 2×2 modules; the
+   actual historical book-jacket wall begins only after a separate imprint. */
+#dawn-second .dawn-reading-list__series-grid{
+ grid-template-columns:repeat(4,minmax(0,1fr))!important;
+ max-width:1080px!important;margin:0!important;
+ align-items:stretch!important;grid-auto-flow:row!important;
+}
+#dawn-second .dawn-reading-list__series-grid>.dawn-reading-list__marker{
+ grid-column:1 / span 2!important;grid-row:1 / span 2!important;
+ aspect-ratio:1!important;width:100%!important;height:100%!important;
+ padding:clamp(22px,2.8vw,52px)!important;
+ border:0!important;background:var(--ws-harvest)!important;
+}
+#dawn-second .dawn-reading-list__marker .dawn-reading-list__marker-kicker{
+ font:400 clamp(10px,1vw,14px)/1.35 var(--ws-type-display-en-sc,var(--ws-type-display-en))!important;
+ letter-spacing:.12em!important;
+}
+#dawn-second .dawn-reading-list__series-grid>.dawn-reading-list__marker h2{
+ margin:auto 0 clamp(16px,2vw,30px)!important;
+ font:900 clamp(70px,8vw,122px)/.94 var(--ws-type-display-zh)!important;
+ letter-spacing:-.06em!important;white-space:nowrap;
+}
+#dawn-second .dawn-reading-list__marker p{
+ max-width:16em;font:200 clamp(17px,1.6vw,25px)/1.55 var(--ws-type-display-zh)!important;
+ word-break:normal!important;text-wrap:pretty;
+}
+#dawn-second .dawn-reading-list__marker .dawn-reading-list__marker-count{
+ display:flex!important;flex-wrap:wrap;align-items:baseline;gap:clamp(5px,.7vw,12px);
+ margin-top:auto!important;padding-top:clamp(15px,2vw,25px)!important;
+ border-color:color-mix(in srgb,var(--ws-ink) 55%,transparent);
+ font:200 clamp(12px,1vw,17px)/1.25 var(--ws-type-display-zh)!important;
+}
+#dawn-second .dawn-reading-list__marker-count strong{
+ font:400 clamp(25px,2.5vw,38px)/1 var(--ws-type-display-en-sc,var(--ws-type-display-en));
+}
+#dawn-second .dawn-reading-list__series-grid>.dawn-reading-list__tile{
+ grid-column:span 1!important;grid-row:span 1!important;
+ border:0!important;padding:clamp(13px,1.35vw,23px)!important;
+ background:var(--ws-paper)!important;
+}
+#dawn-second .dawn-reading-list__tile--gospel{background:var(--ws-papyrus)!important}
+#dawn-second .dawn-reading-list__tile--history{
+ background:color-mix(in srgb,var(--ws-harvest) 12%,var(--ws-paper))!important
+}
+#dawn-second .dawn-reading-list__tile--life{border-top:0!important}
+#dawn-second .dawn-reading-list__tile .dawn-reading-list__serial{
+ font:200 clamp(12px,.92vw,15px)/1.25 var(--ws-type-display-zh)!important;
+ color:var(--ws-ink)!important;
+}
+#dawn-second .dawn-reading-list__tile .dawn-reading-list__face{
+ align-items:flex-start!important;justify-content:center!important;
+ flex-direction:column!important;gap:clamp(3px,.4vw,8px);
+ padding:clamp(8px,1vw,18px) 0!important;
+}
+#dawn-second .dawn-reading-list__tile .dawn-reading-list__face>.dawn-reading-list__quantity{
+ display:block!important;font:400 clamp(64px,6.8vw,116px)/.91 var(--ws-type-display-en-sc,var(--ws-type-display-en))!important;
+ letter-spacing:-.055em;overflow:visible!important;
+}
+#dawn-second .dawn-reading-list__tile .dawn-reading-list__face>i{
+ position:static!important;display:block!important;
+ font:400 clamp(9px,.7vw,12px)/1.2 var(--ws-type-display-en-sc,var(--ws-type-display-en));
+ opacity:.76;letter-spacing:.09em;
+}
+#dawn-second .dawn-reading-list__tile .dawn-reading-list__caption>strong{
+ font:600 clamp(19px,1.58vw,26px)/1.22 var(--ws-type-display-zh)!important;
+ letter-spacing:-.025em;
+}
+#dawn-second .dawn-reading-list__tile .dawn-reading-list__caption>small{
+ font:200 clamp(11px,.86vw,14px)/1.35 var(--ws-type-display-zh)!important;
+}
+#dawn-second .dawn-wall__grid--curated>.dawn-wall__collection-divider{
+ display:flex!important;grid-column:1/-1!important;grid-row:auto!important;
+ align-items:baseline;justify-content:space-between;gap:12px;
+ padding:0 0 clamp(9px,.9vw,14px)!important;
+ margin:clamp(12px,1.5vw,26px) 0 0!important;
+ border-bottom:1px solid var(--ws-branch-rule);color:var(--ws-olive)!important;
+}
+#dawn-second .dawn-wall__collection-divider>strong{
+ font:200 clamp(17px,1.4vw,24px)/1.25 var(--ws-type-display-zh);
+}
+#dawn-second .dawn-wall__collection-divider>span{
+ font:400 clamp(9px,.8vw,12px)/1.2 var(--ws-type-display-en-sc,var(--ws-type-display-en));
+ letter-spacing:.1em;
+}
+@media(max-width:650px){
+ #dawn-second .dawn-reading-list__series-grid{
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:8px!important;
+ }
+ #dawn-second .dawn-reading-list__series-grid>.dawn-reading-list__marker{
+  grid-column:1 / -1!important;grid-row:auto / span 2!important;
+  padding:clamp(22px,6vw,32px)!important;
+ }
+ #dawn-second .dawn-reading-list__series-grid>.dawn-reading-list__marker h2{
+  font-size:clamp(70px,18vw,100px)!important;
+ }
+ #dawn-second .dawn-reading-list__marker p{font-size:clamp(17px,4.7vw,22px)!important}
+ #dawn-second .dawn-reading-list__marker-count strong{font-size:clamp(28px,8vw,36px)}
+ #dawn-second .dawn-reading-list__series-grid>.dawn-reading-list__tile{padding:11px!important}
+ #dawn-second .dawn-reading-list__tile .dawn-reading-list__face>.dawn-reading-list__quantity{
+  font-size:clamp(62px,17vw,92px)!important;
+ }
+ #dawn-second .dawn-reading-list__tile .dawn-reading-list__caption>strong{font-size:clamp(17px,4.8vw,21px)!important}
+ #dawn-second .dawn-reading-list__tile .dawn-reading-list__caption>small{font-size:clamp(10px,2.6vw,12px)!important}
+}
