@@ -108,7 +108,7 @@
       </div>
     </div>
     <div class="ws-ministry-story__final-identity" aria-label="教會正式名稱">
-      <strong>神召會活水堂西區教會</strong>
+      <span class="ws-ministry-story__final-artwork" role="img" aria-label="神召會活水堂西區教會"></span>
       <span lang="en">P.A.O.C. Living Water Assembly West</span>
     </div>
     <div class="ws-ministry-story__final-stack">
