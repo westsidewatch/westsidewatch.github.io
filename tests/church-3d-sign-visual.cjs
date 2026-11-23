@@ -32,7 +32,7 @@ const base=process.env.CHURCH_TEST_ORIGIN||'http://127.0.0.1:4176';
      assert(Math.abs(audit.frame?.at-t)<0.001,'Wrong camera time: '+JSON.stringify(audit));
      assert(audit.canvasSize[0]>=cfg.width,'Missing GLB canvas');
      await page.waitForTimeout(260);
-     await page.screenshot({path:'artifacts/church-sign/'+cfg.name+'-t'+t+'.png',animations:'disabled'});
+     await page.screenshot({path:'artifacts/church-sign/'+cfg.name+'-t'+t+'.png',animations:'allow',timeout:90000});
      console.log('CHURCH_SOUTH_WALL_REAL_WEBGL_FRAME',cfg.name,t,JSON.stringify({identity:audit.identity,canvas:audit.canvasSize}));
    }
    console.log('BROWSER_MESSAGES',cfg.name,JSON.stringify(messages.slice(-8)));
