@@ -1,7 +1,7 @@
 /* P2 01 — true scroll-controlled architectural construction.
  * Red Sea first: water opens 1.72–2.37. After a short, legible pause,
- * the ORIGINAL 3D building begins construction at 2.41 and reaches full
- * height by 3.22. The approved magazine handoff still starts at 3.36.
+ * the ORIGINAL 3D building begins construction at 2.50 and reaches full
+ * height by 3.27. The approved magazine handoff still starts at 3.36.
  * No timer, replay, static model substitute or second animation clock.
  * Scrolling backward reverses the same real geometric growth. */
 (() => {
@@ -47,9 +47,9 @@
  function sync(){
   const pose=Number(stage.dataset.p2Progress||0);
   if(pose>=1.42&&pose<5.19)prime();
-  // Until 2.41 the church pane and Red Sea may be visible, but no
+  // Until 2.50 the church pane and Red Sea may be visible, but no
   // building is allowed to appear before the opening has completed.
-  const active=pose>=2.41&&pose<5.19;
+  const active=pose>=2.50&&pose<5.19;
   stage.classList.toggle('p2-church-model-visible',active);
   frame.style.visibility=active?'visible':'hidden';
   send();

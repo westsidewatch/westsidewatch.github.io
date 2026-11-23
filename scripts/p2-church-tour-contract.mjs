@@ -59,12 +59,12 @@ assert(ministryGuide.includes("query.get('entry')!=='p2'") &&
 assert((folio.match(/\/p2\/church-tour\.html\?entry=p2/g)||[]).length===3 &&
        interaction.includes("entry.href=magazineProgress>=.5?'/journal/':'/p2/church-tour.html?entry=p2'"),
   "Both church names, native maquette and existing compact 01 entry must lead to the SAME 3D church page");
-assert(interaction.includes("const buildStart=2.41,buildEnd=3.22") &&
+assert(interaction.includes("const buildStart=2.50,buildEnd=3.27") &&
        interaction.includes("opening=smooth((vh-1.72)/.65)") &&
        interaction.includes("root.dataset.p2ChurchBuildPhase") &&
        interaction.includes("const magazineStart=3.36") &&
-       growth.includes("const active=pose>=2.41&&pose<5.19"),
-  "Red Sea must finish at 2.37 before real GLB white-maquette growth starts 2.41, ends 3.22 and holds before original Magazine at 3.36");
+       growth.includes("const active=pose>=2.50&&pose<5.19"),
+  "Red Sea must finish at 2.37 before real GLB white-maquette growth starts 2.50, ends 3.27 and holds before original Magazine at 3.36");
 assert(script.includes("entranceHinge.rotation.y"), "A real scene door must open");
 assert(script.includes('const southDoor = mesh("TALL SINGLE WHITE PIVOT DOOR")') &&
        script.includes("entranceHinge.attach(southDoor)"),

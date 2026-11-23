@@ -91,12 +91,12 @@ try{
     throw Error("Red Sea must finish BEFORE any visible white construction "+JSON.stringify(opened));
   console.log("P2_SEA_OPEN_FIRST="+JSON.stringify(opened));
   await capture("01-red-sea-fully-open-no-model");
-  const beginning=await at(2.42);
+  const beginning=await at(2.51);
   if(beginning.progress>.015||beginning.modelVisible!=="visible"||
      beginning.opening<.995)
     throw Error("White GLB growth must start near zero after opening "+JSON.stringify(beginning));
   await capture("02-original-maquette-begins");
-  const midpoint=await at(2.815);
+  const midpoint=await at(2.885);
   if(midpoint.progress<.40||midpoint.progress>.60||
      midpoint.phase!=="building"||midpoint.modelVisible!=="visible"||
      midpoint.opening<.995||midpoint.magazine>.001)
@@ -104,7 +104,7 @@ try{
   console.log("P2_WHITE_MODEL_MID_GROWTH="+JSON.stringify(midpoint));
   await sleep(600);
   await capture("03-original-maquette-half-grown");
-  const finished=await at(3.22);
+  const finished=await at(3.27);
   if(finished.progress<.999||finished.phase!=="complete"||
      finished.magazine>.001||finished.modelVisible!=="visible")
     throw Error("Original model must complete and hold before magazine takes over "+JSON.stringify(finished));
@@ -125,7 +125,7 @@ try{
     await sleep(450);
   }
   await capture("04-original-maquette-complete");
-  const back=await at(2.815),closed=await at(2.37);
+  const back=await at(2.885),closed=await at(2.37);
   if(back.progress<.40||back.progress>.60||closed.progress>.005||
      closed.modelVisible!=="hidden")
     throw Error("Reverse scroll must reverse white construction and return to only water "+JSON.stringify({back,closed}));
