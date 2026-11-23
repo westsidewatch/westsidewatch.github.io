@@ -567,24 +567,36 @@
     const fallback=document.createElement('span');fallback.className='dawn-reading-list__featured-fallback';
     fallback.textContent=book.title;
     art.append(fallback);
-    const src=safeHttp(book.image);
+    // A true book illustration may supersede the edition cover ONLY when
+    // it has its own verified provenance. No fictional interior asset URL.
+    // With no validated plate, crop the sourced same-edition cover full bleed.
+    const plate=book.featuredVisual;
+    const hasSourcedPlate=plate&&typeof plate==='object'&&
+     typeof plate.credit==='string'&&plate.credit.trim()&&
+     ['interior-plate','engraving','map','title-page'].includes(plate.kind)&&
+     safeHttp(plate.src);
+    const src=hasSourcedPlate?safeHttp(plate.src):safeHttp(book.image);
+    button.dataset.visualType=hasSourcedPlate?plate.kind:'edition-cover';
     if(src){
      const img=document.createElement('img');
-     img.alt=book.title+'，'+list.title+'書單核實版本的封面';
+     img.alt=hasSourcedPlate?book.title+'相關圖版：'+plate.credit:
+      book.title+'，'+list.title+'書單已核實版本封面（視覺裁切）';
      img.loading='eager';img.decoding='async';img.referrerPolicy='no-referrer';
      img.addEventListener('load',()=>{
       if(img.naturalWidth>100&&img.naturalHeight>100)
        button.classList.add('dawn-reading-list__featured-book--image-ready');
-      else img.remove();
+      else{img.remove();button.classList.remove('dawn-reading-list__featured-book--image-ready')}
      });
      img.addEventListener('error',()=>{img.remove();button.classList.remove('dawn-reading-list__featured-book--image-ready')});
      img.src=src;art.append(img);
     }
-    const label=document.createElement('span');label.className='dawn-reading-list__featured-book-label';
-    const title=document.createElement('strong');title.textContent=book.title;
-    const origin=document.createElement('small');origin.textContent=list.title+' · 選讀 ↗';
-    label.append(title,origin);
-    button.append(art,label);
+    const overlay=document.createElement('span');overlay.className='dawn-reading-list__featured-overlay';
+    const origin=document.createElement('small');origin.className='dawn-reading-list__featured-kicker';
+    origin.textContent=list.title+' / 選讀';
+    const title=document.createElement('strong');title.className='dawn-reading-list__featured-title';
+    title.textContent=book.title;
+    overlay.append(origin,title);
+    button.append(art,overlay);
     button.addEventListener('click',()=>openReadingList(list.id,book.editorialKey));
     fragment.append(button);
    });
