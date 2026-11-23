@@ -26,6 +26,15 @@ assert(html.includes("/css/p2-church-ministry.css") &&
        script.includes("if (!prefersReducedMotion && !guidePaused)") &&
        script.includes("guideClockAnchor?guideCurrentSeconds(now):elapsed+dt"),
   "P2 second layer must reuse the established native camera renderer");
+assert((ministryGuide.match(/"kjv":/g)||[]).length===7 &&
+       (ministryGuide.match(/"zh":/g)||[]).length===7 &&
+       ministryGuide.includes("ws-ministry-story__sunday-row") &&
+       ministryGuide.includes("ws-ministry-story__verse-en") &&
+       ministryStyle.includes("--dawn:var(--ws-first-light") &&
+       ministryStyle.includes("--water:var(--ws-water") &&
+       ministryStyle.includes("backdrop-filter:blur(22px)") &&
+       ministryStyle.includes("text-wrap:pretty"),
+  "Seven full CUV/KJV passages, complete Sunday finale and OS square skylight glass must remain");
 assert(ministryGuide.includes("query.get('entry')!=='p2'") &&
        ministryGuide.includes("window.__churchGuide") &&
        ministryGuide.includes("chapters.length") &&

@@ -77,14 +77,26 @@ try{
     state:window.__churchGuide.status(),audit:window.__churchMinistryAudit(),
     visible:!!document.querySelector(".ws-ministry-story__rail")
   })`);
-  if(!first.visible||first.audit.chapters!==7)
-    throw Error("P2 second-layer seven ministries absent");
+  if(!first.visible||first.audit.chapters!==7||
+     first.audit.fullVerses!==true||first.audit.scheduleRows!==7)
+    throw Error("P2 must publish seven COMPLETE bilingual scripture passages and seven worship rows "+JSON.stringify(first));
   await shot("01-p2-arrival");
   await evaluate('document.querySelector(\'[data-chapter="2"]\').click()');
   await sleep(240);
   const worship=await evaluate('({state:window.__churchGuide.status(),audit:window.__churchMinistryAudit()})');
-  if(Math.abs(worship.state.at-83)>.1||!worship.state.paused||worship.audit.selected!==2)
-    throw Error("Worship chapter did not move actual 3D camera "+JSON.stringify(worship));
+  if(Math.abs(worship.state.at-94)>.1||!worship.state.paused||worship.audit.selected!==2)
+    throw Error("Worship chapter must STOP at the illuminated sanctuary cross "+JSON.stringify(worship));
+  const crossFrame=await evaluate("window.__churchMinistryFramingAudit");
+  if(crossFrame?.label!=="cross-worship")
+    throw Error("Worship camera did not select cross-and-pews composition "+JSON.stringify(crossFrame));
+  const scriptureAtCross=await evaluate(`({
+    zh:document.querySelector("[data-story-zh]").textContent,
+    kjv:document.querySelector("[data-story-kjv]").textContent,
+    source:document.querySelector("[data-story-reference]").textContent
+  })`);
+  if(scriptureAtCross.zh.length<35||scriptureAtCross.kjv.length<150||
+     !scriptureAtCross.source.includes("15:5–6"))
+    throw Error("Worship full CUV/KJV text missing "+JSON.stringify(scriptureAtCross));
   await shot("02-worship-3d");
   await evaluate('document.querySelector(\'[data-chapter="5"]\').click()');
   const discipleship=await evaluate('({state:window.__churchGuide.status(),audit:window.__churchMinistryAudit()})');
@@ -118,17 +130,43 @@ try{
   })`);
   if(mobile.width!==390||mobile.rail.x<0||mobile.rail.right>391||mobile.panel.right>391)
     throw Error("Mobile 3D chapter labels are clipped "+JSON.stringify(mobile));
+  const wrapping=await evaluate(`({
+    panel:document.querySelector(".ws-ministry-story__panel").scrollWidth,
+    panelWidth:document.querySelector(".ws-ministry-story__panel").clientWidth,
+    en:document.querySelector("[data-story-kjv]").scrollWidth,
+    enWidth:document.querySelector("[data-story-kjv]").clientWidth,
+    zh:document.querySelector("[data-story-zh]").scrollWidth,
+    zhWidth:document.querySelector("[data-story-zh]").clientWidth
+  })`);
+  if(wrapping.panel>wrapping.panelWidth+2||
+     wrapping.en>wrapping.enWidth+2||
+     wrapping.zh>wrapping.zhWidth+2)
+    throw Error("Full scripture has horizontal overflow / broken words on phone "+JSON.stringify(wrapping));
   await shot("05-mobile-editorial");
+  // Final architectural still must bring forward the genuine P2 Sunday
+  // programme while the illuminated exterior cross stays visible.
+  await evaluate('document.querySelector(\'[data-chapter="6"]\').click()');
+  await sleep(550);
+  const finale=await evaluate(`({
+    state:window.__churchGuide.status(),
+    active:document.querySelector(".ws-ministry-story").classList.contains("is-finale"),
+    rows:document.querySelectorAll(".ws-ministry-story__sunday-row").length,
+    hidden:document.querySelector(".ws-ministry-story__sunday").getAttribute("aria-hidden")
+  })`);
+  if(finale.state.at!==248||!finale.active||finale.rows!==7||finale.hidden!=="false")
+    throw Error("Finale must show all seven Sunday worship programme rows "+JSON.stringify(finale));
+  await shot("06-final-sunday-programme");
   await send("Page.navigate",{
     url:"http://127.0.0.1:8765/p2/church-tour.html?proofFrame=83"
   });
   await waitReady(0);
   if(await evaluate('!!document.querySelector(".ws-ministry-story")||!!document.body.dataset.churchEntry'))
     throw Error("Raw camera-only tour polluted by ministry introduction");
-  await shot("06-direct-3d-clean");
+  await shot("07-direct-3d-clean");
   if(errors.length)throw Error("Browser errors "+errors.slice(-3).join("; "));
   console.log("P2_SECOND_LAYER_MINISTRY_QA_PASS="+JSON.stringify({
-    sevenChapters:true,p2Entry:true,worshipTime:83,studyTime:211,
-    pausePlay:true,hideShow:true,mobile390:true,pure3dClean:true
+    sevenChapters:true,completeCUVandKJV:true,osGlass:true,
+    p2Entry:true,worshipTime:94,studyTime:211,
+    SundayFinaleRows:7,pausePlay:true,hideShow:true,mobile390:true,pure3dClean:true
   }));
 }finally{ws.close();}
