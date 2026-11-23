@@ -153,7 +153,7 @@ jobs:
         if: ${{ !cancelled() && steps.city_server.outcome == 'success' }}
         run: |
           failed=0
-          for suite in sacred_ridge_guide playback_view playback transition; do
+          for suite in sacred_ridge_guide playback_view playback transition destruction_visibility; do
             if ! node "scripts/verify_jerusalem_3000_${suite}_browser.mjs"; then failed=1; fi
           done
           exit "$failed"

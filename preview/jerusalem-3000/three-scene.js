@@ -791,7 +791,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
         if(currentPhaseId)constructionPresentation.apply({phaseId:currentPhaseId,phaseIndex,position:playbackDisplayPosition??timelinePosition,active:playbackPresentation,ruin:['babylonian-destruction','roman-destruction'].includes(currentPhaseId)});
         landmarkView.setAnchors(constructionPresentation.landmarks());landmarkView.setVisible(landmarkLabelsEnabled);const labelBoxes=landmarkView.project(camera,gateBoxes);mount.parentElement.style.setProperty('--map-label-rail-height',`${Math.max(0,...labelBoxes.map(b=>b.bottom-mount.clientHeight+20))}px`);
         architecturalTerrainOcclusion?.apply(activeWorldEntry?.runtime.landmarkMeshes?.find(m=>m.visible&&m.userData.occupiedFoundation));
-        phaseDissolve.before({phaseId:currentPhaseId,index:phaseIndex,fraction,active:playbackPresentation,ready:phaseReady});
+        phaseDissolve.before({phaseId:currentPhaseId,index:phaseIndex,fraction,active:playbackPresentation,ready:phaseReady,destructive:['babylonian-destruction','roman-destruction'].includes(currentPhaseId)});
         const batchPrepareStarted=performance.now();housingBatches.apply({camera,phase:currentPhaseId,matricesReady:true});const renderSubmitStarted=performance.now();
         try{renderer.render(scene,camera);}finally{housingBatches.restore();}const renderSubmitFinished=performance.now();
         phaseDissolve.after(renderer.domElement,{phaseId:currentPhaseId,fraction,ready:phaseReady&&playbackPresentation});
