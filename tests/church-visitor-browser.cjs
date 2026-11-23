@@ -29,6 +29,7 @@ const base=process.env.CHURCH_TEST_ORIGIN||'http://127.0.0.1:4174';
         const blur=s=>((s.backdropFilter||s.webkitBackdropFilter||'').includes('blur('));
         const heading=getComputedStyle(document.querySelector('.church-visit__section-head h2'));
         return blur(t)&&blur(g)&&
+          getComputedStyle(card.querySelector('span')).fontFamily.includes('Chiron')&&
           heading.fontFamily.includes('Chiron')&&
           os.getPropertyValue('--ws-branch').trim().length>0;
       })(),
@@ -80,6 +81,18 @@ const base=process.env.CHURCH_TEST_ORIGIN||'http://127.0.0.1:4174';
       &&title.fontFamily.includes('Chiron');
   });
   assert(formGlass,'Decision panels must use OS typography and backdrop blur');
+  const collision=await form.evaluate(()=>{
+    const title=document.querySelector('body[data-intake-type=decision] #form-title');
+    const scripture=document.querySelector('.church-form__scripture-hint');
+    const a=title.getBoundingClientRect(),b=scripture.getBoundingClientRect();
+    return {
+      spans:title.querySelectorAll('span').length,
+      overlap:a.right>b.left+3&&a.left<b.right&&a.bottom>b.top+3&&a.top<b.bottom,
+      titleWidth:a.width,scriptureLeft:b.left
+    };
+  });
+  assert(collision.spans===2&&!collision.overlap,
+    'Gospel title must split into two lines without overlapping Scripture '+JSON.stringify(collision));
   assert.equal(await form.locator('.church-form__gospel-step').count(),3,'Love, Cross and Faith steps required');
   assert.equal(await form.locator('[name="response"]').getAttribute('required'),'','Decision selection must be explicit');
   await form.screenshot({path:'artifacts/church-visitor/decision-form.png',fullPage:true});
