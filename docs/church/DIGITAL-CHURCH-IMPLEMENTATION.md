@@ -28,7 +28,7 @@ Status: implementation branch (not automatically production approved) · 2026-11
 - Keep the seven existing story chapters, full CUV / KJV scripture, and 251-second route.
 - In each chapter show ONE contextual content action to the real section: welcome → static guide, fellowship → gatherings, worship → Sunday bulletin, prayer → online prayer, care → visitor intake, discipleship → /one/, witness → decision / membership.
 - Provide `/church/visit/` as a single, indexable, no-WebGL static editorial overview accessible from existing `/church/` and the tour. It covers identity/history (only verifiable facts), Sunday, gatherings, all seven ministries, first-visit guidance, prayer, baptism/discipleship pathway, contact, forms and return to tour. Preserve canonical legacy `/church/` without rewriting its approved MERSI chapter or hero.
-- Existing `/join/` Gate remains historical, with reusable existing QR/official email. Do not publish an unverified founding date or new Zoom ID.
+- Existing `/join/` Gate remains available with historical invitation copy and its verified church email. The legacy WeChat QR asset and old Zoom credentials were not reliably available, so do NOT render a broken QR or treat historical credentials as current. The invitation links to `/join/` and instructs visitors to request a confirmed invite from staff. The **four new forms** have independently tested first-party QR codes. Do not publish an unverified founding date or new Zoom ID.
 
 ## Four intake routes and privacy
 Distinct shareable QR destinations: `/church/forms/?type=join`, `decision`, `newcomer`, `prayer`.
@@ -43,3 +43,9 @@ Distinct shareable QR destinations: `/church/forms/?type=join`, `decision`, `new
 - Real architecturally matched render should use proven screenshot of the actual GLB, not fabricated church imagery. A temporary engraving and approved logo may be displayed until a visually checked still exists. Label any conceptual image clearly.
 - Test 1440×900, 390×844, 320px width, reduced-motion, keyboard/focus, QR scan, missing JSON, archive dates, refresh, backward P2 scroll, 3D proof 0/248, same-origin cross-page navigation and real email receipt with staff consent before enabling production.
 - Deferred: free roam, volunteer dashboard / member CRM, unverified history timeline, historical-photo publishing.
+
+## Latest actual verification
+- Original P2 0–100% animation source thresholds preserved; R47 church contract and production Hugo build have passed on the feature branch.
+- New static visitor browser QA passed on 1440px, 390px, 320px viewports, with all seven Sunday rows, four recurring groups, seven ministries, QR, Sunday editor and disabled unconfigured form.
+- Real 3D sign visual proof is an independent GLB/Chromium run. Source-level presence is established; visual approval only after comparing rendered t0/12/248 screenshots.
+- Historical homepage first-look tests and frozen morning-star fingerprint have old baseline expectations independent of these visitor files; diagnose separately before approving a merge. Never alter protected P2 assets just to silence unrelated checks.
