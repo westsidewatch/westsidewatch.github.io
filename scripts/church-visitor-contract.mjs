@@ -32,7 +32,11 @@ assert.ok(read('static/js/p2-living-water.js').includes('const buildStart=2.50,b
 assert.ok(p2.includes('href="/p2/church-tour.html?entry=p2"'));
 assert.ok(ministry.includes('data-story-link')&&ministry.includes('/data/church/ministries.json'));
 assert.ok(overview.includes('id="sunday"')&&overview.includes('id="gatherings"')&&overview.includes('id="invitation"'));
-assert.ok(overview.includes('/images/living-water-west-church-name.png'));
+assert.ok(overview.includes('church-visit__identity-lockup')&&overview.includes('church-visit__scripture-tile'));
+assert.ok(overview.includes('神召會活水堂西區教會')&&overview.includes('P.A.O.C. Living Water Assembly West'));
+assert.ok(forms.includes('id="church-gospel" hidden')&&forms.includes('church-form__gospel-steps'));
+assert.ok(forms.includes('約翰福音')&&forms.includes('羅馬書'));
+assert.ok(formApp.includes('gospel.hidden=false'));
 assert.ok(overview.includes('href="/join/"'),'Original Gate remains accessible without its broken historical QR');
 assert.ok(!overview.includes('一座可以走進去的教會，也是一個可以繼續參與的教會'));
 for(const kind of ['join','decision','newcomer','prayer']){
