@@ -2705,3 +2705,10 @@
   font-size:clamp(12px,3.35vw,16px)!important;line-height:1.25!important;
  }
 }
+
+
+/* A guided list is an editorial reading sequence, not the classification
+   index. The four original classification actions remain for other routes. */
+#dawn-second #dawn-catalogue[data-reading-list="true"] .dawn-catalogue__primary-nav{
+ display:none!important;
+}
