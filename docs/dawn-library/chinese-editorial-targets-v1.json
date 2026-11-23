@@ -1,0 +1,891 @@
+{
+  "schema": "dawn.chinese-editorial-targets.v1",
+  "created": "2026-11-22",
+  "title": "中文精品選書母單",
+  "status": "editorial-selection-only",
+  "count": 40,
+  "themeCount": 10,
+  "policy": "book-first; no download links until rights and reader access verified",
+  "sourcePolicy": {
+    "priority": [
+      "legal free no-sign-in",
+      "legally free with registration",
+      "bibliography-only when no legal free edition"
+    ],
+    "secondarySource": "my-elibrary.net",
+    "noMirrorWithoutRights": true
+  },
+  "sources": {
+    "HFP": {
+      "name": "台北信友堂｜牧書齋十本經典",
+      "url": "https://www.hfpchurch.org.tw/牧書齋●摘書目/",
+      "kind": "教會共讀精選"
+    },
+    "CSTT": {
+      "name": "基督教研究智庫｜睿智書單",
+      "url": "https://cstt.tw/smartbooks/",
+      "kind": "基督教思想經典策選"
+    },
+    "RERC": {
+      "name": "香港聖公會宗教教育中心｜十本好書閱讀運動",
+      "url": "https://www.rerc.org.hk/?page_id=2035",
+      "kind": "牧者及讀者推薦"
+    },
+    "CAMPUS": {
+      "name": "校園網路書房｜董家驊牧師推薦書單",
+      "url": "https://shop.campus.org.tw/SelectBookProducts.aspx?ID=21century_mission",
+      "kind": "當代宣教與公共信仰專題策選"
+    },
+    "TYNDALE": {
+      "name": "Tyndale University｜中文神學課程必讀書目",
+      "url": "https://libguides.tyndale.ca/c.php?g=737913&p=5343531",
+      "kind": "學術課程必讀/推薦"
+    },
+    "CUHK": {
+      "name": "香港中文大學崇基學院神學院｜課程書目",
+      "url": "https://www.theology.cuhk.edu.hk/students/book-lists.html",
+      "kind": "學術課程書目"
+    },
+    "CUHK_BOOKS": {
+      "name": "香港中文大學崇基學院神學院｜書籍推介",
+      "url": "https://www.theology.cuhk.edu.hk/tc/publication/books.html",
+      "kind": "院校出版及專書推薦"
+    },
+    "CESNA": {
+      "name": "北美中華福音神學院｜圖書館新書展示",
+      "url": "https://cesna.edu/library-cn/",
+      "kind": "館藏新書展示（非精品評分）"
+    },
+    "CCM": {
+      "name": "中國信徒佈道會｜閱讀屬靈書籍的提醒",
+      "url": "https://www.ccmusa.org/read/read.aspx?id=pro20180501",
+      "kind": "作者推薦閱讀"
+    },
+    "ISCS": {
+      "name": "漢語基督教文化研究所｜漢語神學讀本",
+      "url": "https://iscs.org.hk/Common/Reader/Products/ShowProduct.jsp?Charset=big5_hkscs&Cid=163&Pid=7&Version=0&idx=27",
+      "kind": "漢語神學原典選讀"
+    },
+    "ENDAO": {
+      "name": "恩道出版社｜2025年度出版回顧",
+      "url": "https://edbooks.co/zh-hant/post-012/",
+      "kind": "出版者作品資訊（不代表獨立推薦）"
+    },
+    "HISTORY": {
+      "name": "《透視教會春秋》｜中國教會史入門推薦附錄",
+      "url": "https://books.biblereader.top/read/tou.shi.jiao.hui.chun.qiu/c64",
+      "kind": "著作附錄書目（僅供選書論據，不作合法全文來源）"
+    },
+    "COURSES": {
+      "name": "衛理神學研究院｜神學課程書目",
+      "url": "https://mgst.org.tw/courses/202601C/20261A42.html",
+      "kind": "神學院課程書目"
+    }
+  },
+  "items": [
+    {
+      "id": "DL-ZH-T01-01",
+      "theme": "信仰的門",
+      "themeQuestion": "如果讀者尚未確定自己相信什麼，應先讀哪些書？",
+      "title": "反璞歸真",
+      "author": "魯益師（C. S. Lewis）",
+      "level": "入門",
+      "editorialReason": "以基本信仰論證展開對話",
+      "evidence": [
+        "HFP",
+        "CSTT"
+      ],
+      "selection": "editorial-target",
+      "isAccessioned": false,
+      "editionIdentity": "pending-verification",
+      "freeAccess": "not-checked",
+      "rights": "not-checked",
+      "cover": "not-checked",
+      "duplicateCheck": "not-run-against-full-catalog",
+      "sourceUrl": null
+    },
+    {
+      "id": "DL-ZH-T01-02",
+      "theme": "信仰的門",
+      "themeQuestion": "如果讀者尚未確定自己相信什麼，應先讀哪些書？",
+      "title": "認識神",
+      "author": "巴刻（J. I. Packer）",
+      "level": "入門→進階",
+      "editorialReason": "把對上帝的認識和敬拜生活連起來",
+      "evidence": [
+        "HFP"
+      ],
+      "selection": "editorial-target",
+      "isAccessioned": false,
+      "editionIdentity": "pending-verification",
+      "freeAccess": "not-checked",
+      "rights": "not-checked",
+      "cover": "not-checked",
+      "duplicateCheck": "not-run-against-full-catalog",
+      "sourceUrl": null
+    },
+    {
+      "id": "DL-ZH-T01-03",
+      "theme": "信仰的門",
+      "themeQuestion": "如果讀者尚未確定自己相信什麼，應先讀哪些書？",
+      "title": "我想相信，但……",
+      "author": "米高・格林、力克・史賓沙",
+      "level": "入門",
+      "editorialReason": "容許懷疑者提出真問題",
+      "evidence": [
+        "RERC"
+      ],
+      "selection": "editorial-target",
+      "isAccessioned": false,
+      "editionIdentity": "pending-verification",
+      "freeAccess": "not-checked",
+      "rights": "not-checked",
+      "cover": "not-checked",
+      "duplicateCheck": "not-run-against-full-catalog",
+      "sourceUrl": null
+    },
+    {
+      "id": "DL-ZH-T01-04",
+      "theme": "信仰的門",
+      "themeQuestion": "如果讀者尚未確定自己相信什麼，應先讀哪些書？",
+      "title": "疑惑與相信",
+      "author": "許道良",
+      "level": "入門→進階",
+      "editorialReason": "讓華人作者參與信仰懷疑的討論",
+      "evidence": [
+        "CESNA"
+      ],
+      "selection": "editorial-target",
+      "isAccessioned": false,
+      "editionIdentity": "pending-verification",
+      "freeAccess": "not-checked",
+      "rights": "not-checked",
+      "cover": "not-checked",
+      "duplicateCheck": "not-run-against-full-catalog",
+      "sourceUrl": null
+    },
+    {
+      "id": "DL-ZH-T02-01",
+      "theme": "學會讀聖經",
+      "themeQuestion": "怎樣避免只憑印象和金句解釋聖經？",
+      "title": "抓準神的話",
+      "author": "史考特・杜瓦爾、丹尼爾・海斯",
+      "level": "入門",
+      "editorialReason": "從觀察、處境和應用建立可實踐的讀經方法",
+      "evidence": [
+        "CCM"
+      ],
+      "selection": "editorial-target",
+      "isAccessioned": false,
+      "editionIdentity": "pending-verification",
+      "freeAccess": "not-checked",
+      "rights": "not-checked",
+      "cover": "not-checked",
+      "duplicateCheck": "not-run-against-full-catalog",
+      "sourceUrl": null
+    },
+    {
+      "id": "DL-ZH-T02-02",
+      "theme": "學會讀聖經",
+      "themeQuestion": "怎樣避免只憑印象和金句解釋聖經？",
+      "title": "讀經藝術三部曲（套書）",
+      "author": "戈登・費依、道格拉斯・史都華等",
+      "level": "入門→進階",
+      "editorialReason": "區分文體與閱讀方法，套書須分冊建 Edition",
+      "evidence": [
+        "CESNA"
+      ],
+      "selection": "editorial-target",
+      "isAccessioned": false,
+      "editionIdentity": "pending-verification",
+      "freeAccess": "not-checked",
+      "rights": "not-checked",
+      "cover": "not-checked",
+      "duplicateCheck": "not-run-against-full-catalog",
+      "sourceUrl": null
+    },
+    {
+      "id": "DL-ZH-T02-03",
+      "theme": "學會讀聖經",
+      "themeQuestion": "怎樣避免只憑印象和金句解釋聖經？",
+      "title": "釋經學原理",
+      "author": "伯克富（Louis Berkhof）",
+      "level": "進階",
+      "editorialReason": "認識解經原理的歷史傳承",
+      "evidence": [
+        "HFP"
+      ],
+      "selection": "editorial-target",
+      "isAccessioned": false,
+      "editionIdentity": "pending-verification",
+      "freeAccess": "not-checked",
+      "rights": "not-checked",
+      "cover": "not-checked",
+      "duplicateCheck": "not-run-against-full-catalog",
+      "sourceUrl": null
+    },
+    {
+      "id": "DL-ZH-T02-04",
+      "theme": "學會讀聖經",
+      "themeQuestion": "怎樣避免只憑印象和金句解釋聖經？",
+      "title": "山上寶訓新解：新盟約與效應史",
+      "author": "葉約翰",
+      "level": "進階→學術",
+      "editorialReason": "以馬太福音具體示範研究深度",
+      "evidence": [
+        "CUHK"
+      ],
+      "selection": "editorial-target",
+      "isAccessioned": false,
+      "editionIdentity": "pending-verification",
+      "freeAccess": "not-checked",
+      "rights": "not-checked",
+      "cover": "not-checked",
+      "duplicateCheck": "not-run-against-full-catalog",
+      "sourceUrl": null
+    },
+    {
+      "id": "DL-ZH-T03-01",
+      "theme": "信仰的思想骨架",
+      "themeQuestion": "中文讀者需要哪些真正能支撐深入思考的神學著作？",
+      "title": "神學綱要",
+      "author": "周聯華",
+      "level": "入門→進階",
+      "editorialReason": "用華人作者的語言建立教義基本架構",
+      "evidence": [
+        "COURSES"
+      ],
+      "selection": "editorial-target",
+      "isAccessioned": false,
+      "editionIdentity": "pending-verification",
+      "freeAccess": "not-checked",
+      "rights": "not-checked",
+      "cover": "not-checked",
+      "duplicateCheck": "not-run-against-full-catalog",
+      "sourceUrl": null
+    },
+    {
+      "id": "DL-ZH-T03-02",
+      "theme": "信仰的思想骨架",
+      "themeQuestion": "中文讀者需要哪些真正能支撐深入思考的神學著作？",
+      "title": "系統神學（上、下冊）",
+      "author": "林鴻信",
+      "level": "進階",
+      "editorialReason": "華人原創的系統神學論述；作一作品多冊次",
+      "evidence": [
+        "CAMPUS",
+        "TYNDALE"
+      ],
+      "selection": "editorial-target",
+      "isAccessioned": false,
+      "editionIdentity": "pending-verification",
+      "freeAccess": "not-checked",
+      "rights": "not-checked",
+      "cover": "not-checked",
+      "duplicateCheck": "not-run-against-full-catalog",
+      "sourceUrl": null
+    },
+    {
+      "id": "DL-ZH-T03-03",
+      "theme": "信仰的思想骨架",
+      "themeQuestion": "中文讀者需要哪些真正能支撐深入思考的神學著作？",
+      "title": "基督教神學原典菁華",
+      "author": "麥葛福（Alister E. McGrath）編",
+      "level": "進階→學術",
+      "editorialReason": "從原典進入教義史而非只讀二手歸納",
+      "evidence": [
+        "TYNDALE"
+      ],
+      "selection": "editorial-target",
+      "isAccessioned": false,
+      "editionIdentity": "pending-verification",
+      "freeAccess": "not-checked",
+      "rights": "not-checked",
+      "cover": "not-checked",
+      "duplicateCheck": "not-run-against-full-catalog",
+      "sourceUrl": null
+    },
+    {
+      "id": "DL-ZH-T03-04",
+      "theme": "信仰的思想骨架",
+      "themeQuestion": "中文讀者需要哪些真正能支撐深入思考的神學著作？",
+      "title": "漢語神學讀本",
+      "author": "何光滬、楊熙楠編",
+      "level": "進階→學術",
+      "editorialReason": "展現漢語思想自身的神學歷史與論辯",
+      "evidence": [
+        "ISCS"
+      ],
+      "selection": "editorial-target",
+      "isAccessioned": false,
+      "editionIdentity": "pending-verification",
+      "freeAccess": "not-checked",
+      "rights": "not-checked",
+      "cover": "not-checked",
+      "duplicateCheck": "not-run-against-full-catalog",
+      "sourceUrl": null
+    },
+    {
+      "id": "DL-ZH-T04-01",
+      "theme": "禱告與生命重整",
+      "themeQuestion": "信仰如何從思想進入禱告、願望、習慣與生命？",
+      "title": "懺悔錄",
+      "author": "奧古斯丁",
+      "level": "進階",
+      "editorialReason": "靈魂反省與恩典的經典敘事",
+      "evidence": [
+        "CSTT"
+      ],
+      "selection": "editorial-target",
+      "isAccessioned": false,
+      "editionIdentity": "pending-verification",
+      "freeAccess": "not-checked",
+      "rights": "not-checked",
+      "cover": "not-checked",
+      "duplicateCheck": "not-run-against-full-catalog",
+      "sourceUrl": null
+    },
+    {
+      "id": "DL-ZH-T04-02",
+      "theme": "禱告與生命重整",
+      "themeQuestion": "信仰如何從思想進入禱告、願望、習慣與生命？",
+      "title": "宗教情操真偽辨",
+      "author": "愛德華滋（Jonathan Edwards）",
+      "level": "進階",
+      "editorialReason": "辨別宗教經驗與真實生命的關係；異名版本待核",
+      "evidence": [
+        "HFP"
+      ],
+      "selection": "editorial-target",
+      "isAccessioned": false,
+      "editionIdentity": "pending-verification",
+      "freeAccess": "not-checked",
+      "rights": "not-checked",
+      "cover": "not-checked",
+      "duplicateCheck": "not-run-against-full-catalog",
+      "sourceUrl": null
+    },
+    {
+      "id": "DL-ZH-T04-03",
+      "theme": "禱告與生命重整",
+      "themeQuestion": "信仰如何從思想進入禱告、願望、習慣與生命？",
+      "title": "屬靈操練之旅",
+      "author": "傅士德、史雅各編",
+      "level": "入門→進階",
+      "editorialReason": "讓靈修操練具有可實踐的節奏",
+      "evidence": [
+        "CESNA"
+      ],
+      "selection": "editorial-target",
+      "isAccessioned": false,
+      "editionIdentity": "pending-verification",
+      "freeAccess": "not-checked",
+      "rights": "not-checked",
+      "cover": "not-checked",
+      "duplicateCheck": "not-run-against-full-catalog",
+      "sourceUrl": null
+    },
+    {
+      "id": "DL-ZH-T04-04",
+      "theme": "禱告與生命重整",
+      "themeQuestion": "信仰如何從思想進入禱告、願望、習慣與生命？",
+      "title": "欲望的門訓：一切從「心」的習慣開始",
+      "author": "蘇明思（James K. A. Smith）",
+      "level": "進階",
+      "editorialReason": "理解習慣、文化與敬拜如何塑造生命",
+      "evidence": [
+        "CSTT",
+        "CAMPUS"
+      ],
+      "selection": "editorial-target",
+      "isAccessioned": false,
+      "editionIdentity": "pending-verification",
+      "freeAccess": "not-checked",
+      "rights": "not-checked",
+      "cover": "not-checked",
+      "duplicateCheck": "not-run-against-full-catalog",
+      "sourceUrl": null
+    },
+    {
+      "id": "DL-ZH-T05-01",
+      "theme": "十字架與教會",
+      "themeQuestion": "教會不是活動組織，十字架如何形塑群體？",
+      "title": "當代基督十架",
+      "author": "斯托得（John Stott）",
+      "level": "進階",
+      "editorialReason": "從十字架理解福音與門徒生活",
+      "evidence": [
+        "HFP"
+      ],
+      "selection": "editorial-target",
+      "isAccessioned": false,
+      "editionIdentity": "pending-verification",
+      "freeAccess": "not-checked",
+      "rights": "not-checked",
+      "cover": "not-checked",
+      "duplicateCheck": "not-run-against-full-catalog",
+      "sourceUrl": null
+    },
+    {
+      "id": "DL-ZH-T05-02",
+      "theme": "十字架與教會",
+      "themeQuestion": "教會不是活動組織，十字架如何形塑群體？",
+      "title": "教會生態學",
+      "author": "林鴻信",
+      "level": "進階",
+      "editorialReason": "以華人神學論述思考教會生態",
+      "evidence": [
+        "TYNDALE"
+      ],
+      "selection": "editorial-target",
+      "isAccessioned": false,
+      "editionIdentity": "pending-verification",
+      "freeAccess": "not-checked",
+      "rights": "not-checked",
+      "cover": "not-checked",
+      "duplicateCheck": "not-run-against-full-catalog",
+      "sourceUrl": null
+    },
+    {
+      "id": "DL-ZH-T05-03",
+      "theme": "十字架與教會",
+      "themeQuestion": "教會不是活動組織，十字架如何形塑群體？",
+      "title": "世界在等待的門徒",
+      "author": "斯托得（John Stott）",
+      "level": "入門→進階",
+      "editorialReason": "把門徒身份帶入公共與日常使命",
+      "evidence": [
+        "CAMPUS",
+        "RERC"
+      ],
+      "selection": "editorial-target",
+      "isAccessioned": false,
+      "editionIdentity": "pending-verification",
+      "freeAccess": "not-checked",
+      "rights": "not-checked",
+      "cover": "not-checked",
+      "duplicateCheck": "not-run-against-full-catalog",
+      "sourceUrl": null
+    },
+    {
+      "id": "DL-ZH-T05-04",
+      "theme": "十字架與教會",
+      "themeQuestion": "教會不是活動組織，十字架如何形塑群體？",
+      "title": "在華人教會處境中探尋教牧職事",
+      "author": "作者／編者待版本核定",
+      "level": "進階→學術",
+      "editorialReason": "正視華人堂會的教牧與制度處境",
+      "evidence": [
+        "CUHK_BOOKS"
+      ],
+      "selection": "editorial-target",
+      "isAccessioned": false,
+      "editionIdentity": "pending-verification",
+      "freeAccess": "not-checked",
+      "rights": "not-checked",
+      "cover": "not-checked",
+      "duplicateCheck": "not-run-against-full-catalog",
+      "sourceUrl": null
+    },
+    {
+      "id": "DL-ZH-T06-01",
+      "theme": "中國教會的記憶",
+      "themeQuestion": "中國與台灣基督教歷史如何被中文讀者自己閱讀和保存？",
+      "title": "福臨中華：中國近代教會史十講",
+      "author": "梁家麟",
+      "level": "入門",
+      "editorialReason": "中國近代教會史的清晰起點",
+      "evidence": [
+        "HISTORY"
+      ],
+      "selection": "editorial-target",
+      "isAccessioned": false,
+      "editionIdentity": "pending-verification",
+      "freeAccess": "not-checked",
+      "rights": "not-checked",
+      "cover": "not-checked",
+      "duplicateCheck": "not-run-against-full-catalog",
+      "sourceUrl": null
+    },
+    {
+      "id": "DL-ZH-T06-02",
+      "theme": "中國教會的記憶",
+      "themeQuestion": "中國與台灣基督教歷史如何被中文讀者自己閱讀和保存？",
+      "title": "圖片中國基督教簡史",
+      "author": "禤浩榮",
+      "level": "入門",
+      "editorialReason": "圖像材料與歷史脈絡相結合",
+      "evidence": [
+        "HISTORY"
+      ],
+      "selection": "editorial-target",
+      "isAccessioned": false,
+      "editionIdentity": "pending-verification",
+      "freeAccess": "not-checked",
+      "rights": "not-checked",
+      "cover": "not-checked",
+      "duplicateCheck": "not-run-against-full-catalog",
+      "sourceUrl": null
+    },
+    {
+      "id": "DL-ZH-T06-03",
+      "theme": "中國教會的記憶",
+      "themeQuestion": "中國與台灣基督教歷史如何被中文讀者自己閱讀和保存？",
+      "title": "福爾摩沙記事",
+      "author": "馬偕（George Leslie Mackay）",
+      "level": "進階",
+      "editorialReason": "台灣宣教第一手歷史記述，譯本版本待核",
+      "evidence": [
+        "CSTT"
+      ],
+      "selection": "editorial-target",
+      "isAccessioned": false,
+      "editionIdentity": "pending-verification",
+      "freeAccess": "not-checked",
+      "rights": "not-checked",
+      "cover": "not-checked",
+      "duplicateCheck": "not-run-against-full-catalog",
+      "sourceUrl": null
+    },
+    {
+      "id": "DL-ZH-T06-04",
+      "theme": "中國教會的記憶",
+      "themeQuestion": "中國與台灣基督教歷史如何被中文讀者自己閱讀和保存？",
+      "title": "立於磐石——庚子教難前後的晉南教會",
+      "author": "亦文編著",
+      "level": "進階→學術",
+      "editorialReason": "透過原刊物史料再檢視地方教會記憶",
+      "evidence": [
+        "ENDAO"
+      ],
+      "selection": "editorial-target",
+      "isAccessioned": false,
+      "editionIdentity": "pending-verification",
+      "freeAccess": "not-checked",
+      "rights": "not-checked",
+      "cover": "not-checked",
+      "duplicateCheck": "not-run-against-full-catalog",
+      "sourceUrl": null
+    },
+    {
+      "id": "DL-ZH-T07-01",
+      "theme": "上帝的宣教與城市",
+      "themeQuestion": "全球宣教在城市與地方文化中會發生什麼變化？",
+      "title": "宣教中的上帝",
+      "author": "萊特（Christopher J. H. Wright）",
+      "level": "進階",
+      "editorialReason": "把宣教放回整本聖經的神學敘事",
+      "evidence": [
+        "CAMPUS"
+      ],
+      "selection": "editorial-target",
+      "isAccessioned": false,
+      "editionIdentity": "pending-verification",
+      "freeAccess": "not-checked",
+      "rights": "not-checked",
+      "cover": "not-checked",
+      "duplicateCheck": "not-run-against-full-catalog",
+      "sourceUrl": null
+    },
+    {
+      "id": "DL-ZH-T07-02",
+      "theme": "上帝的宣教與城市",
+      "themeQuestion": "全球宣教在城市與地方文化中會發生什麼變化？",
+      "title": "21世紀教會成長學：以福音為中心的城市教會新異象",
+      "author": "提摩太・凱勒（Timothy Keller）",
+      "level": "進階",
+      "editorialReason": "思考城市的福音與教會實踐",
+      "evidence": [
+        "CAMPUS"
+      ],
+      "selection": "editorial-target",
+      "isAccessioned": false,
+      "editionIdentity": "pending-verification",
+      "freeAccess": "not-checked",
+      "rights": "not-checked",
+      "cover": "not-checked",
+      "duplicateCheck": "not-run-against-full-catalog",
+      "sourceUrl": null
+    },
+    {
+      "id": "DL-ZH-T07-03",
+      "theme": "上帝的宣教與城市",
+      "themeQuestion": "全球宣教在城市與地方文化中會發生什麼變化？",
+      "title": "扎根本土的宣教：宣教處境化的實踐模式",
+      "author": "史考特・莫羅（Scott Moreau）",
+      "level": "進階",
+      "editorialReason": "比較跨文化福音傳播與處境化方式",
+      "evidence": [
+        "CESNA"
+      ],
+      "selection": "editorial-target",
+      "isAccessioned": false,
+      "editionIdentity": "pending-verification",
+      "freeAccess": "not-checked",
+      "rights": "not-checked",
+      "cover": "not-checked",
+      "duplicateCheck": "not-run-against-full-catalog",
+      "sourceUrl": null
+    },
+    {
+      "id": "DL-ZH-T07-04",
+      "theme": "上帝的宣教與城市",
+      "themeQuestion": "全球宣教在城市與地方文化中會發生什麼變化？",
+      "title": "宣教神學（增修版）",
+      "author": "莊祖鯤",
+      "level": "進階",
+      "editorialReason": "引入華人作者的宣教神學反省",
+      "evidence": [
+        "CESNA"
+      ],
+      "selection": "editorial-target",
+      "isAccessioned": false,
+      "editionIdentity": "pending-verification",
+      "freeAccess": "not-checked",
+      "rights": "not-checked",
+      "cover": "not-checked",
+      "duplicateCheck": "not-run-against-full-catalog",
+      "sourceUrl": null
+    },
+    {
+      "id": "DL-ZH-T08-01",
+      "theme": "信仰與公共世界",
+      "themeQuestion": "信仰如何與文化、社會、工作及原住民族處境對話？",
+      "title": "公共的信仰：基督徒社會參與的第一課",
+      "author": "沃弗（Miroslav Volf）",
+      "level": "進階",
+      "editorialReason": "信仰介入公共討論的倫理起點",
+      "evidence": [
+        "CAMPUS"
+      ],
+      "selection": "editorial-target",
+      "isAccessioned": false,
+      "editionIdentity": "pending-verification",
+      "freeAccess": "not-checked",
+      "rights": "not-checked",
+      "cover": "not-checked",
+      "duplicateCheck": "not-run-against-full-catalog",
+      "sourceUrl": null
+    },
+    {
+      "id": "DL-ZH-T08-02",
+      "theme": "信仰與公共世界",
+      "themeQuestion": "信仰如何與文化、社會、工作及原住民族處境對話？",
+      "title": "創造文化：世界潮流中的福音新呼召",
+      "author": "柯羅奇（Andy Crouch）",
+      "level": "進階",
+      "editorialReason": "文化不只是抵抗或消費，也關乎創造",
+      "evidence": [
+        "CAMPUS"
+      ],
+      "selection": "editorial-target",
+      "isAccessioned": false,
+      "editionIdentity": "pending-verification",
+      "freeAccess": "not-checked",
+      "rights": "not-checked",
+      "cover": "not-checked",
+      "duplicateCheck": "not-run-against-full-catalog",
+      "sourceUrl": null
+    },
+    {
+      "id": "DL-ZH-T08-03",
+      "theme": "信仰與公共世界",
+      "themeQuestion": "信仰如何與文化、社會、工作及原住民族處境對話？",
+      "title": "山間靈風吹起：泰雅爾的甦醒",
+      "author": "台灣神學研究學院基督教思想研究中心",
+      "level": "進階",
+      "editorialReason": "納入台灣原住民族基督教的生命與文化",
+      "evidence": [
+        "CSTT"
+      ],
+      "selection": "editorial-target",
+      "isAccessioned": false,
+      "editionIdentity": "pending-verification",
+      "freeAccess": "not-checked",
+      "rights": "not-checked",
+      "cover": "not-checked",
+      "duplicateCheck": "not-run-against-full-catalog",
+      "sourceUrl": null
+    },
+    {
+      "id": "DL-ZH-T08-04",
+      "theme": "信仰與公共世界",
+      "themeQuestion": "信仰如何與文化、社會、工作及原住民族處境對話？",
+      "title": "基督教四面楚歌？文化危機與轉化",
+      "author": "余達心",
+      "level": "進階",
+      "editorialReason": "華人神學家對文化困境的反思",
+      "evidence": [
+        "ENDAO"
+      ],
+      "selection": "editorial-target",
+      "isAccessioned": false,
+      "editionIdentity": "pending-verification",
+      "freeAccess": "not-checked",
+      "rights": "not-checked",
+      "cover": "not-checked",
+      "duplicateCheck": "not-run-against-full-catalog",
+      "sourceUrl": null
+    },
+    {
+      "id": "DL-ZH-T09-01",
+      "theme": "傷痛與日常照顧",
+      "themeQuestion": "家庭、老年、衝突與心理困難可以如何被信仰照亮？",
+      "title": "這段路，我們一起走：與漸老的父母交換心聲",
+      "author": "米西・布坎南（Missy Buchanan）",
+      "level": "入門",
+      "editorialReason": "老人照顧與跨代對話",
+      "evidence": [
+        "RERC"
+      ],
+      "selection": "editorial-target",
+      "isAccessioned": false,
+      "editionIdentity": "pending-verification",
+      "freeAccess": "not-checked",
+      "rights": "not-checked",
+      "cover": "not-checked",
+      "duplicateCheck": "not-run-against-full-catalog",
+      "sourceUrl": null
+    },
+    {
+      "id": "DL-ZH-T09-02",
+      "theme": "傷痛與日常照顧",
+      "themeQuestion": "家庭、老年、衝突與心理困難可以如何被信仰照亮？",
+      "title": "家庭神學：獨身、婚姻和家庭的神學反思",
+      "author": "黃國維",
+      "level": "進階",
+      "editorialReason": "以華人神學思考家庭之外的獨身議題",
+      "evidence": [
+        "CESNA"
+      ],
+      "selection": "editorial-target",
+      "isAccessioned": false,
+      "editionIdentity": "pending-verification",
+      "freeAccess": "not-checked",
+      "rights": "not-checked",
+      "cover": "not-checked",
+      "duplicateCheck": "not-run-against-full-catalog",
+      "sourceUrl": null
+    },
+    {
+      "id": "DL-ZH-T09-03",
+      "theme": "傷痛與日常照顧",
+      "themeQuestion": "家庭、老年、衝突與心理困難可以如何被信仰照亮？",
+      "title": "再吵也要相愛",
+      "author": "丁明華",
+      "level": "入門",
+      "editorialReason": "把群體衝突化成關係修復的學習",
+      "evidence": [
+        "CESNA"
+      ],
+      "selection": "editorial-target",
+      "isAccessioned": false,
+      "editionIdentity": "pending-verification",
+      "freeAccess": "not-checked",
+      "rights": "not-checked",
+      "cover": "not-checked",
+      "duplicateCheck": "not-run-against-full-catalog",
+      "sourceUrl": null
+    },
+    {
+      "id": "DL-ZH-T09-04",
+      "theme": "傷痛與日常照顧",
+      "themeQuestion": "家庭、老年、衝突與心理困難可以如何被信仰照亮？",
+      "title": "擷思撫心：行走在神學與心理學之間",
+      "author": "多位華人學者合著；詳目待核",
+      "level": "進階",
+      "editorialReason": "神學與心理學跨學科的華人處境研究",
+      "evidence": [
+        "ENDAO"
+      ],
+      "selection": "editorial-target",
+      "isAccessioned": false,
+      "editionIdentity": "pending-verification",
+      "freeAccess": "not-checked",
+      "rights": "not-checked",
+      "cover": "not-checked",
+      "duplicateCheck": "not-run-against-full-catalog",
+      "sourceUrl": null
+    },
+    {
+      "id": "DL-ZH-T10-01",
+      "theme": "以文學觀看福音",
+      "themeQuestion": "好書除了說明教義，能否讓中文讀者重新獲得想像力？",
+      "title": "基列系列 I：遺愛基列",
+      "author": "瑪莉蓮・羅賓遜（Marilynne Robinson）",
+      "level": "進階",
+      "editorialReason": "在小說中思考記憶、恩典與家庭",
+      "evidence": [
+        "CSTT"
+      ],
+      "selection": "editorial-target",
+      "isAccessioned": false,
+      "editionIdentity": "pending-verification",
+      "freeAccess": "not-checked",
+      "rights": "not-checked",
+      "cover": "not-checked",
+      "duplicateCheck": "not-run-against-full-catalog",
+      "sourceUrl": null
+    },
+    {
+      "id": "DL-ZH-T10-02",
+      "theme": "以文學觀看福音",
+      "themeQuestion": "好書除了說明教義，能否讓中文讀者重新獲得想像力？",
+      "title": "小心魔鬼很聰明",
+      "author": "魯益師（C. S. Lewis）",
+      "level": "入門",
+      "editorialReason": "以文學諷喻揭示誘惑與自欺",
+      "evidence": [
+        "RERC"
+      ],
+      "selection": "editorial-target",
+      "isAccessioned": false,
+      "editionIdentity": "pending-verification",
+      "freeAccess": "not-checked",
+      "rights": "not-checked",
+      "cover": "not-checked",
+      "duplicateCheck": "not-run-against-full-catalog",
+      "sourceUrl": null
+    },
+    {
+      "id": "DL-ZH-T10-03",
+      "theme": "以文學觀看福音",
+      "themeQuestion": "好書除了說明教義，能否讓中文讀者重新獲得想像力？",
+      "title": "開往天堂的巴士",
+      "author": "魯益師（C. S. Lewis）",
+      "level": "入門→進階",
+      "editorialReason": "藉寓言討論自由、恩典與終極選擇",
+      "evidence": [
+        "CSTT"
+      ],
+      "selection": "editorial-target",
+      "isAccessioned": false,
+      "editionIdentity": "pending-verification",
+      "freeAccess": "not-checked",
+      "rights": "not-checked",
+      "cover": "not-checked",
+      "duplicateCheck": "not-run-against-full-catalog",
+      "sourceUrl": null
+    },
+    {
+      "id": "DL-ZH-T10-04",
+      "theme": "以文學觀看福音",
+      "themeQuestion": "好書除了說明教義，能否讓中文讀者重新獲得想像力？",
+      "title": "基督教與中國文化的相遇、求同與存異",
+      "author": "作者／編者待版本核定",
+      "level": "進階→學術",
+      "editorialReason": "以漢語文化脈絡深化跨文化閱讀",
+      "evidence": [
+        "CUHK_BOOKS"
+      ],
+      "selection": "editorial-target",
+      "isAccessioned": false,
+      "editionIdentity": "pending-verification",
+      "freeAccess": "not-checked",
+      "rights": "not-checked",
+      "cover": "not-checked",
+      "duplicateCheck": "not-run-against-full-catalog",
+      "sourceUrl": null
+    }
+  ]
+}
