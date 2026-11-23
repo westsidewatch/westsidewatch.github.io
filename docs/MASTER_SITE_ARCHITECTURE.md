@@ -93,6 +93,17 @@ Root principle:
 
 The Library is a continuously accumulating knowledge/resource system, not a Journal issue-by-issue publication. Its resources may serve Journal, ONE, 多雷搜索、Church、Social、Visual research and other functions.
 
+#### 中文讀者的精品書單｜書目先於來源（Editorial-first booklists）
+
+This is a **core Dawn editorial capability**, not an additional public channel or a supplier-feed importer. Its sole task upstream of 三晨星、光譜、策展集 is to ask which books deserve serious reading and recommendation for Chinese-language readers, *independently of where a free copy may be found*.
+
+- **First: independent editorial question.** Develop a meaningful reading proposition (e.g. 內在生活、教會歷史、名牧薦書、歷代經典、華人原創神學、文學中的福音), reader context, comparative selection criteria, dissenting or excluded works, and a provenance standard for named recommendations.
+- **Second: assess the Work itself.** Evaluate theological, historical, literary and reader-fit merits, including tradition and critical context. Distinguish independently read judgments from candidate-level hypotheses. A publisher shelf, award list, church curriculum or search result is a research lead, not a substitute for judgment.
+- **Third: resolve the Chinese edition.** Only *after* making the editorial choice do we verify Chinese titles, translators, editions, rights, cover images and legitimate access. Prefer completely free, no-login reading. Optional free-subscription aggregators are secondary; lack of a free edition cannot retroactively disqualify a high-value book.
+- **Fourth: hand the reviewed Work to existing outputs.** 三晨星 judges present recommendation, 光譜 visualizes knowledge links, 策展集 composes study journeys. The same Work is never duplicated simply because it appears on different lists.
+
+**Canonical operating specification:** [精品書單編輯室 V1](dawn-library/EDITORIAL-READING-LISTS-CHARTER-V1.md); independently checkable method inventory [editorial-booklist-studio.v1.json](dawn-library/editorial-booklist-studio.v1.json). These are editorial research documents, not published lists and not a parallel design authority. No automated assignment of literary/theological quality is permitted.
+
 #### The three-layer editorial model
 
 ```text
@@ -138,6 +149,8 @@ The distinction is:
 This means a resource can be understood not only by its metadata or category, but by its relationships to Scripture, other resources, historical development, concepts, people, places, disciplines, and levels of study. Over time, this accumulated knowledge context becomes one of the Library's most important forms of intellectual capital and supports ONE、 多雷搜索、Journal、字幕插件等 downstream systems.
 
 #### Resource lifecycle
+
+The discovery-first lifecycle below applies to general found resources. **For Chinese精品書單, the editorial-first Work-selection lifecycle above precedes source discovery**; do not reverse it just because the resource pool is large.
 
 ```text
 Candidate Resource Pool
