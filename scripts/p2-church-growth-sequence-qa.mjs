@@ -53,7 +53,7 @@ async function at(vh){
   // scene pose 2.37 + d * .58. It uses the SAME live drawScene code.
   const y=Math.round((vh-2.37)/.58*850);
   await evaluate("window.scrollTo({top:"+Math.max(0,y)+",behavior:'instant'})");
-  for(let i=0;i<70;i++){
+  for(let i=0;i<230;i++){
     await sleep(90);
     const s=await evaluate(`(()=>{
       const root=document.querySelector(".showcase");
@@ -63,13 +63,14 @@ async function at(vh){
       const magazine=Number(root?.dataset.p2MagazineProgress||0);
       const figure=frame?.parentElement;
       return {pose,progress,water:Number(root?.dataset.p2WaterLevel),
-        opening:Number(root?.querySelector(".stage")?.style?.getPropertyValue("--p2-door-open")||0),
+        opening:Number(root?.style?.getPropertyValue("--p2-door-open")||0),
         phase:root?.dataset.p2ChurchBuildPhase,
         modelVisible:frame?.style.visibility,
+        growthBridgeReady:["visible","hidden"].includes(frame?.style.visibility),
         modelLoaded:!!figure?.classList.contains("maquette-geometry-ready"),
         magazine,iframeSrc:frame?.getAttribute("src")||null};
     })()`);
-    if(Math.abs(s.pose-vh)<.018)return s;
+    if(Math.abs(s.pose-vh)<.018&&s.growthBridgeReady)return s;
   }
   throw Error("Original P2 scroll position did not settle near "+vh);
 }
