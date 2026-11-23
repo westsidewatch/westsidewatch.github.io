@@ -1,0 +1,38 @@
+import assert from 'node:assert/strict';
+import {readFileSync,existsSync} from 'node:fs';
+const read=p=>readFileSync(p,'utf8');
+const manifest=JSON.parse(read('data/editorial/sevenfold.json'));
+const expected=['church','journal','emmaus','olive','dawn-library','cinema','daylight-cafe'];
+assert.deepEqual(manifest.sequence,expected,'All seven realms MUST be in first-release source');
+assert.deepEqual(Object.keys(manifest.sections),expected,'Every realm must have one source record');
+const master=read('layouts/partials/editorial/folio.html');
+const layout=read('layouts/_default/ws-editorial-interior.html');
+const shell=read('layouts/_default/baseof.html');
+const css=read('static/css/westside-editorial-interior.css');
+const source=read('static/experiments/scripture-studio-motherform-live.html');
+assert.ok(layout.includes('partial "editorial/folio.html"'),'Every page must share Hugo renderer');
+assert.ok(shell.includes('if .Params.os_editorial')&&shell.includes('ws-editorial-context'),
+ 'Sevenfold CSS must be opt-in, never globally overwrite accepted P2');
+assert.ok(master.includes('range $records.sequence')&&master.includes('range $i, $link := $item.links'));
+assert.ok(master.includes('scripture-studio-motherform-live.html?embed=1'));
+assert.ok(source.includes('p2SevenfoldVertical')&&source.includes("layout')==='sevenfold-vertical'"));
+assert.ok(css.includes('var(--ws-type-scale-')&&css.includes('var(--ws-type-display-en-sc)'));
+assert.ok(css.includes('var(--ws-first-light)')&&css.includes('var(--ws-water)'));
+assert.ok(css.includes('var(--ws-harvest)')&&css.includes('var(--ws-crimson)'));
+assert.ok(!/#[0-9a-f]{3,8}\b/i.test(css),'No hardcoded competing color palettes');
+assert.ok(!css.includes('--visit-')&&!css.includes('--form-'));
+for(const key of expected){
+ const item=manifest.sections[key];
+ assert.equal(item.key,key);
+ assert.ok(item.number&&item.p2&&item.nameZh&&item.nameEn&&item.refZh&&item.quoteZh&&item.quoteEn);
+ assert.ok(item.source==='/'+key+'/'&&Array.isArray(item.links)&&item.links.length>=3);
+ assert.ok(item.links.every(x=>x.href.startsWith('/')&&!x.href.startsWith('//')));
+ const file='content/'+key+'/folio.md';
+ assert.ok(existsSync(file),'Missing real Hugo interior: '+file);
+ const page=read(file);
+ assert.ok(page.includes('layout: "ws-editorial-interior"')&&page.includes('os_editorial: true')&&page.includes('editorial_key: "'+key+'"'));
+ assert.ok(css.includes('data-ws-editorial-realm="'+key+'"'),'Missing scoped material for '+key);
+}
+assert.ok(master.includes('ws-interior__church-art'),'Preserve original church art, never typeset logo');
+assert.ok(read('static/p2/living-water.html').includes('church-schedule'),'Prior P2 untouched');
+console.log('SEVENFOLD_EDITORIAL_CONTRACT_PASS: single OS, single Hugo master, all seven real folios, canonical P2 untouched');
