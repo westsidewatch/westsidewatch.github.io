@@ -235,6 +235,37 @@ body.p2Embedded.p2ChurchVertical .plate:not(.inverse) .cornerCitation{
 }
 body.p2Embedded.p2ChurchVertical .plate.experimental:after,
 body.p2Embedded.p2ChurchVertical .guard{display:none!important}
+/* SEVENFOLD EDITORIAL / V60 existing Chinese-vertical plate.
+   One scoped adapter for all seven current P2 section IDs, not seven rewrites. */
+html:has(body.p2SevenfoldVertical),body.p2SevenfoldVertical{
+ background:transparent!important;overflow:hidden!important;margin:0!important
+}
+body.p2Embedded.p2SevenfoldVertical .shell,
+body.p2Embedded.p2SevenfoldVertical .work,
+body.p2Embedded.p2SevenfoldVertical .pair,
+body.p2Embedded.p2SevenfoldVertical .impression{
+ display:block!important;position:relative!important;
+ width:100%!important;height:100%!important;
+ max-width:none!important;min-width:0!important;
+ margin:0!important;padding:0!important;overflow:hidden!important
+}
+body.p2Embedded.p2SevenfoldVertical .pair{
+ display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:0!important
+}
+body.p2Embedded.p2SevenfoldVertical .impression:first-child{display:block!important}
+body.p2Embedded.p2SevenfoldVertical .impression:nth-child(2){display:none!important}
+body.p2Embedded.p2SevenfoldVertical .plate:not(.inverse){
+ width:100%!important;height:100%!important;aspect-ratio:1!important;
+ border:0!important;background:transparent!important;
+ color:var(--section-text,#FAF9F5)!important
+}
+body.p2Embedded.p2SevenfoldVertical .plate:not(.inverse) .piece.zh,
+body.p2Embedded.p2SevenfoldVertical .plate:not(.inverse) .piece.en,
+body.p2Embedded.p2SevenfoldVertical .plate:not(.inverse) .cornerCitation{
+ color:var(--section-text,#FAF9F5)!important
+}
+body.p2Embedded.p2SevenfoldVertical .plate.experimental:after,
+body.p2Embedded.p2SevenfoldVertical .guard{display:none!important}
 /* Print proof uses the SAME live mother forme and its verified self-hosted font files. */
 @media print{
  @page{size:A4 landscape;margin:11mm}
@@ -1003,6 +1034,7 @@ if(p2Params.get('embed')==='1')document.body.classList.add('p2Embedded');
 if(p2Params.get('layout')==='olive-spread'&&p2Params.get('embed')==='1'&&activeP2==='04')document.body.classList.add('p2OliveSpread');
 if(p2Params.get('layout')==='church-horizontal'&&p2Params.get('embed')==='1'&&activeP2==='01')document.body.classList.add('p2ChurchHorizontal');
 if(p2Params.get('layout')==='church-vertical'&&p2Params.get('embed')==='1'&&activeP2==='01')document.body.classList.add('p2ChurchVertical');
+if(p2Params.get('layout')==='sevenfold-vertical'&&p2Params.get('embed')==='1'&&p2Sections.some(x=>x.id===activeP2))document.body.classList.add('p2SevenfoldVertical');
 addEventListener('message',event=>{
  if(event.origin!==location.origin)return;
  const data=event.data;
