@@ -44,6 +44,9 @@ const cases=[['gospel-essentials',6,1],['inner-life',9,0],['church-history',7,0]
         labelHeight:heading?.getBoundingClientRect().height,
         markerWidth:square?.width,markerHeight:square?.height,
         bookStartsAfterSeries:books.every(n=>n.getBoundingClientRect().top>=end-4),
+        dividerAfterSeries:(el.querySelector('.dawn-wall__collection-divider')?.getBoundingClientRect().top||0)>=end-4,
+        markerCount:marker?.querySelector('.dawn-reading-list__marker-count')?.innerText,
+        cardCounts:tiles.map(n=>n.querySelector('.dawn-reading-list__quantity')?.textContent?.trim()||''),
         tileLabels:tiles.map(n=>n.querySelector('.dawn-reading-list__serial')?.textContent?.trim()||''),
         pageOverflow:document.querySelector('#dawn-second').scrollWidth-document.querySelector('#dawn-second').clientWidth};
     });
@@ -53,6 +56,10 @@ const cases=[['gospel-essentials',6,1],['inner-life',9,0],['church-history',7,0]
     assert(style.chapterLabel==='書單'&&/Chiron/i.test(style.labelFont)&&style.labelHeight>25,
        device+': readable Chinese 書單 heading is missing '+JSON.stringify(style));
     assert(Math.abs(style.markerWidth-style.markerHeight)<12,device+': booklist section identity is not a square '+JSON.stringify(style));
+    assert(style.markerWidth>style.unit*1.85,device+': booklist directory is not a true 2x2 lead square '+JSON.stringify(style));
+    assert(style.markerCount?.includes('22')&&style.markerCount?.includes('03'),device+': curated series is not identified as a collection '+JSON.stringify(style));
+    assert(JSON.stringify(style.cardCounts)===JSON.stringify(['06','09','07']),device+': multi-book quantities 6/9/7 not visually identifiable '+JSON.stringify(style));
+    assert(style.dividerAfterSeries,device+': real book-cover wall lacks its own editorial heading '+JSON.stringify(style));
     assert(style.tileLabels.every(s=>s.includes('書單')),device+': list square appears to be an ordinary book '+JSON.stringify(style));
     assert(Math.abs(style.unit-style.height)<12,device+': reading-list sleeve not a square '+JSON.stringify(style));
     assert(style.firstListTop>=style.portalBottom-8,device+': reading lists displayed before the original three editorial portals '+JSON.stringify(style));
