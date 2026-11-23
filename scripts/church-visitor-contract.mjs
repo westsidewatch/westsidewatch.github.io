@@ -33,6 +33,15 @@ assert.ok(p2.includes('href="/p2/church-tour.html?entry=p2"'));
 assert.ok(ministry.includes('data-story-link')&&ministry.includes('/data/church/ministries.json'));
 assert.ok(overview.includes('id="sunday"')&&overview.includes('id="gatherings"')&&overview.includes('id="invitation"'));
 assert.ok(overview.includes('church-visit__identity-lockup')&&overview.includes('church-visit__scripture-tile'));
+assert.ok(overview.includes('church-visit__official-artwork')&&
+  overview.includes('P.A.O.C. Living Water Assembly West'),'Official P2 glyphs and English must form one lockup');
+assert.ok(!overview.includes('<span>活水堂</span><span>西區教會</span>'),'Do not retype logo');
+assert.ok(read('static/css/church-visit.css').includes('mask:url("/images/living-water-west-church-name.png")'));
+assert.ok(forms.includes('church-form__brand-artwork')&&
+  read('static/css/church-forms.css').includes('living-water-west-church-name.png'));
+assert.ok(scene.includes("southNameArtworkUrl='/images/living-water-west-church-name.png'")&&
+  !scene.includes("g.fillText('神召會活水堂西區教會'"));
+assert.ok(ministry.includes('ws-ministry-story__final-artwork'),'Tour finale uses original church glyphs');
 assert.ok(overview.includes('神召會活水堂西區教會')&&overview.includes('P.A.O.C. Living Water Assembly West'));
 assert.ok(forms.includes('id="church-gospel" hidden')&&forms.includes('church-form__gospel-steps'));
 assert.ok(forms.includes('約翰福音')&&forms.includes('羅馬書'));
