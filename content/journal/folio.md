@@ -4,6 +4,6 @@ description: "在同一本刊物的編輯節奏中，連結全站。"
 layout: "ws-editorial-interior"
 os_editorial: true
 editorial_key: "journal"
-_build:
+build:
   render: always
 ---
