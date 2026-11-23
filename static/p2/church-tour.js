@@ -1391,7 +1391,7 @@ function animate(now,forcedTime=null) {
   const ministryStop=entryParams.get("entry")==="p2"&&guidePaused
     ?[{at:43,p:[9.45,1.95,-9.85],look:[7.52,2.52,-7.55]}, // actual CC0 maple crown x6.1..8.9,z-9.0..-6.2
       {at:94,p:[15.0,1.82,-9.65],look:[15.0,3.65,-.19]}, // pews + luminous cross
-      {at:151,p:[2.80,-.22,-10.70],look:[1.00,-.78,-8.08]} // original V32 CAFÉ long table and chairs
+      {at:151,p:[1.30,.08,-10.70],look:[.98,-.80,-8.10]} // eye-level INSIDE original V32 CAFE room, facing communal table
       ].find(p=>Math.abs(p.at-t)<.07)
     :null;
   if(ministryStop){
