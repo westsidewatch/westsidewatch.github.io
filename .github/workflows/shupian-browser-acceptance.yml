@@ -1,0 +1,99 @@
+name: Shupian real-browser film acceptance
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'static/shupian/index.html'
+      - 'scripts/shupian_recovery/authorized_candidates.json'
+      - 'scripts/shupian_recovery/browser_acceptance.mjs'
+      - 'scripts/shupian_recovery/test_frontend_gate.mjs'
+      - '.github/workflows/shupian-browser-acceptance.yml'
+  schedule:
+    - cron: '17 */6 * * *'
+permissions:
+  contents: write
+concurrency:
+  group: shupian-real-browser-catalog
+  cancel-in-progress: false
+jobs:
+  browser-acceptance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify fail-closed catalog logic with regression cases
+        run: node scripts/shupian_recovery/test_frontend_gate.mjs
+      - name: Prepare real Chromium and browser automation
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --prefix /tmp/shupian-playwright --no-save --ignore-scripts playwright@1.56.1
+          echo "SHUPIAN_PLAYWRIGHT_MODULE=/tmp/shupian-playwright/node_modules/playwright" >> "$GITHUB_ENV"
+          CHROME="$(command -v google-chrome || command -v google-chrome-stable || true)"
+          if [ -z "$CHROME" ]; then
+            /tmp/shupian-playwright/node_modules/.bin/playwright install --with-deps chromium
+          else
+            echo "SHUPIAN_CHROME_BIN=$CHROME" >> "$GITHUB_ENV"
+          fi
+      - name: Test a real licensed film on the audience-facing page
+        run: node scripts/shupian_recovery/browser_acceptance.mjs
+      - name: Require fresh on-screen playback and successful seeking
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          evidence=json.loads(Path('reports/shupian-browser-acceptance.json').read_text())
+          assert evidence['status']=='PASSED', 'No browser playback proof'
+          assert len(evidence['films'])==1, 'Only the exact tested work may pass'
+          assert all(f['videoStarted'] and f['seekSucceeded'] for f in evidence['films'])
+          screenings=json.loads(Path('static/shupian/screenings.json').read_text())
+          assert len(screenings)==1
+          for work in screenings:
+              assert work['licence']['spdx']=='CC-BY-3.0'
+              for ep in work['episodes']:
+                  for source in ep['sources']:
+                      proof=source['playbackVerification']
+                      assert proof['status']=='passed' and proof['seekSucceeded']
+          print('Approved film:',screenings[0]['title'])
+          PY
+      - name: Keep browser screenshot and diagnostic record
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: shupian-real-browser-proof
+          path: |
+            reports/shupian-browser-acceptance.json
+            reports/shupian-browser-acceptance.png
+          if-no-files-found: warn
+      - name: Save accepted film catalog to main
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add static/shupian/screenings.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'data(shupian): admit film only after real Chromium playback'
+            git push origin HEAD:main || (git pull --rebase origin main && git push origin HEAD:main)
+          fi
+      - name: Publish only approved screenings and public-facing cinema page
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin gh-pages
+          git worktree add -b shupian-browser-publish /tmp/shupian-browser-publish origin/gh-pages
+          mkdir -p /tmp/shupian-browser-publish/shupian
+          cp static/shupian/index.html /tmp/shupian-browser-publish/shupian/index.html
+          cp static/shupian/screenings.json /tmp/shupian-browser-publish/shupian/screenings.json
+          cd /tmp/shupian-browser-publish
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add shupian/index.html shupian/screenings.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'deploy(shupian): verified playable film'
+            git push origin HEAD:gh-pages
+          fi
