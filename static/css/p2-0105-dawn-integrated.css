@@ -3223,3 +3223,27 @@
   font-size:14px!important;padding:11px 14px!important;
  }
 }
+
+
+/* R86 — restore MERSI transition geometry at the PROTECTED 04→05 boundary.
+   Both halves of the actual image exhibition slide in with opposed
+   scroll-owned masks. Their original 04 visual stays below until the
+   correct half has physically arrived. A background on either wrapper
+   would turn the motion into the rejected full-screen beige crossfade. */
+#dawn-realm.dawn-realm{
+ background:transparent!important;
+}
+#dawn-realm .dawn-world{
+ background:transparent!important;
+}
+#dawn-realm .dawn-world__page{
+ will-change:clip-path!important;
+}
+#dawn-realm .dawn-world__art img,
+#dawn-realm .dawn-world__art img.dawn-world__incoming{
+ will-change:clip-path,transform!important;
+}
+@media(prefers-reduced-motion:reduce){
+ #dawn-realm .dawn-world__page,
+ #dawn-realm .dawn-world__art img{will-change:auto!important}
+}
