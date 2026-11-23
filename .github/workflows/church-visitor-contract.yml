@@ -1,0 +1,43 @@
+name: Church visitor contract
+on:
+  pull_request:
+    paths:
+      - 'static/data/church/**'
+      - 'static/church/**'
+      - 'static/js/church-*'
+      - 'static/css/church-*'
+      - 'static/p2/church-tour.js'
+      - 'static/js/p2-church-ministry.js'
+      - 'static/p2/church-tour.html'
+      - 'static/p2/living-water.html'
+      - 'functions/api/church-intake.js'
+      - 'scripts/church-visitor-contract.mjs'
+      - '.github/workflows/church-visitor-contract.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'static/data/church/**'
+      - 'static/church/**'
+      - 'static/js/church-*'
+      - 'static/p2/church-tour.js'
+      - 'static/js/p2-church-ministry.js'
+      - 'functions/api/church-intake.js'
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Parse visitor JavaScript and Cloudflare Function
+        run: |
+          node --check static/js/church-sunday.js
+          node --check static/js/church-visit.js
+          node --check static/js/church-forms.js
+          node --check static/js/church-schedule-editor.js
+          node --check static/js/p2-church-ministry.js
+          node --check static/p2/church-tour.js
+          node --check functions/api/church-intake.js
+      - name: Verify content and links
+        run: node scripts/church-visitor-contract.mjs
