@@ -283,3 +283,101 @@ body[data-intake-type=decision] .church-form__gospel-head h2{
  line-height:var(--ws-type-leading-title,1.12)!important;
  letter-spacing:.02em;
 }
+
+/* R8 / Two Scripture squares, both edited from the same Westside Design OS
+   church glass material. Keep the existing Romans 10:9, add Nahum 1:7 only
+   on the decision route. Long verses stay complete and bilingual. */
+.church-form__scripture-pair{display:contents}
+body:not([data-intake-type="decision"]) .church-form__scripture-hint--nahum{display:none}
+body[data-intake-type="decision"] .church-form__scripture-pair{
+ display:grid;grid-column:2;grid-row:2/5;min-width:0;
+ grid-template-columns:repeat(2,minmax(0,1fr));
+ align-content:center;gap:clamp(10px,1.2vw,18px);margin:0
+}
+body[data-intake-type="decision"] .church-form__scripture-pair .church-form__scripture-hint{
+ box-sizing:border-box;grid-column:auto;grid-row:auto;
+ margin:0!important;padding:clamp(18px,1.65vw,28px)!important;
+ max-width:none;min-width:0;width:100%;height:auto;min-height:0;
+ aspect-ratio:1/1;overflow:hidden;isolation:isolate;
+ display:flex;flex-direction:column;justify-content:space-between;align-items:stretch;
+ gap:clamp(7px,1vw,13px);border:1px solid var(--ws-line);
+ border-top:2px solid var(--ws-first-light);
+ background:linear-gradient(148deg,
+   color-mix(in srgb,var(--ws-surface) 86%,transparent),
+   color-mix(in srgb,var(--ws-water) 18%,transparent));
+ box-shadow:0 15px 50px color-mix(in srgb,var(--ws-water) 11%,transparent),
+  inset 0 1px 0 color-mix(in srgb,var(--ws-surface) 86%,transparent);
+ -webkit-backdrop-filter:blur(22px) saturate(1.3);
+ backdrop-filter:blur(22px) saturate(1.3);
+}
+body[data-intake-type="decision"] .church-form__scripture-pair .church-form__scripture-hint--nahum{
+ background:linear-gradient(153deg,
+   color-mix(in srgb,var(--ws-water) 28%,var(--ws-surface)),
+   color-mix(in srgb,var(--ws-surface) 71%,transparent));
+}
+body[data-intake-type="decision"] .church-form__scripture-pair figcaption{
+ font:var(--ws-weight-standard) var(--ws-type-scale-title-sm)/1.12 var(--ws-type-display-en-sc);
+ color:var(--ws-first-light);letter-spacing:.015em;
+}
+body[data-intake-type="decision"] .church-form__scripture-pair figcaption span{
+ font:inherit;font-variant-numeric:lining-nums;
+}
+body[data-intake-type="decision"] .church-form__scripture-pair blockquote{
+ margin:0!important;padding:0;min-width:0;
+ font:var(--ws-weight-anchor) var(--ws-type-scale-reading)/1.56 var(--ws-type-display-zh);
+ word-break:normal;line-break:strict;text-wrap:pretty;
+}
+body[data-intake-type="decision"] .church-form__scripture-pair .church-form__scripture-en{
+ margin:0;min-width:0;
+ font:italic var(--ws-weight-standard) var(--ws-type-scale-micro)/1.48 var(--ws-type-display-en);
+ color:var(--ws-text);text-wrap:pretty;
+}
+body[data-intake-type="decision"] .church-form__scripture-pair cite{
+ display:block;align-self:flex-end;min-width:0;
+ font:var(--ws-weight-air) var(--ws-type-scale-micro)/1.3 var(--ws-type-display-zh);
+ color:var(--ws-first-light);font-style:normal;white-space:nowrap;
+}
+body[data-intake-type="decision"] .church-form__scripture-pair cite span{
+ font-family:var(--ws-type-display-en-sc);
+}
+@media(max-width:1250px) and (min-width:781px){
+ body[data-intake-type="decision"] .church-form__intro{
+  grid-template-columns:minmax(0,.74fr) minmax(0,1fr);
+  column-gap:clamp(20px,3vw,44px);
+ }
+ body[data-intake-type="decision"] .church-form__scripture-pair{grid-template-columns:1fr}
+ body[data-intake-type="decision"] .church-form__scripture-pair .church-form__scripture-hint{
+  max-width:530px;justify-self:center
+ }
+}
+@media(max-width:780px){
+ body[data-intake-type="decision"] .church-form__scripture-pair{
+  grid-column:1;grid-row:5;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:clamp(11px,2vw,22px);margin-top:12px;
+ }
+}
+@media(max-width:690px){
+ body[data-intake-type="decision"] .church-form__scripture-pair{
+  grid-template-columns:1fr;max-width:530px;margin-inline:auto;width:100%;
+ }
+ body[data-intake-type="decision"] .church-form__scripture-pair .church-form__scripture-hint{
+  max-width:100%;padding:clamp(17px,5vw,32px)!important;
+ }
+ body[data-intake-type="decision"] .church-form__scripture-pair blockquote{
+  font-size:var(--ws-type-scale-reading-lg);line-height:1.62;
+ }
+ body[data-intake-type="decision"] .church-form__scripture-pair .church-form__scripture-en{
+  font-size:var(--ws-type-scale-meta);line-height:1.53;
+ }
+}
+@media(max-width:355px){
+ body[data-intake-type="decision"] .church-form__scripture-pair figcaption{
+  font-size:var(--ws-type-scale-title-sm);
+ }
+ body[data-intake-type="decision"] .church-form__scripture-pair blockquote{
+  font-size:var(--ws-type-scale-reading);line-height:1.47;
+ }
+ body[data-intake-type="decision"] .church-form__scripture-pair .church-form__scripture-en{
+  font-size:var(--ws-type-scale-micro);line-height:1.35;
+ }
+}
