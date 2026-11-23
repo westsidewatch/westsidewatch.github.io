@@ -2644,16 +2644,65 @@
    is removed from HTML; these small sleeves occupy the SAME six-column
    matrix and use the same OS ink, paper, harvest and editorial typography.
    The original 2x2 Three Morning Stars / Exhibitions / Spectrum are untouched. */
-#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-reading-list__issue{
- grid-column:1 / -1!important;grid-row:auto!important;display:flex!important;
- justify-content:space-between;align-items:center;min-width:0;
- margin:clamp(26px,4.8vw,72px) 0 0;
- padding:0 0 clamp(7px,.75vw,12px);border-bottom:1px solid var(--ws-branch-rule);
- color:var(--ws-olive);background:transparent;
- font:400 clamp(9px,.73vw,12px)/1.5 var(--ws-type-display-en-sc,var(--ws-type-display-en));
- letter-spacing:.15em;
+/* R81 — one unmistakable reading-list chapter, not three book-like orphan
+   tiles. This is a full-width section *inside* the existing vinyl matrix;
+   actual 1×1 records are appended after it, never beside the last list. */
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-reading-list__series{
+ grid-column:1 / -1!important;grid-row:auto!important;
+ display:block!important;min-width:0!important;width:100%!important;
+ margin:clamp(38px,5.2vw,86px) 0 clamp(40px,5.5vw,92px)!important;
+ padding:clamp(18px,2.2vw,32px) 0 clamp(18px,2.2vw,32px)!important;
+ border-top:1px solid var(--ws-branch-rule)!important;
+ border-bottom:1px solid var(--ws-branch-rule)!important;
+ background:transparent!important;
 }
-#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-reading-list__tile{
+#dawn-second .dawn-reading-list__series-grid{
+ display:grid!important;
+ grid-template-columns:repeat(6,minmax(0,1fr))!important;
+ grid-auto-flow:row!important;gap:clamp(8px,1vw,18px)!important;
+ width:100%;align-items:stretch;
+}
+#dawn-second .dawn-reading-list__marker{
+ grid-column:span 1;grid-row:span 1;aspect-ratio:1;
+ min-height:0;min-width:0;position:relative;box-sizing:border-box;
+ display:flex;flex-direction:column;align-items:flex-start;
+ padding:clamp(11px,1.2vw,20px);overflow:hidden;
+ background:var(--ws-harvest)!important;color:var(--ws-ink)!important;
+ border:1px solid var(--ws-harvest)!important;
+}
+#dawn-second .dawn-reading-list__marker-kicker{
+ font:400 clamp(8px,.65vw,11px)/1.28 var(--ws-type-display-en-sc,var(--ws-type-display-en));
+ letter-spacing:.085em;white-space:nowrap;
+}
+#dawn-second .dawn-reading-list__marker h2{
+ margin:auto 0 clamp(6px,.6vw,10px)!important;
+ font:600 clamp(32px,3.1vw,56px)/1.1 var(--ws-type-display-zh)!important;
+ letter-spacing:-.04em;color:var(--ws-ink)!important;
+}
+#dawn-second .dawn-reading-list__marker p{
+ margin:0!important;
+ font:200 clamp(11px,.9vw,15px)/1.35 var(--ws-type-display-zh)!important;
+ color:var(--ws-ink)!important;word-break:keep-all;
+}
+#dawn-second .dawn-reading-list__marker-count{
+ display:block;margin-top:clamp(9px,1.1vw,18px);
+ padding-top:clamp(7px,.65vw,11px);width:100%;
+ border-top:1px solid color-mix(in srgb,var(--ws-ink) 35%,transparent);
+ font:400 clamp(8px,.67vw,11px)/1.2 var(--ws-type-display-en-sc,var(--ws-type-display-en));
+ letter-spacing:.07em;white-space:nowrap;
+}
+@media(max-width:1100px){
+ #dawn-second .dawn-reading-list__series-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+}
+@media(max-width:650px){
+ #dawn-second .dawn-reading-list__series-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+ #dawn-second .dawn-reading-list__marker{padding:10px!important}
+ #dawn-second .dawn-reading-list__marker h2{font-size:clamp(31px,9vw,42px)!important}
+ #dawn-second .dawn-reading-list__marker p{font-size:clamp(10px,3vw,13px)!important}
+ #dawn-second .dawn-reading-list__marker-kicker{font-size:8px!important}
+ #dawn-second .dawn-reading-list__marker-count{font-size:8px!important}
+}
+#dawn-second .dawn-reading-list__series-grid>.dawn-reading-list__tile{
  position:relative!important;display:flex!important;flex-direction:column!important;
  grid-column:span 1!important;grid-row:span 1!important;
  box-sizing:border-box!important;width:100%!important;min-width:0!important;
@@ -2667,8 +2716,11 @@
 }
 #dawn-second .dawn-reading-list__tile .dawn-reading-list__serial{
  position:relative;z-index:1;display:block;flex:none;
- font:400 clamp(8px,.58vw,10px)/1.2 var(--ws-type-display-en-sc,var(--ws-type-display-en));
- color:var(--ws-olive);letter-spacing:.08em;
+ font:200 clamp(10px,.78vw,13px)/1.3 var(--ws-type-display-zh);
+ color:var(--ws-ink);letter-spacing:.02em;
+}
+#dawn-second .dawn-reading-list__serial [lang="en"]{
+ font:400 clamp(9px,.68vw,11px)/1.2 var(--ws-type-display-en-sc,var(--ws-type-display-en));
 }
 #dawn-second .dawn-reading-list__tile .dawn-reading-list__face{
  position:relative;flex:1 1 auto;display:flex;align-items:center;
