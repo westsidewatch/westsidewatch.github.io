@@ -164,6 +164,40 @@ body.p2Embedded.p2OliveSpread .plate.inverse .cornerCitation{
   flex-basis:43vw!important;width:43vw!important
  }
 }
+/* Living Water static visitor adapter:
+   Reuse precisely the existing V60 second (rotated, Chinese-horizontal)
+   mother forme. This only changes the host framing, not glyph spacing, search,
+   fonts, vertical reference rail, or the V60 rendering algorithm. */
+html:has(body.p2ChurchHorizontal),body.p2ChurchHorizontal{background:transparent!important;margin:0!important;overflow:hidden!important}
+body.p2Embedded.p2ChurchHorizontal .shell,
+body.p2Embedded.p2ChurchHorizontal .work,
+body.p2Embedded.p2ChurchHorizontal .pair,
+body.p2Embedded.p2ChurchHorizontal .impression{
+ display:block!important;position:relative!important;
+ width:100%!important;height:100%!important;max-width:none!important;
+ padding:0!important;margin:0!important;overflow:hidden!important;
+}
+body.p2Embedded.p2ChurchHorizontal .pair{
+ display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:0!important;
+}
+body.p2Embedded.p2ChurchHorizontal .impression:first-child{display:none!important}
+body.p2Embedded.p2ChurchHorizontal .impression:nth-child(2){display:block!important;max-width:100%!important}
+body.p2Embedded.p2ChurchHorizontal .plate.inverse{
+ display:block;width:100%!important;height:100%!important;aspect-ratio:1!important;
+ background:transparent!important;border:0!important;
+ color:var(--section-text,#FAF9F5)!important;
+}
+body.p2Embedded.p2ChurchHorizontal .plate.inverse .piece.zh{
+ color:color-mix(in srgb,var(--section-text,#FAF9F5) 84%,var(--section-bg,#5B8FA8))!important
+}
+body.p2Embedded.p2ChurchHorizontal .plate.inverse .piece.en{
+ color:var(--section-text,#FAF9F5)!important
+}
+body.p2Embedded.p2ChurchHorizontal .plate.inverse .cornerCitation{
+ color:var(--section-text,#FAF9F5)!important
+}
+body.p2Embedded.p2ChurchHorizontal .plate.experimental:after,
+body.p2Embedded.p2ChurchHorizontal .guard{display:none!important}
 /* Print proof uses the SAME live mother forme and its verified self-hosted font files. */
 @media print{
  @page{size:A4 landscape;margin:11mm}
@@ -930,6 +964,7 @@ const themeFromUrl=(p2Params.get('theme')||'').toUpperCase();
 if(toolThemes.some(x=>x.id===themeFromUrl&&!x.pending)){activeTheme=themeFromUrl;activeP2=null}
 if(p2Params.get('embed')==='1')document.body.classList.add('p2Embedded');
 if(p2Params.get('layout')==='olive-spread'&&p2Params.get('embed')==='1'&&activeP2==='04')document.body.classList.add('p2OliveSpread');
+if(p2Params.get('layout')==='church-horizontal'&&p2Params.get('embed')==='1'&&activeP2==='01')document.body.classList.add('p2ChurchHorizontal');
 addEventListener('message',event=>{
  if(event.origin!==location.origin)return;
  const data=event.data;
