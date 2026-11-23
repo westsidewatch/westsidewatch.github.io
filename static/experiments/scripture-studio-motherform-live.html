@@ -198,6 +198,43 @@ body.p2Embedded.p2ChurchHorizontal .plate.inverse .cornerCitation{
 }
 body.p2Embedded.p2ChurchHorizontal .plate.experimental:after,
 body.p2Embedded.p2ChurchHorizontal .guard{display:none!important}
+/* Church visitor: use the original FIRST V60 mother-form (Chinese vertical).
+   Keep the compositor, editorial break units and font audit untouched.
+   Only the host's plate selection and glass-surface ink are scoped here. */
+html:has(body.p2ChurchVertical),body.p2ChurchVertical{
+ background:transparent!important;margin:0!important;overflow:hidden!important
+}
+body.p2Embedded.p2ChurchVertical .shell,
+body.p2Embedded.p2ChurchVertical .work,
+body.p2Embedded.p2ChurchVertical .pair,
+body.p2Embedded.p2ChurchVertical .impression{
+ display:block!important;position:relative!important;
+ width:100%!important;height:100%!important;max-width:none!important;
+ padding:0!important;margin:0!important;overflow:hidden!important
+}
+body.p2Embedded.p2ChurchVertical .pair{
+ display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:0!important
+}
+body.p2Embedded.p2ChurchVertical .impression:first-child{
+ display:block!important;max-width:100%!important
+}
+body.p2Embedded.p2ChurchVertical .impression:nth-child(2){display:none!important}
+body.p2Embedded.p2ChurchVertical .plate:not(.inverse){
+ display:block!important;width:100%!important;height:100%!important;aspect-ratio:1!important;
+ background:transparent!important;border:0!important;
+ color:var(--section-text,#FAF9F5)!important
+}
+body.p2Embedded.p2ChurchVertical .plate:not(.inverse) .piece.zh{
+ color:var(--section-text,#FAF9F5)!important
+}
+body.p2Embedded.p2ChurchVertical .plate:not(.inverse) .piece.en{
+ color:var(--section-text,#FAF9F5)!important
+}
+body.p2Embedded.p2ChurchVertical .plate:not(.inverse) .cornerCitation{
+ color:var(--section-text,#FAF9F5)!important
+}
+body.p2Embedded.p2ChurchVertical .plate.experimental:after,
+body.p2Embedded.p2ChurchVertical .guard{display:none!important}
 /* Print proof uses the SAME live mother forme and its verified self-hosted font files. */
 @media print{
  @page{size:A4 landscape;margin:11mm}
@@ -965,6 +1002,7 @@ if(toolThemes.some(x=>x.id===themeFromUrl&&!x.pending)){activeTheme=themeFromUrl
 if(p2Params.get('embed')==='1')document.body.classList.add('p2Embedded');
 if(p2Params.get('layout')==='olive-spread'&&p2Params.get('embed')==='1'&&activeP2==='04')document.body.classList.add('p2OliveSpread');
 if(p2Params.get('layout')==='church-horizontal'&&p2Params.get('embed')==='1'&&activeP2==='01')document.body.classList.add('p2ChurchHorizontal');
+if(p2Params.get('layout')==='church-vertical'&&p2Params.get('embed')==='1'&&activeP2==='01')document.body.classList.add('p2ChurchVertical');
 addEventListener('message',event=>{
  if(event.origin!==location.origin)return;
  const data=event.data;
