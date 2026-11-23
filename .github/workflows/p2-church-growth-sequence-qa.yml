@@ -1,0 +1,43 @@
+name: P2 Sea Then White Church Growth QA
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'static/p2/living-water.html'
+      - 'static/js/p2-living-water.js'
+      - 'static/js/p2-church-growth-maquette.js'
+      - 'scripts/p2-church-growth-sequence-qa.mjs'
+      - '.github/workflows/p2-church-growth-sequence-qa.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  red-sea-then-maquette:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Prove native Red Sea fully opens before original GLB church grows
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m http.server 8765 --directory static >/tmp/p2-growth-http.log 2>&1 &
+          CHROME=$(command -v google-chrome || command -v chromium || true)
+          test -n "$CHROME"
+          "$CHROME" --headless=new --no-sandbox --disable-dev-shm-usage \
+            --enable-webgl --ignore-gpu-blocklist --enable-unsafe-swiftshader \
+            --use-gl=angle --use-angle=swiftshader --no-first-run \
+            --remote-debugging-port=9222 --user-data-dir=/tmp/p2-growth-cdp \
+            --window-size=1366,850 about:blank >/tmp/p2-growth-chrome.log 2>&1 &
+          node scripts/p2-church-growth-sequence-qa.mjs
+      - name: Preserve actual Red Sea and white construction WebGL frames
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p2-church-r46-water-first-white-growth
+          path: artifacts/p2-church-growth-sequence/
+          if-no-files-found: warn
+          retention-days: 14
