@@ -4,6 +4,6 @@ description: "信仰與每日生活。"
 layout: "ws-editorial-interior"
 os_editorial: true
 editorial_key: "daylight-cafe"
-_build:
+build:
   render: always
 ---
