@@ -2661,3 +2661,9 @@
   font-size:clamp(30px,7.5vw,43px)!important;
  }
 }
+
+/* In editorial reading lists, works without a confirmed canonical ID cannot
+   be saved yet; do not show internal identity-audit text to the reader. */
+#dawn-second .dawn-book-detail[data-reading-list="true"] .dawn-book-detail__bookmark:disabled{
+ display:none!important;
+}
