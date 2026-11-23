@@ -14,6 +14,8 @@ on:
       - 'tests/p2-dawn-personal-integration.cjs'
       - 'tests/p2-dawn-expanding-preview.cjs'
       - 'tests/p2-dawn-os-visual-hierarchy.cjs'
+      - 'tests/p2-dawn-reading-lists-browser.cjs'
+      - 'static/dawn-library/p2-reading-lists-issue-01.json'
       - '.github/workflows/first-look-branch-preview.yml'
   workflow_dispatch:
 
@@ -70,6 +72,20 @@ jobs:
           server=$!
           trap 'kill "$server" 2>/dev/null || true' EXIT
           node tests/p2-dawn-os-visual-hierarchy.cjs
+      - name: Verify native Dawn editorial booklists in Chromium on desktop and phone
+        run: |
+          python3 -m http.server 4173 --directory public >/tmp/p2-dawn-reading-lists.log 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          node tests/p2-dawn-reading-lists-browser.cjs
+      - name: Save native reading-list page and book detail evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p2-dawn-native-reading-lists
+          path: artifacts/p2-dawn-reading-lists/
+          if-no-files-found: warn
+          retention-days: 14
       - name: Save Dawn OS hierarchy visual evidence
         if: always()
         uses: actions/upload-artifact@v4
