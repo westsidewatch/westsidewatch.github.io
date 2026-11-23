@@ -2938,3 +2938,142 @@
  #dawn-second .dawn-reading-list__tile .dawn-reading-list__caption>strong{font-size:clamp(17px,4.8vw,21px)!important}
  #dawn-second .dawn-reading-list__tile .dawn-reading-list__caption>small{font-size:clamp(10px,2.6vw,12px)!important}
 }
+
+
+/* R83 — right-hand sourced book covers. The empty portion of the original
+   vinyl wall becomes an actual, source-grounded four-cover editorial shelf.
+   This changes neither the primary P2 portals nor the 2x2/1x1 booklist
+   grammar; it uses the *same* six-column mother grid on desktop. */
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-reading-list__series{
+ display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;
+ column-gap:clamp(8px,1vw,18px)!important;row-gap:0!important;
+ align-items:stretch!important;
+}
+#dawn-second .dawn-reading-list__series>.dawn-reading-list__series-grid{
+ grid-column:1 / span 4!important;grid-row:1!important;
+ max-width:none!important;width:100%!important;
+ min-width:0!important;margin:0!important;align-self:start!important;
+}
+#dawn-second .dawn-reading-list__series-grid>.dawn-reading-list__featured-caption{
+ grid-column:4!important;grid-row:2!important;
+ display:flex;flex-direction:column;justify-content:flex-end;
+ align-items:flex-start;gap:clamp(4px,.5vw,9px);
+ box-sizing:border-box;width:100%;min-width:0;aspect-ratio:1;
+ padding:clamp(13px,1.35vw,23px);
+ background:color-mix(in srgb,var(--ws-harvest) 8%,var(--ws-paper));
+ border:1px solid color-mix(in srgb,var(--ws-harvest) 30%,transparent);
+ color:var(--ws-olive);
+}
+#dawn-second .dawn-reading-list__featured-caption>span{
+ font:400 clamp(9px,.68vw,11px)/1.3 var(--ws-type-display-en-sc,var(--ws-type-display-en));
+ letter-spacing:.1em;
+}
+#dawn-second .dawn-reading-list__featured-caption>strong{
+ font:200 clamp(17px,1.46vw,24px)/1.25 var(--ws-type-display-zh);
+ color:var(--ws-ink);word-break:keep-all;
+}
+#dawn-second .dawn-reading-list__featured-caption>small{
+ font:200 clamp(10px,.8vw,13px)/1.35 var(--ws-type-display-zh);
+}
+#dawn-second .dawn-reading-list__series>.dawn-reading-list__featured{
+ grid-column:5 / span 2!important;grid-row:1!important;
+ box-sizing:border-box;min-width:0;width:100%;aspect-ratio:1;
+ display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+ grid-template-rows:repeat(2,minmax(0,1fr));
+ gap:clamp(8px,1vw,18px)!important;
+ align-self:start!important;
+}
+#dawn-second .dawn-reading-list__featured-placeholder{
+ display:flex;grid-column:1 / -1;align-items:center;justify-content:center;
+ background:var(--ws-paper);color:var(--ws-olive);
+ font:200 clamp(13px,1.2vw,18px)/1.5 var(--ws-type-display-zh);
+}
+#dawn-second .dawn-reading-list__featured-book{
+ display:flex;flex-direction:column;position:relative;min-width:0;min-height:0;
+ width:100%;height:100%;aspect-ratio:1;box-sizing:border-box;overflow:hidden;
+ padding:0;margin:0;border:1px solid var(--ws-branch-rule);
+ background:var(--ws-paper);color:var(--ws-ink);cursor:pointer;
+ text-align:left;box-shadow:none;border-radius:0;
+ transition:filter .2s ease;
+}
+#dawn-second .dawn-reading-list__featured-book:hover{filter:brightness(.96)}
+#dawn-second .dawn-reading-list__featured-book:focus-visible{
+ outline:2px solid var(--ws-ink);outline-offset:2px;
+}
+#dawn-second .dawn-reading-list__featured-image{
+ display:flex;align-items:center;justify-content:center;
+ flex:1 1 73%;min-height:0;width:100%;padding:clamp(3px,.45vw,8px);
+ box-sizing:border-box;overflow:hidden;
+ background:color-mix(in srgb,var(--ws-harvest) 5%,var(--ws-paper));
+}
+#dawn-second .dawn-reading-list__featured-image img{
+ display:none;width:100%;height:100%;object-fit:contain;object-position:center;
+ mix-blend-mode:multiply;
+}
+#dawn-second .dawn-reading-list__featured-book--image-ready .dawn-reading-list__featured-image img{
+ display:block;
+}
+#dawn-second .dawn-reading-list__featured-image .dawn-reading-list__featured-fallback{
+ font:600 clamp(13px,1.05vw,19px)/1.35 var(--ws-type-display-zh);
+ color:var(--ws-ink);padding:5px;overflow-wrap:break-word;text-wrap:balance;
+}
+#dawn-second .dawn-reading-list__featured-book--image-ready .dawn-reading-list__featured-fallback{
+ display:none;
+}
+#dawn-second .dawn-reading-list__featured-book-label{
+ display:flex;flex-direction:column;justify-content:center;
+ flex:0 0 27%;min-height:0;min-width:0;
+ padding:clamp(5px,.55vw,10px);box-sizing:border-box;
+ border-top:1px solid color-mix(in srgb,var(--ws-harvest) 30%,transparent);
+ background:var(--ws-paper);gap:clamp(2px,.2vw,4px);
+}
+#dawn-second .dawn-reading-list__featured-book-label>strong{
+ font:600 clamp(10px,.8vw,14px)/1.2 var(--ws-type-display-zh);
+ color:var(--ws-ink);white-space:normal;
+ display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+ overflow-wrap:break-word;word-break:normal;
+}
+#dawn-second .dawn-reading-list__featured-book-label>small{
+ font:200 clamp(8px,.63vw,11px)/1.2 var(--ws-type-display-zh);
+ color:var(--ws-olive);
+}
+@media(min-width:651px) and (max-width:1100px){
+ #dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-reading-list__series{
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  row-gap:clamp(8px,1vw,18px)!important;
+ }
+ #dawn-second .dawn-reading-list__series>.dawn-reading-list__series-grid{
+  grid-column:1 / -1!important;grid-row:auto!important;
+ }
+ #dawn-second .dawn-reading-list__series>.dawn-reading-list__featured{
+  grid-column:1 / -1!important;grid-row:auto!important;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  grid-template-rows:minmax(0,1fr);
+  aspect-ratio:4 / 1;
+ }
+}
+@media(max-width:650px){
+ #dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-reading-list__series{
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  row-gap:clamp(8px,2.5vw,14px)!important;
+ }
+ #dawn-second .dawn-reading-list__series>.dawn-reading-list__series-grid{
+  grid-column:1 / -1!important;grid-row:auto!important;
+ }
+ #dawn-second .dawn-reading-list__series-grid>.dawn-reading-list__featured-caption{
+  grid-column:auto!important;grid-row:auto!important;padding:10px;
+ }
+ #dawn-second .dawn-reading-list__featured-caption>strong{font-size:clamp(17px,4.8vw,21px)}
+ #dawn-second .dawn-reading-list__series>.dawn-reading-list__featured{
+  grid-column:1 / -1!important;grid-row:auto!important;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  grid-template-rows:repeat(2,minmax(0,1fr));
+ }
+ #dawn-second .dawn-reading-list__featured-book-label{padding:5px 7px;}
+ #dawn-second .dawn-reading-list__featured-book-label>strong{font-size:clamp(11px,3vw,13px)}
+ #dawn-second .dawn-reading-list__featured-book-label>small{font-size:9px}
+ #dawn-second .dawn-reading-list__featured-image .dawn-reading-list__featured-fallback{font-size:clamp(13px,3.4vw,17px)}
+}
+@media(prefers-reduced-motion:reduce){
+ #dawn-second .dawn-reading-list__featured-book{transition:none}
+}
