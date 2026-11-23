@@ -15,6 +15,7 @@ export function createCityConstructionPresentation({root,getRecord}){
   const original=mesh.material,plane=new THREE.Plane(new THREE.Vector3(0,-1,0),1e9),materials=(Array.isArray(original)?original:[original]).map(m=>{const c=m.clone();c.clippingPlanes=[...(m.clippingPlanes||[]),plane];c.clipShadows=true;return c;});
   mesh.material=Array.isArray(original)?materials:materials[0];e={mesh,original,materials,plane};entries.set(mesh,e);return e;
  }
+ function releaseMaterials(){for(const e of entries.values()){e.mesh.material=e.original;for(const m of e.materials)m.dispose();}entries.clear();}
  function apply({phaseId,phaseIndex,position,active=false,ruin=false}){
   root.updateMatrixWorld(true);const groups=new Map();
   root.traverse(mesh=>{
@@ -48,5 +49,5 @@ export function createCityConstructionPresentation({root,getRecord}){
   stats={phase:phaseId,active,fraction,objects:groups.size,complete,growing,waiting,displayKept:kept,visibleByRole:counts,growingByRole,ownedMaterials:[...entries.values()].reduce((n,e)=>n+e.materials.length,0),historicalSurvivalInferred:false,geometryTransformsChanged:false};
   return stats;
  }
- return {apply,landmarks:()=>structuredClone(landmarks),diagnostics:()=>structuredClone(stats),dispose(){for(const e of entries.values()){e.mesh.material=e.original;for(const m of e.materials)m.dispose();}entries.clear();phases.clear();}};
+ return {apply,releaseMaterials,landmarks:()=>structuredClone(landmarks),diagnostics:()=>structuredClone(stats),dispose(){releaseMaterials();phases.clear();}};
 }

@@ -90,6 +90,8 @@ try {
     },
   });
   await three.ready;
+  window.__JERUSALEM3000__.setHousingBatches=value=>three.setHousingBatches(value);
+  window.__JERUSALEM3000__.inspectHousingBatches=options=>three.inspectHousingBatches(options);
   window.__JERUSALEM3000__.inspectCityObject=id=>three.inspectCityObject(id);
   window.__JERUSALEM3000__.inspectSourceLifecycleContext=id=>three.inspectSourceLifecycleContext(id);
   window.__JERUSALEM3000__.namedGateIndex=()=>three.namedGateIndex();
@@ -354,6 +356,7 @@ try {
   baselineInfo=document.createElement('p');baselineInfo.className='j3k-overview-baseline';document.querySelector('.j3k-time').append(baselineInfo);const compare=document.createElement('button');baselineCompare=compare;compare.type='button';compare.textContent='統一尺度比較';compare.setAttribute('aria-pressed','false');document.querySelector('.j3k-time-head').append(compare);compare.addEventListener('click',()=>{const active=terrainButton.getAttribute('aria-pressed')!=='true';terrainOverview(active);});
   const landmarkToggle=document.createElement('button');landmarkToggle.type='button';landmarkToggle.textContent='地標標示';landmarkToggle.setAttribute('aria-pressed','true');document.querySelector('.j3k-event-controls').append(landmarkToggle);landmarkToggle.addEventListener('click',()=>landmarkToggle.setAttribute('aria-pressed',String(three.setLandmarkLabels(landmarkToggle.getAttribute('aria-pressed')!=='true'))));
   const hierarchyButton=document.createElement('button');hierarchyButton.textContent='結構層次';hierarchyButton.title='比較住宅、道路、城防與公共核心的顯示層次；不改變模型尺度或證據分級';hierarchyButton.setAttribute('aria-pressed','true');hierarchyButton.addEventListener('click',()=>hierarchyButton.setAttribute('aria-pressed',String(three.setVisualHierarchy(hierarchyButton.getAttribute('aria-pressed')!=='true'))));document.querySelector('.j3k-event-controls').append(hierarchyButton);
+  const housingBatchesButton=document.createElement('button');housingBatchesButton.textContent='住宅批次繪製';housingBatchesButton.setAttribute('aria-pressed','true');housingBatchesButton.title='將相容、已完成的住宅分區提交；保留原物件與證據資料';housingBatchesButton.addEventListener('click',()=>housingBatchesButton.setAttribute('aria-pressed',String(three.setHousingBatches(housingBatchesButton.getAttribute('aria-pressed')!=='true'))));document.querySelector('.j3k-event-controls').append(housingBatchesButton);
   const residentialDistanceButton=document.createElement('button');residentialDistanceButton.textContent='住宅遠景層次';residentialDistanceButton.setAttribute('aria-pressed','true');residentialDistanceButton.title='依畫面尺度減弱遠景住宅立面碎影；不改變建築或院落幾何';residentialDistanceButton.addEventListener('click',()=>residentialDistanceButton.setAttribute('aria-pressed',String(three.setResidentialDistance(residentialDistanceButton.getAttribute('aria-pressed')!=='true'))));document.querySelector('.j3k-event-controls').append(residentialDistanceButton);
   const toolbar=document.querySelector('.j3k-event-controls'),tools=document.createElement('details'),toolSummary=document.createElement('summary'),toolBody=document.createElement('div');tools.className='j3k-tools';toolSummary.textContent='檢視與研究';toolBody.className='j3k-tools-content';tools.append(toolSummary,toolBody);
   for(const node of [...toolbar.children])if(![terrainButton,landmarkToggle,terrainNote].includes(node))toolBody.append(node);
