@@ -51,6 +51,8 @@ const base=process.env.P2_TEST_ORIGIN||'http://127.0.0.1:4173';
       scheduleDisplay:getComputedStyle(programme).display};
    });
    console.log('P2_FULL_LAYOUT_METRICS',screen.name,JSON.stringify(result));
+   // Preserve actual browser proof even if a historical geometry assertion fails.
+   await page.screenshot({path:'artifacts/p2-sunday-growth/'+screen.name+'.png',animations:'disabled'});
    assert.equal(result.modelActive,true,screen.name+' not displaying the Church visual');
    assert.equal(result.programme,true,screen.name+' missing Sunday programme');
    assert.equal(result.leftContainsModel,true,screen.name+' model absent from LEFT water-engraving pane');
