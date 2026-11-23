@@ -27,18 +27,36 @@ const cases=[['gospel-essentials',6,1],['inner-life',9,0],['church-history',7,0]
     const style=await section.evaluate(el=>{
       const portal=[...el.querySelectorAll('.dawn-feature')];
       const tiles=[...el.querySelectorAll('button[data-dawn-reading-list]')];
+      const chapter=el.querySelector('.dawn-reading-list__series');
+      const heading=chapter?.querySelector('#dawn-reading-list-heading');
+      const marker=chapter?.querySelector('.dawn-reading-list__marker');
       const first=tiles[0],s=getComputedStyle(first.querySelector('.dawn-reading-list__caption strong'));
+      const books=[...el.querySelectorAll('.dawn-cover')];
+      const square=marker?.getBoundingClientRect(),end=chapter?.getBoundingClientRect().bottom;
       return {font:s.fontFamily,weight:s.fontWeight,unit:first.getBoundingClientRect().width,
         height:first.getBoundingClientRect().height,
         portalBottom:Math.max(...portal.map(n=>n.getBoundingClientRect().bottom)),
         firstListTop:Math.min(...tiles.map(n=>n.getBoundingClientRect().top)),
-        parent:first.parentElement?.id,
+        parent:first.parentElement?.className,
+        chapterParent:chapter?.parentElement?.id,
+        chapterLabel:heading?.textContent?.trim(),
+        labelFont:heading?getComputedStyle(heading).fontFamily:'',
+        labelHeight:heading?.getBoundingClientRect().height,
+        markerWidth:square?.width,markerHeight:square?.height,
+        bookStartsAfterSeries:books.every(n=>n.getBoundingClientRect().top>=end-4),
+        tileLabels:tiles.map(n=>n.querySelector('.dawn-reading-list__serial')?.textContent?.trim()||''),
         pageOverflow:document.querySelector('#dawn-second').scrollWidth-document.querySelector('#dawn-second').clientWidth};
     });
     assert(/Chiron/i.test(style.font),device+': original Design OS Chinese type removed '+style.font);
-    assert(style.parent==='dawn-wall-grid',device+': guided lists escaped original vinyl wall');
+    assert(style.parent==='dawn-reading-list__series-grid'&&style.chapterParent==='dawn-wall-grid',
+       device+': reading series no longer belongs to the original vinyl wall '+JSON.stringify(style));
+    assert(style.chapterLabel==='書單'&&/Chiron/i.test(style.labelFont)&&style.labelHeight>25,
+       device+': readable Chinese 書單 heading is missing '+JSON.stringify(style));
+    assert(Math.abs(style.markerWidth-style.markerHeight)<12,device+': booklist section identity is not a square '+JSON.stringify(style));
+    assert(style.tileLabels.every(s=>s.includes('書單')),device+': list square appears to be an ordinary book '+JSON.stringify(style));
     assert(Math.abs(style.unit-style.height)<12,device+': reading-list sleeve not a square '+JSON.stringify(style));
     assert(style.firstListTop>=style.portalBottom-8,device+': reading lists displayed before the original three editorial portals '+JSON.stringify(style));
+    assert(style.bookStartsAfterSeries,device+': actual book jackets intrude into the guided-list group '+JSON.stringify(style));
     assert(style.pageOverflow<18,device+': second layer horizontal overflow '+style.pageOverflow);
     await page.screenshot({path:path.join(out,device+'-native-reading-contents.png'),animations:'disabled',timeout:30000});
     const labelRects=await section.locator('button[data-dawn-reading-list]').evaluateAll(cards=>cards.map(el=>{
@@ -50,7 +68,7 @@ const cases=[['gospel-essentials',6,1],['inner-life',9,0],['church-history',7,0]
       assert(label.cardWidth>120&&label.clippedCaption<4&&label.clippedFace<4,
         device+': native vinyl square lost its Chinese label '+JSON.stringify(label));
     }
-    await section.locator('button[data-dawn-reading-list="gospel-essentials"]').scrollIntoViewIfNeeded();
+    await section.locator('#dawn-reading-list-heading').scrollIntoViewIfNeeded();
     await page.screenshot({path:path.join(out,device+'-native-vinyl-list-squares.png'),animations:'disabled',timeout:30000});
     for(const [slug,count,bookIndex] of cases){
       await page.locator('button[data-dawn-reading-list="'+slug+'"]').click();
