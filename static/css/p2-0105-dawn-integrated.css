@@ -2591,3 +2591,73 @@
  #dawn-second .dawn-reading-room__reading-index button{transition:none}
  #dawn-second .dawn-reading-room__reading-index button:hover{transform:none}
 }
+
+
+/* Native booklist caption readability and Chinese title retention.
+   The original P2 book sleeves and third-layer reader are reused.
+   Only editorial-list book cards receive these overrides. */
+#dawn-second .dawn-reading-list__sleeve .dawn-catalogue__cover-card{
+ background:color-mix(in srgb,var(--ws-harvest) 8%,var(--ws-paper))!important;
+ border:1px solid color-mix(in srgb,var(--ws-harvest) 38%,transparent)!important;
+}
+#dawn-second .dawn-reading-list__sleeve .dawn-catalogue__cover-typography{
+ opacity:1!important;visibility:visible!important;
+ color:var(--ws-ink)!important;
+ background:transparent;justify-content:space-between;
+}
+#dawn-second .dawn-reading-list__sleeve .dawn-catalogue__cover-typography>strong{
+ display:block!important;
+ font:600 clamp(17px,1.38vw,25px)/1.35 var(--ws-type-display-zh)!important;
+ color:var(--ws-ink)!important;letter-spacing:-.02em;
+ overflow-wrap:break-word;word-break:normal;text-wrap:balance;
+ opacity:1!important;-webkit-line-clamp:unset;
+}
+#dawn-second .dawn-reading-list__sleeve .dawn-catalogue__cover-typography>span{
+ font:400 clamp(11px,.92vw,15px)/1.5 var(--ws-type-display-zh)!important;
+ color:var(--ws-olive)!important;
+}
+#dawn-second .dawn-reading-list__sleeve .dawn-catalogue__cover-typography>small{
+ color:var(--ws-harvest)!important;
+}
+#dawn-second .dawn-reading-list__sleeve .dawn-catalogue__cover-card--image>img{
+ object-fit:contain!important;mix-blend-mode:multiply;
+}
+#dawn-second .dawn-reading-list__sleeve .dawn-catalogue__cover-card--image .dawn-catalogue__cover-typography{
+ background:linear-gradient(to bottom,
+ transparent 0%,transparent 49%,
+ color-mix(in srgb,var(--ws-paper) 86%,transparent) 70%,
+ color-mix(in srgb,var(--ws-paper) 98%,transparent) 100%)!important;
+}
+#dawn-second .dawn-reading-list__sleeve .dawn-catalogue__cover-card--image .dawn-catalogue__cover-typography>*{
+ color:var(--ws-ink)!important;
+}
+#dawn-second .dawn-book-detail[data-reading-list="true"] .dawn-book-detail__reading h2{
+ display:block!important;visibility:visible!important;opacity:1!important;
+ font:600 clamp(30px,4vw,64px)/1.2 var(--ws-type-display-zh)!important;
+ color:var(--ws-ink)!important;letter-spacing:-.035em;
+ text-wrap:balance;overflow-wrap:break-word;word-break:normal;
+}
+#dawn-second .dawn-book-detail[data-reading-list="true"] .dawn-book-detail__visual{
+ background:transparent;border-color:color-mix(in srgb,var(--ws-harvest) 35%,transparent);
+}
+#dawn-second .dawn-book-detail[data-reading-list="true"] .dawn-book-detail__visual img{
+ mix-blend-mode:multiply;object-fit:contain;background:transparent;
+}
+#dawn-second .dawn-book-detail__text,
+#dawn-second .dawn-expander__description{
+ font-family:"Noto Serif TC",serif!important;
+ font-weight:400!important;
+ line-height:1.85!important;
+}
+#dawn-second .dawn-book-detail__introduction p{
+ font-family:"Noto Serif TC",serif!important;
+ font-weight:400!important;line-height:1.88!important;
+}
+@media(max-width:650px){
+ #dawn-second .dawn-reading-list__sleeve .dawn-catalogue__cover-typography>strong{
+  font-size:clamp(15px,4vw,19px)!important;line-height:1.38;
+ }
+ #dawn-second .dawn-book-detail[data-reading-list="true"] .dawn-book-detail__reading h2{
+  font-size:clamp(30px,7.5vw,43px)!important;
+ }
+}
