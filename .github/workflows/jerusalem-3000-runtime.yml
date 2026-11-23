@@ -106,6 +106,7 @@ jobs:
           node scripts/verify_jerusalem_3000_fortification_architecture.mjs
           node scripts/verify_jerusalem_3000_shared_places.mjs
           node scripts/verify_jerusalem_3000_persistent_world.mjs
+          node scripts/verify_jerusalem_3000_async_later_generation.mjs
           node scripts/verify_jerusalem_3000_independent_later.mjs
           node scripts/verify_jerusalem_3000_landmark_chronology.mjs
           node scripts/verify_jerusalem_3000_module_shapes.mjs
@@ -142,6 +143,7 @@ jobs:
           node scripts/verify_jerusalem_3000_housing_topology_browser.mjs
           node scripts/verify_jerusalem_3000_residential_batches_browser.mjs
           node scripts/measure_jerusalem_3000_generation_browser.mjs
+          node scripts/verify_jerusalem_3000_async_later_browser.mjs
           node scripts/verify_jerusalem_3000_visual_hierarchy_browser.mjs
           node scripts/verify_jerusalem_3000_main_view_browser.mjs
           node scripts/verify_jerusalem_3000_overview_browser.mjs

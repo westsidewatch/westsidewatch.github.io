@@ -7,7 +7,7 @@ const browser=await chromium.launch({headless:true});try{
  await openToolsForReview(p);await p.goto(process.env.J3K_URL||'http://127.0.0.1:8765/preview/jerusalem-3000/',{waitUntil:'networkidle'});await p.waitForFunction(()=>window.__JERUSALEM3000__?.status==='ready');
  for(const v of[3.9,6.9,7.9,8.9]){
   await p.locator('.j3k-scrubber').evaluate((e,v)=>{e.value=String(v);e.dispatchEvent(new Event('input',{bubbles:true}));},v);
-  await p.waitForFunction(v=>window.__JERUSALEM3000__.historicalTime.position===v,v);
+  await p.waitForFunction(v=>window.__JERUSALEM3000__.renderDiagnostics.phase===window.__JERUSALEM3000__.historicalTime.phase&&window.__JERUSALEM3000__.renderDiagnostics.cityGenerationStatus==='ready'&&window.__JERUSALEM3000__.historicalTime.position===v,v);
   await p.getByRole('button',{name:'聖殿近看',exact:true}).click();await p.evaluate(()=>document.fonts.ready);await p.waitForTimeout(1000);
   const canvas=p.locator('.j3k-stage canvas').first(),capture=()=>canvas.screenshot(),before=await capture();
   await p.getByRole('button',{name:'聖殿剖視',exact:true}).click();await p.waitForTimeout(200);

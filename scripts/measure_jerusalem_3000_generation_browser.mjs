@@ -9,7 +9,7 @@ try{
  async function visit(index,pass){
   const started=performance.now(),position=index===17?17:index+.9;
   await page.locator('.j3k-scrubber').evaluate((e,v)=>{e.value=String(v);e.dispatchEvent(new Event('input',{bubbles:true}));},position);
-  await page.waitForFunction(v=>{const s=window.__JERUSALEM3000__,d=s.renderDiagnostics;return s.historicalTime.position===v&&d.housingBatches?.phase===s.historicalTime.phase&&(![4,5,6,7].includes(Math.floor(v))||d.sharedEra.status==='ready');},position);
+  await page.waitForFunction(v=>{const s=window.__JERUSALEM3000__,d=s.renderDiagnostics;return d.cityGenerationStatus==='ready'&&s.historicalTime.position===v&&d.housingBatches?.phase===s.historicalTime.phase&&(![4,5,6,7].includes(Math.floor(v))||d.sharedEra.status==='ready');},position);
   await page.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))));
   const d=await page.evaluate(()=>{const s=window.__JERUSALEM3000__,d=s.renderDiagnostics;return{phase:s.historicalTime.phase,world:d.cityWorld,shared:d.sharedEra,renderCost:d.renderCost,batches:d.housingBatches,accounted:s.inspectCityFoundation().registrationAccounting.visibleScopeAccounted};});assert.ok(d.accounted);rows.push({index,pass,automationToSettledWallMilliseconds:performance.now()-started,...d});await fs.writeFile(`${out}/progress.json`,JSON.stringify({initialReadyWallMilliseconds,rows,errors},null,2));
  }

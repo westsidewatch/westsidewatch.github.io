@@ -55,7 +55,7 @@ try {
   assert.equal(terrainView.verticalScale,1);assert.ok(terrainView.contourSegments>100);
   for(const value of [3.9,4.9,8,10,17]){
     await page.locator('.j3k-scrubber').evaluate((el,v)=>{el.value=String(v);el.dispatchEvent(new Event('input',{bubbles:true}));},value);
-    await page.waitForFunction(v=>window.__JERUSALEM3000__.historicalTime.position===v,value);
+    await page.waitForFunction(v=>window.__JERUSALEM3000__.renderDiagnostics.phase===window.__JERUSALEM3000__.historicalTime.phase&&window.__JERUSALEM3000__.renderDiagnostics.cityGenerationStatus==='ready'&&window.__JERUSALEM3000__.historicalTime.position===v,value);
     await page.waitForTimeout(150);
     const current=await page.evaluate(()=>window.__JERUSALEM3000__.renderDiagnostics.terrainPresentation);
     assert.equal(current.overviewActive,true);current.camera.forEach((v,i)=>assert.ok(Math.abs(v-terrainView.camera[i])<.01,'terrain comparison camera must persist across phases'));
