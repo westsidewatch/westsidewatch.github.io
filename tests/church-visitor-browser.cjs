@@ -11,6 +11,7 @@ const base=process.env.CHURCH_TEST_ORIGIN||'http://127.0.0.1:4174';
    const page=await browser.newPage({viewport:{width:screen.width,height:screen.height},deviceScaleFactor:1});
    const errors=[];page.on('pageerror',e=>errors.push(e.message));
    await page.goto(base+'/church/visit/',{waitUntil:'domcontentloaded',timeout:30000});
+   await page.evaluate(()=>document.fonts.ready);
    await page.waitForFunction(()=>document.querySelectorAll('#church-ministry-list article').length===7
     &&document.querySelectorAll('#church-gathering-list article').length===4
     &&document.querySelectorAll('#church-sunday-live .ws-church-sunday-row').length===7
@@ -20,7 +21,17 @@ const base=process.env.CHURCH_TEST_ORIGIN||'http://127.0.0.1:4174';
     const cards=[...document.querySelectorAll('[data-church-qr] canvas')];
     return {
       width:document.documentElement.scrollWidth,viewport:innerWidth,
-      identity:!!document.querySelector('img.church-visit__identity[src="/images/living-water-west-church-name.png"]'),
+      identity:(()=>{
+       const zh=document.querySelector('.church-visit__name'),en=document.querySelector('.church-visit__english');
+       if(!zh||!en)return false;
+       const zhType=getComputedStyle(zh),enType=getComputedStyle(en);
+       const zhRect=zh.getBoundingClientRect(),enRect=en.getBoundingClientRect();
+       const panes=!((zhRect.right>enRect.left+8)&&(zhRect.left<enRect.right));
+       return zhType.fontFamily.includes('Chiron')&&zhType.fontWeight==='900'&&
+         enType.fontFamily.includes('Bodoni Moda SC')&&
+         zh.textContent.includes('活水堂')&&en.textContent.includes('Assembly West')&&
+         (innerWidth<=355||panes);
+      })(),
       archive:story?.textContent?.includes('歷史主日程序'),
       sunday:story?.querySelectorAll('.ws-church-sunday-row').length,
       ministries:document.querySelectorAll('.church-visit__ministry').length,
@@ -50,6 +61,9 @@ const base=process.env.CHURCH_TEST_ORIGIN||'http://127.0.0.1:4174';
   await form.waitForFunction(()=>document.querySelector('#form-status')?.textContent?.includes('未開放'),null,{timeout:12000});
   assert.equal(await form.locator('#church-submit').isDisabled(),true,'No backend: form must fail closed');
   assert.equal(await form.locator('#form-title').textContent(),'信仰回應與決志');
+  assert.equal(await form.locator('#church-gospel').isVisible(),true,'Gospel editorial pathway must be visible on decision');
+  assert.equal(await form.locator('.church-form__gospel-step').count(),3,'Love, Cross and Faith steps required');
+  assert.equal(await form.locator('[name="response"]').getAttribute('required'),'','Decision selection must be explicit');
   await form.screenshot({path:'artifacts/church-visitor/decision-form.png',fullPage:true});
   await form.close();
   console.log('CHURCH_VISITOR_BROWSER_PASS: full readable pages, archive guard, seven ministries, four offline QRs, editor and fail-closed forms');
