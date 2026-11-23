@@ -157,7 +157,7 @@ This means a resource can be understood not only by its metadata or category, bu
 
 #### Resource lifecycle
 
-The discovery-first lifecycle below applies to general found resources. **For Chinese精品書單, the editorial-first Work-selection lifecycle above precedes source discovery**; do not reverse it just because the resource pool is large.
+一般資源盤點可遵循下方的發現→選取流程；**精品書單**遵循上方「選書與雜誌導讀先完成、書局來源緊接其後」的兩層出版流程。絕不可讓書源是否方便取得回頭決定選書的內容。
 
 ```text
 Candidate Resource Pool
