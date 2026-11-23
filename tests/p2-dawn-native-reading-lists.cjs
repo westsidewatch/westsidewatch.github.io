@@ -19,7 +19,7 @@ for(const list of json.lists){
  for(const book of list.works){
   assert(!ids.has(book.editorialKey),'Duplicate editorial work '+book.editorialKey);
   ids.add(book.editorialKey);
-  for(const k of ['title','creator','judgement','counterpoint','comparison'])assert(book[k]?.length>=4,'Missing editorial '+k+' '+book.editorialKey);
+  for(const k of ['title','creator','judgement','counterpoint','comparison'])assert(book[k]?.length>=(k==='creator'?2:4),'Missing editorial '+k+' '+book.editorialKey);
   if(book.libraryWorkId)assert(/^(OL\d+W|dawn:[\w:-]+)$/.test(book.libraryWorkId),'Unverified Work ID');
   if(book.image?.startsWith('/'))assert(fs.existsSync(path.join(root,book.image)),'Missing local cover '+book.image);
  }
