@@ -1,0 +1,86 @@
+/* Westside Watch / P2 church second-layer editorial introduction.
+   The WebGL tour owns the screen. These narrow paper fragments disappear
+   entirely for the direct, camera-only /p2/church-tour.html route. */
+body[data-church-entry="p2"]{font-family:var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif)}
+body[data-church-entry="p2"] #church-canvas{touch-action:none}
+.ws-ministry-story{--sheet:rgba(239,235,223,.94);--ink:#282e2b;--gold:#8b7042;--rule:rgba(77,70,57,.25);
+ position:fixed;inset:0;z-index:15;pointer-events:none;color:var(--ink);
+ -webkit-font-smoothing:antialiased}
+.ws-ministry-story button,.ws-ministry-story a{pointer-events:auto;-webkit-tap-highlight-color:transparent}
+.ws-ministry-story button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+.ws-ministry-story button:focus-visible,.ws-ministry-story a:focus-visible{
+ outline:2px solid var(--gold);outline-offset:4px}
+.ws-ministry-story__rail{position:absolute;left:clamp(15px,2.2vw,42px);top:clamp(20px,3.4vh,46px);
+ width:min(252px,27vw);background:var(--sheet);padding:20px 20px 17px;
+ box-shadow:0 14px 42px rgba(60,54,44,.09);pointer-events:auto;
+ border-top:1px solid var(--gold);backdrop-filter:blur(12px)}
+.ws-ministry-story__eyebrow{font:400 10px/1.35 var(--ws-type-display-en-sc,"Bodoni Moda SC",serif);
+ letter-spacing:.16em;color:#685e51}
+.ws-ministry-story__heading{font:200 clamp(18px,1.35vw,23px)/1.3 var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);
+ letter-spacing:.09em;margin:7px 0 0}
+.ws-ministry-story__rule{height:1px;background:var(--rule);margin:18px 0 7px}
+.ws-ministry-story__index{display:flex;flex-direction:column;gap:0}
+.ws-ministry-story__chapter{display:grid;grid-template-columns:23px 1fr 13px;align-items:center;
+ column-gap:11px;text-align:left;padding:9px 0;border-bottom:1px solid var(--rule)!important;
+ opacity:.68;transition:opacity .35s,color .35s;min-height:36px}
+.ws-ministry-story__chapter:hover,.ws-ministry-story__chapter[aria-current="step"]{opacity:1}
+.ws-ministry-story__chapter[aria-current="step"]{color:#785e2f}
+.ws-ministry-story__chapter-number{font:400 11px/1 var(--ws-type-display-en-sc,"Bodoni Moda SC",serif);font-variant-numeric:tabular-nums}
+.ws-ministry-story__chapter-title{font:200 12px/1.5 var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);letter-spacing:.04em}
+.ws-ministry-story__chapter-mark{height:1px;width:10px;background:currentColor;opacity:0}
+.ws-ministry-story__chapter[aria-current="step"] .ws-ministry-story__chapter-mark{opacity:1}
+.ws-ministry-story__rail-footer{display:flex;justify-content:space-between;gap:6px;align-items:center;
+ margin-top:14px}
+.ws-ministry-story__control{font:400 10px/1.5 var(--ws-type-display-en,"Bodoni Moda",serif)!important;
+ letter-spacing:.08em;padding:4px 0!important;color:#625b51!important}
+.ws-ministry-story__back{font:400 10px/1.5 var(--ws-type-display-en,"Bodoni Moda",serif);
+ text-decoration:none;letter-spacing:.12em;color:#625b51}
+.ws-ministry-story__panel{position:absolute;right:clamp(18px,3vw,58px);bottom:clamp(24px,5.3vh,64px);
+ width:min(345px,31vw);padding:20px 23px 21px;
+ background:var(--sheet);border-top:1px solid var(--gold);pointer-events:auto;
+ box-shadow:0 16px 46px rgba(60,54,44,.1);backdrop-filter:blur(12px)}
+.ws-ministry-story__meta{display:flex;align-items:center;justify-content:space-between;gap:12px;
+ color:var(--gold);font:400 10px/1.2 var(--ws-type-display-en-sc,"Bodoni Moda SC",serif);
+ letter-spacing:.13em}
+.ws-ministry-story__title{font:200 clamp(24px,2.2vw,36px)/1.25 var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);
+ letter-spacing:.045em;margin:13px 0 10px}
+.ws-ministry-story__description{font:200 clamp(13px,.95vw,15px)/1.9 var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);
+ letter-spacing:.035em;margin:0;max-width:30ch}
+.ws-ministry-story__reference{display:block;border-top:1px solid var(--rule);margin-top:17px;padding-top:11px;
+ color:#665c4c;font:400 11px/1.5 var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);
+ letter-spacing:.04em}
+.ws-ministry-story__progress{position:absolute;left:0;bottom:0;width:100%;height:2px;background:rgba(106,95,77,.12)}
+.ws-ministry-story__progress-fill{height:100%;width:0;background:#9e854c;transition:width .25s linear}
+.ws-ministry-story__minimal{position:absolute;left:clamp(15px,2.2vw,42px);bottom:clamp(24px,5.3vh,64px);
+ display:none;padding:10px 15px!important;background:var(--sheet)!important;
+ border-top:1px solid var(--gold)!important;font-size:12px!important;letter-spacing:.05em;
+ box-shadow:0 10px 30px rgba(60,54,44,.1)}
+.ws-ministry-story.is-minimal .ws-ministry-story__rail,
+.ws-ministry-story.is-minimal .ws-ministry-story__panel{display:none}
+.ws-ministry-story.is-minimal .ws-ministry-story__minimal{display:block}
+@media(max-width:880px){
+ .ws-ministry-story__rail{width:min(215px,29vw);padding:14px 15px}
+ .ws-ministry-story__chapter{padding:7px 0}
+ .ws-ministry-story__panel{width:min(310px,42vw)}
+}
+@media(max-width:680px){
+ .ws-ministry-story__rail{left:10px;top:10px;width:calc(100% - 20px);padding:10px 13px 8px;
+  border-top:1px solid var(--gold)}
+ .ws-ministry-story__heading{font-size:15px;margin-top:3px}
+ .ws-ministry-story__rule{margin:8px 0 3px}
+ .ws-ministry-story__index{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px}
+ .ws-ministry-story__chapter{min-height:35px;padding:5px 2px;display:flex;flex-direction:column;
+  gap:3px;justify-content:center;border-bottom:0!important}
+ .ws-ministry-story__chapter-number{font-size:10px}
+ .ws-ministry-story__chapter-title{font-size:9px;white-space:nowrap;letter-spacing:0}
+ .ws-ministry-story__chapter-mark{display:none}
+ .ws-ministry-story__rail-footer{margin-top:4px}
+ .ws-ministry-story__panel{left:10px;right:10px;bottom:14px;width:auto;
+  padding:12px 15px 16px}
+ .ws-ministry-story__title{font-size:21px;margin:6px 0 4px}
+ .ws-ministry-story__description{font-size:12px;line-height:1.65;max-width:none}
+ .ws-ministry-story__reference{font-size:10px;margin-top:8px;padding-top:7px}
+ .ws-ministry-story__minimal{left:10px;bottom:14px}
+}
+@media(max-width:400px){.ws-ministry-story__chapter-title{font-size:8px}}
+@media(prefers-reduced-motion:reduce){.ws-ministry-story *{transition:none!important;animation:none!important}}
