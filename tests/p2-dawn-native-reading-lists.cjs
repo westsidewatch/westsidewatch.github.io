@@ -30,6 +30,11 @@ for(const key of ['dawn-second__motherform','dawn-wall-grid','dawn-department-gr
  assert(html.includes(key),'Original P2-05 region removed '+key);
 }
 assert(!html.includes('dawn-curation-prologue'),'Parallel Dawn homepage must not be copied');
+assert(!html.includes('>THE COLLECTION</span>')&&!html.includes('>MY LIBRARY</span>'),'Rejected giant editorial navigation billboard must be removed, not reduced');
+assert(!html.includes('id="dawn-open-catalogue-top"')&&!html.includes('class="dawn-second__nav-actions"'),'Top action row must be physically removed from P2 L2');
+assert(html.includes('class="dawn-wall__personal" id="dawn-personal-open"')&&html.includes('id="dawn-personal-count"'),'Personal library entry/count must survive on the wall');
+assert(html.includes('id="dawn-open-catalogue"'),'Original collection remains available from its native wall control');
+assert(css.includes('R85 — No giant navigation billboard')&&css.includes('position:absolute!important'),'Compact Back is an overlay utility, not a page-wide banner');
 assert(js.includes("if(activePortal==='書單')void showReadingList(ticket)"),'Original catalogue does not own booklist route');
 assert(js.includes("openCollection('書單')"),'Native catalogue navigation missing');
 assert(js.includes("renderPortalWorks(items,'書單')"),'Native six-column book gallery not reused');
