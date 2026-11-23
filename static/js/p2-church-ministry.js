@@ -107,6 +107,7 @@
         <a class="ws-ministry-story__back" href="/" aria-label="返回 Westside Watch 主站">返回</a>
       </div>
     </div>
+    <div class="ws-ministry-story__final-stack">
     <section class="ws-ministry-story__panel" aria-live="polite" aria-atomic="true" aria-label="當前事工介紹">
       <div class="ws-ministry-story__meta"><span data-story-en>WELCOME</span>
         <span data-story-index>01 / 07</span></div>
@@ -142,6 +143,12 @@
       </div>
       <footer>205 Wilmington Ave. · North York, ON</footer>
     </section>
+    <button class="ws-ministry-story__return-to-scene" type="button" data-action="return-scene">返回教會全景 ↑</button>
+    </div>
+    <button class="ws-ministry-story__scroll-invitation" type="button" data-action="read-finale"
+      aria-label="向下滑動閱讀主日程序與你們是世上的光完整經文">
+      <span>向下滑閱 · 主日程序與經文</span><span aria-hidden="true">⌄</span>
+    </button>
     <button type="button" class="ws-ministry-story__minimal" data-action="show"
        aria-label="顯示教會事工章節">教會生活　01 — 07</button>
     <div class="ws-ministry-story__progress" aria-hidden="true">
@@ -196,6 +203,15 @@
   root.querySelector('[data-action="show"]').addEventListener('click',()=>{
     root.classList.remove('is-minimal');
   });
+  const readingStack=root.querySelector('.ws-ministry-story__final-stack');
+  root.querySelector('[data-action="read-finale"]').addEventListener('click',()=>{
+    readingStack.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+  root.querySelector('[data-action="return-scene"]').addEventListener('click',()=>{
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+  let finalePinned=false;
+  const mobileFinale=window.matchMedia('(max-width:680px)');
   play.addEventListener('click',()=>{
     const guide=window.__churchGuide;
     if(!guide)return;
@@ -218,10 +234,23 @@
             if(t>=chapters[i].boundary)idx=i;
           render(idx);
         }
-        // At the stable dusk total-building tableau, exchange the ordinary
-        // chapter caption for the existing church's seven-line worship order.
+        // The Sunday order appears ABOVE, not instead of, the complete
+        // Matthew 5:14-16 scripture block. On narrow screens the original
+        // church finale fills the first viewport; readers scroll down to
+        // separate, stacked folios in document flow.
         const finale=t>=246;
+        if(t<246)finalePinned=false;
+        if(finale&&!manual&&!finalePinned&&t>=248){
+          guide.pause();
+          guide.seek(248);
+          finalePinned=true;
+          paused=true;
+          play.textContent='繼續導覽';
+        }
         root.classList.toggle('is-finale',finale);
+        const scrollFinale=finale&&mobileFinale.matches;
+        document.documentElement.classList.toggle('church-finale-scroll',scrollFinale);
+        document.body.classList.toggle('church-finale-scroll',scrollFinale);
         sunday.setAttribute('aria-hidden',String(!finale));
         progress.style.width=(Math.min(1,t/251)*100).toFixed(3)+'%';
       }
@@ -233,7 +262,10 @@
     enabled:true,chapters:chapters.length,selected:active,
     chapterSeconds:chapters.map(c=>c.at),manual,paused,
     fullVerses:chapters.every(c=>c.zh.length>10&&c.kjv.length>20),
-    scheduleRows:7,sundayVisible:root.classList.contains('is-finale')
+    scheduleRows:7,sundayVisible:root.classList.contains('is-finale'),
+    scriptureVisible:root.classList.contains('is-finale') &&
+      getComputedStyle(root.querySelector('.ws-ministry-story__panel')).display!=='none',
+    scrollFinale:document.body.classList.contains('church-finale-scroll')
   });
   requestAnimationFrame(tick);
 })();
