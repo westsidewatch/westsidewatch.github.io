@@ -1,0 +1,18 @@
+:root{color-scheme:light}body{margin:0;background:#f6f5ef;color:#263e44;font:400 15px/1.8 var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif)}
+*{box-sizing:border-box}a{color:inherit;text-underline-offset:4px}a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible{outline:2px solid #aa8b44;outline-offset:4px}
+.church-form__top{display:flex;justify-content:space-between;gap:22px;max-width:1180px;margin:auto;padding:23px 24px;border-bottom:1px solid #bdc9c7}
+.church-form__top span{font:400 17px var(--ws-type-display-en-sc,serif)}.church-form__layout{max-width:1180px;margin:auto;display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(22px,7vw,105px);padding:clamp(40px,8vw,110px) 24px}
+.church-form__eyebrow{color:#957536;font:400 13px var(--ws-type-display-en-sc,serif);letter-spacing:.12em}
+.church-form__intro img{max-width:320px;width:100%;margin:40px 0 12px}.church-form__intro h1{font-size:clamp(28px,3vw,45px);font-weight:200;line-height:1.25}
+.church-form__intro>p{max-width:32em}.church-form__privacy{font-size:13px;color:#596d70;border-top:1px solid #c2ceca;padding-top:22px}
+.church-form__formarea{border-top:2px solid #ab8b45;padding-top:12px}.church-form__formarea nav{display:flex;gap:20px;flex-wrap:wrap;border-bottom:1px solid #b7c8c5;padding:12px 0 23px;margin-bottom:28px}
+.church-form__formarea nav a{text-decoration:none;font-size:13px}.church-form__formarea label{display:block;font-size:14px;margin:0 0 21px}
+.church-form__formarea input:not([type=checkbox]),.church-form__formarea select,.church-form__formarea textarea{display:block;width:100%;margin-top:8px;padding:12px 13px;font:inherit;color:inherit;background:#fff;border:1px solid #bac9c7;border-radius:0}
+.church-form__formarea textarea{min-height:120px;resize:vertical}.church-form__columns{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.church-form__hint{font-size:12px;line-height:1.7;color:#5d7478}.church-form__consent{display:flex!important;gap:12px;align-items:flex-start}
+.church-form__consent input{margin-top:9px}.church-form__honeypot{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+#form-status{font-size:13px;color:#577280;border-left:2px solid #b28f4b;padding:12px 0 12px 15px;margin:26px 0}
+#church-submit{border:1px solid #8c7132;padding:12px 25px;font:400 16px var(--ws-type-display-zh,sans-serif);background:#e0d4b6;cursor:pointer}
+#church-submit[disabled]{background:#ece9de;color:#73817d;cursor:not-allowed;border-color:#c9ceca}
+footer{max-width:1180px;margin:auto;border-top:1px solid #becac8;padding:26px 24px 65px;display:flex;gap:27px;font-size:13px}
+@media(max-width:700px){.church-form__layout{grid-template-columns:1fr;padding:35px 18px}.church-form__top{padding:16px 18px}.church-form__top span{font-size:12px}.church-form__columns{grid-template-columns:1fr;gap:0}.church-form__intro img{width:230px;margin:22px 0 0}}
