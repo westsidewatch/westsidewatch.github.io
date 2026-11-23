@@ -171,6 +171,22 @@ const out='artifacts/p2-dawn-os-repair';fs.mkdirSync(out,{recursive:true});
    await page.locator('#dawn-personal-close').click();
    assert(!await page.locator('#dawn-personal-dialog').isVisible(),
      device+': personal library dialog no longer closes');
+   // Screenshot the ACTUAL TOP of the second reading layer, not whichever
+   // position the bookwall checks scrolled to. The rejected header was at top.
+   await page.evaluate(()=>document.querySelector('#dawn-second')?.scrollTo({top:0,behavior:'instant'}));
+   await page.waitForTimeout(150);
+   const topLayout=await page.evaluate(()=>{
+     const second=document.querySelector('#dawn-second');
+     const nav=second.querySelector('.dawn-second__global-nav');
+     const press=second.querySelector('.dawn-second__press');
+     const nr=nav.getBoundingClientRect(),pr=press.getBoundingClientRect(),sr=second.getBoundingClientRect();
+     return {scrollTop:second.scrollTop,navY:nr.top-sr.top,navH:nr.height,
+       pressY:pr.top-sr.top,navBg:getComputedStyle(nav).backgroundColor,
+       navBorder:getComputedStyle(nav).borderBottomWidth};
+   });
+   assert(topLayout.scrollTop<3&&topLayout.navY>=-2&&topLayout.navY<38&&
+     topLayout.navH<52&&topLayout.pressY<35&&topLayout.navBorder==='0px',
+     device+': rejected pale navigation band still sits above the real scripture '+JSON.stringify(topLayout));
    await page.screenshot({path:path.join(out,device+'-os-navigation-masthead.png'),fullPage:false});
    await page.locator('#dawn-wall-grid').scrollIntoViewIfNeeded();
    await page.screenshot({path:path.join(out,device+'-os-original-gallery.png'),fullPage:false});
