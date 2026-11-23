@@ -167,6 +167,14 @@
     play=root.querySelector('[data-action="play"]'),
     progress=root.querySelector('.ws-ministry-story__progress-fill');
   let active=-1,manual=false,paused=false,queued=null;
+  const mobileFinale=window.matchMedia('(max-width:680px)');
+  function setFinaleMode(finale){
+    root.classList.toggle('is-finale',finale);
+    const scrollFinale=finale&&mobileFinale.matches;
+    document.documentElement.classList.toggle('church-finale-scroll',scrollFinale);
+    document.body.classList.toggle('church-finale-scroll',scrollFinale);
+    sunday.setAttribute('aria-hidden',String(!finale));
+  }
   function render(index){
     if(index===active)return;
     const chapter=chapters[index];
@@ -192,6 +200,10 @@
     guide.seek(chapters[index].at);
     play.textContent='繼續導覽';
     render(index);
+    // The chapter click must render its final reading page immediately.
+    // SwiftShader and slower devices can delay requestAnimationFrame for
+    // seconds while drawing the 3D GLB; do not wait for the next frame.
+    setFinaleMode(index===chapters.length-1);
   }
   buttons.forEach(button=>button.addEventListener('click',()=>{
     const index=Number(button.dataset.chapter);
@@ -211,7 +223,6 @@
     window.scrollTo({top:0,behavior:'smooth'});
   });
   let finalePinned=false;
-  const mobileFinale=window.matchMedia('(max-width:680px)');
   play.addEventListener('click',()=>{
     const guide=window.__churchGuide;
     if(!guide)return;
@@ -247,11 +258,7 @@
           paused=true;
           play.textContent='繼續導覽';
         }
-        root.classList.toggle('is-finale',finale);
-        const scrollFinale=finale&&mobileFinale.matches;
-        document.documentElement.classList.toggle('church-finale-scroll',scrollFinale);
-        document.body.classList.toggle('church-finale-scroll',scrollFinale);
-        sunday.setAttribute('aria-hidden',String(!finale));
+        setFinaleMode(finale);
         progress.style.width=(Math.min(1,t/251)*100).toFixed(3)+'%';
       }
     }
