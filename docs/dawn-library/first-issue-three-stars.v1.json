@@ -1,0 +1,61 @@
+{
+  "schema": "dawn.three-stars.editorial.v1",
+  "date": "2026-11-23",
+  "edition": "launch-01",
+  "status": "editorial-draft-for-launch-qa",
+  "notAutomaticTopThree": true,
+  "derivedFrom": [
+    "DL-LIST-GOSPEL-001",
+    "DL-LIST-INNER-001",
+    "DL-LIST-HISTORY-001"
+  ],
+  "title": "三本書，打開三道門",
+  "works": [
+    {
+      "id": "gospel-02",
+      "slot": "01",
+      "line": "把信仰問題重新問清楚",
+      "title": "返璞歸真：純粹的基督教",
+      "author": "C. S. Lewis",
+      "main": "一本值得反覆讀的福音思想經典。魯益師不要求讀者一開始就懂神學術語，而是從良知、是非、人的內在矛盾切入；他的論證可能被挑戰，卻能使討論不再只剩下立場標籤。",
+      "read": "適合第一次認真思考基督教，也適合信主多年卻想重新學習如何和疑問者說話的讀者。請留意它是廣播講稿整理而成，語氣、例子與二十世紀英國社會處境有關。",
+      "whyNow": "第一顆晨星先打開福音對話，不把所有問題簡化為一個標準答案。",
+      "list": "gospel-essentials.html",
+      "label": "福音必讀",
+      "editionCoverSrc": "https://www.logos.com.hk/acms/upload/logos/images/book-fullsize/9789865222888.jpg",
+      "editionStatus": "五南繁體譯本，汪詠梅譯（ISBN 9789865222888）",
+      "publicReviewStatus": "original-editorial-judgment-not-full-book-audit"
+    },
+    {
+      "id": "inner-05-chinese",
+      "slot": "02",
+      "line": "以中文重新認識靈修經典",
+      "title": "靜水流深：基督信仰靈修大師八講",
+      "author": "周學信",
+      "main": "這次選擇華人原創的研究導讀，而不是再選一本英語靈修暢銷書。周學信通過八位不同時代的人物幫助中文讀者理解靈修傳統的廣度，也提醒我們：神學思想、祈禱生活、人的生命經驗並不是同一個分類。",
+      "read": "適合對靈修已有興趣、希望建立跨傳統判斷力的人。它是對歷代靈修人物的二手導讀，讀者應循書中提到的人物繼續讀原著，不能將作者概述當成每位靈修大師原話。",
+      "whyNow": "第二顆晨星維持黎明書局對中文原創思想的重視。",
+      "list": "inner-life.html",
+      "label": "內在生活",
+      "editionCoverSrc": "/dawn-library/reading-room/assets/cover-9789577276551.jpg",
+      "editionStatus": "靜水流深：基督信仰靈修大師八講（2025）",
+      "publicReviewStatus": "original-editorial-judgment-not-full-book-audit",
+      "originalPublisherCoverUrl": "https://resource.cosmiccare.org/api/Resource/Image/947305e3-2659-45ff-8f79-284107b2b0ac"
+    },
+    {
+      "id": "history-01",
+      "slot": "03",
+      "line": "先找到時間與地域的全景",
+      "title": "基督教史（上、下卷）",
+      "author": "胡斯托・岡薩雷斯",
+      "main": "讀教會歷史不宜直接從英雄名單起步。岡薩雷斯的通史讓讀者先取得時間、事件和不同地域的整體輪廓，才有能力進入優西比烏、利瑪竇或華人地方教會的第一手材料，判斷不同作者站在什麼位置說話。",
+      "read": "適合主日學帶領者、教會歷史初學者。請把它當作導航，不要把單一通史視為所有歷史問題的定論；上、下卷屬同一套書，書封所示為簡體中文版。",
+      "whyNow": "第三顆晨星為光譜與耶路撒冷策展打開歷史視野。",
+      "list": "church-history.html",
+      "label": "教會歷史",
+      "editionCoverSrc": "https://www.afcbook.org/cdn/shop/files/53dc05d392b73b3e0f8eec2f9112938f.jpg?v=1768511474",
+      "editionStatus": "基督教史（上、下卷）簡體版",
+      "publicReviewStatus": "original-editorial-judgment-not-full-book-audit"
+    }
+  ]
+}

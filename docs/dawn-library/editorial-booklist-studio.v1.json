@@ -1,0 +1,494 @@
+{
+  "schema": "dawn.editorial-reading-lists.v1",
+  "created": "2026-11-22",
+  "scope": "internal-editorial-method-not-public-booklist",
+  "canonicalAuthority": "docs/MASTER_SITE_ARCHITECTURE.md §4.1",
+  "editorialFirst": true,
+  "publicationGate": "human-review-only",
+  "previousRejectedPR": 1412,
+  "families": [
+    {
+      "id": "classic",
+      "name": "歷代經典",
+      "method": "經典評選"
+    },
+    {
+      "id": "voice",
+      "name": "薦書者與閱讀權威",
+      "method": "具名推薦"
+    },
+    {
+      "id": "inward",
+      "name": "內在生活",
+      "method": "靈性緩讀"
+    },
+    {
+      "id": "history",
+      "name": "教會歷史",
+      "method": "史料導讀"
+    },
+    {
+      "id": "scripture",
+      "name": "聖經細讀",
+      "method": "經文導讀"
+    },
+    {
+      "id": "life",
+      "name": "人生與牧養",
+      "method": "讀者處境"
+    },
+    {
+      "id": "culture",
+      "name": "思想、藝術與公共世界",
+      "method": "跨學科批評"
+    },
+    {
+      "id": "chinese",
+      "name": "華人原創與文學",
+      "method": "中文原創主張"
+    }
+  ],
+  "archetypes": [
+    {
+      "id": "classic-1",
+      "family": "classic",
+      "familyName": "歷代經典",
+      "method": "經典評選",
+      "title": "值得反覆讀的經典",
+      "question": "哪些作品能穿越時代、仍可挑戰今日讀者？",
+      "criteria": "思想深度與跨時代影響",
+      "redFlag": "有名就必讀",
+      "status": "editorial-concept-only"
+    },
+    {
+      "id": "classic-2",
+      "family": "classic",
+      "familyName": "歷代經典",
+      "method": "經典評選",
+      "title": "慢讀之書",
+      "question": "什麼文本值得花一年而非一天讀完？",
+      "criteria": "閱讀深度與注釋導引",
+      "redFlag": "書越厚越經典",
+      "status": "editorial-concept-only"
+    },
+    {
+      "id": "classic-3",
+      "family": "classic",
+      "familyName": "歷代經典",
+      "method": "經典評選",
+      "title": "改變教會的思想爭論",
+      "question": "哪些關鍵分歧改變了信仰歷史？",
+      "criteria": "正反原典與歷史背景",
+      "redFlag": "只選勝方",
+      "status": "editorial-concept-only"
+    },
+    {
+      "id": "voice-1",
+      "family": "voice",
+      "familyName": "薦書者與閱讀權威",
+      "method": "具名推薦",
+      "title": "牧者的書房",
+      "question": "牧者曾在何時、為何推薦這本書？",
+      "criteria": "直接推薦證據與獨立編輯判斷",
+      "redFlag": "講道引用等同推薦",
+      "status": "editorial-concept-only"
+    },
+    {
+      "id": "voice-2",
+      "family": "voice",
+      "familyName": "薦書者與閱讀權威",
+      "method": "具名推薦",
+      "title": "神學家的案頭",
+      "question": "一位學者如何建立自己的閱讀思想？",
+      "criteria": "可核查的薦讀、書評及課程脈絡",
+      "redFlag": "被引用等同被推薦",
+      "status": "editorial-concept-only"
+    },
+    {
+      "id": "voice-3",
+      "family": "voice",
+      "familyName": "薦書者與閱讀權威",
+      "method": "具名推薦",
+      "title": "兩種傳統的答案",
+      "question": "不同教會傳統對同一問題如何讀書？",
+      "criteria": "平行書單與比較評議",
+      "redFlag": "假裝只有一種立場",
+      "status": "editorial-concept-only"
+    },
+    {
+      "id": "inward-1",
+      "family": "inward",
+      "familyName": "內在生活",
+      "method": "靈性緩讀",
+      "title": "內在生活",
+      "question": "如何從宗教忙碌走向與神相交？",
+      "criteria": "靈修經典加上語境與批評",
+      "redFlag": "靈性成功學",
+      "status": "editorial-concept-only"
+    },
+    {
+      "id": "inward-2",
+      "family": "inward",
+      "familyName": "內在生活",
+      "method": "靈性緩讀",
+      "title": "禱告的學校",
+      "question": "禱告是技巧、習慣還是關係？",
+      "criteria": "實踐、神學與文本對讀",
+      "redFlag": "操練保證有效",
+      "status": "editorial-concept-only"
+    },
+    {
+      "id": "inward-3",
+      "family": "inward",
+      "familyName": "內在生活",
+      "method": "靈性緩讀",
+      "title": "苦難中的禱告",
+      "question": "痛苦、沉默與盼望如何被書寫？",
+      "criteria": "見證、詩歌與神學比較",
+      "redFlag": "以傷痛作煽情",
+      "status": "editorial-concept-only"
+    },
+    {
+      "id": "history-1",
+      "family": "history",
+      "familyName": "教會歷史",
+      "method": "史料導讀",
+      "title": "教會史的十個現場",
+      "question": "誰記錄了教會的歷史？漏了誰？",
+      "criteria": "原始史料與史家觀點對讀",
+      "redFlag": "英雄榜代替史學",
+      "status": "editorial-concept-only"
+    },
+    {
+      "id": "history-2",
+      "family": "history",
+      "familyName": "教會歷史",
+      "method": "史料導讀",
+      "title": "中國教會的記憶",
+      "question": "華人教會如何記憶自身歷史？",
+      "criteria": "地方史料和不同主體並讀",
+      "redFlag": "只見外國宣教士",
+      "status": "editorial-concept-only"
+    },
+    {
+      "id": "history-3",
+      "family": "history",
+      "familyName": "教會歷史",
+      "method": "史料導讀",
+      "title": "宣教與文化的相遇",
+      "question": "福音與地方文化曾如何互相改變？",
+      "criteria": "第一手記述與文化史研究",
+      "redFlag": "用單一勝利敘事",
+      "status": "editorial-concept-only"
+    },
+    {
+      "id": "scripture-1",
+      "family": "scripture",
+      "familyName": "聖經細讀",
+      "method": "經文導讀",
+      "title": "與一卷書同行",
+      "question": "一本聖經書卷如何引出一個閱讀世界？",
+      "criteria": "經卷與註釋的分層選讀",
+      "redFlag": "只列熱門註釋",
+      "status": "editorial-concept-only"
+    },
+    {
+      "id": "scripture-2",
+      "family": "scripture",
+      "familyName": "聖經細讀",
+      "method": "經文導讀",
+      "title": "福音書四讀",
+      "question": "四福音書異同有何閱讀價值？",
+      "criteria": "並讀敘事而不消除差異",
+      "redFlag": "以求同抹平文本",
+      "status": "editorial-concept-only"
+    },
+    {
+      "id": "scripture-3",
+      "family": "scripture",
+      "familyName": "聖經細讀",
+      "method": "經文導讀",
+      "title": "釋經方法交鋒",
+      "question": "同一段經文為何有不同可靠解法？",
+      "criteria": "方法教材及案例比較",
+      "redFlag": "一本方法書包辦一切",
+      "status": "editorial-concept-only"
+    },
+    {
+      "id": "life-1",
+      "family": "life",
+      "familyName": "人生與牧養",
+      "method": "讀者處境",
+      "title": "牧者的困難書架",
+      "question": "事奉倦怠與群體衝突時讀什麼？",
+      "criteria": "牧養現場與專業邊界",
+      "redFlag": "閱讀代替治療",
+      "status": "editorial-concept-only"
+    },
+    {
+      "id": "life-2",
+      "family": "life",
+      "familyName": "人生與牧養",
+      "method": "讀者處境",
+      "title": "職場與召命",
+      "question": "工作與敬拜有何內在關係？",
+      "criteria": "神學、職場經驗及倫理",
+      "redFlag": "成功神學",
+      "status": "editorial-concept-only"
+    },
+    {
+      "id": "life-3",
+      "family": "life",
+      "familyName": "人生與牧養",
+      "method": "讀者處境",
+      "title": "生命的下半場",
+      "question": "衰老、照顧與盼望如何彼此連結？",
+      "criteria": "照顧見證與信仰反省",
+      "redFlag": "把老人當作問題",
+      "status": "editorial-concept-only"
+    },
+    {
+      "id": "culture-1",
+      "family": "culture",
+      "familyName": "思想、藝術與公共世界",
+      "method": "跨學科批評",
+      "title": "科學與信仰",
+      "question": "論點和證據應如何區分？",
+      "criteria": "專業資格與論證檢驗",
+      "redFlag": "科普口號",
+      "status": "editorial-concept-only"
+    },
+    {
+      "id": "culture-2",
+      "family": "culture",
+      "familyName": "思想、藝術與公共世界",
+      "method": "跨學科批評",
+      "title": "基督教與藝術",
+      "question": "圖像如何表達信仰、權力與歷史？",
+      "criteria": "美術史、神學與原作",
+      "redFlag": "只有漂亮圖片",
+      "status": "editorial-concept-only"
+    },
+    {
+      "id": "culture-3",
+      "family": "culture",
+      "familyName": "思想、藝術與公共世界",
+      "method": "跨學科批評",
+      "title": "公共世界的基督徒",
+      "question": "信仰如何回應文化與公共責任？",
+      "criteria": "不同論證與其盲點",
+      "redFlag": "政治同溫層",
+      "status": "editorial-concept-only"
+    },
+    {
+      "id": "chinese-1",
+      "family": "chinese",
+      "familyName": "華人原創與文學",
+      "method": "中文原創主張",
+      "title": "用中文思考上帝",
+      "question": "有哪些華人原創思想真正不可忽略？",
+      "criteria": "中文神學原創性與文獻影響",
+      "redFlag": "只有英譯中著作",
+      "status": "editorial-concept-only"
+    },
+    {
+      "id": "chinese-2",
+      "family": "chinese",
+      "familyName": "華人原創與文學",
+      "method": "中文原創主張",
+      "title": "文學中的福音",
+      "question": "小說、詩歌如何打開信仰想像？",
+      "criteria": "文學品質與信仰張力",
+      "redFlag": "把文學當宣傳",
+      "status": "editorial-concept-only"
+    },
+    {
+      "id": "chinese-3",
+      "family": "chinese",
+      "familyName": "華人原創與文學",
+      "method": "中文原創主張",
+      "title": "普通人的教會史",
+      "question": "書信、日記與口述如何保存華人信仰？",
+      "criteria": "第一手記錄與考證",
+      "redFlag": "只有名人故事",
+      "status": "editorial-concept-only"
+    }
+  ],
+  "references": [
+    {
+      "id": "renovare",
+      "name": "Renovaré 經典25書選",
+      "url": "https://renovare.org/booklists/25-books-every-christian-should-read",
+      "evidence": "跨傳統編委遴選與分書導語"
+    },
+    {
+      "id": "foster",
+      "name": "Richard Foster 12 Spiritual Formation Classics",
+      "url": "https://renovare.org/booklists/richard-foster-12-book-starter-kit",
+      "evidence": "具名薦書、慢讀節奏和閱讀次序"
+    },
+    {
+      "id": "ct",
+      "name": "Christianity Today 2026 Book Awards",
+      "url": "https://www.christianitytoday.com/2025/12/christianity-today-book-awards-2025-2026/",
+      "evidence": "分領域專家與編輯決選"
+    },
+    {
+      "id": "tgc",
+      "name": "福音聯盟2025圖書獎",
+      "url": "https://tc.tgcchinese.org/article/tgc-book-awards-2025",
+      "evidence": "11類別、評選程序與神學標準"
+    },
+    {
+      "id": "hk",
+      "name": "香港聖公會2026十本好書閱讀運動",
+      "url": "https://www.stjohnscathedral.org.hk/files/site/4/pew_bulletin/20260426_Chinese%20Pew%20Sheet_260424170744.pdf",
+      "evidence": "具名牧者、主教與書目的直接證據"
+    },
+    {
+      "id": "cstt",
+      "name": "基督教研究智庫睿智書單",
+      "url": "https://cstt.tw/smartbooks/",
+      "evidence": "經典中文譯本與華人相關閱讀材料"
+    },
+    {
+      "id": "ala",
+      "name": "ALA圖書館選書標準",
+      "url": "https://www.ala.org/tools/challengesupport/selectionpolicytoolkit/criteria",
+      "evidence": "評估品質、讀者適用性及不同觀點"
+    }
+  ],
+  "pilots": [
+    {
+      "id": "inner-life",
+      "archetype": "inward-1",
+      "title": "內在生活：從自我省察到神同在",
+      "question": "內在生命是外在活動的替代品，還是回應神的另一種生活尺度？",
+      "thesis": "比較自我省察、日常神同在、群體操練三種靈性語言；不把不同傳統抹平。",
+      "reader": "願意慢讀、反思的中文基督徒",
+      "notFor": "要求立即有效的心理或醫療處方",
+      "format": "跨時代的附註對讀",
+      "tradeoff": "更深刻的經驗文學不一定適合剛接觸靈修的讀者",
+      "rejectExample": "只有即時見效口號的靈修捷徑書",
+      "methodEvidence": [
+        "renovare",
+        "foster"
+      ],
+      "sample": [
+        {
+          "title": "《懺悔錄》",
+          "author": "奧古斯丁",
+          "role": "從渴望與悔改進入自我省察",
+          "caution": "重視文本全貌，避免只摘名言"
+        },
+        {
+          "title": "《與神同在》",
+          "author": "勞倫斯弟兄",
+          "role": "日常生活中的禱告觀",
+          "caution": "中文譯名和底本有待逐本辨識"
+        },
+        {
+          "title": "《屬靈操練禮讚》",
+          "author": "理查・傅士德",
+          "role": "讓個人靈修與共同體操練互相映照",
+          "caution": "處理傳統及實踐方法的差異"
+        }
+      ]
+    },
+    {
+      "id": "church-memory",
+      "archetype": "history-1",
+      "title": "教會歷史：從原始記錄到華人現場",
+      "question": "歷史書如何區分誰說了什麼、憑何知道，以及誰被遺忘？",
+      "thesis": "史料、歷史敘事與地方觀點應分層閱讀，不做偉人名單。",
+      "reader": "有基本信仰背景的中文教會讀者",
+      "notFor": "只想背誦年代的人物速覽",
+      "format": "史料與史家雙聲部導讀",
+      "tradeoff": "一手記錄有價值，但它的敘述立場也需要校正",
+      "rejectExample": "沒有原始證據的十大教會英雄榜",
+      "methodEvidence": [
+        "ala",
+        "cstt"
+      ],
+      "sample": [
+        {
+          "title": "《教會史》",
+          "author": "優西比烏",
+          "role": "接觸早期教會自我敘述",
+          "caution": "不可視為完全中立史書"
+        },
+        {
+          "title": "《歷史的軌跡：二千年教會史》",
+          "author": "祁伯爾",
+          "role": "以後期概覽辨識年代脈絡",
+          "caution": "認識其史學與宗派立場"
+        },
+        {
+          "title": "《福爾摩沙記事》",
+          "author": "馬偕",
+          "role": "把台灣歷史場景納入閱讀",
+          "caution": "需要與本地第一手記錄對讀"
+        }
+      ]
+    },
+    {
+      "id": "pastors-books",
+      "archetype": "voice-1",
+      "title": "牧者的書房：核實真正被推薦過的書",
+      "question": "推薦者是誰，在什麼場合薦書，黎明書局是否獨立同意其推薦？",
+      "thesis": "具名推薦紀錄只是證據，不等於黎明書局自動認可。",
+      "reader": "教會閱讀小組與牧養同工",
+      "notFor": "名牧背書廣告",
+      "format": "有來源的薦書證據卡＋獨立評議",
+      "tradeoff": "具名聲譽不能代替本館閱讀，且推薦者可能有特定宗派處境",
+      "rejectExample": "把講道引用當成推薦、把書店文案當成牧者說法",
+      "methodEvidence": [
+        "hk",
+        "ala"
+      ],
+      "sample": [
+        {
+          "title": "《40 個創意祈禱》（一書兩冊）",
+          "author": "克萊爾・丹尼爾",
+          "role": "2026香港聖公會資料列為陳謳明大主教的薦書",
+          "caution": "推薦事實已見書單，作品品質尚未獨立審讀",
+          "recommender": "陳謳明",
+          "recommendationEvidence": "hk"
+        },
+        {
+          "title": "《為何上帝容許苦難？》",
+          "author": "羅賓・基爾",
+          "role": "2026香港聖公會資料列為郭志丕主教的薦書",
+          "caution": "不可虛構原薦者的理由",
+          "recommender": "郭志丕",
+          "recommendationEvidence": "hk"
+        },
+        {
+          "title": "《在失序中抱緊上帝：千禧世代的信仰心法》",
+          "author": "潘正行",
+          "role": "2026香港聖公會資料列為謝子和主教的薦書",
+          "caution": "是否適合本館讀者另行獨立評審",
+          "recommender": "謝子和",
+          "recommendationEvidence": "hk"
+        }
+      ]
+    }
+  ],
+  "sourcePolicy": {
+    "stage": "after-editorial-judgement",
+    "openFreeFirst": true,
+    "secondaryOnly": [
+      "my-elibrary.net"
+    ],
+    "bookValueIndependentOfAvailability": true
+  },
+  "untouched": [
+    "P2",
+    "Design OS",
+    "三晨星",
+    "光譜",
+    "策展集",
+    "正式館藏",
+    "main"
+  ]
+}

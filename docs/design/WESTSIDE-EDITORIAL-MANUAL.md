@@ -379,3 +379,13 @@ These files remain archived intact; they do not operate as independent OS author
 **驗收不得缺項：** `真實查詢 → 回傳來源／明確零結果 → 逐集匹配 → 媒體測試 → 公開影院頁面測試`。任何一項未做，都必須標記「未完成」。完整詳細事故、原始工具函數核對和責任裁定見 [数片恢復工程紀錄](../shupian/RECOVERY-2026-11-22.md)。
 
 **範圍保護：** 此規範只約束数片／PARADISO，不改 P2 動效、Dawn Library、ONE、OS tokens 或其他站點工程。
+
+
+### 2026-11-23 — 黎明書局原生 P2 05 書單整合（取代已撤回的平行頁面方案）
+
+- **唯一視覺權威：** 黎明書局既有 P2 05 原生第二、第三層在 PR #1411 的 `static/experiments/p2-0105-dawn-preview.html`、`static/js/p2-0105-dawn-continuation.js`、`static/css/p2-0105-dawn-integrated.css`。沿用原雙方塊刊頭、旌旗、經文母版、三晨星／策展集／光譜、七大學科、館藏分類、原書封展開與單書閱讀；不得改由 `/dawn-library/reading-room/` 或 `/dawn-library/product/` 取代原入口。
+- **書單原生位置：** 以小型紙頁目錄融入 P2 05 第二層閱讀室 `#dawn-wall`，書單內容從 `static/dawn-library/p2-reading-lists-issue-01.json` 讀取；三份書單內共 22 個作品，循讀者問題、編輯理由、閱讀次序、逐冊推薦與比較閱讀進入原 `#dawn-catalogue` 及 `#dawn-book-detail`。P2 既有三個大編輯版塊必須維持三個，不得把書單做成第四個同級大型入口。
+- **原生動效：** 書卡按原 `p2-dawn-expanding-book-preview.mjs` 展開，單書閱讀及返回沿用原頁狀態，不重啟 P2 動效、不另建導航、翻書引擎或站點。
+- **視覺：** 使用 Design OS 的收穫黃、紙色、Chiron Hei HK 中文與 Bodoni 英文、細金線及原方形書封比例；無封面時顯示真實書目字排，遠端封面未成功載入前保持書名可讀；有封面時保留完整書影並與標題分區，不能壓住封面或讓白框冒充書封。未核定書封不得捏造。
+- **讀者語言：** 前台只顯示書單、作品、閱讀次序、版本與閱讀來源；CI、PR、資料層、身分核對及工程回報不得露在書頁。未匹配 canonical Work ID 不得假稱可加入我的書房。
+- **驗收：** PR #1411 的 P2 Dawn Reading Hall 靜態檢查與 First Look Branch Preview 內的實際 Chromium（桌面／手機）需要檢驗三份書單、22 部作品、原三個欄目、翻書、返回、字體、無橫向溢出及圖片載入情境。舊 PR #1413 僅保存編輯研究與初刊材料，不是原生視覺整合的發布依據；本計劃維持 Draft，未經出版審稿與整體檢查不得合併。

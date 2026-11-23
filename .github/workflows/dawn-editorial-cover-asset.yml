@@ -1,0 +1,86 @@
+name: Dawn One-Time Publisher Cover Cache
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/dawn-editorial-cover-asset.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  cache-official-thumbnail:
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.ref == 'dawn/editorial-curation-core-v1-20261122'
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref || 'dawn/editorial-curation-core-v1-20261122' }}
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Obtain and verify exact publisher image
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 2 --max-time 25 --silent --show-error \
+            --header 'Referer: https://bookstore.cosmiccare.org/Product/Detail/OH002' \
+            --header 'User-Agent: Mozilla/5.0 (Dawn Library Editorial Cover Review)' \
+            'https://resource.cosmiccare.org/api/Resource/Image/947305e3-2659-45ff-8f79-284107b2b0ac' \
+            --output /tmp/dawn-original-cover.jpg
+          python -m pip install --quiet Pillow
+          python - <<'PY'
+          from PIL import Image, ImageOps
+          from pathlib import Path
+          import hashlib
+          original=Path('/tmp/dawn-original-cover.jpg')
+          target=Path('static/dawn-library/reading-room/assets/cover-9789577276551.jpg')
+          target.parent.mkdir(parents=True,exist_ok=True)
+          with Image.open(original) as src:
+              src.verify()
+          with Image.open(original) as src:
+              if min(src.size) < 100: raise ValueError('not a real book cover image')
+              cover=ImageOps.exif_transpose(src).convert('RGB')
+              cover.thumbnail((300,440),Image.Resampling.LANCZOS)
+              cover.save(target,format='JPEG',quality=78,optimize=True,progressive=True)
+              print('SOURCE_DIMENSIONS',src.size,'THUMBNAIL_DIMENSIONS',cover.size)
+          print('THUMBNAIL_BYTES',target.stat().st_size)
+          print('THUMBNAIL_SHA256',hashlib.sha256(target.read_bytes()).hexdigest())
+          # Exact 2024 Chinese Christian Mission Confessions cover (ISBN 9781634202176).
+          import urllib.request, io
+          cover_url='https://cdn.store-assets.com/s/734831/i/86387665.jpeg'
+          try:
+              req=urllib.request.Request(cover_url,headers={'User-Agent':'Mozilla/5.0'})
+              with urllib.request.urlopen(req,timeout=25) as r:
+                  image_bytes=r.read()
+                  print('CONFESSIONS_COVER_FETCH',r.status,len(image_bytes))
+              with Image.open(io.BytesIO(image_bytes)) as source:
+                  if min(source.size)<150: raise ValueError('small image')
+                  new=ImageOps.exif_transpose(source).convert('RGB')
+                  new.thumbnail((300,440),Image.Resampling.LANCZOS)
+                  dest=Path('static/dawn-library/reading-room/assets/cover-9781634202176.jpg')
+                  new.save(dest,format='JPEG',quality=78,optimize=True,progressive=True)
+                  print('CACHED_CONFESSIONS',new.size,dest.stat().st_size)
+          except Exception as e:
+              print('CONFESSIONS_IMAGE_NOT_CACHED',str(e)[:150])
+          PY
+      - name: Commit real small editorial book-cover thumbnail to isolated PR branch
+        run: |
+          set -euo pipefail
+          git config user.name 'Dawn Editorial Asset Automation'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add static/dawn-library/reading-room/assets/cover-9789577276551.jpg
+          test ! -f static/dawn-library/reading-room/assets/cover-9781634202176.jpg || git add static/dawn-library/reading-room/assets/cover-9781634202176.jpg
+          if git diff --cached --quiet; then
+            echo 'Cover already up to date; no commit needed'
+            exit 0
+          fi
+          git commit -m 'assets(dawn): original publisher Chinese book-cover thumbnail for editorial review'
+          for attempt in 1 2 3 4; do
+            git fetch origin dawn/editorial-curation-core-v1-20261122
+            git rebase origin/dawn/editorial-curation-core-v1-20261122
+            if git push origin HEAD:dawn/editorial-curation-core-v1-20261122; then exit 0; fi
+            sleep 3
+          done
+          echo '::error::Unable to safely push after concurrent changes'
+          exit 1

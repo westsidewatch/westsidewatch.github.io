@@ -1,0 +1,81 @@
+name: Dawn Editorial First Issue
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'static/dawn-library/reading-room/**'
+      - 'static/experiments/dawn-reading-lists/**'
+      - 'docs/dawn-library/reading-lists/**'
+      - 'docs/dawn-library/first-issue-three-stars.v1.json'
+      - 'tests/dawn-editorial-launch-*'
+      - 'tests/dawn-editorial-issue-browser.cjs'
+      - 'tests/dawn-cover-probe.cjs'
+      - '.github/workflows/dawn-editorial-first-issue.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: dawn-editorial-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  editorial-and-browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: '0.167.0'
+          extended: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Audit remote image availability before browser run
+        run: node tests/dawn-cover-probe.cjs
+      - name: Verify editorial dossiers and independent outputs
+        run: |
+          node --test tests/dawn-editorial-launch-structure.test.mjs
+          node scripts/check_dawn_editorial_dossiers.mjs
+          node scripts/check_dawn_magazine_lists.mjs
+      - name: Build and verify all seven reader pages
+        run: |
+          hugo --gc --minify --baseURL 'http://127.0.0.1:4173/'
+          test -s public/dawn-library/reading-room/index.html
+          for p in gospel-essentials inner-life church-history three-stars spectrum-abiding jerusalem-3000; do
+            test -s "public/dawn-library/reading-room/$p.html"
+          done
+      - name: Chromium screenshot tests at desktop and phone widths
+        run: |
+          npm install --no-save --no-package-lock playwright
+          npx playwright install chromium
+          python3 -m http.server 4173 --directory public >/tmp/dawn-editorial-http.log 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          node tests/dawn-editorial-issue-browser.cjs
+      - name: Deploy isolated Dawn editorial Cloudflare Pages preview
+        if: github.event_name == 'pull_request'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ] || [ -z "$CLOUDFLARE_ACCOUNT_ID" ]; then
+            echo '::warning::Cloudflare preview credentials are not configured. No deployment claimed.'
+            exit 0
+          fi
+          npx --yes wrangler@4 pages deploy public \
+            --project-name=westsidewatch-github-io \
+            --branch=dawn-editorial-1413 \
+            --commit-hash="${GITHUB_SHA}" \
+            --commit-message='Dawn Library First Editorial Issue - isolated preview'
+          echo '### First issue isolated preview' >> "$GITHUB_STEP_SUMMARY"
+          echo 'https://dawn-editorial-1413.westsidewatch-github-io.pages.dev/dawn-library/reading-room/' >> "$GITHUB_STEP_SUMMARY"
+      - name: Preserve first-issue visual evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dawn-editorial-first-issue-browser
+          path: artifacts/dawn-editorial-launch/
+          if-no-files-found: warn
+          retention-days: 14
