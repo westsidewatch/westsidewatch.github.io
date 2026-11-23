@@ -1,6 +1,6 @@
 {
   "schema": "dawn.library.storefront.v3",
-  "generatedAt": "2026-11-22T17:14:39.888822+00:00",
+  "generatedAt": "2026-11-23T05:58:09.714056+00:00",
   "title": "黎明書局",
   "storagePolicy": "index-only",
   "principle": "映射 ≠ 導入。閱讀 ≠ 收藏。收藏 ≠ 下載。",
@@ -608,18 +608,18 @@
       "source": "Internet Archive",
       "items": [
         {
-          "id": "internet-archive-jonathanedwardsb0000brow",
-          "title": "Jonathan Edwards and the Bible",
-          "author": "Brown, Robert E., 1958-",
+          "id": "internet-archive-randmcnallybible0000krae_e6d4",
+          "title": "Rand McNally Bible atlas",
+          "author": "Kraeling, Emil Gottlieb Heinrich, 1892-",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/jonathanedwardsb0000brow",
+            "url": "https://archive.org/details/randmcnallybible0000krae_e6d4",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/jonathanedwardsb0000brow",
+            "url": "https://archive.org/services/img/randmcnallybible0000krae_e6d4",
             "mode": "source"
           },
           "rights": {
@@ -631,18 +631,133 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-isbn_9781851752768",
-          "title": "Explore the Bible : a study guidebook",
+          "id": "internet-archive-tweetingwithgodb0000reme",
+          "title": "Tweeting with God : #Big Bang, prayer, Bible, sex, Crusades, sin, career ...",
+          "author": "Remery, Michel (Michel Petrus), author",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/tweetingwithgodb0000reme",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/tweetingwithgodb0000reme",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-storyofbibletran0000ludl",
+          "title": "The story of Bible translations",
+          "author": "Ludlow, William L",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/storyofbibletran0000ludl",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/storyofbibletran0000ludl",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-reclaimingbiblef0000spon",
+          "title": "Re-claiming the Bible for a non-religious world",
+          "author": "Spong, John Shelby",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/reclaimingbiblef0000spon",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/reclaimingbiblef0000spon",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-truetohiswordsto0000lewi",
+          "title": "True to His word : the story of Bible Study Fellowship",
+          "author": "Lewis, Gregg, 1951-",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/truetohiswordsto0000lewi",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/truetohiswordsto0000lewi",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-asimovsguidetobi0002asim",
+          "title": "Asimov's guide to the Bible",
+          "author": "Asimov, Isaac, 1920-1992",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/asimovsguidetobi0002asim",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/asimovsguidetobi0002asim",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-studiesinbibleed0000unse",
+          "title": "Studies in the Bible : edited on behalf of the Institute of Jewish Studies in the Faculty of Humanities",
           "author": "",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/isbn_9781851752768",
+            "url": "https://archive.org/details/studiesinbibleed0000unse",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/isbn_9781851752768",
+            "url": "https://archive.org/services/img/studiesinbibleed0000unse",
             "mode": "source"
           },
           "rights": {
@@ -654,64 +769,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-sim_biblical-research_1997_42_contents",
-          "title": "Biblical Research 1997: Vol 42 Table of Contents",
-          "author": "",
-          "language": "English",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/sim_biblical-research_1997_42_contents",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/sim_biblical-research_1997_42_contents",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-sim_biblical-research_2000_45_contents",
-          "title": "Biblical Research 2000: Vol 45 Table of Contents",
-          "author": "",
-          "language": "English",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/sim_biblical-research_2000_45_contents",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/sim_biblical-research_2000_45_contents",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-indiscordancewit0000thue",
-          "title": "In discordance with the Scriptures : American Protestant battles over translating the Bible",
-          "author": "Thuesen, Peter Johannes, 1971-",
+          "id": "internet-archive-surpassingwonder0000aken",
+          "title": "Surpassing wonder : the invention of the Bible and the Talmuds",
+          "author": "Akenson, Donald H",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/indiscordancewit0000thue",
+            "url": "https://archive.org/details/surpassingwonder0000aken",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/indiscordancewit0000thue",
+            "url": "https://archive.org/services/img/surpassingwonder0000aken",
             "mode": "source"
           },
           "rights": {
@@ -723,18 +792,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-britishbooksinbi0000howl",
-          "title": "British books in biblical style",
-          "author": "Howlett, D. R. (David R.)",
+          "id": "internet-archive-witnessofwordbib0000mccu_h0s9",
+          "title": "Witness of the word : a biblical theology of the Gospel",
+          "author": "McCurley, Foster R",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/britishbooksinbi0000howl",
+            "url": "https://archive.org/details/witnessofwordbib0000mccu_h0s9",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/britishbooksinbi0000howl",
+            "url": "https://archive.org/services/img/witnessofwordbib0000mccu_h0s9",
             "mode": "source"
           },
           "rights": {
@@ -746,18 +815,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-studiesinmodernc0000moul",
-          "title": "Studies in modern Christendom; being a series of lectures delivered in connexion with the Liverpool Board of Biblical Studies, Lent term 1909",
-          "author": "Moulton, W. F. (William Fiddian), 1835-1898",
+          "id": "internet-archive-economicproblemi0000gord",
+          "title": "The economic problem in biblical and patristic thought",
+          "author": "Gordon, Barry (Barry Lewis John)",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/studiesinmodernc0000moul",
+            "url": "https://archive.org/details/economicproblemi0000gord",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/studiesinmodernc0000moul",
+            "url": "https://archive.org/services/img/economicproblemi0000gord",
             "mode": "source"
           },
           "rights": {
@@ -769,133 +838,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-sacredstreamsanc00goss_2",
-          "title": "Sacred streams : the ancient and modern history of the rivers of the Bible",
-          "author": "Gosse, Philip Henry, 1810-1888",
+          "id": "internet-archive-watermelonfishan0000left",
+          "title": "A watermelon, a fish and a bible",
+          "author": "Lefteri, Christy",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/sacredstreamsanc00goss_2",
+            "url": "https://archive.org/details/watermelonfishan0000left",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/sacredstreamsanc00goss_2",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-understandingbib0000mont",
-          "title": "Understanding the Bible : a basic introduction to biblical interpretation",
-          "author": "Montague, George T",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/understandingbib0000mont",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/understandingbib0000mont",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-whenjewrulesworl0000rich",
-          "title": "When a Jew rules the world : what the Bible really says about Israel in the plan of God",
-          "author": "Richardson, Joel",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/whenjewrulesworl0000rich",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/whenjewrulesworl0000rich",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-when-god-spoke-greek-the-septuagint-and-the-making-of-the-christian-bible",
-          "title": "WHEN GOD SPOKE GREEK: The Septuagint and the Making of the Christian Bible",
-          "author": "Timothy Michael Law",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/when-god-spoke-greek-the-septuagint-and-the-making-of-the-christian-bible",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/when-god-spoke-greek-the-septuagint-and-the-making-of-the-christian-bible",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-whoswhowhereswhe0000mill_g8o4",
-          "title": "Who's who & where's where in the Bible : an illustrated A-to-Z dictionary of the people and places in scripture",
-          "author": "Miller, Stephen M., 1952- author",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/whoswhowhereswhe0000mill_g8o4",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/whoswhowhereswhe0000mill_g8o4",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-supremebookofman00mccl",
-          "title": "The supreme book of mankind : the origin and influence of the English Bible",
-          "author": "McClure, James G. K. (James Gore King), 1848-1932",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/supremebookofman00mccl",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/supremebookofman00mccl",
+            "url": "https://archive.org/services/img/watermelonfishan0000left",
             "mode": "source"
           },
           "rights": {
@@ -930,18 +884,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-literacybiblerea0000watk",
-          "title": "Literacy, Bible reading, and church growth through the ages",
-          "author": "Watkins, Morris G",
+          "id": "internet-archive-reclaiminghebrew0000haco",
+          "title": "Reclaiming the Hebrew Bible : German-Jewish reception of Biblical criticism",
+          "author": "HaCohen, Ran",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/literacybiblerea0000watk",
+            "url": "https://archive.org/details/reclaiminghebrew0000haco",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/literacybiblerea0000watk",
+            "url": "https://archive.org/services/img/reclaiminghebrew0000haco",
             "mode": "source"
           },
           "rights": {
@@ -953,18 +907,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-thunderovertabor0000tasl",
-          "title": "Thunder over Tabor : a novel based on the Biblical story of Deborah",
-          "author": "Taslitt, Israel Isaac, author",
+          "id": "internet-archive-modernbiblicalsc0000unse",
+          "title": "Modern Biblical scholarship : its impact on theology and proclamation",
+          "author": "",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/thunderovertabor0000tasl",
+            "url": "https://archive.org/details/modernbiblicalsc0000unse",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/thunderovertabor0000tasl",
+            "url": "https://archive.org/services/img/modernbiblicalsc0000unse",
             "mode": "source"
           },
           "rights": {
@@ -976,18 +930,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-bibleitsorigingr0000harr",
-          "title": "The Bible, its origin and growth",
-          "author": "Harrell, Costen J. (Costen Jordan), 1885-1971",
+          "id": "internet-archive-postcoloniallite0000unse",
+          "title": "Postcolonial literature and the biblical call for justice",
+          "author": "",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/bibleitsorigingr0000harr",
+            "url": "https://archive.org/details/postcoloniallite0000unse",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/bibleitsorigingr0000harr",
+            "url": "https://archive.org/services/img/postcoloniallite0000unse",
             "mode": "source"
           },
           "rights": {
@@ -999,18 +953,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-historyofenglish0000brow",
-          "title": "The history of the English Bible",
-          "author": "Brown, John, 1830-1922",
+          "id": "internet-archive-biblepoliticsdem0000unse",
+          "title": "The Bible, politics, and democracy : essays",
+          "author": "",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/historyofenglish0000brow",
+            "url": "https://archive.org/details/biblepoliticsdem0000unse",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/historyofenglish0000brow",
+            "url": "https://archive.org/services/img/biblepoliticsdem0000unse",
             "mode": "source"
           },
           "rights": {
@@ -1022,18 +976,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-howwegotbible0000ligh_d6h5",
-          "title": "How we got the Bible",
-          "author": "Lightfoot, Neil R",
+          "id": "internet-archive-victorianselfaut00hend",
+          "title": "The Victorian self : autobiography and Biblical narrative",
+          "author": "Henderson, Heather, 1951-",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/howwegotbible0000ligh_d6h5",
+            "url": "https://archive.org/details/victorianselfaut00hend",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/howwegotbible0000ligh_d6h5",
+            "url": "https://archive.org/services/img/victorianselfaut00hend",
             "mode": "source"
           },
           "rights": {
@@ -1045,18 +999,64 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-storyofbiblefrom00shel",
-          "title": "The story of the Bible from the standpoint of modern scholarship",
-          "author": "Sheldon, Walter Lorenzo, 1858-1907",
+          "id": "internet-archive-sociologicalstud0000wall",
+          "title": "Sociological study of the Bible",
+          "author": "Wallis, Louis",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/storyofbiblefrom00shel",
+            "url": "https://archive.org/details/sociologicalstud0000wall",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/storyofbiblefrom00shel",
+            "url": "https://archive.org/services/img/sociologicalstud0000wall",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-studentbibleguid0000back",
+          "title": "The student Bible guide to Jerusalem",
+          "author": "Backhouse, Robert",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/studentbibleguid0000back",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/studentbibleguid0000back",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-sim_journal-of-biblical-literature_1895_14_1-2",
+          "title": "Journal of Biblical Literature 1895: Vol 14 Iss 1-2",
+          "author": "",
+          "language": "English",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/sim_journal-of-biblical-literature_1895_14_1-2",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/sim_journal-of-biblical-literature_1895_14_1-2",
             "mode": "source"
           },
           "rights": {
@@ -1076,18 +1076,18 @@
       "source": "Internet Archive",
       "items": [
         {
-          "id": "internet-archive-yearbooklutheran0000vari",
-          "title": "YEARBOOK LUTHERAN CHURCH IN AMERICA",
-          "author": "VARIOUS",
+          "id": "internet-archive-isbn_9781548421809",
+          "title": "Farming Church",
+          "author": "Mark E. Tidsworth",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/yearbooklutheran0000vari",
+            "url": "https://archive.org/details/isbn_9781548421809",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/yearbooklutheran0000vari",
+            "url": "https://archive.org/services/img/isbn_9781548421809",
             "mode": "source"
           },
           "rights": {
@@ -1099,18 +1099,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-solvingchurchsch0000unse_k5m4",
-          "title": "solving church school problems",
-          "author": "",
+          "id": "internet-archive-churchmusicinhis0000winf_z3f4",
+          "title": "Church Music in History and Practice",
+          "author": "Winfred Douglas",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/solvingchurchsch0000unse_k5m4",
+            "url": "https://archive.org/details/churchmusicinhis0000winf_z3f4",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/solvingchurchsch0000unse_k5m4",
+            "url": "https://archive.org/services/img/churchmusicinhis0000winf_z3f4",
             "mode": "source"
           },
           "rights": {
@@ -1122,18 +1122,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-bwb_P9-BHX-146",
-          "title": "The local church",
-          "author": "Albert W. Beaven",
+          "id": "internet-archive-letterstogodfrom0000caro",
+          "title": "letters to god from the church secretary",
+          "author": "carol fisher",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/bwb_P9-BHX-146",
+            "url": "https://archive.org/details/letterstogodfrom0000caro",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/bwb_P9-BHX-146",
+            "url": "https://archive.org/services/img/letterstogodfrom0000caro",
             "mode": "source"
           },
           "rights": {
@@ -1145,18 +1145,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-bwb_T3-CBR-758",
-          "title": "Seventy-five Years in the Life of Trinity Episcopal Church",
-          "author": "Various",
+          "id": "internet-archive-holycommunioninc0000unse",
+          "title": "Holy Communion in the Church of England",
+          "author": "R. R. Osborn",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/bwb_T3-CBR-758",
+            "url": "https://archive.org/details/holycommunioninc0000unse",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/bwb_T3-CBR-758",
+            "url": "https://archive.org/services/img/holycommunioninc0000unse",
             "mode": "source"
           },
           "rights": {
@@ -1168,41 +1168,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-betweenchurchand0000park",
-          "title": "Between a church and a hard place : one faith-free dad's struggle to understand what it means to be religious (or not)",
-          "author": "Park, Andrew. 1970-",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/betweenchurchand0000park",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/betweenchurchand0000park",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-bwb_T5-CRK-126",
-          "title": "church unity movements in the united states",
-          "author": "H. Paul Douglass",
+          "id": "internet-archive-storyofchurch0000char_i4n8",
+          "title": "The Story of the Church",
+          "author": "Charles M. Jacobs",
           "language": "en",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/bwb_T5-CRK-126",
+            "url": "https://archive.org/details/storyofchurch0000char_i4n8",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/bwb_T5-CRK-126",
+            "url": "https://archive.org/services/img/storyofchurch0000char_i4n8",
             "mode": "source"
           },
           "rights": {
@@ -1214,18 +1191,41 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-bwb_T5-AGB-073",
-          "title": "How toteachin the church school",
-          "author": "Paul H.Vieth",
+          "id": "internet-archive-truechristianreg0001eman",
+          "title": "The True Christian Region containing the Universal Theology of the New Church",
+          "author": "Emanuel Swendenborg",
+          "language": "en",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/truechristianreg0001eman",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/truechristianreg0001eman",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-isbn_9781937004019",
+          "title": "Seasoned With Rhymes and a Pinch of Thyme: Immanuel Evangelical Lutheran Church",
+          "author": "Bonnie Hull",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/bwb_T5-AGB-073",
+            "url": "https://archive.org/details/isbn_9781937004019",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/bwb_T5-AGB-073",
+            "url": "https://archive.org/services/img/isbn_9781937004019",
             "mode": "source"
           },
           "rights": {
@@ -1237,18 +1237,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-childrensworship0000jean_h4r3",
-          "title": "Children's Worship in the Church School",
-          "author": "Jeanette E. Perkins",
+          "id": "internet-archive-prospectingforun0000angu",
+          "title": "Prospecting for a united church",
+          "author": "Angus Dun",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/childrensworship0000jean_h4r3",
+            "url": "https://archive.org/details/prospectingforun0000angu",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/childrensworship0000jean_h4r3",
+            "url": "https://archive.org/services/img/prospectingforun0000angu",
             "mode": "source"
           },
           "rights": {
@@ -1260,41 +1260,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-bwb_C0-CBU-603",
-          "title": "An outline of Church History",
-          "author": "Theodore Huggenvik",
-          "language": "Eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/bwb_C0-CBU-603",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/bwb_C0-CBU-603",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-alleluiagospelve0000unse",
-          "title": "alleluia and gospel verses for the church year",
-          "author": "",
+          "id": "internet-archive-popularmisconcep0000will",
+          "title": "Popular Misconceptions Of The Episcopal Church (1891)",
+          "author": "William Reed Huntington",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/alleluiagospelve0000unse",
+            "url": "https://archive.org/details/popularmisconcep0000will",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/alleluiagospelve0000unse",
+            "url": "https://archive.org/services/img/popularmisconcep0000will",
             "mode": "source"
           },
           "rights": {
@@ -1306,18 +1283,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-peace.first.minutes.2020_0001",
-          "title": "Peace Lutheran Church Council & Congregational Meeting Minutes in 2020, and Meeting Minutes and Correspondence Between Peace and First Lutheran Churches in 2019-2020",
-          "author": "Peace Lutheran Church",
+          "id": "internet-archive-bwb_Y0-BCM-857",
+          "title": "The growth of the christian church",
+          "author": "Robert hastings Nichols",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/peace.first.minutes.2020_0001",
+            "url": "https://archive.org/details/bwb_Y0-BCM-857",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/peace.first.minutes.2020_0001",
+            "url": "https://archive.org/services/img/bwb_Y0-BCM-857",
             "mode": "source"
           },
           "rights": {
@@ -1329,179 +1306,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-managingchurch0000robe_b0q3",
-          "title": "Managing the church",
-          "author": "Robert N. Gray",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/managingchurch0000robe_b0q3",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/managingchurch0000robe_b0q3",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-introductiontoar0000unse_e1v2",
-          "title": "An introduction to the articles of the Church of England",
-          "author": "",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/introductiontoar0000unse_e1v2",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/introductiontoar0000unse_e1v2",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-romanlifeindayso00chur_0_202601",
-          "title": "Roman Life in the Days of Cicero | Alfred John Church",
-          "author": "Alfred John Church",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/romanlifeindayso00chur_0_202601",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/romanlifeindayso00chur_0_202601",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-bwb_S0-BMB-962",
-          "title": "the church is a communion",
-          "author": "jerome hamer o.p",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/bwb_S0-BMB-962",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/bwb_S0-BMB-962",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-bwb_P3-ACD-491",
-          "title": "Let the church be the church",
-          "author": "Bishop George D. Mckinney",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/bwb_P3-ACD-491",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/bwb_P3-ACD-491",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-bwb_T3-BNN-626",
-          "title": "The Ordination Questions A Study for Church Officers",
-          "author": "Howard L. Rice and Clavin Chinn",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/bwb_T3-BNN-626",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/bwb_T3-BNN-626",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-bwb_Y0-BTG-171",
-          "title": "Broadman Church manual",
-          "author": "Howard Foshee",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/bwb_Y0-BTG-171",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/bwb_Y0-BTG-171",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-bwb_Y0-AFV-876",
-          "title": "Discipline of the Wesleyan Methodist church of America",
+          "id": "internet-archive-bwb_C0-AZG-697",
+          "title": "The Order Of Holry Communion The Liturgy Or Eucharist Of The Church Of The Province Of New Zealand",
           "author": "Various",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/bwb_Y0-AFV-876",
+            "url": "https://archive.org/details/bwb_C0-AZG-697",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/bwb_Y0-AFV-876",
+            "url": "https://archive.org/services/img/bwb_C0-AZG-697",
             "mode": "source"
           },
           "rights": {
@@ -1513,18 +1329,202 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-bwb_Y0-AGI-439",
-          "title": "The Church of the Holy Rude",
-          "author": "Douglas Simpson",
-          "language": "eng",
+          "id": "internet-archive-bwb_C0-ANH-860",
+          "title": "CHRISTIAN EDUCATION IN THE CHURCH TODAY",
+          "author": "HENRY M. BULLOCK",
+          "language": "en",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/bwb_Y0-AGI-439",
+            "url": "https://archive.org/details/bwb_C0-ANH-860",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/bwb_Y0-AGI-439",
+            "url": "https://archive.org/services/img/bwb_C0-ANH-860",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-churchpeoplesmov0000math",
+          "title": "The Church: A Peoples' Movement",
+          "author": "Mathai Zachariah",
+          "language": "en",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/churchpeoplesmov0000math",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/churchpeoplesmov0000math",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bwb_KQ-734-479",
+          "title": "the faith of the church",
+          "author": "Karl Barth",
+          "language": "en",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bwb_KQ-734-479",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bwb_KQ-734-479",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bwb_S0-DSF-647",
+          "title": "A Selected Library of the Nicene and Post-Nicene Fathers of The Christian Church",
+          "author": "Various",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bwb_S0-DSF-647",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bwb_S0-DSF-647",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bwb_S0-EAO-213",
+          "title": "new testament church",
+          "author": "roy e. cogdill",
+          "language": "en",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bwb_S0-EAO-213",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bwb_S0-EAO-213",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bwb_S0-CPS-363",
+          "title": "The Church of English 1900-1965",
+          "author": "Roger Lloyd",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bwb_S0-CPS-363",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bwb_S0-CPS-363",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bwb_S0-BXS-114",
+          "title": "Teaching of presidents of the church brigham young",
+          "author": "Various",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bwb_S0-BXS-114",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bwb_S0-BXS-114",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bwb_W9-CXA-238",
+          "title": "Church Reform in 18th Century Italy (The Synod of Pistoia, 1786)",
+          "author": "Charles A. Bolton",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bwb_W9-CXA-238",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bwb_W9-CXA-238",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bwb_W9-DFC-399",
+          "title": "The Building of the Eighteenth-Century Church",
+          "author": "Basil F. L. Clarke",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bwb_W9-DFC-399",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bwb_W9-DFC-399",
             "mode": "source"
           },
           "rights": {
