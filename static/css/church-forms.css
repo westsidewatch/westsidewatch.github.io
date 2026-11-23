@@ -175,3 +175,18 @@ body[data-intake-type=decision] .church-form__contact{grid-column:2;margin-top:2
  .church-form__footer span[lang=en]{margin-left:0}
 }
 @media(prefers-reduced-motion:reduce){body[data-ws-scope="church"] *{animation:none!important;transition:none!important}}
+
+/* R3: identical official P2 church name artwork, not Chiron retyped glyphs. */
+.church-form__brand{display:flex;flex-direction:column;gap:0;width:min(100%,620px);max-width:100%;align-items:center;margin-block:clamp(20px,3vw,40px)}
+.church-form__brand-artwork{display:block;width:100%;aspect-ratio:1800/193;background:var(--form-gold);
+ -webkit-mask:url("/images/living-water-west-church-name.png") center/contain no-repeat;
+ mask:url("/images/living-water-west-church-name.png") center/contain no-repeat}
+.church-form__brand span[lang=en]{
+ display:block;text-align:center;align-self:center;margin-top:clamp(8px,1vw,15px);
+ font:400 clamp(14px,1.65vw,24px)/1.25 var(--ws-type-display-en-sc,"Bodoni Moda SC",serif);
+ letter-spacing:0;white-space:normal;
+}
+@media(max-width:780px){
+ .church-form__brand{width:min(100%,550px);margin-block:25px}
+ .church-form__brand span[lang=en]{font-size:clamp(14px,3.5vw,22px)}
+}
