@@ -1326,12 +1326,19 @@
     ?(safeHttp(work.cover?.url)?{url:safeHttp(work.cover.url),alt:'中文版書封：'+work.title,kind:'cover'}:null)
     :imageFor(work,source);
    const card=document.createElement('button');card.type='button';
-   card.className='dawn-catalogue__cover-card'+(art?' dawn-catalogue__cover-card--image':' dawn-catalogue__cover-card--unresolved');
+   card.className='dawn-catalogue__cover-card'+(art&&kind!=='書單'?' dawn-catalogue__cover-card--image':' dawn-catalogue__cover-card--unresolved');
    card.setAttribute('aria-label','閱讀：'+work.title);
    if(art){
-    const img=document.createElement('img');img.loading='lazy';img.decoding='async';img.src=art.url;img.alt=art.alt||work.title;
+    const img=document.createElement('img');img.loading='lazy';img.decoding='async';img.alt=art.alt||work.title;
+    if(kind==='書單'){
+     // Typography remains complete until the same-edition photograph is loaded.
+     img.onload=()=>{if(img.naturalWidth>0){
+      card.classList.remove('dawn-catalogue__cover-card--unresolved');
+      card.classList.add('dawn-catalogue__cover-card--image');
+     }};
+    }
     img.onerror=()=>{img.remove();card.classList.remove('dawn-catalogue__cover-card--image');card.classList.add('dawn-catalogue__cover-card--unresolved')};
-    card.append(img);
+    img.src=art.url;card.append(img);
    }
    const copy=document.createElement('div');copy.className='dawn-catalogue__cover-typography';
    const num=document.createElement('small');num.textContent=String(i+1).padStart(2,'0');
