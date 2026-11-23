@@ -77,6 +77,7 @@ const cases=[['gospel-essentials',6,1],['inner-life',9,0],['church-history',7,0]
     }
     await section.locator('#dawn-reading-list-heading').scrollIntoViewIfNeeded();
     await page.screenshot({path:path.join(out,device+'-native-vinyl-list-squares.png'),animations:'disabled',timeout:30000});
+    await section.locator('.dawn-reading-list__series').screenshot({path:path.join(out,device+'-complete-booklist-series.png'),animations:'disabled',timeout:30000});
     for(const [slug,count,bookIndex] of cases){
       await page.locator('button[data-dawn-reading-list="'+slug+'"]').click();
       await page.waitForFunction(n=>document.querySelectorAll('#dawn-works button.dawn-catalogue__cover-card').length===n,count,{timeout:30000});
