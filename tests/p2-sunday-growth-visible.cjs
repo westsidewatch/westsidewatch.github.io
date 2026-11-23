@@ -21,6 +21,9 @@ const base=process.env.P2_TEST_ORIGIN||'http://127.0.0.1:4173';
      scripts:[...document.scripts].map(s=>s.src).filter(Boolean).slice(-9),
      frame:document.querySelector('.church-editorial__maquette')?.outerHTML.slice(0,240)
    }))),JSON.stringify(pageErrors));
+   // Opt-in churchPreview=1 deliberately starts at pose 2.37 (Red Sea open),
+   // when the original white GLB MUST still be hidden. Move to mid-build.
+   await page.evaluate(()=>{const d=(2.885-2.37)/.58*innerHeight;window.scrollTo({top:d,behavior:'instant'});});
    await page.waitForFunction(()=>document.querySelector('.showcase')?.classList.contains('p2-church-model-visible'),null,{timeout:12000});
    await page.waitForFunction(()=>!!document.querySelector('.church-editorial__maquette')?.getAttribute('src'),null,{timeout:12000});
    const result=await page.evaluate(()=>{
