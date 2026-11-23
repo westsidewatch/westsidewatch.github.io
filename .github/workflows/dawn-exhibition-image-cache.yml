@@ -31,4 +31,11 @@ jobs:
           git add static/dawn-library/reading-room/assets/historic-*.jpg
           if git diff --cached --quiet; then echo 'No images obtained'; exit 0; fi
           git commit -m 'assets(dawn): cache accurately identified historic Jerusalem plates for review'
-          git push origin HEAD:dawn/editorial-curation-core-v1-20261122
+          for attempt in 1 2 3 4; do
+            git fetch origin dawn/editorial-curation-core-v1-20261122
+            git rebase origin/dawn/editorial-curation-core-v1-20261122
+            if git push origin HEAD:dawn/editorial-curation-core-v1-20261122; then exit 0; fi
+            sleep 3
+          done
+          echo '::error::Could not safely commit verified images after concurrent branch updates'
+          exit 1
