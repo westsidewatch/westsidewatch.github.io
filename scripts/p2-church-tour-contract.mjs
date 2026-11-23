@@ -29,6 +29,12 @@ assert(html.includes("/css/p2-church-ministry.css") &&
 assert((ministryGuide.match(/"kjv":/g)||[]).length===7 &&
        (ministryGuide.match(/"zh":/g)||[]).length===7 &&
        ministryGuide.includes("ws-ministry-story__sunday-row") &&
+       ministryGuide.includes("ws-ministry-story__final-stack") &&
+       ministryGuide.includes("church-finale-scroll") &&
+       ministryGuide.includes("scriptureVisible:root.classList.contains('is-finale')") &&
+       ministryStyle.includes(".ws-ministry-story.is-finale .ws-ministry-story__final-stack") &&
+       ministryStyle.includes("margin:100svh auto 0") &&
+       ministryStyle.includes(".ws-ministry-story.is-finale .ws-ministry-story__panel") &&
        ministryGuide.includes("ws-ministry-story__verse-en") &&
        ministryStyle.includes("--dawn:var(--ws-first-light") &&
        ministryStyle.includes("--water:var(--ws-water") &&

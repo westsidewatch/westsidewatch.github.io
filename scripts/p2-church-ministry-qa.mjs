@@ -113,6 +113,27 @@ try{
   if(Math.abs(discipleship.state.at-211)>.1||discipleship.audit.selected!==5)
     throw Error("Discipleship chapter did not reach original gallery "+JSON.stringify(discipleship));
   await shot("03-discipleship-3d");
+  await evaluate('document.querySelector(\'[data-chapter="6"]\').click()');
+  await sleep(220);
+  const desktopFinale=await evaluate(`(()=>{
+    const sunday=document.querySelector(".ws-ministry-story__sunday").getBoundingClientRect();
+    const scripture=document.querySelector(".ws-ministry-story__panel").getBoundingClientRect();
+    return {sunday:sunday.toJSON(),scripture:scripture.toJSON(),
+      sundayDisplay:getComputedStyle(document.querySelector(".ws-ministry-story__sunday")).display,
+      scriptureDisplay:getComputedStyle(document.querySelector(".ws-ministry-story__panel")).display,
+      scriptureText:document.querySelector("[data-story-zh]").textContent,
+      kjvText:document.querySelector("[data-story-kjv]").textContent};
+  })()`);
+  if(desktopFinale.sundayDisplay==="none"||desktopFinale.scriptureDisplay==="none"||
+     desktopFinale.sunday.bottom>desktopFinale.scripture.top-6||
+     desktopFinale.sunday.top<0||desktopFinale.scripture.bottom>851||
+     !desktopFinale.scriptureText.includes("你們是世上的光")||
+     !desktopFinale.kjvText.includes("Ye are the light of the world"))
+    throw Error("Desktop finale must stack Sunday ABOVE the complete light scripture, both visible "+JSON.stringify(desktopFinale));
+  await shot("03b-desktop-sunday-above-scripture");
+  // Return to the actual upper gallery so pause/resume regression still
+  // checks the original continuous camera from that existing chapter.
+  await evaluate('document.querySelector(\'[data-chapter="5"]\').click()');
   await evaluate('document.querySelector(\'[data-action="hide"]\').click()');
   if(!await evaluate('document.querySelector(".ws-ministry-story").classList.contains("is-minimal")'))
     throw Error("Visitor cannot hide guide and see 3D");
@@ -161,11 +182,72 @@ try{
     state:window.__churchGuide.status(),
     active:document.querySelector(".ws-ministry-story").classList.contains("is-finale"),
     rows:document.querySelectorAll(".ws-ministry-story__sunday-row").length,
-    hidden:document.querySelector(".ws-ministry-story__sunday").getAttribute("aria-hidden")
+    hidden:document.querySelector(".ws-ministry-story__sunday").getAttribute("aria-hidden"),
+    scrolling:document.body.classList.contains("church-finale-scroll"),
+    documentHeight:document.scrollingElement.scrollHeight,
+    viewportHeight:innerHeight,
+    sunday:document.querySelector(".ws-ministry-story__sunday").getBoundingClientRect().toJSON(),
+    scripture:document.querySelector(".ws-ministry-story__panel").getBoundingClientRect().toJSON(),
+    church:document.querySelector("main").getBoundingClientRect().toJSON(),
+    scrollLink: getComputedStyle(document.querySelector(".ws-ministry-story__scroll-invitation")).display
   })`);
-  if(finale.state.at!==248||!finale.active||finale.rows!==7||finale.hidden!=="false")
-    throw Error("Finale must show all seven Sunday worship programme rows "+JSON.stringify(finale));
-  await shot("06-final-sunday-programme");
+  if(finale.state.at!==248||!finale.active||finale.rows!==7||
+     finale.hidden!=="false"||!finale.scrolling||
+     finale.documentHeight<finale.viewportHeight+450||
+     finale.sunday.top<finale.viewportHeight-2||
+     finale.scripture.top<finale.sunday.bottom+9||
+     finale.church.top<-.1||finale.church.height<finale.viewportHeight-3||
+     finale.scrollLink==="none")
+    throw Error("Mobile church MUST fill first screen; Sunday+scripture follow BELOW it in a scrollable page "+JSON.stringify(finale));
+  await shot("06-mobile-unobstructed-church");
+  await evaluate('document.querySelector(\'[data-action="read-finale"]\').click()');
+  await sleep(600);
+  const reading=await evaluate(`({
+    y:scrollY, sunday:document.querySelector(".ws-ministry-story__sunday").getBoundingClientRect().toJSON(),
+    scripture:document.querySelector(".ws-ministry-story__panel").getBoundingClientRect().toJSON(),
+    rows:document.querySelectorAll(".ws-ministry-story__sunday-row").length,
+    script:document.querySelector("[data-story-zh]").textContent,
+    kjv:document.querySelector("[data-story-kjv]").textContent,
+    width:document.scrollingElement.scrollWidth
+  })`);
+  if(reading.y<finale.viewportHeight*.45||
+     reading.rows!==7||
+     reading.script.length<50||reading.kjv.length<200||
+     reading.width>391)
+    throw Error("Swipe-down/mobile scroll did not reveal full schedule AND Matthew scripture "+JSON.stringify(reading));
+  await shot("06b-mobile-sunday-scroll");
+  await evaluate('document.querySelector(".ws-ministry-story__panel").scrollIntoView({behavior:"instant",block:"start"})');
+  await sleep(200);
+  await shot("06c-mobile-scripture-scroll");
+  // Check that Chinese copy doesn't leave a single Han character on its
+  // last rendered line; each header/row keeps its semantic text intact.
+  const chineseWrap=await evaluate(`(()=>{
+    const nodes=[...document.querySelectorAll(".ws-ministry-story__sunday-row strong"),
+      document.querySelector(".ws-ministry-story__panel .ws-ministry-story__title"),
+      document.querySelector(".ws-ministry-story__verse-zh")];
+    return nodes.map(el=>{
+      const text=el.firstChild,lines=new Map();
+      if(!text||text.nodeType!==Node.TEXT_NODE)return {text:el.textContent,orphan:false};
+      const r=document.createRange();
+      for(let i=0;i<text.length;i++){
+        r.setStart(text,i);r.setEnd(text,i+1);
+        const box=r.getBoundingClientRect();
+        const y=Math.round(box.y);
+        if(!lines.has(y))lines.set(y,"");
+        lines.set(y,lines.get(y)+text.textContent[i]);
+      }
+      const groups=[...lines.values()].filter(x=>x.trim());
+      return {text:el.textContent,lineLengths:groups.map(x=>x.length),
+        orphan:groups.length>1&&groups.some(x=>/^\\p{Script=Han}$/u.test(x))};
+    });
+  })()`);
+  if(chineseWrap.some(x=>x.orphan))
+    throw Error("Chinese orphan single-character line in final programme/scripture "+JSON.stringify(chineseWrap));
+  console.log("P2_CHINESE_WRAP="+JSON.stringify(chineseWrap));
+  await evaluate('document.querySelector(\'[data-action="return-scene"]\').click()');
+  await sleep(500);
+  if(await evaluate('scrollY')>40)
+    throw Error("Mobile return-to-church control does not restore complete final building");
   await send("Page.navigate",{
     url:"http://127.0.0.1:8765/p2/church-tour.html?proofFrame=83"
   });
@@ -177,6 +259,8 @@ try{
   console.log("P2_SECOND_LAYER_MINISTRY_QA_PASS="+JSON.stringify({
     sevenChapters:true,completeCUVandKJV:true,osGlass:true,
     p2Entry:true,worshipTime:94,studyTime:211,
-    SundayFinaleRows:7,pausePlay:true,hideShow:true,mobile390:true,pure3dClean:true
+    SundayFinaleRows:7,sundayAboveCompleteScripture:true,mobileFinaleScroll:true,
+    noChineseOrphans:true,unobstructedChurchFirstViewport:true,
+    pausePlay:true,hideShow:true,mobile390:true,pure3dClean:true
   }));
 }finally{ws.close();}
