@@ -4,6 +4,6 @@ description: "與教會一起生活。"
 layout: "ws-editorial-interior"
 os_editorial: true
 editorial_key: "church"
-_build:
+build:
   render: always
 ---
