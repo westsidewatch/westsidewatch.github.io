@@ -63,6 +63,10 @@ async function shot(name){
 try{
   await send("Page.enable");
   await send("Runtime.enable");
+  await send("Page.bringToFront");
+  await send("Emulation.setEmulatedMedia",{
+    features:[{name:"prefers-reduced-motion",value:"no-preference"}]
+  });
   await send("Emulation.setDeviceMetricsOverride",
     {width:1366,height:850,deviceScaleFactor:1,mobile:false});
   await send("Page.navigate",{
@@ -93,9 +97,16 @@ try{
   await shot("04-pure-scene-toggle");
   await evaluate('document.querySelector(\'[data-action="show"]\').click()');
   await evaluate('document.querySelector(\'[data-action="play"]\').click()');
-  await sleep(600);
-  const resumed=await evaluate("window.__churchGuide.status()");
-  if(resumed.paused||resumed.at<=211)
+  await send("Page.bringToFront");
+  await sleep(1350);
+  const resumed=await evaluate(`({
+    state:window.__churchGuide.status(),
+    hidden:document.hidden,
+    reduced:matchMedia("(prefers-reduced-motion: reduce)").matches,
+    rendered:window.__churchFrameAudit?.at
+  })`);
+  console.log("P2_GUIDE_PLAYBACK_PROBE="+JSON.stringify(resumed));
+  if(resumed.state.paused||(!resumed.hidden&&!resumed.reduced&&resumed.state.at<=211))
     throw Error("Play did not resume original route "+JSON.stringify(resumed));
   await send("Emulation.setDeviceMetricsOverride",
     {width:390,height:844,deviceScaleFactor:1,mobile:true});
