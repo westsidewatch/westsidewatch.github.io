@@ -42,12 +42,24 @@ const cases=[['gospel-essentials',6,1],['inner-life',9,0],['church-history',7,0]
       assert(guide.includes('閱讀次序：'),device+': source-selected reading sequence absent');
       const card=page.locator('#dawn-works button.dawn-catalogue__cover-card').nth(bookIndex);
       await card.scrollIntoViewIfNeeded();
+      const visualTitle=await card.locator('.dawn-catalogue__cover-typography>strong').evaluate(el=>{
+        const box=el.getBoundingClientRect(),style=getComputedStyle(el);
+        return {text:el.textContent?.trim(),height:box.height,font:style.fontFamily,color:style.color,opacity:style.opacity};
+      });
+      assert(visualTitle.text.length>1&&visualTitle.height>15&&visualTitle.opacity!=='0'&&/Chiron/i.test(visualTitle.font),
+        device+': actual Chinese book title is invisible '+slug+' '+JSON.stringify(visualTitle));
       await page.screenshot({path:path.join(out,device+'-'+slug+'-bookwall.png'),animations:'disabled',timeout:30000});
       await card.click();
       await page.locator('#dawn-book-expanding-preview .dawn-expander__read').waitFor({state:'visible',timeout:20000});
       await page.locator('#dawn-book-expanding-preview .dawn-expander__read').click();
       await page.locator('#dawn-book-detail').waitFor({state:'visible',timeout:20000});
-      const text=await page.locator('#dawn-book-detail__none, #dawn-book-text').last().innerText();
+      const heading=await page.locator('#dawn-book-title').evaluate(el=>{
+        const style=getComputedStyle(el),box=el.getBoundingClientRect();
+        return {font:style.fontFamily,opacity:style.opacity,height:box.height,text:el.textContent.trim()};
+      });
+      assert(/Chiron/i.test(heading.font)&&heading.height>25&&heading.opacity!=='0'&&heading.text.length>1,
+        device+': original book detail Chinese title not rendered '+slug+' '+JSON.stringify(heading));
+      const text=await page.locator('#dawn-book-text').innerText();
       assert(text.includes('為什麼推薦：')&&text.includes('怎樣閱讀：')&&text.includes('與其他作品並讀：'),
         device+': detailed source-backed editorial review missing '+slug);
       assert(await page.locator('#dawn-book-title').innerText().then(v=>v.trim().length>2),device+': book identity gone');
