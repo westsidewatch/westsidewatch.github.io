@@ -9,6 +9,7 @@ on:
       - 'docs/dawn-library/first-issue-three-stars.v1.json'
       - 'tests/dawn-editorial-launch-*'
       - 'tests/dawn-editorial-issue-browser.cjs'
+      - 'tests/dawn-cover-probe.cjs'
       - '.github/workflows/dawn-editorial-first-issue.yml'
   workflow_dispatch:
 permissions:
@@ -31,6 +32,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Audit remote image availability before browser run
+        run: node tests/dawn-cover-probe.cjs
       - name: Verify editorial dossiers and independent outputs
         run: |
           node --test tests/dawn-editorial-launch-structure.test.mjs
