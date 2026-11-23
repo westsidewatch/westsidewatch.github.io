@@ -2501,3 +2501,93 @@
  outline:2px solid var(--ws-ink)!important;
  outline-offset:-2px!important;
 }
+
+
+/* First-issue reading lists: a bibliographic contents leaf in the existing
+   P2 05 reading room. It inherits the paper, harvest and typography authority;
+   it does not create a fourth portal, independent site, or new animation. */
+#dawn-second .dawn-reading-room__reading-lists{
+ display:grid;grid-template-columns:minmax(0,37%) minmax(0,1fr);
+ gap:clamp(20px,5vw,84px);align-items:start;
+ width:100%;margin:0 0 clamp(48px,7vw,112px);padding:0 0 clamp(32px,5vw,80px);
+ border-bottom:1px solid var(--ws-harvest);background:transparent;color:var(--ws-ink);
+}
+#dawn-second .dawn-reading-room__reading-lists-intro{min-width:0}
+#dawn-second .dawn-reading-room__edition-mark{
+ display:block;color:var(--ws-harvest);font:400 clamp(10px,.9vw,12px)/1.5 var(--ws-type-display-en-sc);
+ letter-spacing:.12em;
+}
+#dawn-second .dawn-reading-room__reading-lists h2{
+ margin:clamp(12px,2vw,28px) 0 20px;
+ font:600 clamp(32px,4.4vw,76px)/1.18 var(--ws-type-display-zh);
+ letter-spacing:-.035em;color:var(--ws-ink);
+}
+#dawn-second .dawn-reading-room__reading-lists-intro p{
+ max-width:29em;margin:0;color:var(--ws-olive);
+ font:400 clamp(14px,1.15vw,18px)/1.85 var(--ws-type-reading-zh);
+}
+#dawn-second .dawn-reading-room__reading-index{
+ display:block;min-width:0;border-top:1px solid color-mix(in srgb,var(--ws-harvest) 48%,transparent);
+}
+#dawn-second .dawn-reading-room__reading-index button{
+ display:grid;grid-template-columns:minmax(95px,25%) minmax(0,1fr) auto;
+ align-items:baseline;gap:clamp(9px,1.7vw,28px);
+ width:100%;padding:clamp(18px,2.6vw,36px) 0;
+ border:0;border-bottom:1px solid color-mix(in srgb,var(--ws-harvest) 48%,transparent);
+ background:transparent;color:var(--ws-ink);text-align:left;cursor:pointer;
+ transition:color .25s ease,transform .25s ease;
+}
+#dawn-second .dawn-reading-room__reading-index button>span{
+ font:400 clamp(12px,.95vw,15px)/1.55 var(--ws-type-display-zh);
+ color:var(--ws-harvest);white-space:nowrap;
+}
+#dawn-second .dawn-reading-room__reading-index button>strong{
+ font:600 clamp(17px,1.4vw,23px)/1.48 var(--ws-type-display-zh);
+ text-wrap:balance;min-width:0;
+}
+#dawn-second .dawn-reading-room__reading-index button>em{
+ font:400 clamp(11px,.85vw,13px)/1.5 var(--ws-type-display-zh);
+ color:var(--ws-olive);font-style:normal;white-space:nowrap;
+}
+#dawn-second .dawn-reading-room__reading-index button:hover,
+#dawn-second .dawn-reading-room__reading-index button:focus-visible{
+ color:var(--ws-harvest);transform:translateX(4px);
+}
+#dawn-second .dawn-reading-room__reading-index button:focus-visible{
+ outline:2px solid var(--ws-harvest);outline-offset:4px;
+}
+#dawn-second .dawn-catalogue[data-view="editorial"] .dawn-catalogue__reading-index{
+ display:flex;flex-wrap:wrap;gap:0 clamp(16px,2.5vw,40px);
+ border-bottom:1px solid var(--ws-harvest);
+ padding:0 0 clamp(16px,2vw,30px);margin:0 0 clamp(25px,4vw,60px);
+}
+#dawn-second .dawn-catalogue__reading-index button{
+ padding:12px 0;border:0;border-bottom:1px solid transparent;background:transparent;
+ color:var(--ws-olive);font:400 clamp(14px,1.2vw,20px)/1.4 var(--ws-type-display-zh);
+ cursor:pointer;
+}
+#dawn-second .dawn-catalogue__reading-index button[aria-current="true"]{
+ color:var(--ws-ink);border-bottom-color:var(--ws-harvest);
+}
+#dawn-second .dawn-catalogue__reading-index button:focus-visible{
+ outline:2px solid var(--ws-harvest);outline-offset:3px;
+}
+@media(max-width:840px){
+ #dawn-second .dawn-reading-room__reading-lists{grid-template-columns:minmax(0,1fr);gap:28px}
+ #dawn-second .dawn-reading-room__reading-index button{
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:6px 16px;
+ }
+ #dawn-second .dawn-reading-room__reading-index button>span{grid-column:1/-1}
+ #dawn-second .dawn-reading-room__reading-index button>strong{grid-column:1}
+ #dawn-second .dawn-reading-room__reading-index button>em{grid-column:2}
+}
+@media(max-width:420px){
+ #dawn-second .dawn-reading-room__reading-lists h2{font-size:clamp(32px,10vw,46px)}
+ #dawn-second .dawn-reading-room__reading-index button>strong{font-size:16px}
+ #dawn-second .dawn-reading-room__reading-index button>em{font-size:11px}
+}
+@media(prefers-reduced-motion:reduce){
+ #dawn-second .dawn-reading-room__reading-index button{transition:none}
+ #dawn-second .dawn-reading-room__reading-index button:hover{transform:none}
+}
