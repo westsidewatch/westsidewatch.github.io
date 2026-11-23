@@ -55,9 +55,10 @@ const out='artifacts/p2-dawn-os-repair';fs.mkdirSync(out,{recursive:true});
       nav:grab('.dawn-second__global-nav'),
       returnMark:grab('.dawn-second__return .dawn-second__return-mark'),
       returnZh:grab('.dawn-second__return .dawn-second__nav-zh'),
-      collectionEn:grab('.dawn-second__all-works .dawn-second__nav-en'),
-      collectionZh:grab('.dawn-second__all-works .dawn-second__nav-zh'),
-      personalEn:grab('.dawn-second__personal .dawn-second__nav-en'),
+      personalEntry:grab('#dawn-personal-open'),
+      catalogueEntry:grab('#dawn-open-catalogue'),
+      oldTopCount:document.querySelectorAll('.dawn-second__nav-actions, #dawn-open-catalogue-top, .dawn-second__all-works').length,
+      oldTopEnglish:[...document.querySelectorAll('.dawn-second__global-nav *')].filter(el=>/THE COLLECTION|MY LIBRARY/.test(el.textContent||'')).length,
       featureEn:grab('#dawn-wall-grid .dawn-feature__titles em'),
       featureZh:grab('#dawn-wall-grid .dawn-feature__titles strong'),
       missingCoverCSS:(()=>{
@@ -71,7 +72,6 @@ const out='artifacts/p2-dawn-os-repair';fs.mkdirSync(out,{recursive:true});
         copy:getComputedStyle(meta).color};
        sheet.remove();return value;
       })(),
-      personalLabelBackground:getComputedStyle(document.querySelector('.dawn-second__personal>.dawn-second__nav-en')).backgroundColor,
       loadedCoverCSS:(()=>{
        const cover=document.createElement('button');
        cover.className='dawn-wall__tile dawn-cover dawn-cover--ready';
@@ -103,12 +103,6 @@ const out='artifacts/p2-dawn-os-repair';fs.mkdirSync(out,{recursive:true});
       returnButton:grab('.dawn-second__return')
     };
    });
-   for(const [id,en,zh] of [['collection',result.collectionEn,result.collectionZh]]){
-     assert(en.size>zh.size*1.25,device+': '+id+' English is not larger than Chinese');
-     assert(/Bodoni/i.test(en.font),device+': '+id+' English family is not OS Bodoni: '+en.font);
-     assert(/Chiron/i.test(zh.font),device+': '+id+' Chinese family is not OS Chiron: '+zh.font);
-     assert.equal(zh.weight,200,device+': '+id+' Chinese helper is not 200');
-   }
    for(const role of result.typeRoles){
     if(['body','description'].includes(role.id)){
       assert(/Noto Serif TC/i.test(role.font),
@@ -125,9 +119,6 @@ const out='artifacts/p2-dawn-os-repair';fs.mkdirSync(out,{recursive:true});
     device+': editorial cover portal still uses oversized Chinese and tiny English');
    assert.equal(result.featureZh.weight,200,
     device+': three feature portal Chinese labels must be 200');
-   assert(result.personalLabelBackground==='rgba(0, 0, 0, 0)'||
-     result.personalLabelBackground==='transparent',
-     device+': old personal counter pill behind English navigation text');
    assert(result.missingCoverCSS.tileDisplay!=='none'&&result.missingCoverCSS.opacity==='1',
      device+': missing jackets still disappear or become blank grid swatches');
    assert(result.loadedCoverCSS.opacity==='1'&&
@@ -140,7 +131,7 @@ const out='artifacts/p2-dawn-os-repair';fs.mkdirSync(out,{recursive:true});
    assert(result.returnMark.size<=21,device+': back arrow enlarged into a headline');
    assert(result.returnButton.width<115,device+': back control occupies headline-sized width');
    assert(result.returnButton.height<58,device+': back control occupies excessive height');
-   for(const [label,zh] of [['back',result.returnZh],['collection',result.collectionZh]]){
+   for(const [label,zh] of [['back',result.returnZh]]){
     assert(zh.size>=14&&zh.size<=18,device+': '+label+' Chinese is not OS UI size');
     assert.equal(zh.weight,200,device+': '+label+' Chinese is not Chiron air');
    }
@@ -164,12 +155,22 @@ const out='artifacts/p2-dawn-os-repair';fs.mkdirSync(out,{recursive:true});
    }
    assert.equal(result.departmentZh.weight,200,device+': secondary Chinese heading must be air');
    assert(result.departmentEn.size>result.departmentZh.size,device+': department heading scale reversed');
-   assert(result.nav.height<180,device+': navigation behaves like a giant toolbar');
-   assert(result.nav.position!=='fixed',device+': toolbar stuck over composition');
+   assert(result.nav.height<52&&result.nav.width<160&&result.nav.position==='absolute',
+     device+': screenshot-rejected giant billboard still occupies the top '+JSON.stringify(result.nav));
+   assert(result.oldTopCount===0&&result.oldTopEnglish===0,
+     device+': THE COLLECTION / MY LIBRARY billboard returned');
+   assert(result.personalEntry.height>20&&result.catalogueEntry.height>20,
+     device+': Collection and My Library controls lost when moving out of top band');
    assert(result.gallery.width>width*.65,device+': gallery contracted off canvas');
    assert(result.gallery.height>120,device+': source image wall collapsed');
    const overWidth=await page.evaluate(()=>document.querySelector('#dawn-second').scrollWidth-document.querySelector('#dawn-second').clientWidth);
    assert(overWidth<18,device+': horizontal overflow '+overWidth);
+   await page.locator('#dawn-personal-open').click();
+   assert(await page.locator('#dawn-personal-dialog').isVisible(),
+     device+': moving the personal library action broke its dialog');
+   await page.locator('#dawn-personal-close').click();
+   assert(!await page.locator('#dawn-personal-dialog').isVisible(),
+     device+': personal library dialog no longer closes');
    await page.screenshot({path:path.join(out,device+'-os-navigation-masthead.png'),fullPage:false});
    await page.locator('#dawn-wall-grid').scrollIntoViewIfNeeded();
    await page.screenshot({path:path.join(out,device+'-os-original-gallery.png'),fullPage:false});
