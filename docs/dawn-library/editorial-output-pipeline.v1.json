@@ -1,0 +1,136 @@
+{
+  "schema": "dawn.continuous-reading-list-editorial.v1",
+  "created": "2026-11-23",
+  "scope": "draft-editorial-system; no public publication claims",
+  "leader": "持續工作的精品書單編輯室",
+  "policy": {
+    "readingListIsLeadingPublication": true,
+    "threeStarsFromEditorialSelection": true,
+    "spectrumIsDeepScriptureAndKnowledgeResearch": true,
+    "collectionRequiresMatureMultimediaTheme": true,
+    "sourceDiscoveryAfterEditorialPublication": true,
+    "noAutomatedPublication": true,
+    "noTopThreeAlgorithm": true
+  },
+  "readingLists": [
+    {
+      "id": "DL-LIST-INNER-001",
+      "slug": "inner-life",
+      "title": "內在生活：從認識自己到在日常中與神同行",
+      "status": "editorial-research-only",
+      "magazineProof": "static/experiments/dawn-reading-lists/inner-life.html",
+      "threeStars": {
+        "id": "stars-inner-life",
+        "status": "candidate-requires-editorial-signoff",
+        "theme": "內在生活的三種重要閱讀視角",
+        "items": [
+          {
+            "workDraftId": "inner-05-chinese",
+            "rationale": "華人學者的跨傳統靈修史領讀，為中文讀者提供思想地圖"
+          },
+          {
+            "workDraftId": "inner-02",
+            "rationale": "日常工作中的神同在，讓讀者看見祈禱與生活相連"
+          },
+          {
+            "workDraftId": "inner-04",
+            "rationale": "共同體生活與獨處相互平衡"
+          }
+        ],
+        "editorialGate": "必須逐本完成選書與適讀者的編輯覆核；不是自動取書單前三本"
+      },
+      "spectrum": [
+        {
+          "id": "spectrum-inner-life",
+          "status": "research-question-not-publication",
+          "title": "常在基督裡：內在生活與教會共同體",
+          "researchQuestion": "如何理解約翰福音15章『住在』，又怎樣分辨個人祈禱與教會共同體的關係？",
+          "scripturePassagesToStudy": [
+            "約翰福音15:1–17",
+            "以弗所書4:1–16",
+            "路加福音15:11–32"
+          ],
+          "researchLayers": [
+            "原文與經文脈絡",
+            "靈修史與神學傳統",
+            "個人操練與共同體",
+            "研究性講論提綱"
+          ],
+          "sourceDraftWorkIds": [
+            "inner-02",
+            "inner-04",
+            "inner-05-chinese",
+            "inner-05"
+          ],
+          "editorialGate": "原典、經文語境、學術來源與引文核查；可作講道預備的深度知識裝備，但不得冒充完成講章"
+        }
+      ]
+    },
+    {
+      "id": "DL-LIST-HISTORY-001",
+      "slug": "church-history",
+      "title": "教會歷史：誰記錄了教會的過去？",
+      "status": "editorial-research-only",
+      "magazineProof": "static/experiments/dawn-reading-lists/church-history.html",
+      "threeStars": {
+        "id": "stars-church-history",
+        "status": "candidate-requires-editorial-signoff",
+        "theme": "教會歷史的三種書寫位置",
+        "items": [
+          {
+            "workDraftId": "history-02",
+            "rationale": "優西比烏的一手教會自述，讓讀者辨識作者的史料選擇"
+          },
+          {
+            "workDraftId": "history-05",
+            "rationale": "梁家麟的中文近代教會史，建立重要歷史坐標"
+          },
+          {
+            "workDraftId": "history-04",
+            "rationale": "王治心作為中國史家的記錄，可和近代通史相互檢驗"
+          }
+        ],
+        "editorialGate": "必須逐本完成選書與適讀者的編輯覆核；不是自動取書單前三本"
+      },
+      "spectrum": [
+        {
+          "id": "spectrum-church-history",
+          "status": "research-question-not-publication",
+          "title": "誰寫下教會的歷史：史料、見證與華人本土敘事",
+          "researchQuestion": "教會史由誰書寫、對什麼負責，早期史家與華人作者留下哪些不同視角？",
+          "scripturePassagesToStudy": [
+            "使徒行傳15:1–35"
+          ],
+          "researchLayers": [
+            "使徒行傳原文與史學敘事之區別",
+            "早期教會史學材料",
+            "宣教士和華人史家的平行文本",
+            "讀者與講道預備的史料批評"
+          ],
+          "sourceDraftWorkIds": [
+            "history-02",
+            "history-03",
+            "history-04",
+            "history-05",
+            "history-07"
+          ],
+          "editorialGate": "原典、經文語境、學術來源與引文核查；可作講道預備的深度知識裝備，但不得冒充完成講章"
+        }
+      ]
+    }
+  ],
+  "exhibitions": [
+    {
+      "id": "jerusalem-3000",
+      "title": "耶路撒冷3000年",
+      "status": "existing-isolated-curation-preview-not-certified",
+      "independentOfTheseReadingLists": true,
+      "evidenceSource": {
+        "branch": "p2-0105-dawn-library-preview-20261120",
+        "path": "static/dawn-library/p2-exhibitions/jerusalem-3000.json"
+      },
+      "previousDraftRecord": "12 books plus 6 visual contrasts, 18 scenes; browser and rights QA pending",
+      "editorialThreshold": "跨媒介史料、歷史地圖、考古、圖版和有論點的策展路徑需充分並可追溯，不因書單有多本書而自動生成"
+    }
+  ]
+}
