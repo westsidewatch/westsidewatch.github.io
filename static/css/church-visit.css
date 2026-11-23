@@ -58,3 +58,8 @@
 .church-visit__gate h3{font-size:20px;font-weight:400;margin:0}.church-visit__gate p{font-size:14px;max-width:44em;line-height:1.8}
 .church-visit__gate img{background:#fff;padding:5px;object-fit:contain;width:160px;height:160px}
 @media(max-width:540px){.church-visit__gate{flex-direction:column;align-items:flex-start}}
+
+/* Seven ministry chapters: the concluding WITNESS chapter completes the grid
+   without a blank filler rectangle. */
+.church-visit__ministries .church-visit__ministry:last-child{grid-column:1/-1;min-height:155px}
+@media(max-width:540px){.church-visit__ministries .church-visit__ministry:last-child{grid-column:auto}}
