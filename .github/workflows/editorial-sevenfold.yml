@@ -1,0 +1,47 @@
+name: Sevenfold magazine interior QA
+on:
+  pull_request:
+    paths:
+      - 'content/*/folio.md'
+      - 'data/editorial/**'
+      - 'layouts/partials/editorial/**'
+      - 'layouts/_default/ws-editorial-interior.html'
+      - 'layouts/_default/baseof.html'
+      - 'static/css/westside-editorial-interior.css'
+      - 'static/experiments/scripture-studio-motherform-live.html'
+      - 'scripts/editorial-sevenfold-contract.mjs'
+      - 'tests/editorial-sevenfold-browser.cjs'
+      - '.github/workflows/editorial-sevenfold.yml'
+  workflow_dispatch:
+jobs:
+  magazine-interiors:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: '0.167.0'
+          extended: true
+      - name: Verify OS ownership and all seven actual pages
+        run: node scripts/editorial-sevenfold-contract.mjs
+      - name: Build canonical Hugo site without rewriting original P2
+        run: hugo --gc --minify --baseURL 'http://127.0.0.1:4186/'
+      - name: Install Playwright Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright
+          npx playwright install chromium
+      - name: Inspect all seven real pages at desktop and mobile
+        run: |
+          python3 -m http.server 4186 --directory public > /tmp/ws-sevenfold-server.log 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          node tests/editorial-sevenfold-browser.cjs
+      - name: Preserve every rendered page for visual jury review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sevenfold-editorial-visual
+          path: artifacts/sevenfold-editorial/
+          retention-days: 14
+          if-no-files-found: ignore

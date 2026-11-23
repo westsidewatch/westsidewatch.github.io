@@ -1,0 +1,303 @@
+{
+  "version": "1.0.0",
+  "authority": "Westside Design OS",
+  "model": "sevenfold-magazine-editorial",
+  "sequence": [
+    "church",
+    "journal",
+    "emmaus",
+    "olive",
+    "dawn-library",
+    "cinema",
+    "daylight-cafe"
+  ],
+  "sections": {
+    "church": {
+      "key": "church",
+      "number": "01",
+      "nameZh": "神召會活水堂西區教會",
+      "nameEn": "Living Water Assembly West",
+      "eyebrow": "The Congregation",
+      "lede": "從主日敬拜進入教會生活；在查經、禱告、門訓和彼此關懷中一同成長。",
+      "source": "/church/",
+      "p2": "01",
+      "quoteZh": "信我的人，就如經上所說：從他腹中要流出活水的江河來。",
+      "quoteEn": "He that believeth on me, as the scripture hath said, out of his belly shall flow rivers of living water.",
+      "refZh": "約翰福音 7:38",
+      "refEn": "John 7:38 · KJV",
+      "featureLabel": "The House of Living Water",
+      "featureTitle": "在敬拜與查經中彼此連結",
+      "featureText": "從聚會、牧養、讀經與禱告開始，繼續認識活水堂西區的教會生活。主日程序以正式發佈資料為準；歷史檔案不作本週公告。",
+      "art": "/images/living-water-west-church-name.png",
+      "artAlt": "神召會活水堂西區教會原有中文字形",
+      "links": [
+        {
+          "label": "教會生活",
+          "detail": "主站正式入口",
+          "href": "/church/"
+        },
+        {
+          "label": "走進虛擬教會",
+          "detail": "原有 3D 導覽",
+          "href": "/p2/church-tour.html?entry=p2"
+        },
+        {
+          "label": "教會訪客頁",
+          "detail": "聚會、事工與聯絡",
+          "href": "/church/visit/"
+        },
+        {
+          "label": "信仰回應",
+          "detail": "福音與決志",
+          "href": "/church/forms/?type=decision"
+        }
+      ]
+    },
+    "journal": {
+      "key": "journal",
+      "number": "02",
+      "nameZh": "西望",
+      "nameEn": "The Journal",
+      "eyebrow": "Magazine · Vol.00",
+      "lede": "以期刊的編輯節奏展開信仰、城市、人物與藝術；從卷首、目錄及正文，進入可持續出版的西望。",
+      "source": "/journal/",
+      "p2": "02",
+      "quoteZh": "耶路撒冷啊，我在你城上設立守望的；他們晝夜必不靜默。",
+      "quoteEn": "I have set watchmen upon thy walls, O Jerusalem, which shall never hold their peace day nor night.",
+      "refZh": "以賽亞書 62:6",
+      "refEn": "Isaiah 62:6 · KJV",
+      "featureLabel": "The Foundations of a Watchful City",
+      "featureTitle": "創刊號 · Vol.00",
+      "featureText": "從卷首進入十二欄目的編輯結構，讓期刊成為全站視覺語言的源頭，而不只是其中一個內容板塊。",
+      "art": "/images/xiwang-poster-a-night-blue-approved-p2.svg",
+      "artAlt": "《西望》原有午夜藍版期刊藝術字形",
+      "links": [
+        {
+          "label": "西望",
+          "detail": "期刊首頁",
+          "href": "/journal/"
+        },
+        {
+          "label": "創刊號",
+          "detail": "Vol.00 全卷",
+          "href": "/vol-00/"
+        },
+        {
+          "label": "十二欄目",
+          "detail": "創刊號目錄",
+          "href": "/vol-00/#contents"
+        },
+        {
+          "label": "卷首",
+          "detail": "閱讀起點",
+          "href": "/vol-00/#opening"
+        }
+      ]
+    },
+    "emmaus": {
+      "key": "emmaus",
+      "number": "03",
+      "nameZh": "以馬忤斯",
+      "nameEn": "Emmaus",
+      "eyebrow": "Scripture & Study",
+      "lede": "從一節經文開始，走進聖經的歷史、人物、土地與書卷；查經與探索共用同一段經文。",
+      "source": "/emmaus/",
+      "p2": "03",
+      "quoteZh": "於是從摩西和眾先知起，凡經上所指著自己的話，都給他們講解明白了。",
+      "quoteEn": "And beginning at Moses and all the prophets, he expounded unto them in all the scriptures the things concerning himself.",
+      "refZh": "路加福音 24:27",
+      "refEn": "Luke 24:27 · KJV",
+      "featureLabel": "On the Road to Emmaus",
+      "featureTitle": "沿著經文，進入聖經世界",
+      "featureText": "ONE 負責經文閱讀與查經，搜尋負責可查證的聖經世界資料；閱讀與筆記不需另起一套資源。",
+      "art": "/images/p2-realms/v15/03-emmaus-engraving-p2-runtime.svg",
+      "artAlt": "以馬忤斯 P2 已批准的聖經世界刻線母圖",
+      "links": [
+        {
+          "label": "以馬忤斯",
+          "detail": "查經入口",
+          "href": "/emmaus/"
+        },
+        {
+          "label": "路加福音 24",
+          "detail": "ONE 經文閱讀",
+          "href": "/one/?book=42&chapter=24"
+        },
+        {
+          "label": "ONE · 一卷",
+          "detail": "經文與查經",
+          "href": "/one/"
+        },
+        {
+          "label": "多雷搜索",
+          "detail": "聖經世界索引",
+          "href": "/dore/search/"
+        }
+      ]
+    },
+    "olive": {
+      "key": "olive",
+      "number": "04",
+      "nameZh": "橄欖山",
+      "nameEn": "Olive Mountain",
+      "eyebrow": "Sermons & Witness",
+      "lede": "透過講員、系列與經文展開信仰教導；人物海報與植物刻線，通向可持續閱讀的講道內容。",
+      "source": "/olive/",
+      "p2": "04",
+      "quoteZh": "可見信道是從聽道來的，聽道是從基督的話來的。",
+      "quoteEn": "So then faith cometh by hearing, and hearing by the word of God.",
+      "refZh": "羅馬書 10:17",
+      "refEn": "Romans 10:17 · KJV",
+      "featureLabel": "A Living Testimony",
+      "featureTitle": "講員、經文與生命的見證",
+      "featureText": "保留已完成的十二位講員及其肖像編輯成果，讓海報之後的內容頁依相同的雜誌網格閱讀。",
+      "art": "/images/olive/david-pawson-editorial.png",
+      "artAlt": "大衛鮑森橄欖山講員編輯肖像",
+      "links": [
+        {
+          "label": "橄欖山",
+          "detail": "講道總入口",
+          "href": "/olive/"
+        },
+        {
+          "label": "大衛鮑森",
+          "detail": "人物與系列",
+          "href": "/olive/david-pawson/"
+        },
+        {
+          "label": "葉光明",
+          "detail": "人物與系列",
+          "href": "/olive/derek-prince/"
+        },
+        {
+          "label": "寇紹恩",
+          "detail": "人物與系列",
+          "href": "/olive/kou-shao-en/"
+        }
+      ]
+    },
+    "dawn-library": {
+      "key": "dawn-library",
+      "number": "05",
+      "nameZh": "黎明書局",
+      "nameEn": "Dawn Library",
+      "eyebrow": "Books · Curation · Reading",
+      "lede": "從可核對的作品開始編輯書單，再生長出三晨星、策展集與光譜；出版、館藏及閱讀共享同一目錄。",
+      "source": "/dawn-library/",
+      "p2": "05",
+      "quoteZh": "求你開我的眼睛，使我看出你律法中的奇妙。",
+      "quoteEn": "Open thou mine eyes, that I may behold wondrous things out of thy law.",
+      "refZh": "詩篇 119:18",
+      "refEn": "Psalm 119:18 · KJV",
+      "featureLabel": "The Edited Collection",
+      "featureTitle": "從書單開始的編輯室",
+      "featureText": "館藏不是均等陳列的商品牆：書籍、書單、三晨星、策展集與光譜以作品與資料來源為中心持續編輯。",
+      "art": "/images/jerusalem-wall.png",
+      "artAlt": "主站原有耶路撒冷城牆圖像",
+      "links": [
+        {
+          "label": "黎明書局",
+          "detail": "館藏入口",
+          "href": "/dawn-library/"
+        },
+        {
+          "label": "完整館藏",
+          "detail": "作品與閱讀通路",
+          "href": "/dawn-library/product/"
+        },
+        {
+          "label": "分類牆",
+          "detail": "編輯館藏視圖",
+          "href": "/dawn-library/product/collection.html"
+        },
+        {
+          "label": "聖經研讀",
+          "detail": "跨頁連到以馬忤斯",
+          "href": "/emmaus/"
+        }
+      ]
+    },
+    "cinema": {
+      "key": "cinema",
+      "number": "06",
+      "nameZh": "天堂電影院",
+      "nameEn": "Paradise Cinema",
+      "eyebrow": "Cinema & Moving Images",
+      "lede": "以影像、片目、主題及聖經線索編輯電影和劇集；從策展介紹走向真正可用的觀看入口。",
+      "source": "/cinema/",
+      "p2": "06",
+      "quoteZh": "我們如今彷彿對著鏡子觀看，模糊不清；到那時就要面對面了。",
+      "quoteEn": "For now we see through a glass, darkly; but then face to face.",
+      "refZh": "哥林多前書 13:12",
+      "refEn": "1 Corinthians 13:12 · KJV",
+      "featureLabel": "The Editorial Screen",
+      "featureTitle": "銀幕之外，仍有敘事",
+      "featureText": "電影院的共同版型可以呈現電影策展、攝影圖版、內容索引與觀看資訊；未經驗證的片源不能被宣稱為可播放。",
+      "art": "/images/sevenfold/westside-watch-logo-crimson.svg",
+      "artAlt": "七重疊電影版塊原有緋紅 Westside Watch 標誌",
+      "links": [
+        {
+          "label": "天堂電影院",
+          "detail": "正式頁面",
+          "href": "/cinema/"
+        },
+        {
+          "label": "西望",
+          "detail": "文化與編輯閱讀",
+          "href": "/journal/"
+        },
+        {
+          "label": "黎明書局",
+          "detail": "書籍與藝術資源",
+          "href": "/dawn-library/"
+        },
+        {
+          "label": "橄欖山",
+          "detail": "信息與聖經線索",
+          "href": "/olive/"
+        }
+      ]
+    },
+    "daylight-cafe": {
+      "key": "daylight-cafe",
+      "number": "07",
+      "nameZh": "白晝咖啡館",
+      "nameEn": "Daylight Café",
+      "eyebrow": "Daily Life & Table",
+      "lede": "將信仰帶進每天實際的生活：家庭、工作、城市、文化與朋友的相遇，在日常的餐桌上展開。",
+      "source": "/daylight-cafe/",
+      "p2": "07",
+      "quoteZh": "那地有小麥、大麥、葡萄樹、無花果樹、石榴樹、橄欖樹和蜜。",
+      "quoteEn": "A land of wheat, and barley, and vines, and fig trees, and pomegranates; a land of oil olive, and honey.",
+      "refZh": "申命記 8:8",
+      "refEn": "Deuteronomy 8:8 · KJV",
+      "featureLabel": "The Sevenfold Harvest",
+      "featureTitle": "五穀、新酒與每日生活",
+      "featureText": "以七種出產為版塊的刻線語彙，讓家庭、工作、城市與文化等生活內容持續累積，而不是建立空的分類百科。",
+      "art": "/images/sevenfold/westside-watch-logo-harvest.svg",
+      "artAlt": "七重疊白晝咖啡館原有收穫黃 Westside Watch 標誌",
+      "links": [
+        {
+          "label": "白晝咖啡館",
+          "detail": "每日生活入口",
+          "href": "/daylight-cafe/"
+        },
+        {
+          "label": "教會",
+          "detail": "聚會與關懷",
+          "href": "/church/"
+        },
+        {
+          "label": "ONE",
+          "detail": "每日讀經",
+          "href": "/one/"
+        },
+        {
+          "label": "西望雜誌",
+          "detail": "文化與論述",
+          "href": "/journal/"
+        }
+      ]
+    }
+  }
+}

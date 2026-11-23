@@ -55,3 +55,13 @@ Precise CSS positioning is verified through the shared OS diagnostic `scripts/de
 ## SVG exploration research index (2026-10-17)
 
 SVG performance, animation, path geometry, clipping and open-source references are indexed in [SVG-EXPLORATION-LIST.md](SVG-EXPLORATION-LIST.md). This is a research list inside the existing Westside Design OS authority, not a new OS, runtime, or CI. Preserve the approved P2 V75 water and door composition; require measured traces before production performance changes.
+
+## 七重疊 · 雜誌式基準內頁（2026-11-23，隔離驗收）
+
+Westside Watch 所有內頁以《西望》的編輯排版語法為共同母體，並不是把七個版塊做成同色、同卡片、同轉場。正式視覺權限仍唯一屬於本 OS 的 fonts / colors / scales / scopes / materials；新增的是可重用的頁面組件與生產母版，不是另一個 OS。
+
+七版塊必須一次全部包含：**教會、西望、以馬忤斯、橄欖山、黎明書局、天堂電影院、白晝咖啡館**。每一版塊在首輪都擁有可渲染的真實 Hugo 內頁；優先深度評審教會、以馬忤斯、橄欖山、黎明書局，同時對西望、電影、咖啡館做相同的技術和視覺驗收，不能只留下未落地規格。
+
+正式隔離母版、單一內容資料、七路由、組件及驗收契約見 [SEVENFOLD-EDITORIAL-INTERIOR.md](SEVENFOLD-EDITORIAL-INTERIOR.md)。這一版僅用 `.Params.os_editorial` 載入共用樣式與 Hugo 版型，**不得改寫既定首頁、導航、Merci、P2、3D、海報與書局動效**。經文鉛字必須連接既有 V60 母版，不可再創造相似的方塊。
+
+此章記錄候選組件的實施地點與評審門檻，**不代表視覺已定稿**。只有七頁整套經原版比對、Chromium 實測和人工評審通過，才可把規則升格並接入各版塊正式內頁。
