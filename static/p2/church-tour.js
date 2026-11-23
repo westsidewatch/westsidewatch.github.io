@@ -598,10 +598,9 @@ function overlapsWalkColumn(box,p,radius=.72){
   return box.min.x<=p[0]+radius&&box.max.x>=p[0]-radius
     &&box.min.z<=p[2]+radius&&box.max.z>=p[2]-radius;
 }
-// R27: The eight V26 upper-ascent treads were isolated individual cubes,
-// visually forming loose fragments. Use their ORIGINAL GLB coordinates to
-// add two narrow structural stringers just beneath their undersides.
-// Preserve treads, landings and the open usable space under the staircase.
+// R42: Eight original upper-ascent treads remain intact, supported by a
+// single original-coordinate continuous concealed slab. No decorative
+// multiple stringers/risers and no new architectural stair geometry.
 const upperStairAudit={treads:0,stringers:0,risers:0,source:"V26_ROUTE_03",centers:[]};
 function connectUpperStairTreads(building){
   const steps=[];
@@ -629,38 +628,21 @@ function connectUpperStairTreads(building){
   const depth=(first.max.z-first.min.z);
   const zCenter=(first.min.z+first.max.z)/2;
   const angle=Math.atan2(topY-baseY,topX-baseX);
-  const beamMaterial=whiteArchitecture;
-  for(const zSide of [-1,1]){
-    const beam=new Mesh(new BoxGeometry(length,.15,.105),beamMaterial);
-    beam.name="V26 continuous upper stair structural side stringer";
-    beam.position.set((baseX+topX)/2,(baseY+topY)/2,
-      zCenter+zSide*(depth/2-.09));
-    beam.rotation.z=angle;
-    beam.castShadow=true;
-    beam.receiveShadow=true;
-    building.add(beam);
-    upperStairAudit.stringers++;
-  }
-  // Connect the actual GLB treads with small vertical risers. A pair of
-  // thin stringers alone still leaves eight visually floating cubes.
-  // Dimensions derive from neighboring GLB tread bounds; never span the
-  // courtyard or invent a new upper-floor plate.
-  for(let i=1;i<steps.length;i++){
-    const lower=steps[i-1].b,upper=steps[i].b;
-    const rise=upper.max.y-lower.max.y;
-    const depthZ=upper.max.z-upper.min.z;
-    if(rise<.07||rise>.55||depthZ<.35)continue;
-    const riser=new Mesh(
-      new BoxGeometry(.075,rise+.04,Math.max(.25,depthZ-.10)),whiteArchitecture
-    );
-    riser.name="V26 upper ascent fitted vertical stair riser";
-    riser.position.set(upper.min.x+.038,lower.max.y+rise/2,
-      (upper.min.z+upper.max.z)/2);
-    riser.castShadow=true;
-    riser.receiveShadow=true;
-    building.add(riser);
-    upperStairAudit.risers++;
-  }
+  // R42: single continuous concealed soffit, derived from the same
+  // original eight GLB step bottoms. Replaces TWO decorative side ribs
+  // plus SEVEN separate riser boxes; preserves every original tread.
+  // Its upper face meets the step undersides; no floating add-on pieces.
+  const flight=new Mesh(
+    new BoxGeometry(length,.15,Math.max(.30,depth-.12)),whiteArchitecture
+  );
+  flight.name="V26 original upper flight single simple supporting soffit";
+  flight.position.set((baseX+topX)/2,(baseY+topY)/2,zCenter);
+  flight.rotation.z=angle;
+  flight.castShadow=true;
+  flight.receiveShadow=true;
+  building.add(flight);
+  upperStairAudit.stringers=1;
+  upperStairAudit.risers=0;
 }
 
 // R36: original shallow north-public-door terraces were three 15 cm slabs
@@ -1398,6 +1380,23 @@ function animate(now,forcedTime=null) {
     ghostRoofVisible:ghostRoofMeshes.filter(x=>x.visible).length
   };
   const sample = positionAlongRoute(t);
+  // Only a user-selected, paused P2 ministry chapter gets a purposefully
+  // composed still camera. Continuous walking and all pure-tour routes
+  // retain the original sampled eye path, safety checks and seven day cycles.
+  const ministryStop=entryParams.get("entry")==="p2"&&guidePaused
+    ?[{at:43,p:[8.70,2.35,-9.30],look:[7.45,2.12,-9.20]}, // maple through glazing
+      {at:94,p:[15.0,1.82,-9.65],look:[15.0,3.65,-.19]}, // pews + luminous cross
+      {at:151,p:[3.65,-.08,-10.60],look:[5.65,-.20,-9.15]} // shared lower courtyard
+      ].find(p=>Math.abs(p.at-t)<.07)
+    :null;
+  if(ministryStop){
+    sample.p=ministryStop.p.slice();
+    sample.look=ministryStop.look.slice();
+  }
+  window.__churchMinistryFramingAudit={
+    at:t,selected:!!ministryStop,
+    label:ministryStop?({43:"maple",94:"cross-worship",151:"fellowship-cafe"}[ministryStop.at]):null
+  };
   lookAtVector.set(sample.look[0],sample.look[1],sample.look[2]);
   camera.position.set(sample.p[0],sample.p[1],sample.p[2]);
   if(isInteriorClearanceTime(t)){

@@ -112,8 +112,9 @@ try{
       throw Error('Spatial clearance mesh cleanup absent: '+JSON.stringify(state.spatial));
     if(frame>=40&&frame<=223&&state.spatial.ghostRoofVisible!==0)
       throw Error('Ghost roof still obscures inhabited spaces at frame '+frame);
-    if(!state.upperStair||state.upperStair.treads<8||state.upperStair.stringers!==2)
-      throw Error('Original eight-step ascent lacks connected supporting structure '+JSON.stringify(state.upperStair));
+    if(!state.upperStair||state.upperStair.treads<8||
+       state.upperStair.stringers!==1||state.upperStair.risers!==0)
+      throw Error('Original upper eight steps must use ONE continuous concealed simple support '+JSON.stringify(state.upperStair));
     if(!state.northDoorSteps||state.northDoorSteps.treads!==3||
        state.northDoorSteps.supports!==3||
        state.northDoorSteps.landingSupports!==2||

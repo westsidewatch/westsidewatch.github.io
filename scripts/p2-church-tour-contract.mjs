@@ -48,9 +48,11 @@ assert(script.includes("supportNorthDoorTerraces(building)") &&
        script.includes("northDoorStepAudit.gapsClosed.push") &&
        script.includes("V26 north public door original terrace physical stair support"),
   "Original north public entrance treads must have actual continuous solid supports");
-assert(script.includes("upperStairAudit.risers++") &&
-       script.includes("V26 upper ascent fitted vertical stair riser"),
-  "Upper stair treads must have connected fitted risers, not eight floating boxes");
+assert(script.includes("V26 original upper flight single simple supporting soffit") &&
+       script.includes("upperStairAudit.stringers=1") &&
+       script.includes("upperStairAudit.risers=0") &&
+       !script.includes("V26 upper ascent fitted vertical stair riser"),
+  "Upper staircase must stay original eight treads with one continuous simple support");
 assert(script.includes("sameDrawSurface(a,b)") &&
        script.includes("coplanarTolerance:.002,exactOnly:true"),
   "Never remove architectural panels based only on matching bounding boxes");
