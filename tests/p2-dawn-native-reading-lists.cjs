@@ -35,5 +35,14 @@ assert(js.includes("openCollection('書單')"),'Native catalogue navigation miss
 assert(js.includes("renderPortalWorks(items,'書單')"),'Native six-column book gallery not reused');
 assert(js.includes("selectBookPreview(works,li,work)"),'Original cover-opening interaction removed');
 assert(js.includes("detailSource.textContent=work.sourceLabel"),'Reading version must not be mislabeled as free full text');
-assert(css.includes('.dawn-reading-room__reading-lists'),'Booklist not in existing Design OS paper/harvest scope');
+assert(!html.includes('dawn-reading-room__reading-lists'),'Oversized parallel reading-list masthead must be physically removed');
+assert(!html.includes('id="dawn-issue-contents"'),'Duplicate large reading masthead has reappeared');
+assert.equal((html.match(/class="dawn-wall__tile dawn-reading-list__tile/g)||[]).length,3,'Three guided list sleeves must use existing wall tiles');
+assert(html.indexOf('data-dawn-portal="光譜"')<html.indexOf('data-dawn-reading-list="gospel-essentials"'),'Booklists must follow the original three editorial portals');
+assert(html.includes('dawn-reading-list__issue'),'Quiet journal imprint missing inside original grid');
+assert(html.includes('class="dawn-reading-room__departments" aria-labelledby="dawn-departments-heading" hidden'),'Seven subjects should not compete on editorial opening');
+assert(js.includes("works.prepend(guide)"),'Guided question square must precede original books');
+assert(js.includes("guide.className='dawn-reading-list__guide'"),'2x2 guide not rendered inside existing catalogue');
+assert(css.includes('.dawn-reading-list__tile')&&css.includes('.dawn-reading-list__guide'),'One visual grammar for small square sleeves and large 2x2 reading guide is missing');
+assert(css.includes('dawn-reading-room__departments[hidden]'),'Seven subjects may not be present on editorial landing');
 console.log('PASS: P2-05 original 3 portals, 7 subjects, native book reader, 3 guided lists, 22 editorial works');
