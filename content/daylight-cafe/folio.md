@@ -6,4 +6,5 @@ os_editorial: true
 editorial_key: "daylight-cafe"
 build:
   render: always
+  list: never
 ---
