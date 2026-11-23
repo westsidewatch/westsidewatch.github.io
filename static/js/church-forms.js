@@ -17,6 +17,9 @@
  heading.textContent=current.title;description.textContent=current.description;
  document.body.dataset.intakeType=type in types?type:'newcomer';
  if(type==='decision'){
+   const first=document.createElement('span');first.textContent='信仰回應';
+   const second=document.createElement('span');second.textContent='與決志';
+   heading.replaceChildren(first,second);
    const gospel=document.getElementById('church-gospel');
    const intro=document.getElementById('church-decision-intro');
    if(gospel)gospel.hidden=false;
