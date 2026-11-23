@@ -90,9 +90,15 @@ function drawScene(vh,now){
  // For the magazine takeover, all church hit targets are disabled again.
  church.style.pointerEvents=showChurch&&vh>=2.37&&magazineProgress===0?'auto':'none';
  root.dataset.p2Phase=vh<.65?'identity':vh<1.72?'ocean-rise':vh<2.37?'red-sea':magazineProgress>=.999?'magazine':magazineProgress>0?'church-to-magazine':'church';
- // One scroll clock controls church construction and its reversible growth.
- // The completed model is held before the separate Magazine curtain may enter.
- root.dataset.p2ChurchGrowth=(reduced.matches?1:smooth((vh-1.48)/1.60)).toFixed(4);
+ // P2 choreography: Red Sea opens first (1.72–2.37), then the native
+ // maquette construction grows from 0 to 100% (2.41–3.22).  The remaining
+ // church hold ends at the ORIGINAL magazine threshold 3.36.  All phases
+ // remain owned by scroll position and reverse cleanly on upward scroll.
+ const buildStart=2.41,buildEnd=3.22;
+ const buildProgress=smooth((vh-buildStart)/(buildEnd-buildStart));
+ root.dataset.p2ChurchGrowth=(reduced.matches?1:buildProgress).toFixed(4);
+ root.dataset.p2ChurchBuildPhase=vh<buildStart?'waiting-for-red-sea':
+  vh<buildEnd?'building':'complete';
  root.dataset.p2WaterLevel=rise.toFixed(4);
  root.dataset.p2Progress=vh.toFixed(4);
  index.querySelector('span').textContent=magazineProgress>=.5?'02 / 07':'01 / 07';
