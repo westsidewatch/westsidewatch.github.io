@@ -127,7 +127,7 @@ document.addEventListener('click',event=>{
   if(target.closest('a[href]')&&!target.closest(
     '.church-folio__identity-link,.church-folio__english-link,.church-folio__model-entry'
   ))return;
-  const url=new URL('/p2/church-tour.html?scene=20261121-source-maple-fullday-r4', window.location.href);
+  const url=new URL('/p2/church-tour.html?entry=p2', window.location.href);
   event.preventDefault();
   // A user-activated top-level navigation, even when P2 lives in its
   // original homepage iframe; fallback to this frame if top is restricted.

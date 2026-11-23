@@ -7,6 +7,8 @@ const read = p => readFileSync(p, "utf8");
 const html = read("static/p2/church-tour.html");
 const script = read("static/p2/church-tour.js");
 const physicalUnion = read("static/p2/church-geometry-union.js");
+const ministryGuide = read("static/js/p2-church-ministry.js");
+const ministryStyle = read("static/css/p2-church-ministry.css");
 const folio = read("static/p2/living-water.html");
 const interaction = read("static/js/p2-living-water.js");
 const firstLayer = read("static/p2-maquette/index.html");
@@ -18,6 +20,19 @@ for (const [name, source] of [
 assert(!/location\.replace|http-equiv=["']refresh/.test(html), "No redirect in tour page");
 assert(/<canvas\b/.test(html), "Tour owns its own WebGL canvas");
 assert(!/<h[1-6]\b|<p\b|<button\b|<aside\b/i.test(html), "No visible UI or engineering labels");
+assert(html.includes("/css/p2-church-ministry.css") &&
+       html.includes("/js/p2-church-ministry.js") &&
+       script.includes("window.__churchGuide={") &&
+       script.includes("if (!prefersReducedMotion && !guidePaused) elapsed += dt;"),
+  "P2 second layer must reuse the established native camera renderer");
+assert(ministryGuide.includes("query.get('entry')!=='p2'") &&
+       ministryGuide.includes("window.__churchGuide") &&
+       ministryGuide.includes("chapters.length") &&
+       ministryGuide.includes("前往第") &&
+       ministryStyle.includes(".ws-ministry-story__rail"),
+  "Only visitors entering from P2 see the 3D ministry editorial chapters");
+assert((folio.match(/\/p2\/church-tour\.html\?entry=p2/g)||[]).length===3,
+  "All three P2 church text/model links lead to the same second layer");
 assert(script.includes("entranceHinge.rotation.y"), "A real scene door must open");
 assert(script.includes('const southDoor = mesh("TALL SINGLE WHITE PIVOT DOOR")') &&
        script.includes("entranceHinge.attach(southDoor)"),
@@ -75,7 +90,8 @@ for (const file of [
   "static/p2-maquette/assets/GLTFLoader-j388d5bW.js"
 ]) assert(existsSync(file), "Missing local asset: " + file);
 assert(folio.match(/\/p2\/church-tour\.html/g)?.length >= 3, "Both first-layer church names and model must link to native tour");
-assert(interaction.includes("new URL('/p2/church-tour.html?scene=20261121-source-maple-fullday-r4', window.location.href)"), "Iframe click must produce a resolved local URL");
+assert(interaction.includes("new URL('/p2/church-tour.html?entry=p2', window.location.href)"),
+  "P2 masked church click must enter the ministry-aware second layer");
 assert(firstLayer.includes("p2-BIwqVfIr.js"), "First-layer growth model remains untouched");
 const syntax = script.replace(/import\s*\{[\s\S]*?\}\s*from\s*["'][^"']+["'];?/gm, "");
 new Script(syntax, { filename: "church-tour.js" });

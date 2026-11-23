@@ -1324,6 +1324,7 @@ const requestedStart=entryParams.get("startAt");
 const startSeconds=requestedStart!==null&&Number.isFinite(Number(requestedStart))
   ?Math.min(route[route.length-1].at,Math.max(0,Number(requestedStart))):0;
 let elapsed = startSeconds, previousFrame = 0, isVisible = !document.hidden;
+let guidePaused=false;
 let pointerDown = false, pointerX = 0, pointerY = 0;
 let yawOffset = 0, pitchOffset = 0;
 canvas.addEventListener("pointerdown", event => {
@@ -1346,7 +1347,7 @@ function animate(now,forcedTime=null) {
   if (!isVisible) { previousFrame = now; return; }
   const dt = previousFrame ? Math.min(0.045, Math.max(0, (now - previousFrame) / 1000)) : 0;
   previousFrame = now;
-  if (!prefersReducedMotion) elapsed += dt;
+  if (!prefersReducedMotion && !guidePaused) elapsed += dt;
   const duration = route[route.length - 1].at;
   // Do not reset early: perform the entire route, including the third level
   // and the final aerial, before restarting after a short panoramic hold.
@@ -1428,6 +1429,25 @@ loadArchitecture().then(() => {
   // Direct, synchronous proof rendering: capture the requested actual
   // WebGL frame without reloading the architecture or guessing RAF timing.
   window.__churchRenderProofFrame=at=>animate(performance.now(),at);
+  // This opt-in editorial controller uses the established 3D GLB route.
+  window.__churchGuide={
+    seek(seconds){
+      const t=Number(seconds);
+      if(!Number.isFinite(t))return false;
+      elapsed=Math.min(route[route.length-1].at,Math.max(0,t));
+      previousFrame=0;
+      yawOffset=0;pitchOffset=0;
+      animate(performance.now(),elapsed);
+      return true;
+    },
+    pause(){guidePaused=true;},
+    play(){guidePaused=false;previousFrame=0;},
+    status(){
+      const duration=route[route.length-1].at;
+      return {ready:document.body.classList.contains("ready"),
+        at:Math.min(duration,elapsed%(duration+20)),paused:guidePaused,duration};
+    }
+  };
   requestAnimationFrame(animate);
 }).catch(error => {
   console.error("Virtual church model load failed", error);
