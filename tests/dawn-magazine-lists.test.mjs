@@ -1,0 +1,15 @@
+import test from "node:test"; import assert from "node:assert/strict"; import fs from "node:fs"; import path from "node:path"; import {fileURLToPath} from "node:url";
+import {checkReadingListProofs} from "../scripts/check_dawn_magazine_lists.mjs";
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");
+const read=p=>fs.readFileSync(path.join(root,p),"utf8");
+const data=JSON.parse(read("docs/dawn-library/reading-lists/reading-list-dossiers-v1.json"));
+const covers=JSON.parse(read("static/experiments/dawn-reading-lists/edition-cover-review.v1.json"));
+const pages=Object.fromEntries(data.lists.map(l=>[l.slug,read("static/experiments/dawn-reading-lists/"+l.slug+".html")]));
+const cp=()=>[structuredClone(data),structuredClone(covers),structuredClone(pages)];
+test("magazine articles contain independent editorial and optional access",()=>assert.deepEqual(checkReadingListProofs(...cp()),[]));
+test("missing visible recommendation fails",()=>{let[d,c,p]=cp();p["inner-life"]=p["inner-life"].replace(d.lists[0].books[0].judgement,"");assert.match(checkReadingListProofs(d,c,p).join("|"),/lost recommendation/);});
+test("links must remain after full magazine reading",()=>{let[d,c,p]=cp();p["inner-life"]=p["inner-life"].replace('class="dl-support"','class="dl-support"') ;const p0=p["inner-life"];p["inner-life"]=p0.replace('class="dl-support"','class="dl-support"'); const earlier=p0.slice(p0.indexOf('class="dl-support"'));p["inner-life"]=earlier+p0.slice(0,p0.indexOf('class="dl-support"')); assert.match(checkReadingListProofs(d,c,p).join("|"),/access must follow/);});
+test("book-cover identity must not be lost",()=>{let[d,c,p]=cp();c.works[0].cover.src="https://example.com/fake-cover.jpg";assert.match(checkReadingListProofs(d,c,p).join("|"),/cover reference absent/);});
+test("no unverified free Chinese reading",()=>{let[d,c,p]=cp();c.works[0].readingSupport.freeChineseTextUrl="https://example.com";assert.match(checkReadingListProofs(d,c,p).join("|"),/unverified free reading/);});
+test("no rights approval without browser proof",()=>{let[d,c,p]=cp();c.works[0].cover.reusePermission="approved";assert.match(checkReadingListProofs(d,c,p).join("|"),/unearned publication/);});
+test("all works must retain access records",()=>{let[d,c,p]=cp();c.works.pop();assert.match(checkReadingListProofs(d,c,p).join("|"),/cardinality mismatch/);});
