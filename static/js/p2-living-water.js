@@ -102,7 +102,11 @@ function drawScene(vh,now){
  root.dataset.p2WaterLevel=rise.toFixed(4);
  root.dataset.p2Progress=vh.toFixed(4);
  index.querySelector('span').textContent=magazineProgress>=.5?'02 / 07':'01 / 07';
- const entry=index.querySelector('a');entry.href=magazineProgress>=.5?'/journal/':'/church/';entry.textContent=magazineProgress>=.5?'READ THE JOURNAL':'ENTER LIVING WATER';
+ const entry=index.querySelector('a');
+ // The full 3D ministry tour IS the P2 church second page, including the
+ // small existing 01/07 church entry; never route it to a separate summary.
+ entry.href=magazineProgress>=.5?'/journal/':'/p2/church-tour.html?entry=p2';
+ entry.textContent=magazineProgress>=.5?'READ THE JOURNAL':'ENTER LIVING WATER';
 }
 
 function schedule(){if(!raf)raf=requestAnimationFrame(render)}
