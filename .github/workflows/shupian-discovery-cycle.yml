@@ -73,21 +73,6 @@ jobs:
             git commit -m 'data(shupian): publish live source discovery and validation evidence'
             git push || (git pull --rebase -X theirs origin main && git push)
           fi
-      - name: Publish research evidence and existing cinema page to gh-pages
-        run: |
-          git fetch origin gh-pages
-          git worktree add -b shupian-evidence-publish /tmp/shupian-evidence-pages origin/gh-pages
-          mkdir -p /tmp/shupian-evidence-pages/shupian/recovery
-          cp static/shupian/recovery/engine-live-round.json /tmp/shupian-evidence-pages/shupian/recovery/engine-live-round.json
-          cp static/shupian/index.html /tmp/shupian-evidence-pages/shupian/index.html
-          cd /tmp/shupian-evidence-pages
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add shupian/recovery/engine-live-round.json shupian/index.html
-          if ! git diff --cached --quiet; then
-            git commit -m 'data(shupian): display the latest source lifecycle checks'
-            git push origin HEAD:gh-pages
-          fi
       - name: Preserve full technical report
         if: always()
         uses: actions/upload-artifact@v4
