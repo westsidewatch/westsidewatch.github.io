@@ -56,7 +56,7 @@ assert(ministryGuide.includes("query.get('entry')!=='p2'") &&
        ministryGuide.includes("前往第") &&
        ministryStyle.includes(".ws-ministry-story__rail"),
   "Only visitors entering from P2 see the 3D ministry editorial chapters");
-assert((folio.match(/\/p2\/church-tour\.html\?entry=p2/g)||[]).length===3 &&
+assert((folio.match(/\/p2\/church-tour\.html\?entry=p2/g)||[]).length===5 &&
        interaction.includes("entry.href=magazineProgress>=.5?'/journal/':'/p2/church-tour.html?entry=p2'"),
   "Both church names, native maquette and existing compact 01 entry must lead to the SAME 3D church page");
 assert(interaction.includes("const buildStart=2.50,buildEnd=3.27") &&
