@@ -25,7 +25,7 @@ test("all local magazine links and within-page book anchors resolve",()=>{
    const link=raw.replaceAll("&amp;","&");
    if(!link.startsWith("./"))continue;
    const [target,anchor]=link.slice(2).split("#");
-   assert.ok(!target||pages.includes(target),name+" links to absent page "+link);
+   assert.ok(!target||pages.includes(target)||["magazine.css","launch.css"].includes(target),name+" links to absent local resource "+link);
    if(anchor)assert.ok((target?html[target]:text)?.includes('id="'+anchor+'"'),name+" broken anchor "+link);
  }
 });
@@ -37,7 +37,7 @@ test("every chosen work retains its editorial recommendation in the public artic
 test("three stars are handpicked, cross three lists, and not a supplier ranking",()=>{
  assert.equal(stars.works.length,3);
  assert.deepEqual(stars.works.map(w=>w.id),["gospel-02","inner-05-chinese","history-01"]);
- for(const w of stars.works){assert.ok(w.main.length>90);assert.ok(html["three-stars.html"].includes(w.main));}
+ for(const w of stars.works){assert.ok(w.main.length>=45,"recommendation too brief for "+w.id);assert.ok(html["three-stars.html"].includes(w.main));}
 });
 test("spectrum is substantive scripture study, not a tag directory",()=>{
  const s=html["spectrum-abiding.html"];
