@@ -8,6 +8,8 @@ on:
       - 'static/js/p2-dawn-living-membership.mjs'
       - 'static/dawn-library/living/root.json'
       - 'tests/p2-dawn-reading-hall.cjs'
+      - 'tests/p2-dawn-native-reading-lists.cjs'
+      - 'static/dawn-library/p2-reading-lists-issue-01.json'
       - '.github/workflows/p2-dawn-reading-hall.yml'
   workflow_dispatch:
 permissions:
@@ -25,3 +27,5 @@ jobs:
         run: node tests/p2-dawn-reading-hall.cjs
       - name: Original living Work membership
         run: node tests/p2-dawn-living-membership.cjs
+      - name: Native editorial booklist ownership and 22 reading recommendations
+        run: node tests/p2-dawn-native-reading-lists.cjs
