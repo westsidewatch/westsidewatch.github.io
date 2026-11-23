@@ -16,19 +16,29 @@ const cases=[['gospel-essentials',6,1],['inner-life',9,0],['church-history',7,0]
     const response=await page.goto('http://127.0.0.1:4173/experiments/p2-0105-dawn-preview.html?layer=second&d=28.4&native-list=1',
       {waitUntil:'domcontentloaded',timeout:45000});
     assert.equal(response?.status(),200,device+': P2 05 preview missing');
-    const section=page.locator('.dawn-reading-room__reading-lists');
+    const section=page.locator('#dawn-wall-grid');
     await section.waitFor({state:'visible',timeout:30000});
-    assert.equal(await section.locator('button[data-dawn-reading-list]').count(),3,device+': all three lists needed');
-    assert.equal(await page.locator('#dawn-wall-grid .dawn-feature').count(),3,device+': original editorial portal missing');
+    assert.equal(await section.locator('button[data-dawn-reading-list]').count(),3,device+': all three original-grid reading lists needed');
+    assert.equal(await section.locator('.dawn-feature').count(),3,device+': original editorial portal missing');
     assert.equal(await page.locator('.dawn-second__motherform').count(),1,device+': original Scripture Studio removed');
+    assert.equal(await page.locator('#dawn-issue-contents').count(),0,device+': intrusive old giant booklist headline remains');
+    assert(!await page.locator('.dawn-reading-room__departments').isVisible(),device+': seven subjects competing on opening wall');
     await section.scrollIntoViewIfNeeded();
     const style=await section.evaluate(el=>{
-      const title=el.querySelector('h2'),s=getComputedStyle(title);
-      return {font:s.fontFamily,weight:s.fontWeight,bg:getComputedStyle(el).backgroundColor,
-        clip:el.scrollWidth-el.clientWidth, viewport:document.querySelector('#dawn-second').clientWidth,
+      const portal=[...el.querySelectorAll('.dawn-feature')];
+      const tiles=[...el.querySelectorAll('button[data-dawn-reading-list]')];
+      const first=tiles[0],s=getComputedStyle(first.querySelector('.dawn-reading-list__caption strong'));
+      return {font:s.fontFamily,weight:s.fontWeight,unit:first.getBoundingClientRect().width,
+        height:first.getBoundingClientRect().height,
+        portalBottom:Math.max(...portal.map(n=>n.getBoundingClientRect().bottom)),
+        firstListTop:Math.min(...tiles.map(n=>n.getBoundingClientRect().top)),
+        parent:first.parentElement?.id,
         pageOverflow:document.querySelector('#dawn-second').scrollWidth-document.querySelector('#dawn-second').clientWidth};
     });
     assert(/Chiron/i.test(style.font),device+': original Design OS Chinese type removed '+style.font);
+    assert(style.parent==='dawn-wall-grid',device+': guided lists escaped original vinyl wall');
+    assert(Math.abs(style.unit-style.height)<12,device+': reading-list sleeve not a square '+JSON.stringify(style));
+    assert(style.firstListTop>=style.portalBottom-8,device+': reading lists displayed before the original three editorial portals '+JSON.stringify(style));
     assert(style.pageOverflow<18,device+': second layer horizontal overflow '+style.pageOverflow);
     await page.screenshot({path:path.join(out,device+'-native-reading-contents.png'),animations:'disabled',timeout:30000});
     for(const [slug,count,bookIndex] of cases){
@@ -37,9 +47,14 @@ const cases=[['gospel-essentials',6,1],['inner-life',9,0],['church-history',7,0]
       assert(await page.locator('#dawn-catalogue').isVisible(),device+': native catalogue did not open for '+slug);
       assert(await page.locator('#dawn-catalogue__reading-index').count()===0,'No parallel selector ID allowed');
       assert.equal(await page.locator('.dawn-catalogue__reading-index button').count(),3,device+': same folio list switching missing');
-      assert(await page.locator('#dawn-catalogue-introduction').isVisible(),device+': reading guide not in original editorial area');
-      const guide=await page.locator('#dawn-catalogue-introduction').innerText();
-      assert(guide.includes('閱讀次序：'),device+': source-selected reading sequence absent');
+      const guide=page.locator('#dawn-works > .dawn-reading-list__guide');
+      assert.equal(await guide.count(),1,device+': 2x2 editorial question is not inside the original six-column work grid');
+      const guideText=await guide.innerText();
+      assert(guideText.includes('閱讀次序：')&&guideText.length>110,device+': original question, essay and sequence missing');
+      const guideBox=await guide.boundingBox(),bookBox=await page.locator('#dawn-works .dawn-reading-list__sleeve').first().boundingBox();
+      assert(guideBox&&bookBox&&guideBox.width>bookBox.width*1.85,device+': hierarchy lacks true 2x2 / 1x1 size contrast '+slug);
+      assert(Math.abs(guideBox.width-guideBox.height)<22,device+': question tile not square '+slug+' '+JSON.stringify(guideBox));
+      assert(!await page.locator('#dawn-catalogue-introduction').isVisible(),device+': duplicate separate reading essay still occupies top of collection');
       const card=page.locator('#dawn-works button.dawn-catalogue__cover-card').nth(bookIndex);
       await card.scrollIntoViewIfNeeded();
       const visualTitle=await card.locator('.dawn-catalogue__cover-typography>strong').evaluate(el=>{
