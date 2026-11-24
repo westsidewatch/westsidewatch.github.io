@@ -27,11 +27,11 @@
     </nav>
   </details>
   {{ partial "editorial/grammar/cover.html" (dict "cover" $composition.cover "realm" $realm "section" $section) }}
-  <main class="ws-grammar__body" id="ws-grammar-content">
+  <div class="ws-grammar__body" id="ws-grammar-content">
     {{ range $i, $block := $composition.blocks }}
       {{ partial "editorial/grammar/block.html" (dict "block" $block "index" $i "realm" $realm "section" $section) }}
     {{ end }}
-  </main>
+  </div>
   <footer class="ws-grammar__colophon">
     <p lang="en">Westside Watch <span>/</span> Watch for the Dawn</p>
     <p>{{ $section.nameZh }} <span aria-hidden="true">·</span> <span lang="en">{{ $composition.cover.issue }}</span></p>
