@@ -1,0 +1,33 @@
+{{/* Supported cover modes: identity, poster, atlas, portrait, ledger, cinematic, quiet.
+   Different composition, same typography, colors, measure and editorial ownership. */}}
+{{ $hero := .cover }}
+<section class="ws-gram-cover" data-mode="{{ $hero.mode }}" aria-label="本篇導讀">
+  <div class="ws-gram-cover__text">
+    <p class="ws-grammar__eyebrow" lang="en">{{ $hero.eyebrow }}</p>
+    <h1 id="ws-grammar-title" class="ws-gram-cover__title">
+      {{ if eq $hero.mode "identity" }}
+        <span class="ws-gram-cover__official-identity" role="img" aria-label="神召會活水堂西區教會"></span>
+        <span class="ws-gram-cover__title-en ws-gram-cover__title-en--official" lang="en">{{ $hero.titleEn }}</span>
+      {{ else }}
+        <span class="ws-gram-cover__title-zh">{{ $hero.titleZh }}</span>
+        <span class="ws-gram-cover__title-en" lang="en">{{ $hero.titleEn }}</span>
+      {{ end }}
+    </h1>
+    <p class="ws-gram-cover__deck">{{ $hero.deck }}</p>
+    <div class="ws-gram-cover__meta">
+      <span lang="en">{{ $hero.issue }}</span>
+      <a href="#ws-grammar-content">繼續閱讀 <span aria-hidden="true">↓</span></a>
+    </div>
+  </div>
+  {{ if ne $hero.mode "identity" }}
+    <figure class="ws-gram-cover__visual">
+      <img src="{{ $hero.art.src }}" alt="{{ $hero.art.alt }}" loading="eager" decoding="async">
+      <figcaption><span lang="en">{{ $hero.issue }}</span><span>圖版 / {{ .section.nameZh }}</span></figcaption>
+    </figure>
+  {{ else }}
+    <div class="ws-gram-cover__identity-field" aria-hidden="true">
+      <span class="ws-gram-cover__identity-mark"></span>
+      <span lang="en">Living Water · John VII:38</span>
+    </div>
+  {{ end }}
+</section>
