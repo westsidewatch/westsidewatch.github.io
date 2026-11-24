@@ -1,3 +1,4 @@
+import {clipBlockToEnvelope} from '../preview/jerusalem-3000/district-infill.js';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import * as THREE from 'three';
@@ -56,7 +57,9 @@ for(let i=0;i<p.count;i+=3){const triangle=[0,1,2].map(k=>({x:p.getX(i+k),z:p.ge
 for(const mesh of meshes){mesh.updateMatrix();const p=mesh.geometry.attributes.position;for(let i=0;i<p.count;i++){const v=new THREE.Vector3().fromBufferAttribute(p,i).applyMatrix4(mesh.matrix);assert.ok(v.y>=terrain.heightAtWorld(v.x,v.z)-1e-4,'geometry must remain above canonical terrain');}}
 const streetGroup=new THREE.Group(),material=new THREE.MeshStandardMaterial(),streetMeshes=buildHerodianRoadGeometry(streetGroup,registration.roads,{inferred:material},terrain,{exclusions:layout.roadExclusions});
 const arrival=core.get(layout.access.id).metadata.spatialTopology.points[0];let hit=false;
-for(const mesh of streetMeshes){const p=mesh.geometry.attributes.position,poly=Array.from({length:p.count},(_,i)=>({x:p.getX(i),z:p.getZ(i)}));const boundary=[poly[0],poly[1],poly[3],poly[2]];assert.ok(layout.roadExclusions.every(r=>!polygonsOverlap(boundary,r.polygon)),'rendered street must not cross reserved precinct');if(mesh.userData.cityObject.objectId===layout.access.from){const b=new THREE.Box3().setFromObject(mesh);if(arrival.x>=b.min.x&&arrival.x<=b.max.x&&arrival.z>=b.min.z&&arrival.z<=b.max.z)hit=true;}}
+for(const mesh of streetMeshes){const p=mesh.geometry.attributes.position,index=mesh.geometry.index;
+ for(let i=0;i<(index?.count??p.count);i+=3){const triangle=[0,1,2].map(k=>{const j=index?index.getX(i+k):i+k;return{x:p.getX(j),z:p.getZ(j)};});for(const zone of layout.roadExclusions){const area=clipBlockToEnvelope(triangle,zone.polygon,{minArea:.00001}).reduce((sum,q)=>sum+Math.abs(q.reduce((s,a,i)=>{const b=q[(i+1)%q.length];return s+a.x*b.z-b.x*a.z;},0))/2,0);assert.ok(area<.01,'actual paving triangles may touch but never occupy the reserved precinct');}}
+ if(mesh.userData.cityObject.objectId===layout.access.from){const b=new THREE.Box3().setFromObject(mesh);if(arrival.x>=b.min.x&&arrival.x<=b.max.x&&arrival.z>=b.min.z&&arrival.z<=b.max.z)hit=true;}}
 assert.ok(hit,'access must reach an actual retained street mesh');
 const parcels=buildEraParcelCore(core,terrain,{phaseId:registration.phase,registration,districtId:registration.districts[0].id,exclusions:layout.reservations});assert.ok(parcels.count>0);for(const parcel of parcels.parcels)for(const r of layout.reservations)assert.ok(!polygonsOverlap(parcel.geometry.polygon,r.polygon),'no housing parcel inside sanctuary or approach');
 for(const position of [6.9,8.1,11.9]){runtime.apply({position});assert.equal(runtime.diagnostics().visibleTemple,0,'selected profile must never leak into earlier/later phases');}
