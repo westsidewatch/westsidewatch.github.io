@@ -150,6 +150,7 @@ jobs:
           node scripts/verify_jerusalem_3000_async_later_browser.mjs
           node scripts/verify_jerusalem_3000_visual_hierarchy_browser.mjs
           node scripts/verify_jerusalem_3000_landmark_silhouette_browser.mjs
+          node scripts/verify_jerusalem_3000_terrain_readability_browser.mjs
           node scripts/verify_jerusalem_3000_main_view_browser.mjs
           node scripts/verify_jerusalem_3000_era_comparison_browser.mjs
           node scripts/verify_jerusalem_3000_model_coverage_browser.mjs

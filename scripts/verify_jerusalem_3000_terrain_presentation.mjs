@@ -2,8 +2,14 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import * as THREE from 'three';
 import {loadCanonicalTerrain} from '../preview/jerusalem-3000/terrain-runtime.js';
-import {createTerrainPresentation} from '../preview/jerusalem-3000/terrain-presentation.js';
+import {createTerrainPresentation,terrainHorizonOcclusion} from '../preview/jerusalem-3000/terrain-presentation.js';
 const grid=JSON.parse(readFileSync(new URL('../preview/jerusalem-3000/data/terrain/copernicus-glo30-jerusalem.json',import.meta.url)));
+// Synthetic valley/crest distinguish enclosure from solar-facing slope shading.
+const bowl=new THREE.PlaneGeometry(720,720,24,24);bowl.rotateX(-Math.PI/2);
+const bp=bowl.attributes.position;for(let i=0;i<bp.count;i++)bp.setY(i,Math.hypot(bp.getX(i),bp.getZ(i))*.4);
+const valley=terrainHorizonOcclusion(bowl),middle=12*25+12;assert.ok(valley[middle]>.4);
+for(let i=0;i<bp.count;i++)bp.setY(i,-bp.getY(i));const crest=terrainHorizonOcclusion(bowl);assert.equal(crest[middle],0);
+for(let i=0;i<bp.count;i++)bp.setY(i,0);assert.ok(terrainHorizonOcclusion(bowl).every(v=>v===0));bowl.dispose();
 const previousFetch=globalThis.fetch;
 let terrain;
 try{globalThis.fetch=async()=>({ok:true,json:async()=>structuredClone(grid)});terrain=await loadCanonicalTerrain({elevationGrid:'./terrain/copernicus-glo30-jerusalem.json'},new THREE.Group());}finally{globalThis.fetch=previousFetch;}
@@ -12,6 +18,7 @@ const positions=Array.from(terrain.mesh.geometry.attributes.position.array),heig
 const view=createTerrainPresentation(terrain.mesh,{datum:grid.verticalDatumOffsetMetres});
 assert.deepEqual(Array.from(terrain.mesh.geometry.attributes.position.array),positions,'presentation must not reshape the land');
 assert.equal(terrain.heightAtWorld(0,0),height);assert.deepEqual(terrain.mesh.scale.toArray(),scale);
+assert.ok(view.diagnostics.horizonOcclusion.max>.1);assert.equal(view.diagnostics.horizonOcclusion.computedOnce,true);
 assert.equal(view.diagnostics.verticalScale,1);assert.equal(view.diagnostics.hillshade,true);assert.ok(view.diagnostics.hillshadeRange[1]-view.diagnostics.hillshadeRange[0]>.2,'real slope normals must drive relief shading');assert.equal(view.contours.visible,true);assert.equal(terrain.mesh.material.color.getHex(),0xffffff,'base tint must not wash out relief colours');assert.ok(view.diagnostics.contourSegments>100);
 assert.ok(view.diagnostics.elevationRangeMetres[1]-view.diagnostics.elevationRangeMetres[0]>250);
 const colors=terrain.mesh.geometry.attributes.color;assert.ok(new Set(Array.from(colors.array).map(v=>v.toFixed(3))).size>50,'DEM elevation must yield visible tonal variation');

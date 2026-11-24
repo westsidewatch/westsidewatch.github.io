@@ -1,4 +1,28 @@
 import * as THREE from 'three';
+// Average positive horizon angles in eight directions. This is display shading,
+// not erosion, vegetation, water, or a reconstruction of an ancient surface.
+export function terrainHorizonOcclusion(geometry,{radii=[90,180,360]}={}){
+ const p=geometry.attributes.position,w=geometry.parameters?.widthSegments+1,h=geometry.parameters?.heightSegments+1;
+ const result=new Float32Array(p.count);
+ if(!Number.isInteger(w)||!Number.isInteger(h)||w*h!==p.count)return result;
+ const dx=Math.abs(p.getX(1)-p.getX(0)),dz=Math.abs(p.getZ(w)-p.getZ(0));
+ if(!(dx>0&&dz>0))return result;
+ for(let row=0;row<h;row++)for(let col=0;col<w;col++){
+  const i=row*w+col;let sum=0,directions=0;
+  for(const [ux,uz]of [[1,0],[-1,0],[0,1],[0,-1],[1,1],[1,-1],[-1,1],[-1,-1]]){
+   let horizon=0,available=false;
+   for(const radius of radii){
+    const norm=Math.hypot(ux,uz),x=col+Math.round(ux*radius/(norm*dx)),z=row+Math.round(uz*radius/(norm*dz));
+    if(x<0||z<0||x>=w||z>=h)continue;
+    const j=z*w+x,distance=Math.hypot(p.getX(j)-p.getX(i),p.getZ(j)-p.getZ(i));if(!distance)continue;
+    available=true;horizon=Math.max(horizon,Math.atan2(p.getY(j)-p.getY(i),distance));
+   }
+   if(available){sum+=horizon;directions++;}
+  }
+  result[i]=directions?Math.min(1,sum/directions/(Math.PI/4)):0;
+ }
+ return result;
+}
 // Presentation only: never change DEM positions, datum, sampling or vertical scale.
 export function createTerrainPresentation(mesh,{datum=0,interval=20}={}){
  if(!(interval>0)||!Number.isFinite(datum))throw new Error('Invalid terrain presentation settings');
@@ -8,10 +32,12 @@ export function createTerrainPresentation(mesh,{datum=0,interval=20}={}){
  // Elevation tint alone was washed out by the material tint and broad lighting.
  // Bake directional relief into vertex colours; geometry and ground authority stay exact.
  const normals=geometry.attributes.normal,sun=new THREE.Vector3(-.8,.55,.35).normalize();
- const colors=new Float32Array(p.count*3),low=new THREE.Color(0x998b72),high=new THREE.Color(0xe2d4b7),color=new THREE.Color();
- let shadeMin=1,shadeMax=0;
+ const colors=new Float32Array(p.count*3),low=new THREE.Color(0x77756a),high=new THREE.Color(0xbdb6a2),color=new THREE.Color();
+ const horizon=terrainHorizonOcclusion(geometry);
+ let shadeMin=1,shadeMax=0,occlusionMax=0;
  for(let i=0;i<p.count;i++){
-  const illumination=Math.max(0,normals.getX(i)*sun.x+normals.getY(i)*sun.y+normals.getZ(i)*sun.z),shade=.42+.58*illumination;
+  const illumination=Math.max(0,normals.getX(i)*sun.x+normals.getY(i)*sun.y+normals.getZ(i)*sun.z),shade=(.48+.52*illumination)*(1-.55*horizon[i]);
+  occlusionMax=Math.max(occlusionMax,horizon[i]);
   shadeMin=Math.min(shadeMin,shade);shadeMax=Math.max(shadeMax,shade);
   color.copy(low).lerp(high,THREE.MathUtils.clamp((p.getY(i)+datum-630)/210,0,1)).multiplyScalar(shade);color.toArray(colors,i*3);
  }
@@ -35,6 +61,6 @@ export function createTerrainPresentation(mesh,{datum=0,interval=20}={}){
  const lineGeometry=new THREE.BufferGeometry();lineGeometry.setAttribute('position',new THREE.Float32BufferAttribute(lines,3));
  const material=new THREE.LineBasicMaterial({color:0x534f3c,transparent:true,opacity:.13,depthWrite:false});
  const contours=new THREE.LineSegments(lineGeometry,material);contours.name='modern-dem-20m-contours';contours.visible=true;mesh.add(contours);
- return {contours,diagnostics:{verticalScale:1,hillshade:true,reliefLighting:'baked-directional-without-double-scene-lighting',palette:"neutral-stone-no-water-encoding",nominalPaletteMetres:[630,840],hillshadeRange:[shadeMin,shadeMax],contoursDefaultVisible:true,contourIntervalMetres:interval,contourSegments:lines.length/6,elevationRangeMetres:[min+datum,max+datum],authority:'modern-dem-not-ancient-surface'},
+ return {contours,diagnostics:{verticalScale:1,hillshade:true,reliefLighting:'baked-directional-without-double-scene-lighting',palette:"muted-earth-separated-from-building-stone-no-water-encoding",horizonOcclusion:{directions:8,radiiMetres:[90,180,360],strength:.55,max:occlusionMax,computedOnce:true},nominalPaletteMetres:[630,840],hillshadeRange:[shadeMin,shadeMax],contoursDefaultVisible:true,contourIntervalMetres:interval,contourSegments:lines.length/6,elevationRangeMetres:[min+datum,max+datum],authority:'modern-dem-not-ancient-surface'},
   dispose(){contours.removeFromParent();lineGeometry.dispose();material.dispose();if(previousColor)geometry.setAttribute('color',previousColor);else geometry.deleteAttribute('color');mesh.material=previousMaterial;reliefMaterial.dispose();}};
 }
