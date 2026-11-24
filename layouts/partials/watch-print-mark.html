@@ -1,0 +1,1 @@
+{{ $id := . }}{{ $width := 48 }}{{ if in (slice "olive" "library" "cinema") $id }}{{ $width = 40 }}{{ end }}<svg class="ww-print-mark ww-print-mark--{{ $id }}" viewBox="0 0 {{ $width }} 8" aria-hidden="true" focusable="false"><use href="/images/watch-rhythm-original.svg#{{ $id }}"/></svg>

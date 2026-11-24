@@ -104,7 +104,7 @@
       <div class="ws-ministry-story__rail-footer">
         <button type="button" class="ws-ministry-story__control" data-action="play">暫停導覽</button>
         <button type="button" class="ws-ministry-story__control" data-action="hide">收起介紹</button>
-        <a class="ws-ministry-story__back" href="/" aria-label="返回 Westside Watch 主站">返回</a>
+        <a class="ws-ministry-story__back" href="${query.get('from')==='church'?'/church/':'/'}" aria-label="返回 ${query.get('from')==='church'?'活水堂西區教會':'Westside Watch 主站'}">返回 ${query.get('from')==='church'?'教會':'西望'} <svg class="ww-print-mark ww-print-mark--church" viewBox="0 0 48 8" aria-hidden="true" focusable="false"><use href="/images/watch-rhythm-original.svg#church"/></svg></a>
       </div>
     </div>
     <div class="ws-ministry-story__final-stack">
@@ -143,11 +143,11 @@
       </div>
       <footer>205 Wilmington Ave. · North York, ON</footer>
     </section>
-    <button class="ws-ministry-story__return-to-scene" type="button" data-action="return-scene">返回教會全景 ↑</button>
+    <button class="ws-ministry-story__return-to-scene" type="button" data-action="return-scene">返回教會全景</button>
     </div>
     <button class="ws-ministry-story__scroll-invitation" type="button" data-action="read-finale"
       aria-label="向下滑動閱讀主日程序與你們是世上的光完整經文">
-      <span>向下滑閱 · 主日程序與經文</span><span aria-hidden="true">⌄</span>
+      <span>向下滑閱 · 主日程序與經文</span>
     </button>
     <button type="button" class="ws-ministry-story__minimal" data-action="show"
        aria-label="顯示教會事工章節">教會生活　01 — 07</button>

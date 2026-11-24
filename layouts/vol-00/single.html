@@ -31,7 +31,7 @@
         <strong>{{ .Params.status | default "Journal" }}</strong>
       </aside>
       <div class="prose">
-        {{ if .Content }}{{ .Content }}{{ else }}<p class="editorial-state">Editorial text is in preparation.</p>{{ end }}
+        {{ if .Content }}{{ .Content }}<span class="ww-article-end">{{ partial "watch-print-mark.html" "end" }}</span>{{ else }}<p class="editorial-state">Editorial text is in preparation.</p>{{ end }}
       </div>
     </div>
 

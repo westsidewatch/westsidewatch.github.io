@@ -5,4 +5,8 @@ description: "Service times, location, pastoral contacts, and ways to join the l
 weight: 5
 ---
 
-Verified contact and gathering information will be added here.
+每週主日 10:30–13:30。
+
+205 Wilmington Ave., North York, ON M3H 6B3。
+
+[主日崇拜程序](/church/sunday-worship/) · [虛擬教會導覽](/p2/church-tour.html?entry=p2&from=church)
