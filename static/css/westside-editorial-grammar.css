@@ -24,6 +24,18 @@
 .ws-grammar a:focus-visible,.ws-grammar summary:focus-visible{
  outline:2px solid var(--g-accent);outline-offset:4px
 }
+/* Legacy typography-sitewide.css uses body.sites-surface :where([lang^="en"])
+   with !important, forcibly returning all English spans to Bodoni Roman.
+   Inside the OS-owned designable editorial display/folio zones, use the
+   canonical OS genuine Bodoni Moda SC token at greater scoped specificity.
+   Do not touch the legacy rule, navigation, control text, or original P2. */
+body.sites-surface.ws-editorial-context .ws-grammar .ws-gram-cover__title-en,
+body.sites-surface.ws-editorial-context .ws-grammar .ws-grammar__folio-no,
+body.sites-surface.ws-editorial-context .ws-grammar .ws-grammar__eyebrow,
+body.sites-surface.ws-editorial-context .ws-grammar .ws-gram-cover__visual figcaption span[lang="en"]{
+ font-family:var(--ws-type-display-en-sc)!important;
+ font-synthesis:none;
+}
 .ws-grammar img{display:block;max-width:100%;height:auto}
 .ws-grammar :is(h1,h2,h3,p,figure,blockquote,ol,dl){margin-block-start:0}
 .ws-grammar__topline{
