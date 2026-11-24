@@ -23,6 +23,59 @@
   merciStart:27.58,merciEnd:28.26,twinEnd:28.38});
  const bridge=$('#p205-engraving-bridge');
  const underprint=$('#p205-engraving-history'),underprintRight=$('#p205-engraving-history-right');
+ // R92 anchor proof: read the two actual mastheads, never a guessed viewport point.
+ // The isolated proof holds the original 04 background while the masthead moves.
+ const anchorProof=new URLSearchParams(location.search).get('anchor')==='1';
+ const anchorLayer=document.createElement('div');
+ anchorLayer.setAttribute('aria-hidden','true');
+ Object.assign(anchorLayer.style,{position:'absolute',inset:'0',zIndex:'25',pointerEvents:'none',visibility:'hidden',overflow:'hidden'});
+ if(anchorProof)stage.append(anchorLayer);
+ let anchorSource=null,anchorClone=null;
+ function copyPrint(node){
+  const copy=node.cloneNode(true),src=[node,...node.querySelectorAll('*')],dst=[copy,...copy.querySelectorAll('*')];
+  src.forEach((el,i)=>{
+   const css=el.ownerDocument.defaultView.getComputedStyle(el);
+   for(const prop of css)dst[i].style.setProperty(prop,css.getPropertyValue(prop));
+   dst[i].removeAttribute('id');
+  });
+  return copy;
+ }
+ function paintAnchor(d,p){
+  if(!anchorProof)return;
+  const source=prior.contentDocument?.querySelector('#olive-twin-entry');
+  if(!source)return;
+  const fr=prior.getBoundingClientRect(),sr=source.getBoundingClientRect(),tr=twins.getBoundingClientRect(),st=stage.getBoundingClientRect();
+  if(!sr.width||!sr.height||!tr.width||!tr.height)return;
+  const a={x:fr.left+sr.left+sr.width/2-st.left,y:fr.top+sr.top+sr.height/2-st.top,size:sr.width};
+  const b={x:tr.left+tr.width/2-st.left,y:tr.top+tr.height/2-st.top,size:tr.height};
+  stage.dataset.p205AnchorSource=JSON.stringify(a);
+  stage.dataset.p205AnchorTarget=JSON.stringify(b);
+  const moving=d>=26.45&&d<27.58;
+  if(!moving){
+   if(anchorSource)anchorSource.style.removeProperty('opacity');
+   anchorLayer.style.visibility='hidden';
+   if(d>=27.58&&p<.001){twins.style.visibility='visible';twins.style.opacity='1';}
+   return;
+  }
+  if(anchorSource!==source||!anchorClone){
+   if(anchorSource)anchorSource.style.removeProperty('opacity');
+   anchorSource=source;anchorClone=copyPrint(source);anchorLayer.replaceChildren(anchorClone);
+  }
+  // A: translate intact vertical pair. B: rotate -90deg at the destination.
+  // C: replace only after the pair is horizontal. Top title becomes left title.
+  const travel=ease((d-26.45)/.38),turn=ease((d-26.83)/.30),replace=ease((d-27.13)/.20);
+  const x=mix(a.x,b.x,travel),y=mix(a.y,b.y,travel),scale=mix(1,b.size/a.size,travel);
+  source.style.opacity='0';
+  Object.assign(anchorClone.style,{position:'absolute',left:x+'px',top:y+'px',margin:'0',transformOrigin:'center center',transform:'translate(-50%,-50%) rotate('+(-90*turn)+'deg) scale('+scale+')',opacity:String(1-replace),visibility:'visible'});
+  anchorLayer.style.visibility='visible';
+  prior.style.visibility='visible';prior.style.opacity='1';
+  bridge.style.visibility='hidden';
+  realm.style.visibility='hidden';
+  // The target itself is the real 05 masthead, above the still-held 04 field.
+  twins.style.visibility=replace>0?'visible':'hidden';
+  twins.style.opacity=String(replace);
+  stage.dataset.p205AnchorPhase=travel<1?'translate':turn<1?'rotate':replace<1?'replace':'registered';
+ }
  function progress(){return clamp(-track.getBoundingClientRect().top/Math.max(1,innerHeight),0,32.3)}
  function paint(){queued=false;const d=progress(),p=entryProgress;
 
@@ -99,6 +152,7 @@
    d<relay.merciStart?'04-05-shared-engraving':
    d<relay.merciEnd?'05-merci-image-entry':'05-gospel-image-world';
   paintHandoff();
+  paintAnchor(d,p);
  }
  function schedule(){if(!queued){queued=true;requestAnimationFrame(paint)}}
  function jump(d){resetEntry();scrollTo({top:track.offsetTop+clamp(d,0,32.3)*innerHeight,behavior:'instant'});schedule()}
