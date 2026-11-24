@@ -58,6 +58,18 @@
   const leftPage=$('#dawn-page-left'),rightPage=$('#dawn-page-right');
   leftPage.style.clipPath=leftReveal>=.99999?'none':`inset(0 0 ${((1-leftReveal)*100).toFixed(3)}% 0)`;
   rightPage.style.clipPath=rightReveal>=.99999?'none':`inset(${((1-rightReveal)*100).toFixed(3)}% 0 0 0)`;
+  // R89: the cross-chapter arrival is an ink impression, not a straight
+  // guillotine across the historic underprint. Feather only the leading
+  // edge of these two ENTRANCE masks. The internal MERSI gallery keeps its
+  // original sharp, reversible image-to-image edits.
+  const leftPercent=leftReveal*100,rightBoundary=(1-rightReveal)*100;
+  const leftMask=leftReveal>=.99999?'none':
+   `linear-gradient(to bottom,#000 ${Math.max(0,leftPercent-14).toFixed(3)}%,transparent ${leftPercent.toFixed(3)}%)`;
+  const rightMask=rightReveal>=.99999?'none':
+   `linear-gradient(to bottom,transparent ${rightBoundary.toFixed(3)}%,#000 ${Math.min(100,rightBoundary+14).toFixed(3)}%)`;
+  leftPage.style.maskImage=leftPage.style.webkitMaskImage=leftMask;
+  rightPage.style.maskImage=rightPage.style.webkitMaskImage=rightMask;
+  stage.dataset.p205MerciEdge='soft-print-register';
   stage.dataset.p205OliveFolio=exit.toFixed(4);
   stage.dataset.p205OliveRetired=String(exit>=.99999);
   stage.dataset.p205EngravingRelay=d<relay.holdEnd?'held':
