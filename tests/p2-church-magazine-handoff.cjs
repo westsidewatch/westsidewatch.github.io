@@ -194,7 +194,46 @@ const data=()=>{
    await homePage.screenshot({path:path.join(out,'homepage-'+name+'.png'),animations:'allow'});
    console.log('HOME 01–03',name,'PASS',state);
   }
+  // Actual visitor navigation: open the native Dawn layers by clicking P2,
+  // never by the standalone layer=second/catalogue shortcut.
   await homePage.close();
+  for(const [device,width,height] of [['desktop',1440,900],['phone',390,844]]){
+   const reader=await browser.newPage({viewport:{width,height},reducedMotion:'reduce'});
+   try{
+    await reader.goto('http://127.0.0.1:4173/',{waitUntil:'domcontentloaded',timeout:45000});
+    const seek=async d=>reader.evaluate(d=>{
+     const host=document.querySelector('.ws-p2-sevenfold-host');
+     window.scrollTo({top:window.scrollY+host.getBoundingClientRect().top+innerHeight*d,behavior:'instant'});
+    },d);
+    await seek(28.4);
+    const dawn=reader.frameLocator('.ws-p2-sevenfold-host>iframe');
+    await dawn.locator('#dawn-twins').waitFor({state:'visible',timeout:30000});
+    await reader.waitForFunction(()=>{
+     const d=document.querySelector('.ws-p2-sevenfold-host>iframe')?.contentDocument;
+     return d?.querySelector('#dawn-realm')?.getAttribute('aria-hidden')==='false';
+    },null,{timeout:30000});
+    await dawn.locator('#dawn-twins').click({timeout:30000});
+    await reader.waitForFunction(()=>{
+     const d=document.querySelector('.ws-p2-sevenfold-host>iframe')?.contentDocument;
+     return d?.querySelector('#dawn-second')?.getAttribute('aria-hidden')==='false';
+    },null,{timeout:30000});
+    assert.equal(await dawn.locator('[data-dawn-portal]').count(),3,device+': all editorial columns must be available');
+    await dawn.locator('[data-dawn-reading-list="gospel-essentials"]').click({timeout:30000});
+    await dawn.locator('#dawn-catalogue').waitFor({state:'visible',timeout:30000});
+    await reader.screenshot({path:path.join(out,'homepage-dawn-third-'+device+'.png')});
+    await dawn.locator('#dawn-close-catalogue').click();
+    await dawn.locator('#dawn-return').click();
+    await dawn.locator('#dawn-twins').waitFor({state:'visible'});
+    await seek(3.0);
+    const church=dawn.frameLocator('#p205-prior').frameLocator('#p2-0103-original').frameLocator('#proof-original');
+    const link=church.locator('.church-folio__identity-link');
+    await link.waitFor({state:'visible',timeout:30000});
+    assert.match(await link.getAttribute('href'),/\/p2\/church-tour\.html/);
+    assert.match(await church.locator('.church-folio__model-entry').getAttribute('href'),/\/p2\/church-tour\.html/);
+    await Promise.all([reader.waitForURL('**/p2/church-tour.html?entry=p2',{timeout:30000}),link.click({timeout:30000})]);
+    console.log('HOME Dawn layers and Church tour navigation',device,'PASS');
+   }finally{await reader.close();}
+  }
  }finally{await browser.close()}
  fs.writeFileSync(path.join(out,'manifest.json'),JSON.stringify({scenes:results},null,2));
  if(results.some(s=>s.errors.length))process.exitCode=1;
