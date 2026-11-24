@@ -4,7 +4,7 @@
 <section class="ws-gram-cover" data-mode="{{ $hero.mode }}" aria-label="本篇導讀">
   <div class="ws-gram-cover__text">
     <p class="ws-grammar__eyebrow" lang="en">{{ $hero.eyebrow }}</p>
-    <h1 id="ws-grammar-title" class="ws-gram-cover__title">
+    <h1 id="ws-grammar-title" class="ws-gram-cover__title" data-ws-designable data-ws-type-role="editorial-display">
       {{ if eq $hero.mode "identity" }}
         <span class="ws-gram-cover__official-identity" role="img" aria-label="神召會活水堂西區教會"></span>
         <span class="ws-gram-cover__title-en ws-gram-cover__title-en--official" lang="en">{{ $hero.titleEn }}</span>
