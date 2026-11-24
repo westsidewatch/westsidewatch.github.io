@@ -182,18 +182,25 @@
  text-align:center;color:var(--g-accent)
 }
 .ws-gram-cover__identity-field{
- grid-column:9/-1;display:flex;flex-direction:column;align-items:center;justify-content:space-between;
- min-height:340px;padding:30px 8px;
- background:linear-gradient(143deg,color-mix(in srgb,var(--ws-water) 13%,transparent),transparent);
- border-left:1px solid var(--g-rule);
- font:var(--ws-weight-standard) var(--ws-type-scale-meta)/1.4 var(--ws-type-display-en-sc);
- color:var(--g-accent)
+ grid-column:9/-1;grid-row:1;
+ align-self:center;min-width:0;width:100%;
+ display:flex;flex-direction:column;align-items:center;justify-content:center;
+ gap:13px;padding:0;color:var(--g-accent);
+ font:var(--ws-weight-standard) var(--ws-type-scale-meta)/1.45 var(--ws-type-display-en-sc)
 }
-.ws-gram-cover__identity-mark{
- display:block;width:100%;height:75%;background:var(--g-accent);
- -webkit-mask:url("/images/living-water-west-church-name.png") center/contain no-repeat;
- mask:url("/images/living-water-west-church-name.png") center/contain no-repeat;
- opacity:.18
+.ws-gram-cover__identity-square{
+ position:relative;overflow:hidden;isolation:isolate;
+ width:100%;aspect-ratio:1/1;max-width:470px;
+ background:linear-gradient(138deg,color-mix(in srgb,var(--ws-paper) 16%,transparent),transparent 41%),
+ color-mix(in srgb,var(--ws-water) 83%,var(--ws-ink));
+ border-top:2px solid var(--ws-first-light);
+ border-inline:1px solid color-mix(in srgb,var(--ws-paper) 24%,transparent);
+ box-shadow:0 15px 40px color-mix(in srgb,var(--ws-water) 13%,transparent);
+ -webkit-backdrop-filter:blur(22px) saturate(1.3);backdrop-filter:blur(22px) saturate(1.3)
+}
+.ws-gram-cover__identity-square iframe{
+ display:block;width:100%;height:100%;position:absolute;inset:0;
+ border:0;background:transparent;pointer-events:none
 }
 /* The content grammar operates in sections, not one repeated page template. */
 .ws-grammar__body{width:100%;min-width:0}
@@ -413,7 +420,9 @@
  .ws-gram-cover[data-mode="atlas"] .ws-gram-cover__meta{width:100%}
  .ws-gram-cover[data-mode="atlas"] .ws-gram-cover__visual{width:100%;max-height:none}
  .ws-gram-cover[data-mode="cinematic"] .ws-gram-cover__visual{order:2;align-self:center}
- .ws-gram-cover[data-mode="identity"] .ws-gram-cover__identity-field{display:none}
+ .ws-gram-cover[data-mode="identity"] .ws-gram-cover__identity-field{
+ display:flex;order:2;width:min(100%,490px);margin:15px auto 0;
+}
  .ws-gram-cover__title{margin:23px 0!important}
  .ws-gram-cover__title-zh{font-size:clamp(38px,8vw,68px)!important}
  .ws-gram-cover__title-en{font-size:clamp(26px,5vw,42px)!important}
