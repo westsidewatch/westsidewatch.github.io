@@ -81,7 +81,10 @@ const viewports=[{name:'desktop',width:1440,height:900},{name:'tablet',width:768
           numeralSemantics:getComputedStyle(document.querySelector('.ws-grammar__folio-no')).fontFamily
          };
        })(),
-       navAvailable:!!document.querySelector('.ws-grammar__directory summary')
+       navAvailable:!!document.querySelector('.ws-grammar__directory summary'),
+       legacyShellHidden:[...document.querySelectorAll('body>.sites-layer-header,body>.sites-layer-footer')]
+         .every(x=>getComputedStyle(x).display==='none'),
+       singleMagazineHeader:document.querySelectorAll('.ws-grammar__topline').length===1
       };
     });
     assert.equal(computed.realm,realm);
@@ -103,6 +106,8 @@ const viewports=[{name:'desktop',width:1440,height:900},{name:'tablet',width:768
       realm+' tiny editorial metadata fails 4.5:1 readability '+JSON.stringify(a));
 
     assert(computed.masthead&&computed.navAvailable);
+    assert(computed.legacyShellHidden&&computed.singleMagazineHeader,
+      realm+' appears with duplicate canonical section masthead/footer '+JSON.stringify(computed));
     if(realm!=='church')assert(computed.assetCount>=1,realm+' actual cover image absent');
     if(realm==='church'){
       const iframe=page.locator('.ws-gram-cover__identity-square iframe');
@@ -172,6 +177,12 @@ const viewports=[{name:'desktop',width:1440,height:900},{name:'tablet',width:768
           assert(imageProof.byteLength>14000,
             realm+' actual artwork screenshot is nearly blank despite successful download '+JSON.stringify({bytes:imageProof.byteLength,...m}));
           console.log('EDITORIAL_ARTWORK_PIXELS',realm,block.id,imageProof.byteLength);
+          const sectionProof=await node.screenshot({
+            path:'artifacts/sevenfold-editorial/'+realm+'-'+block.id+'-section.png',
+            animations:'disabled',timeout:90000
+          });
+          assert(sectionProof.byteLength>15000,'On-screen art section is blank '+realm+'/'+block.id);
+
         }
       }
     }
