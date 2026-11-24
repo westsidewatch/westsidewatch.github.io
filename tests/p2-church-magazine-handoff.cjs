@@ -22,7 +22,7 @@ assert.match(bridge,/westside-p2-dual-progress/,'forward one scroll-owned clock 
 const out='artifacts/p2-church-magazine';
 fs.mkdirSync(out,{recursive:true});
 const screens=[['desktop',1648,928],['tablet',768,1024],['phone',390,844],['small',320,720]];
-const stages=[['ocean',38],['church-open',55],['handoff',62],['star-ink',91],['contents',100],['reverse-church',55]];
+const stages=[['ocean',28],['church-open',58],['handoff',74],['star-ink',94],['contents',100],['reverse-church',58]];
 const results=[];
 const data=()=>{
  const frame=document.getElementById('p2-scene');
@@ -84,7 +84,7 @@ const data=()=>{
      const root=document.querySelector('#p2-scene')?.contentDocument?.querySelector('.showcase');
      if(!root)return false;
      const v=+(root.dataset.p2Progress||0);
-     const target=expected<=75?expected/75*2.9:2.9+(expected/100-.75)/.25*1.1;
+     const p=expected/100;const target=p<=.7?p/.7*3.25:3.25+(p-.7)/.3*2;
      // Above the 75% threshold the normalized input is 0..1.
      return Math.abs(v-target)<.014;
     },value,{timeout:5000});
@@ -93,17 +93,17 @@ const data=()=>{
     if(!m.originalWater||!m.originalChurchSchedule||m.originalDoorCount!==2)
      faults.push('existing V75 water, Church Sunday schedule or Red Sea doors were replaced');
     if(m.scrollWidth>width+2)faults.push('handoff laboratory horizontal overflow');
-    if(value===38&&!(m.rootPhase==='ocean-rise'&&m.waterVisible==='visible'&&
+    if(value===28&&!(m.rootPhase==='ocean-rise'&&m.waterVisible==='visible'&&
        m.waterLevel>.01&&m.waterLevel<1&&m.magazineVisibility==='hidden'))
      faults.push('the original moving water must own its stage before Magazine');
-    if(value===55&&!(m.rootPhase==='red-sea'&&m.churchVisible==='visible'&&
+    if(value===58&&!(m.rootPhase==='church'&&m.churchVisible==='visible'&&
        m.doorsVisible==='visible'&&m.magazineVisibility==='hidden'&&!m.churchInert))
      faults.push('the original Church and opening water doors must remain accessible on reverse');
-    if(value===62&&!(m.rootPhase==='church-to-magazine'&&m.magazineProgress>0&&
+    if(value===74&&!(m.rootPhase==='church-to-magazine'&&m.magazineProgress>0&&
        m.magazineProgress<.1&&m.magazineVisibility==='visible'&&m.churchInert&&
        m.filmOpacity===0&&m.magazinePaper==='transparent'))
      faults.push('the approved Magazine must begin only after the Church door is open');
-    if(value===91&&!(m.magazineProgress>.7&&m.starInk==='single-rising-incision'&&m.heroOriginal))
+    if(value===94&&!(m.magazineProgress>.7&&m.starInk==='single-rising-incision'&&m.heroOriginal))
      faults.push('the Morning Star must bring the original ink title into the spread');
     if(value===100&&!(m.magazineProgress>.999&&m.magazinePhase==='contents-final'&&
       m.coverStage==='contents-final'&&m.activeDesign==='10'&&m.count===12&&m.originalCover&&
@@ -139,14 +139,14 @@ const data=()=>{
     !!root?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)')?.contentDocument?.querySelector('#dual-stage');
   },null,{timeout:30000});
   const realScroll=[
-   ['church',2.65,'01',1.80,.01],
-   ['magazine-start',3.10,'02',2.381,.02],
-   ['star-rising',5.10,'02',3.333,.59],
-   ['contents',6.40,'02',3.952,.97],
-   ['emmaus-green-cover',7.30,'03',4.00,1],
-   ['emmaus-dore',8.06,'03',4.00,1],
-   ['emmaus-reading',9.30,'03',4.00,1],
-   ['church-reverse',2.65,'01',1.80,.01]
+   ['church',2.65,'01',1.35,0],
+   ['magazine-start',4.45,'02',3.405,.025],
+   ['star-rising',5.70,'02',4.53,.643],
+   ['contents',6.40,'02',5.16,.989],
+   ['emmaus-green-cover',7.30,'03',5.25,1],
+   ['emmaus-dore',8.06,'03',5.25,1],
+   ['emmaus-reading',9.30,'03',5.25,1],
+   ['church-reverse',2.65,'01',1.35,0]
   ];
   for(const [name,distance,expectedScene,wantVh,wantMagazine] of realScroll){
    await homePage.evaluate(d=>{
@@ -210,7 +210,7 @@ const data=()=>{
     await dawn.locator('#dawn-twins').waitFor({state:'visible',timeout:30000});
     await reader.waitForFunction(()=>{
      const d=document.querySelector('.ws-p2-sevenfold-host>iframe')?.contentDocument;
-     return d?.querySelector('#dawn-realm')?.getAttribute('aria-hidden')==='false';
+     return d?.querySelector('#dawn-realm')?.getAttribute('aria-hidden')==='false'&&d?.querySelector('#p205-stage')?.dataset.p205Wordmark==='v9-final';
     },null,{timeout:30000});
     await dawn.locator('#dawn-twins').click({timeout:30000});
     await reader.waitForFunction(()=>{
@@ -224,7 +224,7 @@ const data=()=>{
     await dawn.locator('#dawn-close-catalogue').click();
     await dawn.locator('#dawn-return').click();
     await dawn.locator('#dawn-twins').waitFor({state:'visible'});
-    await seek(3.0);
+    await seek(4.25);
     const church=dawn.frameLocator('#p205-prior').frameLocator('#p2-0103-original').frameLocator('#proof-original');
     const link=church.locator('.church-folio__identity-link');
     await link.waitFor({state:'visible',timeout:30000});

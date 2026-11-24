@@ -41,21 +41,23 @@ body.home .ws-p2-sevenfold-host>iframe{position:sticky!important;top:0!important
 const host=document.querySelector('.ws-p2-sevenfold-host');if(!host)return;
 const frame=host.querySelector('iframe');let queued=false;
 const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
+const inverseChurch=vh=>vh<=3.25?.7*vh/3.25:.7+.3*(vh-3.25)/2;
 function sync(){
  queued=false;
  const rect=host.getBoundingClientRect(),height=Math.max(1,innerHeight);
  const entry=clamp((height-rect.top)/height,0,1),distance=clamp(-rect.top/height,0,32.30);
  const churchEnd=3.0775,magazineEnd=6.5,legacyDistance=Math.min(distance,magazineEnd);
  let progress;
- if(rect.top>0){progress=entry*.1/2.9}
+ if(rect.top>0){progress=inverseChurch(entry*.1)}
  else if(legacyDistance<=churchEnd){
   const scene=legacyDistance<=1.8?.1+legacyDistance*(.4/1.8):.5+(legacyDistance-1.8);
-  progress=scene/2.9;
+  progress=inverseChurch(scene);
  }else{
   // Inverse of the untouched Church iframe's embeddedScene() mapping.
   // At churchEnd, Red Sea gates are already open (vh=2.37).
-  const vh=2.37+(legacyDistance-churchEnd)/(magazineEnd-churchEnd)*(4-2.37);
-  progress=vh<=2.9?.75*vh/2.9:.75+.25*(vh-2.9)/1.1;
+  const buildEnd=4.4;
+  const vh=legacyDistance<=buildEnd?2.37+(legacyDistance-churchEnd)/(buildEnd-churchEnd)*(3.36-2.37):3.36+(legacyDistance-buildEnd)/(magazineEnd-buildEnd)*(5.25-3.36);
+  progress=inverseChurch(vh);
  }
  if(frame.contentWindow)frame.contentWindow.postMessage({
     type:'westside-p2-home-pose',distance,legacyProgress:clamp(progress,0,1),

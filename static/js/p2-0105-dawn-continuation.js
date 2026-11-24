@@ -18,7 +18,7 @@
  let queued=false,at=0,entryProgress=0,entryClock=0,entryTarget=0,rafId=0;
  const embedded=new URLSearchParams(location.search).get('embed')==='1'&&parent!==window;
  let hostDistance=0,hostLegacyProgress=0,hostActive=false;
- function originalLegacy(d){const x=Math.min(d,6.5);if(x<=3.0775)return clamp((x<=1.8?.1+x*(.4/1.8):.5+(x-1.8))/2.9);const vh=2.37+(x-3.0775)/(6.5-3.0775)*(4-2.37);return clamp(vh<=2.9?.75*vh/2.9:.75+.25*(vh-2.9)/1.1);}
+ function originalLegacy(d){const x=Math.min(d,6.5),inv=vh=>vh<=3.25?.7*vh/3.25:.7+.3*(vh-3.25)/2;const vh=x<=3.0775?(x<=1.8?.1+x*(.4/1.8):.5+x-1.8):x<=4.4?2.37+(x-3.0775)/(4.4-3.0775)*.99:3.36+(x-4.4)/(6.5-4.4)*1.89;return clamp(inv(vh));}
  // R87 / one source-owned exit, one shared engraved register, then MERSI.
  // These stations are shared by layout and QA; d=28.4 remains the already
  // published stable P2 05 entrance for all existing reading-room links.
