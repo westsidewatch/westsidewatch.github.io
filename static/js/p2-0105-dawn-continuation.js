@@ -42,13 +42,21 @@
   // The actual historic engraving takes its ink from the same 04 terrain
   // underneath the outgoing 04 printing. No featureless olive pause and no
   // Jerusalem rectangle entering while any poster remains on stage.
-  const ink=ease((d-(relay.retireEnd-.35))/(relay.merciStart-relay.retireEnd+.35));
+  const ink=ease((d-(relay.holdEnd+.04))/(relay.merciStart-relay.holdEnd-.04));
   bridge.style.setProperty('--p205-ink-transfer',ink.toFixed(5));
-  bridge.style.setProperty('--p205-engraving-shift',`${(3.5*ink).toFixed(3)}%`);
+  // R91: retain a fixed print register; the old plates surrender ink, not geometry.
+  bridge.style.setProperty('--p205-engraving-shift','0%');
+  const terrain=bridge.querySelector('.p205-engraving-bridge__terrain');
+  const botanical=bridge.querySelector('.p205-engraving-bridge__botanical');
+  const release=ease((ink-.18)/.82);
+  terrain.style.opacity=String(mix(.27,.055,release));
+  botanical.style.opacity=String(mix(.13,.025,release));
   stage.dataset.p205InkTransfer=ink.toFixed(4);
   // Only after the 04 print is gone may the 05 MERSI two-half reveal begin.
   const phase=clamp((d-relay.merciStart)/(relay.merciEnd-relay.merciStart));
   const rightReveal=ease(phase/.55),leftReveal=ease((phase-.52)/.48);
+  // Clear the bridge only after both registered colour plates cover it.
+  bridge.style.visibility=d>=relay.holdEnd&&phase<1?'visible':'hidden';
   const settled=ease((d-relay.merciEnd)/(relay.twinEnd-relay.merciEnd));
   realm.style.visibility=phase>.00001?'visible':'hidden';
   realm.inert=settled<.98||p>.001;
@@ -63,10 +71,11 @@
   // edge of these two ENTRANCE masks. The internal MERSI gallery keeps its
   // original sharp, reversible image-to-image edits.
   const leftPercent=leftReveal*100,rightBoundary=(1-rightReveal)*100;
+  const feather=22;
   const leftMask=leftReveal>=.99999?'none':
-   `linear-gradient(to bottom,#000 ${Math.max(0,leftPercent-14).toFixed(3)}%,transparent ${leftPercent.toFixed(3)}%)`;
+   `linear-gradient(to bottom,#000 ${Math.max(0,leftPercent-feather).toFixed(3)}%,transparent ${leftPercent.toFixed(3)}%)`;
   const rightMask=rightReveal>=.99999?'none':
-   `linear-gradient(to bottom,transparent ${rightBoundary.toFixed(3)}%,#000 ${Math.min(100,rightBoundary+14).toFixed(3)}%)`;
+   `linear-gradient(to bottom,transparent ${rightBoundary.toFixed(3)}%,#000 ${Math.min(100,rightBoundary+feather).toFixed(3)}%)`;
   leftPage.style.maskImage=leftPage.style.webkitMaskImage=leftMask;
   rightPage.style.maskImage=rightPage.style.webkitMaskImage=rightMask;
   stage.dataset.p205MerciEdge='registered-monochrome-to-colour';
@@ -358,11 +367,9 @@
    }
    // Travel stays inside the original two opposing clip apertures:
    // the upper image descends to rest, the lower image rises to rest.
-   const m=clamp((d-relay.merciStart)/(relay.merciEnd-relay.merciStart));
-   const reveal=side.key==='left'?ease((m-.52)/.48):ease(m/.55);
-   const offset=(1-reveal)*(side.key==='left'?-8:8);
-   side.current.style.transform=reveal>=.99999?'none':`translate3d(0,${offset.toFixed(3)}%,0)`;
-   side.next.style.transform=side.current.style.transform;
+   // R91: the aperture travels, never the registered colour plate itself.
+   side.current.style.transform='none';
+   side.next.style.transform='none';
    if(side.node.href!==shown.href){
     side.node.href=shown.href;
     side.node.target='_blank';side.node.rel='noopener noreferrer';
