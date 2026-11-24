@@ -34,7 +34,7 @@
 .ws-grammar__masthead img{width:clamp(130px,14vw,210px);height:auto}
 .ws-grammar__folio-no{
  font:var(--ws-weight-standard) var(--ws-type-scale-meta)/1.4 var(--ws-type-display-en-sc);
- color:var(--g-accent);letter-spacing:.07em;text-align:center;white-space:normal
+ color:var(--g-label-ink);letter-spacing:.07em;text-align:center;white-space:normal
 }
 .ws-grammar__return{
  justify-self:end;font:var(--ws-weight-air) var(--ws-type-scale-ui)/1.2 var(--ws-type-display-zh);
@@ -44,7 +44,7 @@
 .ws-grammar__directory summary{
  cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:18px;
  width:min(240px,100%);list-style:none;padding:13px 0;
- color:var(--g-accent);font:var(--ws-weight-air) var(--ws-type-scale-meta)/1.3 var(--ws-type-display-zh)
+ color:var(--g-label-ink);font:var(--ws-weight-air) var(--ws-type-scale-meta)/1.3 var(--ws-type-display-zh)
 }
 .ws-grammar__directory summary::-webkit-details-marker{display:none}
 .ws-grammar__directory summary span{font-size:var(--ws-type-scale-title-sm)}
@@ -60,7 +60,7 @@
 }
 .ws-grammar__directory nav a:first-child{border-left:1px solid var(--g-rule)}
 .ws-grammar__directory nav a[aria-current=page]{background:color-mix(in srgb,var(--g-accent) 10%,var(--g-paper))}
-.ws-grammar__directory nav a span{color:var(--g-accent);font-family:var(--ws-type-display-en-sc)}
+.ws-grammar__directory nav a span{color:var(--g-label-ink);font-family:var(--ws-type-display-en-sc)}
 .ws-grammar__eyebrow{
  color:var(--g-label-ink);
  font:var(--ws-weight-standard) var(--ws-type-scale-meta)/1.5 var(--ws-type-display-en-sc)!important;
@@ -119,7 +119,7 @@
 .ws-gram-cover__visual figcaption{
  align-self:stretch;display:flex;justify-content:space-between;gap:15px;
  border-top:1px solid var(--g-rule);padding-top:9px;
- color:var(--g-accent);font:var(--ws-weight-air) var(--ws-type-scale-micro)/1.5 var(--ws-type-display-zh)
+ color:var(--g-label-ink);font:var(--ws-weight-air) var(--ws-type-scale-micro)/1.5 var(--ws-type-display-zh)
 }
 .ws-gram-cover__visual figcaption span[lang=en]{font-family:var(--ws-type-display-en-sc)}
 /* Seven distinct editorial entrances; not seven color substitutions. */
@@ -301,7 +301,7 @@
  padding:clamp(19px,2.4vw,36px) 3px;min-width:0
 }
 .ws-gram-index__num{
- color:var(--g-accent);
+ color:var(--g-label-ink);
  font:var(--ws-weight-standard) var(--ws-type-scale-title-sm)/1.2 var(--ws-type-display-en-sc)
 }
 .ws-gram-index__name{
@@ -336,12 +336,12 @@
 .ws-gram-plate[data-mode="portrait-folio"] .ws-gram-plate__image{max-width:720px}
 .ws-gram-plate[data-mode="portrait-folio"] img{height:clamp(390px,65vw,690px);max-height:720px}
 .ws-gram-plate[data-mode="letterbox"]{
- background:var(--ws-night);color:var(--ws-paper);
+ background:var(--ws-ink);color:var(--ws-paper);
  --g-rule:color-mix(in srgb,var(--ws-paper) 32%,transparent)
 }
 .ws-gram-plate[data-mode="letterbox"] .ws-gram-plate__image{max-width:950px}
 .ws-gram-plate[data-mode="letterbox"] img{height:clamp(240px,32vw,420px);max-height:440px}
-.ws-gram-plate[data-mode="letterbox"] .ws-grammar__eyebrow{color:var(--ws-morning-gold)}
+.ws-gram-plate[data-mode="letterbox"] .ws-grammar__eyebrow{color:var(--ws-paper)}
 .ws-gram-conversation{display:grid;grid-template-columns:4fr 8fr;gap:clamp(26px,4vw,70px)}
 .ws-gram-conversation__body{min-width:0;margin:0}
 .ws-gram-conversation__pair{
@@ -494,3 +494,72 @@
  .ws-gram-index__items li,.ws-gram-essay__note{border-color:var(--g-ink)}
 }
 
+
+/* Editorial art-direction R2 / optical reading roles, not an extra type scale.
+   Chinese is the story anchor on *interior* pages; P2 oversized English identity
+   belongs to a different, already accepted animation context and is untouched. */
+.ws-gram-cover__text{font-synthesis:none}
+.ws-gram-cover__title-en{text-transform:none;font-variant:normal;font-feature-settings:"smcp" 0}
+.ws-gram-cover__title-zh{orphans:2;widows:2;hyphens:none}
+.ws-gram-cover__deck,
+.ws-gram-essay__text p,
+.ws-gram-conversation__pair dd,
+.ws-gram-shelf__works p{
+ line-break:strict;overflow-wrap:normal;hyphens:none;
+}
+.ws-gram-block__head h2{
+ letter-spacing:.015em;
+}
+.ws-gram-index__name,
+.ws-gram-conversation__pair dt{
+ letter-spacing:.012em;
+}
+/* The visual mark and the written story remain on the same issue grid. */
+.ws-gram-cover[data-mode="portrait"] .ws-gram-cover__title-en{
+ margin-top:clamp(12px,1.5vw,24px)
+}
+.ws-gram-cover[data-mode="atlas"] .ws-gram-cover__title{
+ display:flex;flex-wrap:wrap;column-gap:clamp(16px,2vw,36px);
+ align-items:baseline
+}
+.ws-gram-cover[data-mode="atlas"] .ws-gram-cover__title-en{
+ margin-top:0
+}
+.ws-gram-cover[data-mode="poster"] .ws-gram-cover__title-zh{
+ line-height:1.03!important
+}
+.ws-gram-cover[data-mode="ledger"] .ws-gram-cover__visual{
+ border-left:1px solid var(--g-rule);
+ padding-left:clamp(14px,2vw,35px)
+}
+.ws-gram-cover[data-mode="cinematic"]{
+ border-top:4px solid var(--ws-crimson);
+}
+.ws-gram-cover[data-mode="cinematic"] .ws-gram-cover__title{
+ padding-top:clamp(13px,2vw,29px);
+ border-top:1px solid color-mix(in srgb,var(--ws-crimson) 62%,var(--ws-paper))
+}
+.ws-gram-cover[data-mode="cinematic"] .ws-gram-cover__meta{
+ border-color:color-mix(in srgb,var(--ws-paper) 35%,transparent)
+}
+.ws-gram-cover[data-mode="cinematic"] .ws-gram-cover__meta a{
+ border-color:var(--ws-crimson)
+}
+.ws-gram-cover[data-mode="quiet"] .ws-gram-cover__visual{
+ align-self:center
+}
+.ws-gram-cover[data-mode="quiet"] .ws-gram-cover__title-zh{
+ font-weight:var(--ws-weight-section)!important
+}
+@media(max-width:780px){
+ .ws-gram-cover[data-mode="atlas"] .ws-gram-cover__title{
+  display:block
+ }
+ .ws-gram-cover[data-mode="atlas"] .ws-gram-cover__title-en{
+  margin-top:12px
+ }
+ .ws-gram-cover[data-mode="ledger"] .ws-gram-cover__visual{
+  border-left:0;border-top:1px solid var(--g-rule);
+  padding-left:0;padding-top:18px
+ }
+}
