@@ -22,7 +22,7 @@
  const relay=Object.freeze({holdEnd:26.45,retireEnd:27.13,
   merciStart:27.58,merciEnd:28.26,twinEnd:28.38});
  const bridge=$('#p205-engraving-bridge');
- const underprint=$('#p205-engraving-history');
+ const underprint=$('#p205-engraving-history'),underprintRight=$('#p205-engraving-history-right');
  function progress(){return clamp(-track.getBoundingClientRect().top/Math.max(1,innerHeight),0,32.3)}
  function paint(){queued=false;const d=progress(),p=entryProgress;
 
@@ -69,7 +69,7 @@
    `linear-gradient(to bottom,transparent ${rightBoundary.toFixed(3)}%,#000 ${Math.min(100,rightBoundary+14).toFixed(3)}%)`;
   leftPage.style.maskImage=leftPage.style.webkitMaskImage=leftMask;
   rightPage.style.maskImage=rightPage.style.webkitMaskImage=rightMask;
-  stage.dataset.p205MerciEdge='soft-print-register';
+  stage.dataset.p205MerciEdge='registered-monochrome-to-colour';
   stage.dataset.p205OliveFolio=exit.toFixed(4);
   stage.dataset.p205OliveRetired=String(exit>=.99999);
   stage.dataset.p205EngravingRelay=d<relay.holdEnd?'held':
@@ -269,14 +269,24 @@
    // Counterflow: alternate collection plates across both independently
    // moving visual channels. Pages always lead back to admitted collection.
    gospelScenes={left:items.filter((_,i)=>i%2===0),right:items.filter((_,i)=>i%2===1)};
-   // Reuse the ACTUAL first sourced Jerusalem engraving as an underprint,
-   // never invent a separate transition illustration or mismatched book.
-   const firstEngraving=gospelScenes.left[0];
-   if(firstEngraving){
-    underprint.dataset.sourceWork=firstEngraving.workId||firstEngraving.title;
-    underprint.onload=()=>{bridge.dataset.historyReady=underprint.naturalWidth>100?'true':'false';schedule()};
-    underprint.onerror=()=>{bridge.dataset.historyReady='false';schedule()};
-    underprint.src=firstEngraving.image;
+   // R90: the first two ACTUAL exhibition plates become monochrome
+   // underprints in their final left/right crop. MERSI adds colour ink on
+   // EXACTLY the same registration; no double-scaled city panorama at the
+   // entrance boundary and no invented historical illustration.
+   const proofPlates=[gospelScenes.left[0],gospelScenes.right[0]];
+   const proofImages=[underprint,underprintRight];
+   function updateProofReady(){
+    bridge.dataset.historyReady=proofImages.every(img=>img.complete&&img.naturalWidth>100)?'true':'false';
+    schedule();
+   }
+   if(proofPlates.every(Boolean)){
+    bridge.dataset.historyReady='loading';
+    proofImages.forEach((img,i)=>{
+     img.dataset.sourceWork=proofPlates[i].workId||proofPlates[i].title;
+     img.onload=updateProofReady;
+     img.onerror=()=>{bridge.dataset.historyReady='false';schedule()};
+     img.src=proofPlates[i].image;
+    });
    }
    activeCollection=exhibition.id;
    world.dataset.exhibition=exhibition.id;
