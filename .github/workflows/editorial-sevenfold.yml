@@ -1,4 +1,4 @@
-name: Sevenfold magazine interior QA
+name: Sevenfold executable editorial grammar QA
 on:
   pull_request:
     paths:
@@ -7,41 +7,55 @@ on:
       - 'layouts/partials/editorial/**'
       - 'layouts/_default/ws-editorial-interior.html'
       - 'layouts/_default/baseof.html'
-      - 'static/css/westside-editorial-interior.css'
+      - 'static/css/westside-editorial-grammar.css'
       - 'static/experiments/scripture-studio-motherform-live.html'
       - 'scripts/editorial-sevenfold-contract.mjs'
+      - 'scripts/editorial-grammar-new.mjs'
       - 'tests/editorial-sevenfold-browser.cjs'
+      - 'fixtures/editorial-grammar/**'
       - '.github/workflows/editorial-sevenfold.yml'
   workflow_dispatch:
 jobs:
-  magazine-interiors:
+  grammar-to-website:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
       - uses: peaceiris/actions-hugo@v3
         with:
           hugo-version: '0.167.0'
           extended: true
-      - name: Verify OS ownership and all seven actual pages
+      - name: Validate the production grammar and all seven original realms
         run: node scripts/editorial-sevenfold-contract.mjs
-      - name: Build canonical Hugo site without rewriting original P2
-        run: hugo --gc --minify --baseURL 'http://127.0.0.1:4186/'
-      - name: Install Playwright Chromium
+      - name: Create a completely new article from editorial grammar input
+        run: |
+          node scripts/editorial-grammar-new.mjs \
+            --realm=journal --slug=grammar-proof \
+            --source=fixtures/editorial-grammar/journal-proof.json --publish
+          test -f content/journal/grammar-proof.md
+          test -f data/editorial/grammar/journal-grammar-proof.json
+      - name: Build the actual Hugo pages
+        run: |
+          hugo --gc --minify --baseURL 'http://127.0.0.1:4186/'
+          test -f public/journal/grammar-proof/index.html
+          for realm in church journal emmaus olive dawn-library cinema daylight-cafe; do
+            test -f "public/$realm/folio/index.html"
+          done
+      - name: Install real Chromium browser
         run: |
           npm install --no-save --no-package-lock playwright
           npx playwright install chromium
-      - name: Inspect all seven real pages at desktop and mobile
+      - name: Prove 7 distinct grammar pages and the generated page actually render
         run: |
-          python3 -m http.server 4186 --directory public > /tmp/ws-sevenfold-server.log 2>&1 &
+          python3 -m http.server 4186 --directory public > /tmp/ws-grammar-server.log 2>&1 &
           server=$!
           trap 'kill "$server" 2>/dev/null || true' EXIT
           node tests/editorial-sevenfold-browser.cjs
-      - name: Preserve every rendered page for visual jury review
+      - name: Preserve every screenshot for editorial design review
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: sevenfold-editorial-visual
+          name: editorial-grammar-web-pages
           path: artifacts/sevenfold-editorial/
           retention-days: 14
           if-no-files-found: ignore
