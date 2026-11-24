@@ -1,0 +1,65 @@
+{
+  "schema": "westside.editorial-grammar.v1",
+  "realm": "daylight-cafe",
+  "genre": "daily-life",
+  "cover": {
+    "mode": "quiet",
+    "eyebrow": "Daylight Café · Everyday Life",
+    "titleZh": "白晝咖啡館",
+    "titleEn": "Daylight Café",
+    "deck": "把信仰帶進每日生活，在工作、家庭、城市與一張餐桌之間，練習溫柔而真實的相遇。",
+    "art": {
+      "src": "/images/sevenfold/westside-watch-logo-harvest.svg",
+      "alt": "白晝咖啡館原有七重疊收穫黃色標誌"
+    },
+    "issue": "07 / Everyday"
+  },
+  "blocks": [
+    {
+      "type": "essay",
+      "id": "table",
+      "mode": "reading-with-margin",
+      "eyebrow": "At the Table",
+      "title": "每日的供應，成為閱讀的起點",
+      "paragraphs": [
+        "白晝咖啡館以生活與餐桌為題，從家人、朋友、工作和城巿的日常經驗，延伸出可以彼此分享的文字與圖像。",
+        "申命記八章提到小麥、大麥、葡萄、無花果、石榴、橄欖與蜜。既有七種出產的刻線語言，可以在適當的圖版中出現，不應重複壓在每個文字段落上。"
+      ]
+    },
+    {
+      "type": "scripture",
+      "id": "harvest",
+      "mode": "inset",
+      "heading": "土地的出產"
+    },
+    {
+      "type": "index",
+      "id": "day",
+      "mode": "columns",
+      "eyebrow": "Life & Faith",
+      "title": "每天可以繼續的事情",
+      "entries": [
+        {
+          "title": "白晝咖啡館",
+          "label": "日常生活",
+          "href": "/daylight-cafe/"
+        },
+        {
+          "title": "ONE",
+          "label": "每日讀經",
+          "href": "/one/"
+        },
+        {
+          "title": "活水堂教會",
+          "label": "真實聚會和關懷",
+          "href": "/church/"
+        },
+        {
+          "title": "西望雜誌",
+          "label": "文化與生活閱讀",
+          "href": "/journal/"
+        }
+      ]
+    }
+  ]
+}
