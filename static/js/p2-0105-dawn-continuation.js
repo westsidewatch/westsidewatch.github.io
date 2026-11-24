@@ -16,39 +16,65 @@
  const clamp=(n,a=0,b=1)=>Math.max(a,Math.min(b,n)),ease=n=>{const x=clamp(n);return x*x*(3-2*x)};
  const mix=(a,b,t)=>a+(b-a)*t;
  let queued=false,at=0,entryProgress=0,entryClock=0,entryTarget=0,rafId=0;
+ // R87 / one source-owned exit, one shared engraved register, then MERSI.
+ // These stations are shared by layout and QA; d=28.4 remains the already
+ // published stable P2 05 entrance for all existing reading-room links.
+ const relay=Object.freeze({holdEnd:26.50,retireEnd:27.12,
+  merciStart:27.36,merciEnd:28.16,twinEnd:28.34});
+ const bridge=$('#p205-engraving-bridge');
  function progress(){return clamp(-track.getBoundingClientRect().top/Math.max(1,innerHeight),0,32.3)}
  function paint(){queued=false;const d=progress(),p=entryProgress;
 
   // THE ORIGINAL 01–04 FILES REMAIN UNMODIFIED AND BEHIND THEIR OWN STAGE.
-  // 04 must stay visible behind the two incoming 05 image masks until
-  // the MERSI handoff fully owns the stage. Never opacity-fade an image world.
-  prior.contentWindow?.postMessage({type:'westside-p2-home-pose',distance:Math.min(d,26.3),legacyProgress:clamp(d/26.3),active:d<27.72},location.origin);
-  // Reuse the original 03→04 MERSI grammar: RIGHT reveals from below first,
-  // LEFT from above second. Both use the same reversible scroll distance.
-  const phase=clamp((d-26.23)/1.30);
+  // 01: hold the complete approved Olive speaker folio. 02: retreat it
+  // as ONE intact composition into its original botanical/topographic ink.
+  // Neither Jerusalem print may clip any face or scripture during this exit.
+  const exit=clamp((d-relay.holdEnd)/(relay.retireEnd-relay.holdEnd));
+  const exitLift=ease(exit),exitInk=ease((exit-.60)/.40);
+  prior.contentWindow?.postMessage({type:'westside-p2-home-pose',
+   distance:Math.min(d,26.3),legacyProgress:clamp(d/26.3),
+   active:d<relay.retireEnd},location.origin);
+  prior.style.visibility=exit>=.99999?'hidden':'visible';
+  prior.style.transformOrigin='center center';
+  prior.style.transform=exit<=.00001?'none':
+   `translate3d(0,${(-3.8*exitLift).toFixed(3)}%,0) scale(${(1-.07*exitLift).toFixed(5)})`;
+  prior.style.opacity=String(1-exitInk);
+  prior.style.pointerEvents=exit>.001?'none':'auto';
+  bridge.style.visibility=d>=relay.holdEnd?'visible':'hidden';
+  bridge.style.setProperty('--p205-engraving-shift',`${(11*ease(clamp((d-relay.holdEnd)/(relay.merciStart-relay.holdEnd)))).toFixed(3)}%`);
+  // 03: share existing 04 contour engraving WITHOUT duplicating speakers.
+  // 04: only AFTER 04 has completely retired, reveal authentic Jerusalem
+  // images with the exact opposed MERSI two-field grammar.
+  const phase=clamp((d-relay.merciStart)/(relay.merciEnd-relay.merciStart));
   const rightReveal=ease(phase/.55),leftReveal=ease((phase-.52)/.48);
-  const settled=ease((d-27.53)/.18);
+  const settled=ease((d-relay.merciEnd)/(relay.twinEnd-relay.merciEnd));
   realm.style.visibility=phase>.00001?'visible':'hidden';
   realm.inert=settled<.98||p>.001;
   realm.setAttribute('aria-hidden',settled<.98||p>.001?'true':'false');
   realm.style.pointerEvents=settled>.98&&p<.001?'auto':'none';
   world.style.opacity='1';
-  // Clip original full-height image panels, INCLUDING their paper backing;
-  // no empty full-screen layer may obscure Olive 04 during this split.
   const leftPage=$('#dawn-page-left'),rightPage=$('#dawn-page-right');
   leftPage.style.clipPath=leftReveal>=.99999?'none':`inset(0 0 ${((1-leftReveal)*100).toFixed(3)}% 0)`;
   rightPage.style.clipPath=rightReveal>=.99999?'none':`inset(${((1-rightReveal)*100).toFixed(3)}% 0 0 0)`;
+  stage.dataset.p205OliveFolio=exit.toFixed(4);
+  stage.dataset.p205OliveRetired=String(exit>=.99999);
+  stage.dataset.p205EngravingRelay=d<relay.holdEnd?'held':
+   d<relay.retireEnd?'complete-folio-retreat':
+   d<relay.merciStart?'shared-topographic-register':'jerusalem-arrival';
   stage.dataset.p205MerciEntry=phase.toFixed(4);
   stage.dataset.p205MerciLeft=leftReveal.toFixed(4);
   stage.dataset.p205MerciRight=rightReveal.toFixed(4);
-  stage.dataset.p205MerciMethod='opposed-top-down-bottom-up';
+  stage.dataset.p205MerciMethod='source-retreat-register-then-opposed-reveal';
   twins.style.visibility=settled>.02?'visible':'hidden';
    // Keep the original paired masthead rendered above the image stage.
    squares.forEach(square=>{square.style.visibility='visible';square.style.opacity='1';});
   twins.style.opacity=String(settled*(1-ease((p-.01)/.16)));
   twins.style.transform='translate(-50%,-50%)';
   paintWorld(d);
-  stage.dataset.p205Scene=d<26.23?'04-protected':'05-gospel-image-world';
+  stage.dataset.p205Scene=d<relay.holdEnd?'04-protected':
+   d<relay.retireEnd?'04-complete-folio-exit':
+   d<relay.merciStart?'04-05-shared-engraving':
+   d<relay.merciEnd?'05-merci-image-entry':'05-gospel-image-world';
   paintHandoff();
  }
  function schedule(){if(!queued){queued=true;requestAnimationFrame(paint)}}
@@ -254,7 +280,7 @@
  function paintWorld(d){
   // Two independently staggered visual strips, with scroll-owned MERSI-like
   // sliding masks. Motion stops on stationary scroll and reverses precisely.
-  const base=Math.max(0,d-27.72);
+  const base=Math.max(0,d-relay.twinEnd);
   for(const side of imageSides){
    const scenes=gospelScenes[side.key];if(!scenes.length)continue;
    // Do not start the right image's NEXT print before the 04→05 reveal ends.
@@ -299,8 +325,8 @@
    }
    // Travel stays inside the original two opposing clip apertures:
    // the upper image descends to rest, the lower image rises to rest.
-   const reveal=side.key==='left'?ease((clamp((d-26.23)/1.30)-.52)/.48):
-    ease(clamp((d-26.23)/1.30)/.55);
+   const m=clamp((d-relay.merciStart)/(relay.merciEnd-relay.merciStart));
+   const reveal=side.key==='left'?ease((m-.52)/.48):ease(m/.55);
    const offset=(1-reveal)*(side.key==='left'?-8:8);
    side.current.style.transform=reveal>=.99999?'none':`translate3d(0,${offset.toFixed(3)}%,0)`;
    side.next.style.transform=side.current.style.transform;
