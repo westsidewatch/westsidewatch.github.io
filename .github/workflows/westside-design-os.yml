@@ -5,6 +5,8 @@ on:
     paths:
       - 'dore-design/visual-workchain/**'
       - 'scripts/dore_visual_workchain.py'
+      - 'static/experiments/church-foundation-*/**'
+      - 'dore-design/knowledge-lab/storybook/scripts/visual-workchain-browser.mjs'
       - 'tests/test_dore_visual_workchain.py'
       - '.github/workflows/westside-design-os.yml'
 jobs:
@@ -18,3 +20,27 @@ jobs:
         run: python3 scripts/check_design_os_entrypoints.py
       - name: Visual workchain negative and positive tests
         run: python3 -m unittest discover -s tests -p test_dore_visual_workchain.py -v
+  visual-workchain-browser:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run evidence gate unit tests independently
+        run: python3 -m unittest discover -s tests -p test_dore_visual_workchain.py -v
+      - name: Install existing browser toolchain
+        working-directory: dore-design/knowledge-lab/storybook
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+      - name: Measure actual browser title hierarchy and glyph fonts
+        run: node dore-design/knowledge-lab/storybook/scripts/visual-workchain-browser.mjs
+      - name: Upload measured evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-workchain-browser-evidence
+          path: visual-workchain-browser-evidence/
