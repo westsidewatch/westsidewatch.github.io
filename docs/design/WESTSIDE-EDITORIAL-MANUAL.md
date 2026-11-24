@@ -357,6 +357,8 @@ These files remain archived intact; they do not operate as independent OS author
 | Cooper Hewitt：持續編輯 | 原 JSON → Hugo 工作鏈保留，期號目錄、編目與出版系列獲得不同的編輯結構 |
 | MoMA：視覺重力 | 講員肖像、圖版、建築和作品目錄各自成為閱讀主角，非均等產品卡 |
 
+**工作鏈修正（2026-11-24）**：設計判斷須先回到現有 [Figma Visual Language Lab / LAB 06](https://www.figma.com/design/v0LXKYZznCRmXWhk36zARN?node-id=21-2)；節點 21:9 的導航是純文字，21:27、21:28 等為極細結構線。這是既有母版的實際證據，不是新增設計權威。新編輯頁的入口、目錄與作品標題不得使用通用箭頭裝飾；保留原有連結、焦點與文字辨識。此項僅修正已查明的局部違規，不代表完成所有 Figma 組件、9.6 原始研究及全站畫面對照。
+
 **第一輪施工範圍**：既有七個 /folio/ 實際頁面及既有共用 CSS/partial；不改已整合 P2、首頁影片、原 3D、書局原有二三層或正式入口。這是局部設計轉譯，非全站完成。須由既有 Chromium 逐頁、逐尺寸與使用者的實際畫面判斷；原研究全文和後續實際頁面移植仍待完成。
 
 ## 10. Scrapling × 主站統一視覺元素：隔離技術驗證（2026-11-14）

@@ -31,3 +31,6 @@ assert(body.includes('ws-gram-essay__text')&&body.includes('ws-gram-plate__image
 const data=JSON.parse(grammar);
 assert(data.cover.mode==='poster'&&data.blocks.some(b=>b.mode==='issue-toc'));
 console.log('EDITORIAL_ART_DIRECTION_OS_PASS: original OS, Chinese-first optical role, genuine SC, sourced artwork, 7 realm colors and no cinema palette bleed');
+
+const shell=fs.readFileSync('layouts/partials/editorial/grammar/page.html','utf8');
+assert(!/[\u2190-\u21ff]/u.test(shell+page+body),'New editorial navigation must not reintroduce generic arrow glyphs');

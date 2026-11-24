@@ -10,6 +10,9 @@ body.ws-editorial-context>main#main{width:100%;max-width:none;margin:0;padding:0
 .ws-grammar[data-ws-editorial-realm=daylight-cafe]{--g-accent:var(--ws-harvest)}
 .ws-grammar *{box-sizing:border-box}
 .ws-grammar a{color:inherit;text-decoration:none}
+/* The Figma editorial wall uses quiet text navigation and hairline structure, not generic arrow affordances. */
+.ws-grammar :is(.ws-grammar__return,.ws-gram-cover__meta a,.ws-grammar__colophon a){text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.3em}
+.ws-gram-index__items a:hover .ws-gram-index__name,.ws-gram-shelf__works a:hover strong{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.22em}
 .ws-grammar a:focus-visible,.ws-grammar summary:focus-visible{outline:2px solid var(--edition);outline-offset:4px}
 .ws-grammar :is(p,h1,h2,figure,ol,dl,dd,blockquote){margin:0}
 .ws-grammar img{display:block;width:100%;height:auto}
@@ -98,14 +101,13 @@ body.sites-surface .ws-grammar :is(.ws-grammar__eyebrow,.ws-grammar__folio-no,.w
 .ws-gram-index[data-mode=issue-toc] .ws-gram-index__items li:first-child{grid-column:1/-1;border-top:3px solid var(--edition)}
 .ws-gram-index[data-mode=issue-toc] .ws-gram-index__items li:first-child .ws-gram-index__name{font-size:var(--ws-type-scale-title-lg)}
 .ws-gram-index[data-mode=numbered] .ws-gram-index__items{grid-template-columns:1fr;gap:0}
-.ws-gram-index[data-mode=numbered] .ws-gram-index__items a{grid-template-columns:3ch minmax(0,2fr) minmax(0,1fr) auto;align-items:baseline;padding-block:10px}
+.ws-gram-index[data-mode=numbered] .ws-gram-index__items a{grid-template-columns:3ch minmax(0,2fr) minmax(0,1fr);align-items:baseline;padding-block:10px}
 .ws-gram-shelf[data-mode=publication-list] .ws-gram-shelf__works li{border-top:5px solid var(--edition);padding-block:16px}
 .ws-gram-shelf[data-mode=publication-list] .ws-gram-shelf__kind{color:var(--g-label-ink)}
 .ws-gram-index__items a,.ws-gram-shelf__works a{display:grid;gap:8px}
 .ws-gram-index__name,.ws-gram-shelf__works strong{font-size:var(--ws-type-scale-title-md);font-weight:var(--ws-weight-zh-anchor)}
 .ws-gram-index__num,.ws-gram-index__label,.ws-gram-shelf__kind,.ws-gram-shelf__works small{font-size:var(--ws-type-scale-meta)}
 .ws-gram-shelf__works p{font-size:var(--ws-type-scale-reading);line-height:1.8}
-.ws-gram-shelf__go,.ws-gram-index__arrow{justify-self:end}
 .ws-gram-shelf__works{grid-template-columns:repeat(3,minmax(0,1fr))}
 .ws-gram-plate__image img{max-height:80vh;object-fit:contain}
 .ws-gram-plate[data-mode=portrait-folio] .ws-gram-plate__image{max-width:58%;margin:auto}
@@ -129,8 +131,7 @@ body.sites-surface .ws-grammar :is(.ws-grammar__eyebrow,.ws-grammar__folio-no,.w
 .ws-gram-scripture__plate{width:min(100%,480px);align-self:center}
 .ws-gram-index__items,.ws-gram-shelf__works,.ws-gram-index[data-mode=issue-toc] .ws-gram-index__items{grid-template-columns:1fr}
 .ws-gram-index[data-mode=issue-toc] .ws-gram-index__items li{grid-column:1/-1}
-.ws-gram-index[data-mode=numbered] .ws-gram-index__items a{grid-template-columns:3ch minmax(0,1fr) auto}
+.ws-gram-index[data-mode=numbered] .ws-gram-index__items a{grid-template-columns:3ch minmax(0,1fr)}
 .ws-gram-index[data-mode=numbered] .ws-gram-index__label{grid-column:2;grid-row:2}
-.ws-gram-index[data-mode=numbered] .ws-gram-index__arrow{grid-column:3;grid-row:1}
 .ws-gram-plate[data-mode=portrait-folio] .ws-gram-plate__image{max-width:100%}
 }
