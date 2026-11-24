@@ -1,0 +1,75 @@
+{
+  "schema": "westside.editorial-grammar.v1",
+  "realm": "emmaus",
+  "genre": "scripture-study",
+  "cover": {
+    "mode": "atlas",
+    "eyebrow": "Emmaus · Scripture and World",
+    "titleZh": "以馬忤斯",
+    "titleEn": "On the Road",
+    "deck": "從經文出發，沿著歷史、人物與土地，進入一段可以繼續研讀的路。",
+    "art": {
+      "src": "/images/p2-realms/v15/03-emmaus-engraving-p2-runtime.svg",
+      "alt": "以馬忤斯原有 P2 刻線經卷圖"
+    },
+    "issue": "03 / Study"
+  },
+  "blocks": [
+    {
+      "type": "scripture",
+      "id": "luke",
+      "mode": "opening-margin",
+      "heading": "凡經上所指著自己的話"
+    },
+    {
+      "type": "essay",
+      "id": "reading",
+      "mode": "reading-with-margin",
+      "eyebrow": "Luke 24:27",
+      "title": "從摩西和眾先知起",
+      "paragraphs": [
+        "路加福音二十四章描寫復活的耶穌在以馬忤斯路上，從摩西和眾先知起，向門徒講解聖經中指向祂的事。",
+        "這一頁將經文閱讀放在第一位，圖版、史地與書目應服事理解，不應讓裝飾遮擋經文。"
+      ],
+      "note": "以經文正文、史地線索與交叉查考組成閱讀路徑。"
+    },
+    {
+      "type": "plate",
+      "id": "engraving",
+      "mode": "full-bleed",
+      "eyebrow": "Historical Imagination",
+      "src": "/images/p2-realms/v15/03-emmaus-engraving-p2-runtime.svg",
+      "alt": "以馬忤斯歷史刻線母圖",
+      "caption": "Emmaus / 已保存於主站的以馬忤斯刻線藝術"
+    },
+    {
+      "type": "index",
+      "id": "references",
+      "mode": "numbered",
+      "eyebrow": "Read Further",
+      "title": "沿著經卷延伸",
+      "entries": [
+        {
+          "title": "ONE · 閱讀聖經",
+          "label": "經文與章節",
+          "href": "/one/"
+        },
+        {
+          "title": "以馬忤斯",
+          "label": "原有查經版塊",
+          "href": "/emmaus/"
+        },
+        {
+          "title": "黎明書局",
+          "label": "延伸書籍與史地",
+          "href": "/dawn-library/"
+        },
+        {
+          "title": "多雷搜索",
+          "label": "研究資料",
+          "href": "/dore/search/"
+        }
+      ]
+    }
+  ]
+}
