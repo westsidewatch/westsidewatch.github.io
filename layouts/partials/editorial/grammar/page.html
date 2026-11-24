@@ -11,7 +11,7 @@
 <article class="ws-grammar" data-ws-editorial-realm="{{ $realm }}" data-ws-grammar="{{ $id }}" data-ws-grammar-version="{{ $composition.schema }}" aria-labelledby="ws-grammar-title">
   <header class="ws-grammar__topline">
     <a class="ws-grammar__masthead" href="/" aria-label="Westside Watch 首頁"><img src="/images/westside-watch-masthead-landscape.svg" alt="Westside Watch" decoding="async"></a>
-    <span class="ws-grammar__folio-no" lang="en">{{ $composition.cover.issue }} · Watch for the Dawn</span>
+    <span class="ws-grammar__folio-no" lang="en" data-ws-designable>{{ $composition.cover.issue }} · Watch for the Dawn</span>
     <a class="ws-grammar__return" href="{{ $section.source }}">進入版塊 <span aria-hidden="true">↗</span></a>
   </header>
   {{/* Seven chapter navigation is available, but does not occupy the title stage. */}}
