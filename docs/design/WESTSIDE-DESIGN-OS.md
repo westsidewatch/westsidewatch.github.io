@@ -89,3 +89,17 @@ The seven realm-specific battlement forms must join edge to edge along a common 
 The wall is a compositional system, not an additional navigation bar. Develop the seven related forms and the openings together: the wall's rhythm establishes alignment, interruptions, proportional differences and continuity across page sections; scripture, architecture, editorial imagery and actual content may occupy openings. Preserve the established 5:8 editorial gravity and other approved proportions; do not force every opening into an identical square, an equal-sized card grid or a fixed frame. An opening can be a window for reading or viewing without being a clickable link. Use genuine destination marks only where navigation exists.
 
 First application: develop the user-identified visual direction in church static V04 B. Keep actual church content, approved OS typography, existing scripture and architectural assets. Compare the new wall/opening composition against V04 B, not just against the technical checklist. Do not alter P2 or promote production geometry without separate approval. A working preview and human visual review remain required; this rule is not approval of any unreviewed silhouette or composition.
+
+
+### Original artwork recovery and rejection of V06 (2026-11-24)
+
+The authoritative historical shape source is **Westside Watch Brand Standards.pdf, page 8 of 26 — Watch Rhythm / 守望節奏**, not an AI-generated array of heights. The actual original artwork is low-profile, tightly joined, with unequal lengths; retain its original optical proportions and baseline. The page explicitly labels the following four forms:
+
+| Original label | Source rhythm |
+| --- | --- |
+| Living Water | `▇▆▇▅▇▆` |
+| Olive Branch | `▅▆▇▆▅` |
+| Harvest | `▆▅▅▆▇` |
+| Crimson | `▇▇▆▅▅` |
+
+The separately documented editorial ending `▆▇▅▇▆▅` is not the Living Water navigation mark. Page 8 also specifies unequal bookmark lengths: First Light longest, permanent columns medium, features shorter, seasonal Crimson Robe shortest. The unlabeled rhythms in that historical artwork must not be arbitrarily reassigned to the seven present-day realms. Recover any additional approved realm mapping from historical records before implementation; unresolved geometry is not authorization to invent. The V06 experiment's seven equal-width, invented six-part forms are **rejected**, and must not be used as canonical assets or as the starting artwork for subsequent designs. V04 B remains the user-identified direction; visual development must use the recovered original art, not repeat the rejected V06 shape system. Browser checks of merely unique SVG IDs or equal baselines do not establish source-art fidelity.
