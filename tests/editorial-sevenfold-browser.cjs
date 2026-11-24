@@ -51,6 +51,25 @@ const viewports=[{name:'desktop',width:1440,height:900},{name:'tablet',width:768
     assert(computed.fontEn.includes('Bodoni'),realm+' English OS font not present');
     assert(computed.masthead&&computed.navAvailable);
     if(realm!=='church')assert(computed.assetCount>=1,realm+' actual cover image absent');
+    if(realm==='church'){
+      const iframe=page.locator('.ws-gram-cover__identity-square iframe');
+      await iframe.scrollIntoViewIfNeeded();
+      await page.waitForFunction(()=>{
+        const d=document.querySelector('.ws-gram-cover__identity-square iframe')?.contentDocument;
+        return d?.body?.classList.contains('p2SevenfoldVertical')&&
+          d.querySelectorAll('#formeZh .piece.zh').length>0;
+      },null,{timeout:70000});
+      const a=await page.evaluate(()=>{
+        const s=document.querySelector('.ws-gram-cover__identity-square').getBoundingClientRect();
+        const d=document.querySelector('.ws-gram-cover__identity-square iframe').contentDocument;
+        return {square:Math.abs(s.width-s.height)<2,
+          vertical:getComputedStyle(d.querySelector('#formeZh .piece.zh')).writingMode==='vertical-rl',
+          numberOfDecorativeDuplicates:document.querySelectorAll('.ws-gram-cover__identity-mark').length};
+      });
+      assert(a.square&&a.vertical&&a.numberOfDecorativeDuplicates===0,
+        'Original church identity must pair with one V60 Chinese-vertical square '+JSON.stringify(a));
+    }
+
     await page.locator('.ws-grammar__directory summary').click();
     assert.equal(await page.locator('.ws-grammar__directory nav a').count(),7,'Full sevenfold navigation required');
     assert.equal(await page.locator('.ws-grammar__directory nav a[aria-current=page]').count(),1);
