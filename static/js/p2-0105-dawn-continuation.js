@@ -66,7 +66,7 @@
   }
   // A: translate intact vertical pair. B: rotate -90deg at the destination.
   // C: replace only after the pair is horizontal. Top title becomes left title.
-  const travel=ease((d-26.45)/.38),turn=ease((d-26.83)/.30),replace=ease((d-27.13)/.20);
+  const travel=ease((d-26.63)/.20),turn=ease((d-26.83)/.30),replace=ease((d-27.13)/.20);
   const x=mix(a.x,b.x,travel),y=mix(a.y,b.y,travel),scale=mix(1,b.size/a.size,travel);
   source.style.opacity='0';
   Object.assign(anchorClone.style,{position:'absolute',left:x+'px',top:y+'px',margin:'0',transformOrigin:'center center',transform:'translate(-50%,-50%) rotate('+(-90*turn)+'deg) scale('+scale+')',opacity:String(1-replace),visibility:'visible'});
@@ -92,7 +92,7 @@
   prior.contentWindow?.postMessage({type:'westside-p2-home-pose',
    distance:Math.min(d,26.3),legacyProgress:clamp(d/26.3),
    active:d<relay.retireEnd,
-   mastheadSplit:ease((d-26.45)/.38),
+   mastheadSplit:ease((d-26.45)/.18),
    mastheadCenter:(()=>{const r=twins.getBoundingClientRect(),s=prior.getBoundingClientRect();return {x:r.left+r.width/2-s.left,y:r.top+r.height/2-s.top,size:r.height}})()},location.origin);
   prior.style.visibility=exit>=.99999?'hidden':'visible';
   prior.style.transform='none';
@@ -160,6 +160,9 @@
    d<relay.merciStart?'04-05-shared-engraving':
    d<relay.merciEnd?'05-merci-image-entry':'05-gospel-image-world';
   paintHandoff();
+  const split=ease((d-26.45)/.18);
+  const tr=twins.getBoundingClientRect(),fr=prior.getBoundingClientRect();
+  prior.contentWindow?.P2SetDawnSplit?.(split,{x:tr.left+tr.width/2-fr.left,y:tr.top+tr.height/2-fr.top,size:tr.height});
   paintAnchor(d,p);
  }
  function schedule(){if(!queued){queued=true;requestAnimationFrame(paint)}}
