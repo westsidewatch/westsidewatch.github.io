@@ -51,7 +51,7 @@
 {{ else if eq $b.type "plate" }}
   <figure class="ws-gram-block ws-gram-plate" data-type="plate" data-mode="{{ $b.mode }}" id="{{ $b.id }}">
     <div class="ws-gram-plate__image">
-      <img src="{{ $b.src }}" alt="{{ $b.alt }}" loading="lazy" decoding="async">
+      <img src="{{ $b.src }}" alt="{{ $b.alt }}" loading="eager" decoding="async" fetchpriority="low">
     </div>
     <figcaption>
       <span class="ws-grammar__eyebrow" lang="en">{{ $b.eyebrow }}</span>
