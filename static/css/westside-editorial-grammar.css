@@ -34,6 +34,7 @@
 .ws-grammar__masthead img{width:clamp(130px,14vw,210px);height:auto}
 .ws-grammar__folio-no{
  font:var(--ws-weight-standard) var(--ws-type-scale-meta)/1.4 var(--ws-type-display-en-sc);
+ font-family:var(--ws-type-display-en-sc)!important;
  color:var(--g-label-ink);letter-spacing:.07em;text-align:center;white-space:normal
 }
 .ws-grammar__return{
@@ -86,12 +87,18 @@
 .ws-gram-cover__title-zh{
  display:block;font:var(--ws-weight-section) var(--ws-type-scale-display-md)/1.18 var(--ws-type-display-zh)!important;
  letter-spacing:.025em;word-break:keep-all;line-break:strict;text-wrap:balance;max-width:100%;
+ font-family:var(--ws-type-display-zh)!important;
+ font-weight:var(--ws-weight-section,900)!important;
+ font-size:var(--ws-type-scale-display-md)!important;
  font-synthesis:none;
 }
 .ws-gram-cover__title-en{
  display:block;margin-top:clamp(9px,1.1vw,18px);
  font:var(--ws-weight-standard) var(--ws-type-scale-title-sm)/1.26 var(--ws-type-display-en-sc)!important;
  color:var(--g-label-ink);letter-spacing:.015em;overflow-wrap:normal;word-break:normal;
+ font-family:var(--ws-type-display-en-sc)!important;
+ font-weight:var(--ws-weight-standard,400)!important;
+ font-size:var(--ws-type-scale-title-sm)!important;
  font-synthesis:none;
 }
 .ws-gram-cover__deck{
@@ -184,8 +191,9 @@
  mask:url("/images/living-water-west-church-name.png") center/contain no-repeat;
 }
 .ws-gram-cover__title-en--official{
- font:var(--ws-weight-standard) clamp(15px,1.75vw,26px)/1.2 var(--ws-type-display-en-sc)!important;
- text-align:center;color:var(--g-accent)
+ font:var(--ws-weight-standard) var(--ws-type-scale-title-sm)/1.2 var(--ws-type-display-en-sc)!important;
+ font-family:var(--ws-type-display-en-sc)!important;
+ text-align:center;color:var(--g-label-ink)
 }
 .ws-gram-cover__identity-field{
  grid-column:9/-1;grid-row:1;
