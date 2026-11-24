@@ -433,7 +433,8 @@ try {
     await page.waitForFunction(value => {
       const s = window.__JERUSALEM3000__;
       return s?.historicalTime?.position === value &&
-        s.renderDiagnostics?.phase === s.historicalTime.phase;
+        s.renderDiagnostics?.phase === s.historicalTime.phase &&
+        s.renderDiagnostics.cityGenerationStatus === 'ready';
     }, value, { timeout: 15000 });
     const sample = await page.evaluate(() => ({
       time: window.__JERUSALEM3000__.historicalTime,
