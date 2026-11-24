@@ -65,3 +65,13 @@ Westside Watch 所有內頁以《西望》的編輯排版語法為共同母體�
 正式隔離母版、單一內容資料、七路由、組件及驗收契約見 [SEVENFOLD-EDITORIAL-INTERIOR.md](SEVENFOLD-EDITORIAL-INTERIOR.md)。這一版僅用 `.Params.os_editorial` 載入共用樣式與 Hugo 版型，**不得改寫既定首頁、導航、Merci、P2、3D、海報與書局動效**。經文鉛字必須連接既有 V60 母版，不可再創造相似的方塊。
 
 此章記錄候選組件的實施地點與評審門檻，**不代表視覺已定稿**。只有七頁整套經原版比對、Chromium 實測和人工評審通過，才可把規則升格並接入各版塊正式內頁。
+
+## 可執行雜誌編輯語法 · Editorial Grammar v1（2026-11-23）
+
+先前七版塊共用同一張 `folio.html` 固定左右構圖，是被否決的設計候選，不可升格為 OS 標準。已改成**可執行的內容到網頁生產語法**，唯一設計權限仍屬 Westside Design OS。
+
+新的有效生產鏈：`data/editorial/grammar/<id>.json` → `layouts/partials/editorial/grammar/{page,cover,block}.html` → `static/css/westside-editorial-grammar.css`（全部消費 OS Token）→ Hugo 真實頁面。七版塊在同一編譯器中選取七種不同封面構圖，六種可重新排列的內容組件，原有 V60 中文豎排鉛字直接復用；另外提供可生成新增頁面的 `scripts/editorial-grammar-new.mjs`，並在 CI 現場生成一張新文章作工程驗收。
+
+加入正式範例 **The Paris Review**：應研究其期號／分類／完整數位館藏與訪談閱讀秩序；結合 Emergence、Aperture、The Public Domain Review 的文章、藝術出版和史料策展方法。請見 [WESTSIDE-EXECUTABLE-EDITORIAL-GRAMMAR.md](WESTSIDE-EXECUTABLE-EDITORIAL-GRAMMAR.md)。
+
+此語法目前只接管七個隔離 `/folio/` 頁面的預覽，沒有授權覆寫首頁、Merci、P2、虛擬教會、講員海報、書局第二三層。**正式遷移仍須七頁人工視覺與內容審定。**
