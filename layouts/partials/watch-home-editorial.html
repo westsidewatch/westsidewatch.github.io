@@ -39,6 +39,14 @@ body.home .sites-home-nav--floating:not(:has(details[open]))::after{content:none
 /* P2 scroll host: isolate approved preview CSS in its iframe; no new global CSS authority. */
 body.home .ws-p2-sevenfold-host{position:relative!important;height:3330svh!important;min-height:3330svh!important;overflow:clip!important}
 body.home .ws-p2-sevenfold-host>iframe{position:sticky!important;top:0!important;display:block!important;width:100%!important;height:100svh!important;min-height:100svh!important;border:0!important}
+/* Gecko scrolls the outer document independently of nested frame paints.
+   Keep the fully pinned frame in viewport coordinates during the P2 sequence. */
+@supports (-moz-appearance:none){
+ body.home .ws-p2-sevenfold-host[data-p2-viewport-pinned="true"]{overflow:visible!important}
+ body.home .ws-p2-sevenfold-host[data-p2-viewport-pinned="true"]>iframe{
+  position:fixed!important;inset:0!important;height:100%!important;min-height:0!important;
+ }
+}
 /* Hold the original film in the viewport while the nested opening scene loads. */
 body.home:has(.ws-p2-sevenfold-host[data-p2-entry-ready="false"]) .sites-home-hero{overflow:visible!important}
 body.home:has(.ws-p2-sevenfold-host[data-p2-entry-ready="false"]) .sites-home-film{position:fixed!important;inset:0!important;width:100%!important;height:100%!important}
@@ -58,6 +66,7 @@ function sync(){
  queued=false;
  const rect=host.getBoundingClientRect(),height=Math.max(1,innerHeight);
  const distance=clamp(-rect.top/height,0,32.30);
+ host.dataset.p2ViewportPinned=String(rect.top<=0&&rect.bottom>=height);
  const churchEnd=3.0775,magazineEnd=6.5,legacyDistance=Math.min(distance,magazineEnd);
  let progress;
  // The hero scroll already establishes the opening reveal. Enter P2 with
