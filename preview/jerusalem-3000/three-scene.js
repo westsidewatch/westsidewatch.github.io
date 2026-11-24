@@ -1,3 +1,4 @@
+import {createModelCoverageWindows} from './model-coverage-windows.js';
 import {createResidentialRenderBatches} from './residential-render-batches.js';
 import {createResidentialDistancePresentation} from './residential-distance-presentation.js';
 import {createCityVisualHierarchy} from './city-visual-hierarchy.js';
@@ -287,7 +288,9 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     const boundary=housingBoundaryAt({phaseId:currentPhaseId,offset:fraction,defenseData,wallReference,royalData:currentPhaseId==='david-solomon'?royalDataForGround:null,royalStage:stage,origin:terrainRuntime.grid.origin});
     urbanGround.apply({key,phase:currentPhaseId,zones,rings:boundary.rings,allowed:evidenceAllowed('inferred')});
   }
+  const modelCoverage=createModelCoverageWindows({parent:root,terrain:{heightAtWorld:(x,z)=>terrainRuntime.heightAtWorld(x,z)},getRegistration:phase=>independentLaterRegistrations.get(phase)});
   function applyTemporalState() {
+    modelCoverage.apply({phase:currentPhaseId,allowed:evidenceAllowed('inferred')});
     housingBoundaryAdmission?.restore();
     wallReferenceModel?.apply({position:timelinePosition,evidenceAllowed});
     defenseTimeline?.apply({phaseId:currentPhaseId,position:timelinePosition,evidenceAllowed});
@@ -838,6 +841,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
             housingBoundary:housingBoundaryAdmission?.snapshot({includeIds:false}),
             wallReference:wallReferenceModel?.diagnostics(),
             defenseTimeline:defenseTimeline?.snapshot({includeSourceAudit:false}),
+            modelCoverage:modelCoverage.diagnostics(),
             cityGenerationStatus:cityGenerationStatus(),
             cityWorld:persistentCityWorld?.diagnostics(),
             constructionPresentation:constructionPresentation.diagnostics(),
@@ -929,6 +933,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     setLandmarkLabels(enabled){landmarkLabelsEnabled=Boolean(enabled);landmarkView.setVisible(landmarkLabelsEnabled);needsFrame=true;return landmarkLabelsEnabled;},
     inspectSharedPlaces(){return currentPhaseId?sharedPlaces?.snapshot({phaseId:currentPhaseId,position:timelinePosition,evidenceMode:currentEvidenceMode})??null:null;},
     sharedPlaceTransitions(){return sharedPlaces?.transitions()??[];},
+    inspectModelCoverage:()=>modelCoverage.diagnostics(),
     inspectPersistentCityPhase(phase){return persistentCityWorld?.inspectPhase(phase)??null;},
     inspectDefenseTimeline(){return defenseTimeline?.snapshot()??null;},
     defenseTimelineIndex(){return defenseTimeline?.index()??[];},
@@ -1074,6 +1079,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
       for(const c of pendingFrameCaptures.splice(0)){clearTimeout(c.timeout);c.reject(new Error('City disposed'));}
       frameCaptureCanvas.width=frameCaptureCanvas.height=0;
       controls.dispose();
+      modelCoverage.dispose();
       housingBatches.dispose();constructionPresentation.dispose();phaseDissolve.dispose();
       templeSection.dispose();residentialDistance.dispose();visualHierarchy.dispose();
       builder.dispose();

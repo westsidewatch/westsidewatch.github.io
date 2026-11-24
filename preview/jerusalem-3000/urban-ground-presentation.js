@@ -15,6 +15,7 @@ export function createUrbanGroundPresentation(mesh){
      const q={x:p.getX(i)+mesh.position.x,z:p.getZ(i)+mesh.position.z},candidates=prepared.filter(z=>inside(q,z));if(!candidates.length)continue;
      const zone=candidates.find(z=>z.kind==='reserved')||candidates.find(z=>z.kind==='public')||candidates[0];if(rings.length&&!zone.explicitExpansion&&!rings.some(r=>pointInPolygon(q,r)))continue;
      const light=.64+.36*Math.max(0,n.getX(i)*sun.x+n.getY(i)*sun.y+n.getZ(i)*sun.z),colour=new THREE.Color(zone.kind==='reserved'?0xa9a49b:zone.kind==='public'?0xc5b99e:0xc6b69c).multiplyScalar(light);
+     if(zone.explicitExpansion&&zone.kind==='quarter')colour.setRGB(base[i*3],base[i*3+1],base[i*3+2]).lerp(new THREE.Color(0xc6b69c).multiplyScalar(light),.25);
      indices.push(i);values.push(colour.r,colour.g,colour.b);counts[zone.kind==='reserved'?'reserved':zone.kind==='public'?'public':'quarter']++;
     }
     entry={indices:new Uint32Array(indices),values:new Float32Array(values),counts};cache.set(key,entry);

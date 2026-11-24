@@ -196,6 +196,7 @@ try {
     const caveat=document.createElement('p');caveat.className='j3k-relief-caveat';caveat.textContent='紅線為地形剖面參考線，非古道路。高差取自現代約30m DSM；示意點非考古定位，不能當作大衛／所羅門時代的實測高程。禾場與建殿關聯依代下3:1，精確位置與古地表尚未核定。';reliefPanel.append(caveat);
     const source=document.createElement('a');source.href='https://www.biblegateway.com/passage/?search=2+Chronicles+3%3A1&version=KJV';source.textContent='禾場與建殿的經文關聯：代下3:1';source.target='_blank';source.rel='noopener';reliefPanel.append(source);
   }
+  const coverageNote=document.createElement('p');coverageNote.className='j3k-guide-note';coverageNote.hidden=true;stage.after(coverageNote);
   const destructionStory=document.createElement('p');destructionStory.className='j3k-guide-note';destructionStory.hidden=true;destructionStory.setAttribute('aria-live','polite');document.querySelector('.j3k-time').prepend(destructionStory);
   function update(v) {
     const state = time.sample(v),
@@ -211,6 +212,7 @@ try {
     destructionStory.hidden=!['babylonian-destruction','roman-destruction'].includes(p.id);
     destructionStory.textContent=p.label+' · '+({'standing-hold':'毀城前的城市',destruction:'聖殿與街區逐步毀壞','ruin-hold':'廢墟停留，尚未重建'}[transformation.presentationStage])+'（毀壞過程為示意）';
     if(['persian-nehemiah','aelia'].includes(p.id)){destructionStory.hidden=false;destructionStory.textContent=p.label+' · '+(localProgress<.12?'從廢墟銜接新階段':localProgress<.32?'公共核心逐步形成':'周邊街區逐步形成')+'（分段呈現為示意）';}
+    coverageNote.hidden=!['outside-walls','modern'].includes(p.id);coverageNote.textContent='虛線：城外建模窗口，並非城界；深色通道：既有示意路網。空白尚未覆蓋，不代表沒有建築。';
     three.setRuinProgress(transformation.ruin);
     three.setTemporalCityState?.(cityObjects, state.position, p.id);
     updateRoyalRelief(p.id,cityObjects.find(o=>o.id==='j3k:object:first-temple')?.state);
