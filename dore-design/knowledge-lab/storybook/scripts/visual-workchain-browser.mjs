@@ -47,6 +47,50 @@ async function measure(page,selector,cdp){
  const data=await node.evaluate(e=>{const s=getComputedStyle(e),r=e.getBoundingClientRect();return {text:e.textContent.trim(),size:parseFloat(s.fontSize),weight:Number(s.fontWeight),family:s.fontFamily,visible:r.width>0&&r.height>0&&s.visibility==='visible'&&s.display!=='none'&&Number(s.opacity)>0&&!!e.checkVisibility({checkOpacity:true,checkVisibilityCSS:true}),box:{x:r.x,y:r.y,w:r.width,h:r.height}}});
  const doc=await cdp.send('DOM.getDocument');const q=await cdp.send('DOM.querySelector',{nodeId:doc.root.nodeId,selector});const fonts=await cdp.send('CSS.getPlatformFontsForNode',{nodeId:q.nodeId});data.actual=fonts.fonts;return data;
 }
+
+async function findNavigationArrows(page){
+ return page.evaluate(()=>{
+   const arrows=/[\u2190-\u21ff\u27f0-\u27ff\u2900-\u297f\u2b05-\u2b07\u2b95\u2039\u203a\u00ab\u00bb\u276e-\u2771\u2794\u279c-\u27be]/u;
+   const names=/(?:^|[\s_:\/#.-])(?:arrow(?:[-_](?:up|down|left|right|up-right|down-right|up-left|down-left))?|chevron(?:[-_](?:up|down|left|right|first|last))?|external[-_]link)(?:$|[\s_:\/#.-])/i;
+   const visible=e=>e.checkVisibility({checkOpacity:true,checkVisibilityCSS:true})&&e.getClientRects().length>0;
+   const failures=[];
+   for(const a of document.querySelectorAll('a[href], [role="link"], button[data-href], button[onclick*="location"]')){
+     if(!visible(a))continue;
+     const id=(a.getAttribute('href')||a.getAttribute('aria-label')||a.outerHTML).slice(0,150);
+     const nodes=[a,...a.querySelectorAll('*')].filter(visible);
+     for(const el of nodes){
+       const text=Array.from(el.childNodes).filter(n=>n.nodeType===3).map(n=>n.textContent).join('');
+       if(arrows.test(text))failures.push({link:id,kind:'text',value:text.trim().slice(0,100)});
+       for(const pseudo of ['::before','::after']){
+         const style=getComputedStyle(el,pseudo);
+         if(style.display!=='none'&&style.visibility!=='hidden'&&Number(style.opacity)>0&&arrows.test(style.content))failures.push({link:id,kind:pseudo,value:style.content});
+       }
+       if(el.matches('svg, use, i, span, img')) {
+         const signature=['class','data-icon','data-lucide','aria-label','href','xlink:href','src'].map(k=>el.getAttribute(k)||'').join(' ');
+         if(names.test(signature))failures.push({link:id,kind:'icon',value:signature.trim().slice(0,100)});
+       }
+     }
+   }
+   return failures;
+ });
+}
+async function testNavigationArrowAudit(){
+ const p=await browser.newPage();
+ try{
+   const fixtures=[
+     ['inline arrow','<a href="/next">閱讀更多 ↗</a>',true],
+     ['pseudo arrow','<style>a::after{content:"\\2192"}</style><a href="/next">閱讀更多</a>',true],
+     ['svg named arrow','<a href="/next">閱讀更多<svg width="16" height="16" class="lucide-arrow-up-right"><path d="M2 14L14 2"/></svg></a>',true],
+     ['hidden old mark','<a href="/next">閱讀更多<span hidden>↗</span></a>',false],
+     ['non-navigation quoted arrow','<blockquote>A → B</blockquote><a href="/next">閱讀更多</a>',false],
+     ['decorative battlement','<a href="/next">閱讀更多<span aria-hidden="true">▆▇▅▇▆▅</span></a>',false]
+   ];
+   for(const [name,html,bad] of fixtures){
+     await p.setContent(html);const hits=await findNavigationArrows(p);assert.equal(hits.length>0,bad,name);console.log('NAVIGATION AUDIT PASS',name);
+   }
+ }finally{await p.close()}
+}
+
 async function audit(path,width){
  const page=await browser.newPage({viewport:{width,height:900}});const name=path.replaceAll('/','_')+'-'+width;let report={path,width,pass:false};
  try{
@@ -58,11 +102,17 @@ async function audit(path,width){
  assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'horizontal overflow');
  assert(await page.evaluate(()=>[...document.images].every(i=>i.complete&&i.naturalWidth>0)),'broken images');
  assert(await page.evaluate(()=>document.querySelectorAll('main h1').length===1),'one semantic main h1 required');
+ // Immutable V01–V05 are historical comparison evidence, not current approval candidates.
+ if(!/^experiments\/church-foundation-v0[1-5]\//.test(path)){
+   report.navigationArrows=await findNavigationArrows(page);
+   assert.equal(report.navigationArrows.length,0,'decorative navigation arrow: '+JSON.stringify(report.navigationArrows));
+ }
  report.pass=true;
  }catch(e){report.error=String(e);console.error('REJECT',path,width,report.error)}
  finally{await page.screenshot({path:join(out,name+'.png'),fullPage:true,timeout:30000}).catch(()=>{});await page.close();results.push(report)}
 }
 try{
+ await testNavigationArrowAudit();
  // Historical rejected releases are never promoted; run actual negative cases too.
  const old=['experiments/church-foundation-v01/index.html','experiments/church-foundation-v02/a.html','experiments/church-foundation-v02/b.html'];
  for(const path of old){await audit(path,1440);assert.equal(results.at(-1).pass,false,'rejected release admitted')}
