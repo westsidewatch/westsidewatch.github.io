@@ -109,7 +109,8 @@ async function audit(path,width){
      const cells=[...document.querySelectorAll('.watch-wall a[data-realm]')];
      const active=cells.filter(a=>a.getAttribute('aria-current')==='page');
      const marks=cells.map(a=>{const svg=a.querySelector('svg');const r=svg.getBoundingClientRect();return {id:a.dataset.realm,shape:svg.querySelector('use').getAttribute('href'),color:getComputedStyle(svg).color,x:r.x,right:r.right,bottom:r.bottom}});
-     return {marks,active:active.map(a=>a.dataset.realm),expected:getComputedStyle(document.body).getPropertyValue('--ws-water').trim(),destinations:[...document.querySelectorAll('a[data-destination]')].map(a=>({expected:a.dataset.destination,actual:a.querySelector('svg[data-ornament]')?.dataset.ornament}))};
+     const sample=document.createElement('span');sample.style.color='var(--ws-water)';document.body.append(sample);const expected=getComputedStyle(sample).color;sample.remove();
+     return {marks,active:active.map(a=>a.dataset.realm),expected,destinations:[...document.querySelectorAll('a[data-destination]')].map(a=>({expected:a.dataset.destination,actual:a.querySelector('svg[data-ornament]')?.dataset.ornament}))};
    });
    if(path.includes('church-foundation-v06/')){
      const w=report.wall;assert.equal(w.marks.length,7,'seven wall sections');assert.equal(new Set(w.marks.map(m=>m.shape)).size,7,'distinct symbol references');assert.deepEqual(w.active,['church']);assert.equal(w.marks[0].color,w.expected,'church identity color');assert.equal(new Set(w.marks.slice(1).map(m=>m.color)).size,1,'silent wall color');assert.notEqual(w.marks[0].color,w.marks[1].color,'current is lit');
