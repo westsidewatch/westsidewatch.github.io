@@ -84,39 +84,21 @@
  function progress(){return clamp(-track.getBoundingClientRect().top/Math.max(1,innerHeight),0,32.3)}
  function paint(){queued=false;const d=progress(),p=entryProgress;
 
-  // THE ORIGINAL 01–04 FILES REMAIN UNMODIFIED AND BEHIND THEIR OWN STAGE.
-  // R88: keep 04 full-bleed for its ENTIRE exit. R87's scaling created
-  // an obvious box within a box; lift all old printing ink together instead.
-  const exit=clamp((d-relay.backgroundStart)/(relay.retireEnd-relay.backgroundStart));
-  const lift=ease((exit-.09)/.91);
+  // R96: the actual Olivet field stays opaque behind both independent Merci apertures.
+  // Never fade, recolour or replace the whole source before either half arrives.
+  const phase=clamp((d-relay.merciStart)/(relay.merciEnd-relay.merciStart));
+  const leftReveal=ease(phase/.55),rightReveal=ease((phase-.52)/.48);
+  const exit=Math.min(leftReveal,rightReveal),retired=exit>=.99999;
   prior.contentWindow?.postMessage({type:'westside-p2-home-pose',
    distance:Math.min(d,26.3),legacyProgress:clamp(d/26.3),
-   active:d<relay.retireEnd,
-   mastheadSplit:ease((d-26.45)/.18),
+   active:!retired,mastheadSplit:ease((d-26.45)/.18),
    mastheadCenter:(()=>{const r=twins.getBoundingClientRect(),s=prior.getBoundingClientRect();return {x:r.left+r.width/2-s.left,y:r.top+r.height/2-s.top,size:r.height}})()},location.origin);
-  prior.style.visibility=exit>=.99999?'hidden':'visible';
+  prior.style.visibility=retired?'hidden':'visible';
   prior.style.transform='none';
-  prior.style.opacity=String(1-lift);
-  prior.style.pointerEvents=exit>.001?'none':'auto';
-  bridge.style.visibility=d>=relay.holdEnd?'visible':'hidden';
-  // The actual historic engraving takes its ink from the same 04 terrain
-  // underneath the outgoing 04 printing. No featureless olive pause and no
-  // Jerusalem rectangle entering while any poster remains on stage.
-  const ink=ease((d-relay.backgroundStart)/(relay.merciStart-relay.backgroundStart));
-  bridge.style.setProperty('--p205-ink-transfer',ink.toFixed(5));
-  // R91: retain a fixed print register; the old plates surrender ink, not geometry.
-  bridge.style.setProperty('--p205-engraving-shift','0%');
-  const terrain=bridge.querySelector('.p205-engraving-bridge__terrain');
-  const botanical=bridge.querySelector('.p205-engraving-bridge__botanical');
-  const release=ease((ink-.18)/.82);
-  terrain.style.opacity=String(mix(.27,.055,release));
-  botanical.style.opacity=String(mix(.13,.025,release));
-  stage.dataset.p205InkTransfer=ink.toFixed(4);
-  // Only after the 04 print is gone may the 05 MERSI two-half reveal begin.
-  const phase=clamp((d-relay.merciStart)/(relay.merciEnd-relay.merciStart));
-  const rightReveal=ease(phase/.55),leftReveal=ease((phase-.52)/.48);
-  // Clear the bridge only after both registered colour plates cover it.
-  bridge.style.visibility=d>=relay.backgroundStart&&phase<1?'visible':'hidden';
+  prior.style.opacity='1';
+  prior.style.pointerEvents=d>relay.holdEnd?'none':'auto';
+  bridge.style.visibility='hidden';
+  stage.dataset.p205InkTransfer='0';
   const settled=ease((d-relay.merciEnd)/(relay.twinEnd-relay.merciEnd));
   realm.style.visibility=d>=27.13?'visible':'hidden';
   world.style.visibility=phase>.00001?'visible':'hidden';
@@ -127,28 +109,18 @@
   const leftPage=$('#dawn-page-left'),rightPage=$('#dawn-page-right');
   leftPage.style.clipPath=leftReveal>=.99999?'none':`inset(0 0 ${((1-leftReveal)*100).toFixed(3)}% 0)`;
   rightPage.style.clipPath=rightReveal>=.99999?'none':`inset(${((1-rightReveal)*100).toFixed(3)}% 0 0 0)`;
-  // R89: the cross-chapter arrival is an ink impression, not a straight
-  // guillotine across the historic underprint. Feather only the leading
-  // edge of these two ENTRANCE masks. The internal MERSI gallery keeps its
-  // original sharp, reversible image-to-image edits.
-  const leftPercent=leftReveal*100,rightBoundary=(1-rightReveal)*100;
-  const feather=22;
-  const leftMask=leftReveal>=.99999?'none':
-   `linear-gradient(to bottom,#000 ${Math.max(0,leftPercent-feather).toFixed(3)}%,transparent ${leftPercent.toFixed(3)}%)`;
-  const rightMask=rightReveal>=.99999?'none':
-   `linear-gradient(to bottom,transparent ${rightBoundary.toFixed(3)}%,#000 ${Math.min(100,rightBoundary+feather).toFixed(3)}%)`;
-  leftPage.style.maskImage=leftPage.style.webkitMaskImage=leftMask;
-  rightPage.style.maskImage=rightPage.style.webkitMaskImage=rightMask;
-  stage.dataset.p205MerciEdge='registered-monochrome-to-colour';
+  // Exact opposed half-page apertures. No crossfade or whole-field underprint.
+  leftPage.style.maskImage=leftPage.style.webkitMaskImage='none';
+  rightPage.style.maskImage=rightPage.style.webkitMaskImage='none';
+  stage.dataset.p205MerciEdge='independent-opposed-half-apertures';
   stage.dataset.p205OliveFolio=exit.toFixed(4);
   stage.dataset.p205OliveRetired=String(exit>=.99999);
   stage.dataset.p205EngravingRelay=d<relay.holdEnd?'held':
-   d<relay.retireEnd?'complete-folio-retreat':
-   d<relay.merciStart?'shared-topographic-register':'jerusalem-arrival';
+   d<relay.merciStart?'masthead-register':'opposed-half-arrival';
   stage.dataset.p205MerciEntry=phase.toFixed(4);
   stage.dataset.p205MerciLeft=leftReveal.toFixed(4);
   stage.dataset.p205MerciRight=rightReveal.toFixed(4);
-  stage.dataset.p205MerciMethod='olive-ink-underprint-then-opposed-merci';
+  stage.dataset.p205MerciMethod='original-olive-to-opposed-merci';
   twins.style.visibility=d>=27.13?'visible':'hidden';
    // Keep the original paired masthead rendered above the image stage.
    squares.forEach(square=>{square.style.visibility=d>=27.13?'visible':'hidden';square.style.opacity='1';});
@@ -156,8 +128,7 @@
   twins.style.transform='translate(-50%,-50%)';
   paintWorld(d);
   stage.dataset.p205Scene=d<relay.holdEnd?'04-protected':
-   d<relay.retireEnd?'04-complete-folio-exit':
-   d<relay.merciStart?'04-05-shared-engraving':
+   d<relay.merciStart?'04-05-masthead-register':
    d<relay.merciEnd?'05-merci-image-entry':'05-gospel-image-world';
   paintHandoff();
   const split=ease((d-26.45)/.18);
@@ -414,11 +385,11 @@
     const currentPct=(fraction*100).toFixed(2);
     const incomingPct=((1-fraction)*100).toFixed(2);
     side.current.style.clipPath=left
-     ?`inset(0 0 ${currentPct}% 0)`
-     :`inset(${currentPct}% 0 0 0)`;
+     ?`inset(${currentPct}% 0 0 0)`
+     :`inset(0 0 ${currentPct}% 0)`;
     side.next.style.clipPath=left
-     ?`inset(${incomingPct}% 0 0 0)`
-     :`inset(0 0 ${incomingPct}% 0)`;
+     ?`inset(0 0 ${incomingPct}% 0)`
+     :`inset(${incomingPct}% 0 0 0)`;
     shown=fraction>.5?scenes[ni]:scenes[i];
    }else if(currentReady){
     side.current.style.clipPath='none';side.next.style.clipPath='inset(0 0 100% 0)';
