@@ -19,32 +19,34 @@
  // R87 / one source-owned exit, one shared engraved register, then MERSI.
  // These stations are shared by layout and QA; d=28.4 remains the already
  // published stable P2 05 entrance for all existing reading-room links.
- const relay=Object.freeze({holdEnd:26.50,retireEnd:27.12,
-  merciStart:27.36,merciEnd:28.16,twinEnd:28.34});
+ const relay=Object.freeze({holdEnd:26.45,retireEnd:27.13,
+  merciStart:27.58,merciEnd:28.26,twinEnd:28.38});
  const bridge=$('#p205-engraving-bridge');
+ const underprint=$('#p205-engraving-history');
  function progress(){return clamp(-track.getBoundingClientRect().top/Math.max(1,innerHeight),0,32.3)}
  function paint(){queued=false;const d=progress(),p=entryProgress;
 
   // THE ORIGINAL 01–04 FILES REMAIN UNMODIFIED AND BEHIND THEIR OWN STAGE.
-  // 01: hold the complete approved Olive speaker folio. 02: retreat it
-  // as ONE intact composition into its original botanical/topographic ink.
-  // Neither Jerusalem print may clip any face or scripture during this exit.
+  // R88: keep 04 full-bleed for its ENTIRE exit. R87's scaling created
+  // an obvious box within a box; lift all old printing ink together instead.
   const exit=clamp((d-relay.holdEnd)/(relay.retireEnd-relay.holdEnd));
-  const exitLift=ease(exit),exitInk=ease((exit-.60)/.40);
+  const lift=ease((exit-.09)/.91);
   prior.contentWindow?.postMessage({type:'westside-p2-home-pose',
    distance:Math.min(d,26.3),legacyProgress:clamp(d/26.3),
    active:d<relay.retireEnd},location.origin);
   prior.style.visibility=exit>=.99999?'hidden':'visible';
-  prior.style.transformOrigin='center center';
-  prior.style.transform=exit<=.00001?'none':
-   `translate3d(0,${(-3.8*exitLift).toFixed(3)}%,0) scale(${(1-.07*exitLift).toFixed(5)})`;
-  prior.style.opacity=String(1-exitInk);
+  prior.style.transform='none';
+  prior.style.opacity=String(1-lift);
   prior.style.pointerEvents=exit>.001?'none':'auto';
   bridge.style.visibility=d>=relay.holdEnd?'visible':'hidden';
-  bridge.style.setProperty('--p205-engraving-shift',`${(11*ease(clamp((d-relay.holdEnd)/(relay.merciStart-relay.holdEnd)))).toFixed(3)}%`);
-  // 03: share existing 04 contour engraving WITHOUT duplicating speakers.
-  // 04: only AFTER 04 has completely retired, reveal authentic Jerusalem
-  // images with the exact opposed MERSI two-field grammar.
+  // The actual historic engraving takes its ink from the same 04 terrain
+  // underneath the outgoing 04 printing. No featureless olive pause and no
+  // Jerusalem rectangle entering while any poster remains on stage.
+  const ink=ease((d-(relay.retireEnd-.35))/(relay.merciStart-relay.retireEnd+.35));
+  bridge.style.setProperty('--p205-ink-transfer',ink.toFixed(5));
+  bridge.style.setProperty('--p205-engraving-shift',`${(3.5*ink).toFixed(3)}%`);
+  stage.dataset.p205InkTransfer=ink.toFixed(4);
+  // Only after the 04 print is gone may the 05 MERSI two-half reveal begin.
   const phase=clamp((d-relay.merciStart)/(relay.merciEnd-relay.merciStart));
   const rightReveal=ease(phase/.55),leftReveal=ease((phase-.52)/.48);
   const settled=ease((d-relay.merciEnd)/(relay.twinEnd-relay.merciEnd));
@@ -64,7 +66,7 @@
   stage.dataset.p205MerciEntry=phase.toFixed(4);
   stage.dataset.p205MerciLeft=leftReveal.toFixed(4);
   stage.dataset.p205MerciRight=rightReveal.toFixed(4);
-  stage.dataset.p205MerciMethod='source-retreat-register-then-opposed-reveal';
+  stage.dataset.p205MerciMethod='olive-ink-underprint-then-opposed-merci';
   twins.style.visibility=settled>.02?'visible':'hidden';
    // Keep the original paired masthead rendered above the image stage.
    squares.forEach(square=>{square.style.visibility='visible';square.style.opacity='1';});
@@ -255,6 +257,15 @@
    // Counterflow: alternate collection plates across both independently
    // moving visual channels. Pages always lead back to admitted collection.
    gospelScenes={left:items.filter((_,i)=>i%2===0),right:items.filter((_,i)=>i%2===1)};
+   // Reuse the ACTUAL first sourced Jerusalem engraving as an underprint,
+   // never invent a separate transition illustration or mismatched book.
+   const firstEngraving=gospelScenes.left[0];
+   if(firstEngraving){
+    underprint.dataset.sourceWork=firstEngraving.workId||firstEngraving.title;
+    underprint.onload=()=>{bridge.dataset.historyReady=underprint.naturalWidth>100?'true':'false';schedule()};
+    underprint.onerror=()=>{bridge.dataset.historyReady='false';schedule()};
+    underprint.src=firstEngraving.image;
+   }
    activeCollection=exhibition.id;
    world.dataset.exhibition=exhibition.id;
    stage.dataset.p205CuratedCollection=exhibition.id;
