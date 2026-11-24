@@ -46,11 +46,16 @@ const viewports=[{name:'desktop',width:1440,height:900},{name:'tablet',width:768
          const eyebrow=cover.querySelector('.ws-grammar__eyebrow');
          const size=x=>parseFloat(getComputedStyle(x).fontSize);
          const toRgb=(s)=>{
-           let m=s.match(/^rgba?\\(([^)]+)\\)$/);
-           if(m)return m[1].split(/[\\s,\\/]+/).slice(0,3).map(Number).map(n=>n/255);
-           m=s.match(/^color\\(srgb\\s+([^)]*)\\)$/);
-           if(m)return m[1].split(/[\\s\\/]+/).slice(0,3).map(Number);
-           return [0,0,0];
+           if(s.startsWith('#')){
+             let h=s.slice(1);
+             if(h.length===3)h=[...h].map(x=>x+x).join('');
+             return [0,2,4].map(i=>parseInt(h.slice(i,i+2),16)/255);
+           }
+           let m=s.match(/^rgba?\(([^)]+)\)$/);
+           if(m)return m[1].split(/[\s,\/]+/).slice(0,3).map(Number).map(n=>n/255);
+           m=s.match(/^color\(srgb\s+([^)]*)\)$/);
+           if(m)return m[1].split(/[\s\/]+/).slice(0,3).map(Number);
+           throw new Error('Unsupported computed CSS color: '+s);
          };
          const lum=a=>a.map(x=>x<=.04045?x/12.92:((x+.055)/1.055)**2.4).reduce((t,x,i)=>t+x*[.2126,.7152,.0722][i],0);
          const osColor=v=>getComputedStyle(article).getPropertyValue(v).trim();
