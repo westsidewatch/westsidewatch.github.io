@@ -3323,3 +3323,6 @@
 @media(prefers-reduced-motion:reduce){
  #p205-prior{will-change:auto}
 }
+
+/* Crop the archival print border inside the fixed, full-bleed wipe geometry. */
+#dawn-realm .dawn-world__art img{scale:1.08}

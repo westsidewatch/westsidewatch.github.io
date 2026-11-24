@@ -31,7 +31,7 @@
  const anchorProof=true;
  const anchorLayer=document.createElement('div');
  anchorLayer.setAttribute('aria-hidden','true');
- Object.assign(anchorLayer.style,{position:'absolute',inset:'0',zIndex:'25',pointerEvents:'none',visibility:'hidden',overflow:'hidden'});
+ Object.assign(anchorLayer.style,{position:'absolute',inset:'0',zIndex:'25',pointerEvents:'none',display:'none',overflow:'hidden'});
  if(anchorProof)stage.append(anchorLayer);
  let anchorSource=null,anchorClone=null;
  function copyPrint(node){
@@ -44,25 +44,24 @@
   return copy;
  }
  function paintAnchor(d,p){
-  if(!anchorProof)return;
+  // Clear the outgoing card before measuring: a hidden or unmounted target
+  // has no usable geometry, even if the previous frame left a clone visible.
+  anchorLayer.style.display='none';
+  const moving=d>=26.45&&d<27.33&&p<=.001;
   const source=prior.contentDocument?.querySelector('#olive-twin-entry');
+  if(anchorSource)anchorSource.style.opacity=d>=26.45?'0':'';
+  if(!moving){
+   if(d>=27.33&&source)source.style.opacity='0';
+   stage.dataset.p205AnchorPhase=d<26.45?'source':'registered';
+   return;
+  }
   if(!source)return;
   const fr=prior.getBoundingClientRect(),sr=source.getBoundingClientRect(),tr=twins.getBoundingClientRect(),st=stage.getBoundingClientRect();
   if(!sr.width||!sr.height||!tr.width||!tr.height)return;
   const a={x:fr.left+sr.left+sr.width/2-st.left,y:fr.top+sr.top+sr.height/2-st.top,size:sr.width};
-  const b={x:tr.left+tr.width/2-st.left,y:tr.top+tr.height/2-st.top,size:tr.height};
+  const b={x:tr.left+tr.width/2-st.left,y:tr.top+tr.height/2-st.top,size:tr.width};
   stage.dataset.p205AnchorSource=JSON.stringify(a);
   stage.dataset.p205AnchorTarget=JSON.stringify(b);
-  const moving=d>=26.45&&d<27.33;
-  if(!moving){
-   if(d>=27.33&&source)source.style.opacity='0';
-   if(anchorSource)anchorSource.style.opacity=d>=26.45?'0':'';
-   anchorLayer.style.visibility='hidden';
-   if(d>=27.33&&p<.001){twins.style.visibility='visible';twins.style.opacity='1';}
-   if(d<26.45)stage.dataset.p205AnchorPhase='source';
-   else stage.dataset.p205AnchorPhase='registered';
-   return;
-  }
   if(anchorSource!==source||!anchorClone){
    if(anchorSource)anchorSource.style.removeProperty('opacity');
    anchorSource=source;anchorClone=copyPrint(source);anchorLayer.replaceChildren(anchorClone);
@@ -73,7 +72,7 @@
   const x=mix(a.x,b.x,travel),y=mix(a.y,b.y,travel),scale=mix(1,b.size/a.size,travel);
   source.style.opacity='0';
   Object.assign(anchorClone.style,{position:'absolute',left:x+'px',top:y+'px',margin:'0',transformOrigin:'center center',transform:'translate(-50%,-50%) rotate('+(-90*turn)+'deg) scale('+scale+')',opacity:String(1-replace),visibility:'visible'});
-  anchorLayer.style.visibility='visible';
+  anchorLayer.style.display='block';
   prior.style.visibility='visible';prior.style.opacity='1';
   bridge.style.visibility='hidden';
   realm.style.visibility='visible';
@@ -400,11 +399,8 @@
    const nextReady=side.next.complete&&side.next.naturalWidth>0;
    let shown;
    if(currentReady&&nextReady){
-    const currentPct=(fraction*100).toFixed(2);
-    const incomingPct=((1-fraction)*100).toFixed(2);
-    side.current.style.clipPath=left
-     ?`inset(${currentPct}% 0 0 0)`
-     :`inset(0 0 ${currentPct}% 0)`;
+     const incomingPct=((1-fraction)*100).toFixed(2);
+    side.current.style.clipPath='none';
     side.next.style.clipPath=left
      ?`inset(0 0 ${incomingPct}% 0)`
      :`inset(${incomingPct}% 0 0 0)`;
