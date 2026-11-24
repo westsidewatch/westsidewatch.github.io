@@ -59,6 +59,8 @@ const approx=(a,b,tol=.035)=>Math.abs(a-b)<tol;
        historyOpacity:Number(css($('#p205-engraving-history')).opacity),
        historySrc:$('#p205-engraving-history').getAttribute('src'),
        historyImageReady:$('#p205-engraving-history').naturalWidth>100,
+       rightHistoryReady:$('#p205-engraving-history-right').naturalWidth>100,
+       rightHistorySrc:$('#p205-engraving-history-right').getAttribute('src'),
        bridgeColor:css(bridge).backgroundColor,
        terrainMask:css(terrain).webkitMaskImage||css(terrain).maskImage,
        botanicalMask:css(botany).webkitMaskImage||css(botany).maskImage,
@@ -91,8 +93,11 @@ const approx=(a,b,tol=.035)=>Math.abs(a-b)<tol;
     assert(engrave.retired&&engrave.priorVisibility==='hidden'&&
       engrave.bridgeVisible&&engrave.realmVisibility==='hidden'&&engrave.m===0&&
       engrave.ink>.55&&engrave.historyOpacity>.55&&engrave.historyImageReady&&
-      engrave.historyReady==='true'&&!!engrave.historySrc,
+      engrave.historyReady==='true'&&!!engrave.historySrc&&
+      engrave.rightHistoryReady&&!!engrave.rightHistorySrc,
       device+': blank olive bridge returned instead of coherent historical underprint '+JSON.stringify(engrave));
+    assert(engrave.historySrc!==engrave.rightHistorySrc,
+      device+': the two 05 proof plates must be independently sourced works '+JSON.stringify(engrave));
     assert(/04-olive-mount-terrain-contours-v1\.svg/.test(engrave.terrainMask)&&
       /04-olive-field-v79-1\.svg/.test(engrave.botanicalMask),
       device+': shared engraving uses invented rather than ORIGINAL 04 assets '+JSON.stringify(engrave));
@@ -104,7 +109,7 @@ const approx=(a,b,tol=.035)=>Math.abs(a-b)<tol;
       device+': independent MERSI opposition or left descending edge lost '+JSON.stringify(meeting));
     assert(arrived.left>.999&&arrived.right>.999&&arrived.priorVisibility==='hidden',
       device+': Jerusalem did not assume the entire stage '+JSON.stringify(arrived));
-    assert(entering.edgeMethod==='soft-print-register'&&
+    assert(entering.edgeMethod==='registered-monochrome-to-colour'&&
       entering.rightInkEdge.includes('linear-gradient')&&
       meeting.leftInkEdge.includes('linear-gradient')&&
       arrived.leftInkEdge==='none'&&arrived.rightInkEdge==='none',
