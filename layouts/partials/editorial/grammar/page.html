@@ -1,0 +1,40 @@
+{{/* Executable Westside Design OS editorial grammar.
+     Content is data/editorial/grammar/<grammar_id>.json; layout is a fixed
+     renderer with multiple editorial modes, NOT seven hardcoded HTML pages. */}}
+{{ $registry := site.Data.editorial.sevenfold }}
+{{ $realm := .Params.editorial_key }}
+{{ $id := .Params.grammar_id | default $realm }}
+{{ $composition := index site.Data.editorial.grammar $id }}
+{{ if not $composition }}{{ errorf "Missing Westside Editorial Grammar composition %s for %s" $id .RelPermalink }}{{ end }}
+{{ if ne $composition.realm $realm }}{{ errorf "Grammar realm mismatch: %s / %s" $id $realm }}{{ end }}
+{{ $section := index $registry.sections $realm }}
+<article class="ws-grammar" data-ws-editorial-realm="{{ $realm }}" data-ws-grammar="{{ $id }}" data-ws-grammar-version="{{ $composition.schema }}" aria-labelledby="ws-grammar-title">
+  <header class="ws-grammar__topline">
+    <a class="ws-grammar__masthead" href="/" aria-label="Westside Watch 首頁"><img src="/images/westside-watch-masthead-landscape.svg" alt="Westside Watch" decoding="async"></a>
+    <span class="ws-grammar__folio-no" lang="en">{{ $composition.cover.issue }} · Watch for the Dawn</span>
+    <a class="ws-grammar__return" href="{{ $section.source }}">進入版塊 <span aria-hidden="true">↗</span></a>
+  </header>
+  {{/* Seven chapter navigation is available, but does not occupy the title stage. */}}
+  <details class="ws-grammar__directory">
+    <summary>七重疊 · 章節目錄 <span aria-hidden="true">+</span></summary>
+    <nav aria-label="七重疊七版塊">
+      {{ range $registry.sequence }}
+        {{ $r := index $registry.sections . }}
+        <a href="/{{ $r.key }}/folio/"{{ if eq $r.key $realm }} aria-current="page"{{ end }}>
+          <span lang="en">{{ $r.number }}</span> {{ if eq $r.key "church" }}活水堂{{ else }}{{ $r.nameZh }}{{ end }}
+        </a>
+      {{ end }}
+    </nav>
+  </details>
+  {{ partial "editorial/grammar/cover.html" (dict "cover" $composition.cover "realm" $realm "section" $section) }}
+  <main class="ws-grammar__body" id="ws-grammar-content">
+    {{ range $i, $block := $composition.blocks }}
+      {{ partial "editorial/grammar/block.html" (dict "block" $block "index" $i "realm" $realm "section" $section) }}
+    {{ end }}
+  </main>
+  <footer class="ws-grammar__colophon">
+    <p lang="en">Westside Watch <span>/</span> Watch for the Dawn</p>
+    <p>{{ $section.nameZh }} <span aria-hidden="true">·</span> <span lang="en">{{ $composition.cover.issue }}</span></p>
+    <a href="{{ $section.source }}">繼續閱讀 <span aria-hidden="true">↗</span></a>
+  </footer>
+</article>

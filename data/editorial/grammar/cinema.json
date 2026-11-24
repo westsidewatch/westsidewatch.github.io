@@ -1,0 +1,68 @@
+{
+  "schema": "westside.editorial-grammar.v1",
+  "realm": "cinema",
+  "genre": "screen",
+  "cover": {
+    "mode": "cinematic",
+    "eyebrow": "Paradise Cinema · Cinema & Essays",
+    "titleZh": "天堂電影院",
+    "titleEn": "Paradise Cinema",
+    "deck": "電影是一種觀看世界的方法。片目、劇照、導演與評論都應有明確的來源與閱讀關係。",
+    "art": {
+      "src": "/images/sevenfold/westside-watch-logo-crimson.svg",
+      "alt": "七重疊天堂電影院既有緋紅色標誌"
+    },
+    "issue": "06 / Cinema"
+  },
+  "blocks": [
+    {
+      "type": "essay",
+      "id": "screen",
+      "mode": "narrow",
+      "eyebrow": "On Screen",
+      "title": "銀幕可以開啟另一種閱讀",
+      "paragraphs": [
+        "天堂電影院的內頁既要有影片內容，也要能讓劇照、評論、索引與片源資訊保持秩序。電影影像不應只作背景，也不應把播放器和可閱讀內容拆成毫無關係的兩套網站。",
+        "實際播放必須經過來源驗證。這裡不把尚未驗證的串流連結宣稱為可觀看片源。"
+      ]
+    },
+    {
+      "type": "plate",
+      "id": "banner",
+      "mode": "letterbox",
+      "eyebrow": "Cinema Edition",
+      "src": "/images/sevenfold/westside-watch-logo-crimson.svg",
+      "alt": "天堂電影院七重疊原有緋紅標誌",
+      "caption": "Paradise Cinema / 現有版塊標誌"
+    },
+    {
+      "type": "index",
+      "id": "screen-index",
+      "mode": "columns",
+      "eyebrow": "Film & Culture",
+      "title": "影像閱讀索引",
+      "entries": [
+        {
+          "title": "天堂電影院",
+          "label": "原版塊入口",
+          "href": "/cinema/"
+        },
+        {
+          "title": "西望雜誌",
+          "label": "影像與文化出版",
+          "href": "/journal/"
+        },
+        {
+          "title": "黎明書局",
+          "label": "書籍與歷史資源",
+          "href": "/dawn-library/"
+        },
+        {
+          "title": "橄欖山",
+          "label": "講道與聖經脈絡",
+          "href": "/olive/"
+        }
+      ]
+    }
+  ]
+}

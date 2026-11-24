@@ -379,3 +379,9 @@ These files remain archived intact; they do not operate as independent OS author
 **驗收不得缺項：** `真實查詢 → 回傳來源／明確零結果 → 逐集匹配 → 媒體測試 → 公開影院頁面測試`。任何一項未做，都必須標記「未完成」。完整詳細事故、原始工具函數核對和責任裁定見 [数片恢復工程紀錄](../shupian/RECOVERY-2026-11-22.md)。
 
 **範圍保護：** 此規範只約束数片／PARADISO，不改 P2 動效、Dawn Library、ONE、OS tokens 或其他站點工程。
+
+## Editorial Grammar · 從編輯語法直接輸出網頁（2026-11-23）
+
+新增 [可執行雜誌編輯語法](WESTSIDE-EXECUTABLE-EDITORIAL-GRAMMAR.md)，為全站唯一 Westside Design OS 的實際網頁生產方法。增補研究案例 [The Paris Review](https://www.theparisreview.org/)：其季度期號、分門別類的完整數位檔案、訪談與正文閱讀方式，以及 Pentagram 2021 版重視作品、字體與書本閱讀感的出版方法。
+
+**不是再寫視覺分析：** 七個版塊採相同 Hugo 解析／編譯器，七種封面藝術構圖和六種可移動的編輯模組由 JSON 真正輸出 HTML。所有字體、色彩仍使用原 OS。每新增一篇內容可使用 `node scripts/editorial-grammar-new.mjs` 產生實際 Hugo 內頁；CI 必須真生成第八張測試頁。此為候選系統，尚不得直接覆蓋原版已確認動效。

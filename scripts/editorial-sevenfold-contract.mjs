@@ -1,41 +1,66 @@
 import assert from 'node:assert/strict';
 import {readFileSync,existsSync} from 'node:fs';
+import {join} from 'node:path';
 const read=p=>readFileSync(p,'utf8');
-const manifest=JSON.parse(read('data/editorial/sevenfold.json'));
-const expected=['church','journal','emmaus','olive','dawn-library','cinema','daylight-cafe'];
-assert.deepEqual(manifest.sequence,expected,'All seven realms MUST be in first-release source');
-assert.deepEqual(Object.keys(manifest.sections),expected,'Every realm must have one source record');
-const master=read('layouts/partials/editorial/folio.html');
-const layout=read('layouts/_default/ws-editorial-interior.html');
+const registry=JSON.parse(read('data/editorial/sevenfold.json'));
+const realms=['church','journal','emmaus','olive','dawn-library','cinema','daylight-cafe'];
+const coverModes=new Set(['identity','poster','atlas','portrait','ledger','cinematic','quiet']);
+const blockTypes=new Set(['essay','scripture','index','plate','conversation','shelf']);
+const groups={};
+const ids=new Set();
+const coverSet=new Set(),typesSeen=new Set(),sequences=new Set();
+assert.deepEqual(registry.sequence,realms,'All seven realms must be present in original OS');
+const sources=read('layouts/partials/editorial/grammar/page.html')+
+  read('layouts/partials/editorial/grammar/cover.html')+
+  read('layouts/partials/editorial/grammar/block.html');
+const styles=read('static/css/westside-editorial-grammar.css');
 const shell=read('layouts/_default/baseof.html');
-const css=read('static/css/westside-editorial-interior.css');
-const source=read('static/experiments/scripture-studio-motherform-live.html');
-assert.ok(layout.includes('partial "editorial/folio.html"'),'Every page must share Hugo renderer');
-assert.ok(shell.includes('if .Params.os_editorial')&&shell.includes('ws-editorial-context'),
- 'Sevenfold CSS must be opt-in, never globally overwrite accepted P2');
-assert.ok(master.includes('range $records.sequence')&&master.includes('range $i, $link := $item.links'));
-assert.ok(master.includes('scripture-studio-motherform-live.html?embed=1'));
-assert.ok(source.includes('p2SevenfoldVertical')&&source.includes("layout')==='sevenfold-vertical'"));
-assert.ok(css.includes('var(--ws-type-scale-')&&css.includes('var(--ws-type-display-en-sc)'));
-assert.ok(css.includes('var(--ws-first-light)')&&css.includes('var(--ws-water)'));
-assert.ok(css.includes('var(--ws-harvest)')&&css.includes('var(--ws-crimson)'));
-assert.ok(!/#[0-9a-f]{3,8}\b/i.test(css),'No hardcoded competing color palettes');
-assert.ok(!css.includes('--visit-')&&!css.includes('--form-'));
-for(const key of expected){
- const item=manifest.sections[key];
- assert.equal(item.key,key);
- assert.ok(item.number&&item.p2&&item.nameZh&&item.nameEn&&item.refZh&&item.quoteZh&&item.quoteEn);
- assert.ok(item.source==='/'+key+'/'&&Array.isArray(item.links)&&item.links.length>=3);
- assert.ok(item.links.every(x=>x.href.startsWith('/')&&!x.href.startsWith('//')));
- const file='content/'+key+'/folio.md';
- assert.ok(existsSync(file),'Missing real Hugo interior: '+file);
- const page=read(file);
- assert.ok(page.includes('layout: "ws-editorial-interior"')&&page.includes('os_editorial: true')&&page.includes('editorial_key: "'+key+'"'));
- assert.ok(page.includes('list: never'),'Experimental folios must not alter existing canonical navigation');
- assert.ok(item.art&&item.art.startsWith('/images/'),'Each chapter must reuse actual verified repository imagery');
- assert.ok(css.includes('data-ws-editorial-realm="'+key+'"'),'Missing scoped material for '+key);
+const mount=read('layouts/_default/ws-editorial-interior.html');
+assert(mount.includes('editorial/grammar/page.html'),'Hugo must execute grammar, not discarded fixed layout');
+assert(shell.includes('if .Params.os_editorial')&&shell.includes('westside-editorial-grammar.css'),'Grammar must be scoped to original OS');
+assert(sources.includes('site.Data.editorial.grammar')&&sources.includes('range $i, $block := $composition.blocks'),'Content JSON must drive page HTML');
+assert(sources.includes('p2 }}&amp;layout=sevenfold-vertical'),'Scripture blocks must reuse original V60');
+assert(styles.includes('var(--ws-paper)')&&styles.includes('var(--ws-type-display-zh)')&&styles.includes('var(--ws-type-display-en-sc)'));
+assert(!/#[0-9a-f]{3,8}\\b/i.test(styles),'No independent hardcoded chromatic system');
+assert(!styles.includes('body.home')&&!styles.includes('sites-section-'),'Never globally override legacy P2');
+function asset(src,label){
+ assert(typeof src==='string'&&src.startsWith('/images/')&&!src.includes('..'),label+' needs an existing site asset path');
+ assert(existsSync(join('static',src.slice(1))),label+' references missing image: '+src);
 }
-assert.ok(master.includes('ws-interior__church-art'),'Preserve original church art, never typeset logo');
-assert.ok(master.includes('src="{{ $item.art }}"'),'Use same shared artwork renderer for all seven realms');
-assert.ok(read('static/p2/living-water.html').includes('church-schedule'),'Prior P2 untouched');
-console.log('SEVENFOLD_EDITORIAL_CONTRACT_PASS: single OS, single Hugo master, all seven real folios, canonical P2 untouched');
+for(const key of realms){
+ const path='data/editorial/grammar/'+key+'.json',page='content/'+key+'/folio.md';
+ assert(existsSync(path)&&existsSync(page),'No actual renderable editorial source for '+key);
+ const d=JSON.parse(read(path));assert.equal(d.schema,'westside.editorial-grammar.v1');assert.equal(d.realm,key);
+ assert(coverModes.has(d.cover.mode)&&d.cover.titleZh?.length>0&&d.cover.titleEn?.length>0&&d.cover.deck?.length>=16);
+ coverSet.add(d.cover.mode);
+ if(key==='church')assert.equal(d.cover.mode,'identity','Preserve official church original name artwork');
+ else asset(d.cover.art.src,key+' cover');
+ assert(Array.isArray(d.blocks)&&d.blocks.length>=3,'At least three authored modules for each live composition');
+ const blockIds=new Set();
+ for(const b of d.blocks){
+  assert(blockTypes.has(b.type),'Unknown grammar command '+b.type);
+  assert(b.id&&!blockIds.has(b.id),'Missing or duplicate block id '+key+':'+b.id);
+  blockIds.add(b.id);typesSeen.add(b.type);
+  assert(b.mode,'Every command must select a layout mode');
+  if(b.type==='plate')asset(b.src,key+' plate '+b.id);
+  if(b.type==='index'||b.type==='shelf'){
+   assert(b.entries.length>=2);
+   for(const link of b.entries)assert(link.title?.length>0&&link.href.startsWith('/')&&!link.href.startsWith('//'),
+     key+' index includes invalid href');
+  }
+  if(b.type==='essay')assert(b.paragraphs.length>0&&b.paragraphs.every(x=>x.length>=10));
+  if(b.type==='conversation')assert(b.pairs.length>0);
+  if(b.type==='scripture')assert(registry.sections[key].p2,'Missing canonical scripture in original realm');
+ }
+ sequences.add(d.blocks.map(x=>x.type).join('>'));
+ const md=read(page);
+ assert(md.includes('layout: "ws-editorial-interior"')&&md.includes('editorial_key: "'+key+'"'));
+ assert(md.includes('list: never')&&!md.includes('draft: true'),'Live candidate folios must build and never auto-alter original navigation');
+ groups[key]={mode:d.cover.mode,blocks:d.blocks.map(x=>x.type),page};
+}
+assert.equal(coverSet.size,7,'Seven individual covers should not be recolored duplicates');
+assert.equal(typesSeen.size,6,'Every available grammar command must actually be used across the seven pages');
+assert(sequences.size>=6,'Seven pages must have deliberately different editorial order');
+assert(sources.includes('ws-gram-cover__official-identity'),'Original church artwork must remain protected');
+assert(existsSync('scripts/editorial-grammar-new.mjs'),'Template must have working creation command');
+console.log('EDITORIAL_GRAMMAR_CONTRACT_PASS',JSON.stringify({realms:7,coverModes:coverSet.size,blockTypes:typesSeen.size,compositionPatterns:sequences.size,groups}));
