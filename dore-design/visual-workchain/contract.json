@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "task": "Westside visual grammar from zero",
+  "goal": "Award-calibre independent editorial compositions; extract executable grammar only after user acceptance",
+  "authority": [
+    "docs/MASTER_SITE_ARCHITECTURE.md",
+    "docs/design/WESTSIDE-EDITORIAL-MANUAL.md",
+    "docs/design/WESTSIDE-DESIGN-OS.md",
+    "design-system/tokens/westside.tokens.json",
+    "design-system/scopes.json",
+    "static/css/westside-design-os.css",
+    "dore-design/knowledge-lab/skills/new-westside-editorial-web/SKILL.md",
+    "docs/dore/italian-editorial-executable-grammar.v1.md"
+  ],
+  "allowed_prefix": "dore-design/visual-workchain/runs/",
+  "rejected_sources": [
+    "westside-editorial-grammar.css",
+    "feat/editorial-art-direction-os-r2-20261123",
+    "layouts/partials/editorial/grammar/"
+  ],
+  "stages": [
+    "authority",
+    "exploration",
+    "composition",
+    "technical",
+    "critique",
+    "human",
+    "grammar"
+  ],
+  "production_allowed": false
+}

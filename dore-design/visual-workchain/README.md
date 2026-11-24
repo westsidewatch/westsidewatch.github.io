@@ -1,0 +1,6 @@
+# Westside visual workchain v1 (isolated)
+Purpose: from-zero award-calibre art direction, not repair of R1–R3.
+Use the single existing Design OS. Read all contract authorities, perform external Doré Exploration, build independent compositions, render desktop/mobile, compare against mature work, await user review, then extract grammar. P2/main must remain untouched.
+The CLI validates evidence ordering and hashes, restricts experiment diffs to runs/, and fails closed at human approval. Run on an experiment branch based on the reviewed workchain commit: python3 scripts/dore_visual_workchain.py --base <trusted-workchain-commit> --run dore-design/visual-workchain/runs/<run>/evidence.json.
+Technical proof booleans and research/critique descriptions are evidence declarations, NOT independently measured or verified by this first gate. PNG header checking is not browser provenance. Next integration: generate proofs directly with existing Storybook/Playwright, connect existing rejection enforcement, verify actual human approval outside agent-controlled files. This is not a tool permission sandbox and cannot stop direct GitHub API writes; branch protection and external runner enforcement remain necessary. No production promotion is implemented.
+Tests: python3 -m unittest discover -s tests -p test_dore_visual_workchain.py -v
