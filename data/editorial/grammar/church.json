@@ -1,0 +1,83 @@
+{
+  "schema": "westside.editorial-grammar.v1",
+  "realm": "church",
+  "genre": "community",
+  "cover": {
+    "mode": "identity",
+    "eyebrow": "A Church in Community",
+    "titleZh": "神召會活水堂西區教會",
+    "titleEn": "P.A.O.C. Living Water Assembly West",
+    "deck": "敬拜、讀經、禱告，在基督裡彼此建立。",
+    "art": {
+      "src": "/images/living-water-west-church-name.png",
+      "alt": "活水堂西區教會原有中文藝術字形"
+    },
+    "issue": "01 / Living Water"
+  },
+  "blocks": [
+    {
+      "type": "essay",
+      "id": "gather",
+      "mode": "reading-with-margin",
+      "eyebrow": "Life Together",
+      "title": "信仰生活，始於真實的相遇",
+      "paragraphs": [
+        "教會不是一份網站功能清單，而是人在主日崇拜、查經、禱告與生活關懷中一同跟隨基督。歡迎從一次聚會開始認識活水堂西區。",
+        "主日聚會、線上查經與禱告會的實際安排以教會當週確認為準；不將歷史週報當作本週公告。"
+      ],
+      "note": "若是第一次來，請先確認聚會地址與時間。"
+    },
+    {
+      "type": "scripture",
+      "id": "living-water",
+      "mode": "glass-aside",
+      "heading": "活水的江河"
+    },
+    {
+      "type": "index",
+      "id": "join",
+      "mode": "columns",
+      "eyebrow": "The Church",
+      "title": "下一步，與教會相遇",
+      "entries": [
+        {
+          "title": "認識教會與聚會",
+          "label": "聚會、地址、事工",
+          "href": "/church/visit/"
+        },
+        {
+          "title": "走進教會",
+          "label": "原有 3D 虛擬導覽",
+          "href": "/p2/church-tour.html?entry=p2"
+        },
+        {
+          "title": "信仰回應與決志",
+          "label": "從福音與經文開始",
+          "href": "/church/forms/?type=decision"
+        },
+        {
+          "title": "讀經",
+          "label": "ONE 查經工具",
+          "href": "/one/"
+        }
+      ]
+    },
+    {
+      "type": "conversation",
+      "id": "welcome",
+      "mode": "editorial-dialogue",
+      "eyebrow": "Welcome",
+      "title": "第一次來，從哪裡開始？",
+      "pairs": [
+        {
+          "question": "我可以先來參加聚會嗎？",
+          "answer": "可以從主日聚會開始認識教會，先查閱當週聚會資訊，或向教會同工詢問。"
+        },
+        {
+          "question": "我還沒受洗，可以認識福音嗎？",
+          "answer": "可以先閱讀福音、查考聖經，也可以透過決志頁與同工聯繫。"
+        }
+      ]
+    }
+  ]
+}
