@@ -91,7 +91,9 @@
   const lift=ease((exit-.09)/.91);
   prior.contentWindow?.postMessage({type:'westside-p2-home-pose',
    distance:Math.min(d,26.3),legacyProgress:clamp(d/26.3),
-   active:d<relay.retireEnd},location.origin);
+   active:d<relay.retireEnd,
+   mastheadSplit:ease((d-26.45)/.38),
+   mastheadCenter:(()=>{const r=twins.getBoundingClientRect(),s=prior.getBoundingClientRect();return {x:r.left+r.width/2-s.left,y:r.top+r.height/2-s.top,size:r.height}})()},location.origin);
   prior.style.visibility=exit>=.99999?'hidden':'visible';
   prior.style.transform='none';
   prior.style.opacity=String(1-lift);
