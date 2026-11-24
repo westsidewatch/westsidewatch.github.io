@@ -379,3 +379,37 @@ These files remain archived intact; they do not operate as independent OS author
 **驗收不得缺項：** `真實查詢 → 回傳來源／明確零結果 → 逐集匹配 → 媒體測試 → 公開影院頁面測試`。任何一項未做，都必須標記「未完成」。完整詳細事故、原始工具函數核對和責任裁定見 [数片恢復工程紀錄](../shupian/RECOVERY-2026-11-22.md)。
 
 **範圍保護：** 此規範只約束数片／PARADISO，不改 P2 動效、Dawn Library、ONE、OS tokens 或其他站點工程。
+
+
+### 9.6 城牆守望垛 × 全站構成：從基本元素到生成語法（2026-11-24）
+
+**研究結論，非已批准圖形。** R01 僅比較微小輪廓與示例，未建立基本元素如何生成頁面；不得以「更換圖標」冒充深化。以品牌原稿第 8 頁 Watch Rhythm 為歷史起點，不將原稿當作不可演化的終稿，也不任意指派未知的 realm 形態。V04 B（blob 0d71179fbe0fb7a0450f43926bb0fa5379fd930d）是教會視覺比較基線；不使用 V05/V06 的構成，不改 P2 已有動效。
+
+**已核對的設計者／機構原始案例（不是可直接複製的開源圖形）：**
+- [Hood Museum of Art / Pentagram](https://www.pentagram.com/work/hood-museum-of-art/story)：建築磚石語彙跨越標誌、出版物、網站網格與實體導覽；研究共同模數，不複製標誌。
+- [Philbrook Museum of Art / Pentagram](https://www.pentagram.com/work/philbrook-museum-of-art?page=2&rel=search)：標誌作觀看藏品的窗口，網站以磚塊組織頁面及導航；直接對應守望口，研究正負形和內容優先。
+- [Whitney / Experimental Jetset](https://www.jetset.nl/archive/whitney-museum-identity)；[Whitney 官方](https://whitney.org/about/new-identity)：固定與可變座標、圖形回應作品比例及空間；研究「不出現標誌亦有共同語法」，不沿用其箭頭或 W。
+- [Serpentine / Pentagram](https://www.pentagram.com/work/serpentine-galleries?discipline=1&rel=combined&sector=7)：標誌如開口，容納變化內容；研究守望口從實體輪廓轉到負空間。
+- [MIT Media Lab / Pentagram](https://www.pentagram.com/work/mit-media-lab)：7×7 共用格網生成組別獨立符號；研究輪廓家族同源、單色亦可辨。
+- [Poster House / Pentagram](https://www.pentagram.com/work/poster-house)：版緣裁切的移動框架；研究視覺退讓、欄目戳記貼近裁切邊。
+- [Cooper Hewitt / Pentagram](https://www.pentagram.com/news/cooper-hewitt-a-democratic-design-identity)：出版與網站共用六欄模組、色彩辨識欄目；研究編輯重力和可持續生產。
+- [MoMA / Pentagram](https://www.pentagram.com/work/moma/story)：固定識別座標、單一主圖、作品裁切；研究主題優先。
+
+**轉譯實作方向：** 同一基礎模數與光學校正，推演三種尺度：微型（轉跳、文章結字符、頁碼）；中型（跨版塊連續城牆、當前段落點亮、邊緣識別）；大型（以正負形推導構圖座標，守望口是內容而非畫出的框）。大尺度不應放大微型符號，也不要求每頁顯示整條牆。試驗正形城垛和負形窗口如何在共同座標上互換；結字符沿用原稿獨立節奏，與版塊導航角色區分。獨立標誌用目的地身份色；連續牆只亮當前 realm；其餘用沉默的紙／墨色，不新增色盤。形態要保留原始節奏與長度差異，並可在單色、微型與反白辨識。現階段未確定模數及新輪廓，不宣稱設計通過。
+
+**全站應用定位（已核對部分現存源檔；其餘為設計提案，不代表已實作）：**
+
+| 頁面／產品 | 城垛可見角色 | 守望口／構成角色 | 禁止事項 |
+| --- | --- | --- | --- |
+| 首頁 | 七段城牆；初始無選中或按進入的 realm 點亮 | 七 realm 的觀看入口由內容重力決定尺度，不是七等分卡片 | 不改已批准首頁動效；不新增大型裝飾牆 |
+| P2 | 在適合的位置以連續牆表示目前 realm；各過場的點亮交換是可研究語義 | 現有雙方塊即守望口；沿既定錨點交接 | 不重寫已確定動效；不插入常駐巨大導航 |
+| 教會 | 入口、聚會聯絡、跨 realm 標記；`layouts/church/portal.html` 現有入口箭頭為遷移點 | V04 B 的經文、建築、崇拜構成；大經文口與建築口保留非對稱關係 | 不把七段禮拜做七個彩色 UI 卡 |
+| 西望 | 卷首／目錄欄目書籤、文章末尾獨立 Printer's Mark、頁碼、邊緣識別；`layouts/_default/single.html` 的 prose 結尾和 article rail、`layouts/journal/list.html` 的目錄 | 封面、主圖、專題、長文按原有比例和編輯重力排版 | 不在每段末尾蓋章；不搶刊頭 |
+| 以馬忤斯 | 經卷入口、跨頁跳轉及 ONE / Doré Folio 上下文入口 | 經文是首要守望口；圖版、地圖及串珠按章節上下文展開（`data/design-preparation/surfaces/emmaus.v1.json`） | 不重寫 66 卷座標、經文正文或工具工作流程 |
+| 橄欖山 | 講員頁及講道系列入口 | 十二講員、海報、講章與影片為不同尺度窗口，保留人物／文字主角 | 不在人物面部覆蓋圖形；不替代播放控件 |
+| 黎明書局 | 館藏、書單、三晨星、策展集、光譜與原文跳轉；`layouts/dawn-library/list.html` 有原文箭頭待遷移 | 封面／同冊插圖為窗口；閱讀及館藏編目共享 Work ID | 不用框切割書封；不把來源未確認的內容填入窗口 |
+| 電影院 | 影片詳情及跨版塊入口 | 幕布、影片與海報維持原畫幅，空間開口重於外框 | 不替換播放、暫停、快轉等功能性控制；不擋字幕 |
+| 咖啡館 | 每日生活入口、相關閱讀與工具入口 | 日常內容大小依編輯選擇；日期與互動工具維持可用性 | 不把日曆前後方向當作轉跳符號；`layouts/daylight-cafe/portal.html` 日曆方向控件另行評估 |
+| 共用 header/footer、文章、工具 | `layouts/partials/header.html`、footer、single 及資源入口是共享整合點；工具退居微型目的地戳記 | 不強迫搜尋／編輯工作臺採用出版式巨型方塊 | 不改 favicon，不重複加 logo，不把裝飾標記混同鍵盤焦點、狀態和功能圖示 |
+
+**成熟技術及權利：** 上列案例為設計方法參考，原圖形不得假定可免費再用。使用原有 Westside 品牌資產、原生 SVG symbol/use、CSS Grid/subgrid（必要時現有 Grid fallback）、OS scope tokens；免費、低依賴、靜態渲染與 reduced motion 優先。先用 V04 B 隔離構成試驗、雜誌長文與館藏／影像對照試驗驗證同源語法，並比對未加城垛的原始構圖；之後才接共用 partial、符號母本與 CI。不得將外部案例截圖、標誌或程式碼直接當作本站資產。驗收要看實際圖文主從、圖形微型／單色辨識、連續牆無裂縫、守望口不遮內容、跨版塊可用性、行動版、非箭頭回歸；技術通過不代表藝術接受。
