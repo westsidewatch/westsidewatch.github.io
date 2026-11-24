@@ -65,6 +65,8 @@ const approx=(a,b,tol=.035)=>Math.abs(a-b)<tol;
        realmVisibility:css(realm).visibility,
        realmOpacity:css(realm).opacity,
        leftClip:left.style.clipPath,rightClip:right.style.clipPath,
+       leftInkEdge:css(left).maskImage,rightInkEdge:css(right).maskImage,
+       edgeMethod:stage.dataset.p205MerciEdge,
        leftImgReady:$('#dawn-image-left').naturalWidth>0,
        rightImgReady:$('#dawn-image-right').naturalWidth>0,
        scrollOverflow:Math.max(document.documentElement.scrollWidth-innerWidth,0)
@@ -102,6 +104,11 @@ const approx=(a,b,tol=.035)=>Math.abs(a-b)<tol;
       device+': independent MERSI opposition or left descending edge lost '+JSON.stringify(meeting));
     assert(arrived.left>.999&&arrived.right>.999&&arrived.priorVisibility==='hidden',
       device+': Jerusalem did not assume the entire stage '+JSON.stringify(arrived));
+    assert(entering.edgeMethod==='soft-print-register'&&
+      entering.rightInkEdge.includes('linear-gradient')&&
+      meeting.leftInkEdge.includes('linear-gradient')&&
+      arrived.leftInkEdge==='none'&&arrived.rightInkEdge==='none',
+      device+': R89 entrance edge still cuts the historical underprint with a hard line '+JSON.stringify({entering,meeting,arrived}));
     assert([hold,retreat,engrave,entering,meeting,arrived].every(s=>
       s.method==='olive-ink-underprint-then-opposed-merci'&&
       s.priorConnected&&s.scrollOverflow<18),
