@@ -1,7 +1,6 @@
 'use strict';
 /**
- * P2 04→05 R88. 04 holds → complete original iframe ink recedes →
- * measured Olivet historical engraving underprint → opposed MERSI Jerusalem reveal.
+ * P2 04→05 R96. 04 holds until both independent opposed MERSI apertures complete.
  * Test ACTUAL P2 scroll, never layer=second or a mock visual.
  */
 const {chromium}=require('playwright');
@@ -18,15 +17,11 @@ const approx=(a,b,tol=.035)=>Math.abs(a-b)<tol;
    const page=await browser.newPage({viewport:{width,height},reducedMotion:'reduce'});
    const errors=[];page.on('pageerror',e=>errors.push(e.message));
    try{
-    const response=await page.goto('http://127.0.0.1:4173/experiments/p2-0105-dawn-preview.html?d=26.2&merci-0405=R88',
+    const response=await page.goto('http://127.0.0.1:4173/experiments/p2-0105-dawn-preview.html?d=26.2&merci-0405=R96',
      {waitUntil:'domcontentloaded',timeout:45000});
     assert.equal(response?.status(),200,device+': native original P2 scene missing');
     await page.waitForFunction(()=>document.querySelector('#p205-stage')?.dataset.p205Scene&&
       document.querySelector('#p205-prior')?.contentWindow,null,{timeout:25000});
-    // An empty olive field was precisely the R87 visual defect; the source
-    // historical impression must be actually loaded, not merely scheduled.
-    await page.waitForFunction(()=>document.querySelector('#p205-engraving-bridge')?.dataset.historyReady==='true',
-      null,{timeout:18000});
     async function sample(d,filename){
      await page.evaluate(d=>{
       const t=document.querySelector('#p205-track');
@@ -77,54 +72,28 @@ const approx=(a,b,tol=.035)=>Math.abs(a-b)<tol;
      if(filename)await page.screenshot({path:path.join(out,device+'-'+filename+'.png'),animations:'disabled'});
      return s;
     }
-    // Protect the whole released speaker art in the first beat.
-    const hold=await sample(26.38,'01-olive-complete-hold');
-    const retreat=await sample(26.87,'02-whole-olive-folio-retreat');
-    const engrave=await sample(27.32,'03-olive-engraving-bridge');
-    const entering=await sample(27.77,'04-merci-jerusalem-right-enters');
-    const meeting=await sample(28.11,'05-merci-jerusalem-left-enters');
-    const arrived=await sample(28.40,'06-jerusalem-whole');
-    assert(hold.exit===0&&hold.m===0&&hold.priorOpacity===1&&
-      hold.priorVisibility==='visible',device+': original twelve-speaker art was altered prematurely '+JSON.stringify(hold));
-    assert(retreat.exit>.35&&retreat.exit<.75&&retreat.m===0&&
-      retreat.priorVisibility==='visible'&&retreat.priorOpacity>.2&&
-      retreat.priorOpacity<.8&&retreat.priorTransform==='none',
-      device+': 04 must stay full bleed while its ink lifts, never shrink to a boxed page '+JSON.stringify(retreat));
-    assert(engrave.retired&&engrave.priorVisibility==='hidden'&&
-      engrave.bridgeVisible&&engrave.realmVisibility==='hidden'&&engrave.m===0&&
-      engrave.ink>.55&&engrave.historyOpacity>.55&&engrave.historyImageReady&&
-      engrave.historyReady==='true'&&!!engrave.historySrc&&
-      engrave.rightHistoryReady&&!!engrave.rightHistorySrc,
-      device+': blank olive bridge returned instead of coherent historical underprint '+JSON.stringify(engrave));
-    assert(engrave.historySrc!==engrave.rightHistorySrc,
-      device+': the two 05 proof plates must be independently sourced works '+JSON.stringify(engrave));
-    assert(/04-olive-mount-terrain-contours-v1\.svg/.test(engrave.terrainMask)&&
-      /04-olive-field-v79-1\.svg/.test(engrave.botanicalMask),
-      device+': shared engraving uses invented rather than ORIGINAL 04 assets '+JSON.stringify(engrave));
-    assert(entering.retired&&entering.priorOpacity===0&&entering.left===0&&
-      entering.right>.2&&entering.right<.9&&entering.m>0&&entering.ink>.99,
-      device+': 05 MERSI enters before 04 has retired or reveals both halves at once '+JSON.stringify(entering));
-    assert(meeting.right>.999&&meeting.left>.3&&meeting.left<.9&&
-      meeting.leftClip.includes('inset(0')&&meeting.rightClip==='none',
-      device+': independent MERSI opposition or left descending edge lost '+JSON.stringify(meeting));
-    assert(arrived.left>.999&&arrived.right>.999&&arrived.priorVisibility==='hidden',
-      device+': Jerusalem did not assume the entire stage '+JSON.stringify(arrived));
-    assert(entering.edgeMethod==='registered-monochrome-to-colour'&&
-      entering.rightInkEdge.includes('linear-gradient')&&
-      meeting.leftInkEdge.includes('linear-gradient')&&
-      arrived.leftInkEdge==='none'&&arrived.rightInkEdge==='none',
-      device+': R89 entrance edge still cuts the historical underprint with a hard line '+JSON.stringify({entering,meeting,arrived}));
-    assert([hold,retreat,engrave,entering,meeting,arrived].every(s=>
-      s.method==='olive-ink-underprint-then-opposed-merci'&&
-      s.priorConnected&&s.scrollOverflow<18),
-      device+': broken source control, motion identity or horizontal layout');
+    const hold=await sample(26.38,'01-olive-hold');
+    const split=await sample(27.32,'02-masthead-register');
+    const entering=await sample(27.77,'03-left-down');
+    const meeting=await sample(28.11,'04-right-up');
+    const arrived=await sample(28.40,'05-both-complete');
+    assert(hold.m===0&&split.m===0,device+': Merci starts before masthead');
+    for(const s of [hold,split,entering,meeting]){
+     assert(s.priorVisibility==='visible'&&s.priorOpacity===1&&!s.bridgeVisible&&!s.retired,device+': whole-field replacement '+JSON.stringify(s));
+    }
+    assert(entering.left>.2&&entering.left<.9&&entering.right===0,device+': left must enter independently '+JSON.stringify(entering));
+    assert(/^inset\(0(?:px)? 0(?:px)? [\d.]+%/.test(entering.leftClip),device+': left must reveal down '+entering.leftClip);
+    assert(meeting.left>.999&&meeting.right>.3&&meeting.right<.9,device+': right must follow independently '+JSON.stringify(meeting));
+    assert(/^inset\([\d.]+% 0(?:px)? 0(?:px)? 0(?:px)?\)/.test(meeting.rightClip),device+': right must reveal up '+meeting.rightClip);
+    assert(arrived.retired&&arrived.left>.999&&arrived.right>.999&&arrived.priorVisibility==='hidden',device+': source retires only after both complete');
+    assert([hold,split,entering,meeting,arrived].every(s=>s.priorConnected&&s.scrollOverflow<18&&s.method==='original-olive-to-opposed-merci'),device+': source/layout contract broken');
     // Scroll backwards: restore precisely the same single unbroken Olive print.
     const reverse=await sample(26.38,'07-olive-whole-recovered');
     assert(reverse.exit===0&&reverse.m===0&&reverse.priorOpacity===1&&
       reverse.priorVisibility==='visible'&&reverse.realmVisibility==='hidden',
       device+': reverse scroll cannot recover the original 04 composition '+JSON.stringify(reverse));
     assert(errors.length===0,device+': JS errors '+errors.join('; '));
-    reports.push({device,unboxedFolio:true,inkUnderprint:true,originalEngraving:true,merciAfterRetirement:true,
+    reports.push({device,unboxedFolio:true,originalSourcePreserved:true,retirementAfterBothHalves:true,
       opposingHalves:true,reverseComplete:true,images:{left:arrived.leftImgReady,right:arrived.rightImgReady}});
    }finally{await page.close()}
   }
