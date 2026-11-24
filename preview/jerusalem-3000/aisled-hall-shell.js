@@ -1,12 +1,13 @@
 // Shared engineering shell. Aisle/height budgets supplied independently by each period core.
 // Door counts, column grid and clerestory profiles are authored, not excavated plans.
-export function appendAisledHall({append,THREE},{cx,cz,length,widths,heights,axis,rearOpen=[],frontEnd=-1}){
+export function appendAisledHall({append,THREE},{cx,cz,length,widths,heights,axis,rearOpen=[],frontEnd=-1,doorWidths=null}){
  const total=widths.reduce((a,b)=>a+b,0),wall=.6,roof=.25;
  const emit=(u,v,along,across,h,bottom=0)=>append(new THREE.BoxGeometry(axis==='x'?along:across,h,axis==='x'?across:along),axis==='x'?cx+u:cx+v,axis==='x'?cz+v:cz+u,bottom+h/2);
  emit(0,0,length,total,.12);
  let cursor=-total/2;
  for(let i=0;i<widths.length;i++){
-  const width=widths[i],height=heights[i],mid=cursor+width/2,door=Math.min(3,width*.5),doorH=4;
+  const width=widths[i],height=heights[i],mid=cursor+width/2,door=doorWidths?.[i]??Math.min(3,width*.5),doorH=4;
+  if(!(door>0&&door<width-2*wall))throw new Error('Invalid hall entrance width');
   emit(0,mid,length,width,roof,height-roof);
   for(const end of[-1,1]){
    const u=end*(length-wall)/2;

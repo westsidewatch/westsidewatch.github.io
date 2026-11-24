@@ -50,14 +50,14 @@ export function sacredCoreGeometry(record,terrain){
  const vertices=[],polygon=record.geometry.polygon,cx=record.metadata.modelAnchor?.x??polygon.reduce((s,p)=>s+p.x,0)/polygon.length,cz=record.metadata.modelAnchor?.z??polygon.reduce((s,p)=>s+p.z,0)/polygon.length;
  const sepulchre=record.id.endsWith('holy-sepulchre-context'),groundPolygon=sepulchre?rectangle(cx,cz,145,95):polygon;
  const inHaram=['octagonal-rock-shrine','aqsa-seven-aisle-context'].includes(record.metadata.coreProfile),courtBase=haramFloor(terrain)+(record.metadata.coreProfile==='octagonal-rock-shrine'?3:0);
- const levelGround=sepulchre||['aqsa-seven-aisle-context','nea-five-aisle-context'].includes(record.metadata.coreProfile)?Math.max(...groundPolygon.map(p=>terrain.heightAtWorld(p.x,p.z))):null;
+ const levelGround=sepulchre||['aqsa-seven-aisle-context','nea-three-aisle-proposal'].includes(record.metadata.coreProfile)?Math.max(...groundPolygon.map(p=>terrain.heightAtWorld(p.x,p.z))):null;
  const append=(g,x,z,y=0)=>{g.translate(x,y,z);const p=g.attributes.position,indices=g.index?.array||Array.from({length:p.count},(_,i)=>i);for(const i of indices){const px=p.getX(i),pz=p.getZ(i),ground=terrain.heightAtWorld(px,pz);if(!Number.isFinite(ground)){g.dispose();throw new Error('Sacred core outside canonical DEM');}const localY=p.getY(i),base=inHaram?courtBase:levelGround===null?ground:localY<=1e-6?ground:levelGround;// Shared-court masses need real contact, including the portion beyond a
 // clipped/mapped court edge. Extend only their bottoms to the original DSM;
 // preserve upper silhouettes and the mapped public floor. Not ancient footings.
 vertices.push(px,inHaram&&localY<=1e-6?courtBase:base+.2+localY,pz);}if(inHaram){const edges=[];for(let j=0;j<indices.length;j+=3){const ids=Array.from(indices.slice(j,j+3)),bottom=ids.filter(i=>p.getY(i)<=1e-6);if(bottom.length===2&&ids.some(i=>p.getY(i)>1e-6))edges.push(bottom.map(i=>({x:p.getX(i),z:p.getZ(i)})));}const support=foundationContactGeometry(edges,terrain,courtBase);vertices.push(...support.attributes.position.array);support.dispose();}g.dispose();};
  const box=(x,z,w,d,h)=>append(new THREE.BoxGeometry(w,h,d),x,z,h/2);
  const dome=(x,z,r,base)=>append(new THREE.SphereGeometry(r,16,8,0,Math.PI*2,0,Math.PI/2),x,z,base);
- if(record.metadata.coreProfile==='nea-five-aisle-context'){
+ if(record.metadata.coreProfile==='nea-three-aisle-proposal'){
   appendNeaGeometry(record,{box,append,THREE},cx,cz);
  }else if(record.metadata.coreProfile==='aqsa-seven-aisle-context'){
   appendAqsaGeometry(record,{box,dome,append,THREE},cx,cz);

@@ -1,6 +1,6 @@
 {
   "schema": "j3k.landmark-building-programme.v1",
-  "date": "2026-11-01",
+  "date": "2026-11-24",
   "kind": "planning-candidate-inventory-not-runtime-lifecycle-ledger",
   "runtimeEnabled": false,
   "historicalGeometryAccepted": false,
@@ -156,6 +156,18 @@
     "middot5": {
       "url": "https://www.sefaria.org/Mishnah_Middot.5",
       "role": "retrospective-literary-description-not-excavated-Herodian-survey"
+    },
+    "umayyad-2026": {
+      "url": "https://publications.iaa.org.il/ha-esi/vol138/iss1/3/",
+      "role": "primary-excavation-reassessment-of-building-II-northern-rooms-not-full-palace-elevation"
+    },
+    "josephus7": {
+      "url": "https://penelope.uchicago.edu/josephus/war-7.html",
+      "role": "literary-immediate-post70-retention-not-modern-tower-identification"
+    },
+    "nea-bendov1977": {
+      "url": "https://www.biblicalarchaeology.org/daily/biblical-sites-places/jerusalem/found-after-1400-years-the-magnificent-nea/",
+      "role": "excavator-suggested-plan-republished1977-not-complete-survey"
     }
   },
   "entities": [
@@ -690,9 +702,9 @@
       "kind": "ensemble",
       "sourceRefs": [
         "citadel",
-        "upper-city"
+        "josephus7"
       ],
-      "researchStatus": "context-sourced-geometry-not-admitted",
+      "researchStatus": "source-reviewed-geometry-not-admitted",
       "location": null,
       "footprintMetres": null,
       "heightMetres": null,
@@ -707,7 +719,19 @@
         "terrain-and-contemporary-wall-relation",
         "core-road-reservation",
         "dated-transformation-and-next-era-fate"
-      ]
+      ],
+      "sourceReview": {
+        "date": "2026-11-24",
+        "decision": "hold-cross-era-geometry",
+        "supported": "multi-period museum sequence is available;unchanged fabric is not established",
+        "missing": [
+          "registered-phase-plans",
+          "retained-fabric-map",
+          "terrain-road-registration"
+        ],
+        "next": "build per-period site plan rather than copying modern citadel backward",
+        "newSurveyedGeometryAdmission": false
+      }
     },
     {
       "id": "herodian-temple",
@@ -794,9 +818,10 @@
       "kind": "ensemble",
       "sourceRefs": [
         "upper-city",
-        "citadel"
+        "citadel",
+        "josephus"
       ],
-      "researchStatus": "context-sourced-geometry-not-admitted",
+      "researchStatus": "source-reviewed-geometry-not-admitted",
       "location": null,
       "footprintMetres": null,
       "heightMetres": null,
@@ -811,7 +836,19 @@
         "terrain-and-contemporary-wall-relation",
         "core-road-reservation",
         "dated-transformation-and-next-era-fate"
-      ]
+      ],
+      "sourceReview": {
+        "date": "2026-11-24",
+        "decision": "hold-new-ensemble-geometry",
+        "supported": "western-palace context;context is not an excavated complete palace plan",
+        "missing": [
+          "registered-footprint",
+          "selected-cubit-policy",
+          "terrain-wall-road-registration"
+        ],
+        "next": "register palace zone and distinguish excavated substructures from literary reconstruction",
+        "newSurveyedGeometryAdmission": false
+      }
     },
     {
       "id": "herod-three-towers",
@@ -819,9 +856,11 @@
       "kind": "ensemble",
       "sourceRefs": [
         "upper-city",
-        "citadel"
+        "citadel",
+        "josephus",
+        "josephus7"
       ],
-      "researchStatus": "context-sourced-geometry-not-admitted",
+      "researchStatus": "source-reviewed-geometry-not-admitted",
       "location": null,
       "footprintMetres": null,
       "heightMetres": null,
@@ -836,7 +875,19 @@
         "terrain-and-contemporary-wall-relation",
         "core-road-reservation",
         "dated-transformation-and-next-era-fate"
-      ]
+      ],
+      "sourceReview": {
+        "date": "2026-11-24",
+        "decision": "hold-new-tower-placement",
+        "supported": "literary-retention-of-three-towers-after70",
+        "missing": [
+          "individual-tower-location",
+          "identification-of-surviving-base",
+          "metric-registration"
+        ],
+        "next": "do not apply blanket ruin to future tower models;separate immediate survival from modern identification",
+        "newSurveyedGeometryAdmission": false
+      }
     },
     {
       "id": "upper-city-public",
@@ -1134,11 +1185,10 @@
       "label": "Aelia城門、廣場、拱門與Cardo公共軸線",
       "kind": "ensemble",
       "sourceRefs": [
-        "backlog",
         "roman-gate-site",
         "roman-plaza-excavation"
       ],
-      "researchStatus": "candidate-needs-source",
+      "researchStatus": "source-reviewed-geometry-not-admitted",
       "location": null,
       "footprintMetres": null,
       "heightMetres": null,
@@ -1156,7 +1206,19 @@
         "terrain-and-contemporary-wall-relation",
         "core-road-reservation",
         "dated-transformation-and-next-era-fate"
-      ]
+      ],
+      "sourceReview": {
+        "date": "2026-11-24",
+        "decision": "hold-expansion-beyond-existing-gate",
+        "supported": "existing northern gate context is not complete civic-centre coverage",
+        "missing": [
+          "source-plan-review",
+          "registered-forum-and-cardo-plans",
+          "phase-specific-elevation"
+        ],
+        "next": "review excavation plans before adding forum or temple masses",
+        "newSurveyedGeometryAdmission": false
+      }
     },
     {
       "id": "roman-sanctuaries",
@@ -1243,9 +1305,10 @@
       "label": "查士丁尼Nea新聖母教堂與附屬建築",
       "kind": "ensemble",
       "sourceRefs": [
-        "nea"
+        "nea",
+        "nea-bendov1977"
       ],
-      "researchStatus": "context-sourced-geometry-not-admitted",
+      "researchStatus": "source-reviewed-geometry-not-admitted",
       "location": null,
       "footprintMetres": null,
       "heightMetres": null,
@@ -1262,7 +1325,19 @@
         "terrain-and-contemporary-wall-relation",
         "core-road-reservation",
         "dated-transformation-and-next-era-fate"
-      ]
+      ],
+      "sourceReview": {
+        "date": "2026-11-24",
+        "decision": "revise-existing-illustration-to-explicit-source-proposal",
+        "supported": "Ben-Dov1977 suggested a three-aisle reconstruction",
+        "missing": [
+          "surveyed-internal-widths",
+          "verified-roof-heights",
+          "later-use-destruction-resolution"
+        ],
+        "next": "keep existing envelope,anchor and chronology;mark internal widths and heights authored",
+        "newSurveyedGeometryAdmission": false
+      }
     },
     {
       "id": "holy-zion",
@@ -1403,9 +1478,9 @@
       "label": "聖殿山南／西南倭馬亞宮殿與行政群",
       "kind": "ensemble",
       "sourceRefs": [
-        "backlog"
+        "umayyad-2026"
       ],
-      "researchStatus": "candidate-needs-source",
+      "researchStatus": "source-reviewed-geometry-not-admitted",
       "location": null,
       "footprintMetres": null,
       "heightMetres": null,
@@ -1420,7 +1495,20 @@
         "terrain-and-contemporary-wall-relation",
         "core-road-reservation",
         "dated-transformation-and-next-era-fate"
-      ]
+      ],
+      "sourceReview": {
+        "date": "2026-11-24",
+        "decision": "hold-new-ensemble-geometry",
+        "supported": "Building II northern rooms re-excavated;source cautions undocumented reconstructed walls",
+        "missing": [
+          "full-plan-registration",
+          "phase-specific-elevation",
+          "documented-road-wall-interface",
+          "later-fate"
+        ],
+        "next": "register excavated footprint and separate modern restoration before full palace volumes",
+        "newSurveyedGeometryAdmission": false
+      }
     },
     {
       "id": "hospital-muristan",
@@ -5047,5 +5135,22 @@
       ],
       "historicalGeometryAccepted": false
     }
+  },
+  "sourceReviewSummary": {
+    "date": "2026-11-24",
+    "reviewedEntities": [
+      "umayyad-palaces",
+      "herod-palace",
+      "herod-three-towers",
+      "citadel-layers",
+      "nea",
+      "roman-civic"
+    ],
+    "all18PhaseRowsPreserved": true,
+    "newGeometryAdmissions": 0,
+    "existingIllustrationRevised": [
+      "nea"
+    ],
+    "runtimeAuthorityUnchanged": true
   }
 }

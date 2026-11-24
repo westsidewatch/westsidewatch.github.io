@@ -82,6 +82,9 @@ try {
   let skeletonView=null,defenseView=null;
   const three = mountJerusalemThreeScene(mount, {
     onDistrictAcceptance(info){districtAcceptance=info;renderDistrictAcceptance();skeletonView?.refresh();defenseView?.refresh();const key=(info?.phase||'')+'|'+(info?.status||'');if(key!==baselineGeneration){baselineGeneration=key;refreshBaseline(true);}},
+    onCityReady(phaseId) {
+      if(window.__JERUSALEM3000__.status==='ready' && window.__JERUSALEM3000__.historicalTime?.phase===phaseId) update(window.__JERUSALEM3000__.historicalTime.position);
+    },
     onReady(info) {
       window.__JERUSALEM3000__.three = true;
       window.__JERUSALEM3000__.evidence = true;

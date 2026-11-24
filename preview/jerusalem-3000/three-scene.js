@@ -133,7 +133,7 @@ function temporalEvidence(object) {
     return 'reconstructed';
   return 'inferred';
 }
-export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance } = {}) {
+export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance, onCityReady } = {}) {
   const scene = new THREE.Scene(),
     camera = new THREE.PerspectiveCamera(34, 1, 0.1, 18000),
     renderer = new THREE.WebGLRenderer({
@@ -375,7 +375,7 @@ export function mountJerusalemThreeScene(mount, { onReady, onDistrictAcceptance 
     }
     eraFabricLayer.visible = currentEvidenceMode !== 'disputed';
     if(foundationOwner==='independent-later-skeleton'){
-      persistentCityWorld.request(phaseId).then(entry=>{if(!entry||currentPhaseId!==phaseId)return;activeWorldEntry=entry;fabricMeshes=entry.runtime.meshes;laterMorphologyBinding=entry.binding;renderedPlaybackReady=false;applyTemporalState();needsFrame=true;}).catch(()=>{needsFrame=true;});return;
+      persistentCityWorld.request(phaseId).then(entry=>{if(!entry||currentPhaseId!==phaseId)return;activeWorldEntry=entry;fabricMeshes=entry.runtime.meshes;laterMorphologyBinding=entry.binding;renderedPlaybackReady=false;applyTemporalState();needsFrame=true;onCityReady?.(phaseId);}).catch(()=>{needsFrame=true;});return;
     }
     const ruined = phaseId.includes('destruction');
     if (foundationOwner === 'ottoman-morphology')
