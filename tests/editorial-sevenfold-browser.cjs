@@ -156,8 +156,23 @@ const viewports=[{name:'desktop',width:1440,height:900},{name:'tablet',width:768
         const img=node.locator('img');
         await img.scrollIntoViewIfNeeded();
         await img.evaluate(async x=>{x.loading='eager';if(x.decode)await x.decode()});
-        const m=await img.evaluate(x=>({loaded:x.naturalWidth>0,w:x.getBoundingClientRect().width,h:x.getBoundingClientRect().height}));
-        assert(m.loaded&&m.w>75&&m.h>75,'Editorial asset invisible even though URL exists '+JSON.stringify(m));
+        const m=await img.evaluate(x=>({
+          loaded:x.naturalWidth>0,w:x.getBoundingClientRect().width,h:x.getBoundingClientRect().height,
+          visible:getComputedStyle(x).visibility,opacity:getComputedStyle(x).opacity,
+          display:getComputedStyle(x).display,
+          source:x.currentSrc
+        }));
+        assert(m.loaded&&m.w>75&&m.h>75&&m.visible==='visible'&&m.display!=='none'&&Number(m.opacity)>.3,
+          'Editorial artwork source/geometry/styling invisible '+JSON.stringify(m));
+        if(viewport.name==='desktop'){
+          const imageProof=await img.screenshot({
+            path:'artifacts/sevenfold-editorial/'+realm+'-'+block.id+'-artwork.png',
+            animations:'disabled',timeout:90000
+          });
+          assert(imageProof.byteLength>14000,
+            realm+' actual artwork screenshot is nearly blank despite successful download '+JSON.stringify({bytes:imageProof.byteLength,...m}));
+          console.log('EDITORIAL_ARTWORK_PIXELS',realm,block.id,imageProof.byteLength);
+        }
       }
     }
     if(viewport.name==='desktop'||viewport.name==='phone'){
