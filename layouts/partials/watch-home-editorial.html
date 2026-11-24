@@ -59,10 +59,13 @@ function sync(){
   const vh=legacyDistance<=buildEnd?2.37+(legacyDistance-churchEnd)/(buildEnd-churchEnd)*(3.36-2.37):3.36+(legacyDistance-buildEnd)/(magazineEnd-buildEnd)*(5.25-3.36);
   progress=inverseChurch(vh);
  }
- if(frame.contentWindow)frame.contentWindow.postMessage({
+ const child=frame.contentWindow;
+  const pose={
     type:'westside-p2-home-pose',distance,legacyProgress:clamp(progress,0,1),
     active:rect.bottom>0&&rect.top<innerHeight
-   },location.origin);
+   };
+  if(child?.P2ApplyHomePose)child.P2ApplyHomePose(pose);
+  else child?.postMessage(pose,location.origin);
 }
 addEventListener('message',event=>{
  if(event.origin!==location.origin||event.data?.type!=='westside-p2-church-enter')return;

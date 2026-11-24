@@ -142,6 +142,17 @@ const data=()=>{
    return !!source?.getElementById('emmaus')&&
     !!root?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)')?.contentDocument?.querySelector('#dual-stage');
   },null,{timeout:30000});
+  // Observe the nested scene inside the same call, before another animation frame can run.
+  const immediateScenes=await homePage.evaluate(()=>{
+   const dawn=document.querySelector('.ws-p2-sevenfold-host>iframe').contentWindow;
+   const olive=dawn.document.querySelector('#p205-prior').contentWindow;
+   const release=olive.document.querySelector('#p2-0103-original').contentWindow;
+   return [2.65,6.4,9.3,6.4,2.65].map(distance=>{
+    dawn.P2ApplyHomePose({distance,legacyProgress:.5,active:true});
+    return release.document.body.dataset.proofScene;
+   });
+  });
+  assert.deepEqual(immediateScenes,['01','02','03','02','01']);
   const realScroll=[
    ['church',2.65,'01',1.35,0],
    ['magazine-start',4.45,'02',3.405,.025],

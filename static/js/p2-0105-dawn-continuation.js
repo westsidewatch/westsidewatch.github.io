@@ -92,10 +92,13 @@
   const phase=clamp((d-relay.merciStart)/(relay.merciEnd-relay.merciStart));
   const leftReveal=ease(phase/.55),rightReveal=ease((phase-.52)/.48);
   const exit=Math.min(leftReveal,rightReveal),retired=exit>=.99999;
-  prior.contentWindow?.postMessage({type:'westside-p2-home-pose',
+  const child=prior.contentWindow;
+  const pose={type:'westside-p2-home-pose',
    distance:Math.min(d,26.3),legacyProgress:embedded?hostLegacyProgress:originalLegacy(d),
    active:(!embedded||hostActive)&&!retired,mastheadSplit:ease((d-26.45)/.18),
-   mastheadCenter:(()=>{const r=twins.getBoundingClientRect(),s=prior.getBoundingClientRect();return {x:r.left+r.width/2-s.left,y:r.top+r.height/2-s.top,size:r.height}})()},location.origin);
+   mastheadCenter:(()=>{const r=twins.getBoundingClientRect(),s=prior.getBoundingClientRect();return {x:r.left+r.width/2-s.left,y:r.top+r.height/2-s.top,size:r.height}})()};
+  if(child?.P2ApplyHomePose)child.P2ApplyHomePose(pose);
+  else child?.postMessage(pose,location.origin);
   prior.style.visibility=retired?'hidden':'visible';
   prior.style.transform='none';
   prior.style.opacity='1';
@@ -139,17 +142,22 @@
   prior.contentWindow?.P2SetDawnSplit?.(split,{x:tr.left+tr.width/2-fr.left,y:tr.top+tr.height/2-fr.top,size:tr.height});
   paintAnchor(d,p);
  }
- function schedule(){if(!queued){queued=true;requestAnimationFrame(paint)}}
+ function schedule(){if(!queued){queued=true;requestAnimationFrame(()=>{if(queued)paint()})}}
  function jump(d){resetEntry();scrollTo({top:track.offsetTop+clamp(d,0,32.3)*innerHeight,behavior:'instant'});schedule()}
  addEventListener('scroll',()=>{if(entryProgress>.001&&progress()<26.23)resetEntry();schedule()},{passive:true});
  addEventListener('resize',schedule,{passive:true});prior.addEventListener('load',schedule);
- if(embedded)addEventListener('message',event=>{
-  if(event.origin!==location.origin||event.source!==parent||event.data?.type!=='westside-p2-home-pose')return;
-  const d=Number(event.data.distance),legacy=Number(event.data.legacyProgress);
+  window.P2ApplyHomePose=data=>{
+  const d=Number(data.distance),legacy=Number(data.legacyProgress);
   if(!Number.isFinite(d)||!Number.isFinite(legacy))return;
-  hostDistance=clamp(d,0,32.3);hostLegacyProgress=clamp(legacy);hostActive=event.data.active!==false;
-  if(entryProgress>.001&&hostDistance<26.23)resetEntry();schedule();
- });
+  hostDistance=clamp(d,0,32.3);hostLegacyProgress=clamp(legacy);hostActive=data.active!==false;
+   if(!embedded)return;
+   if(entryProgress>.001&&hostDistance<26.23)resetEntry();
+   paint();
+  };
+  addEventListener('message',event=>{
+   if(event.source===parent&&event.origin===location.origin&&event.data?.type==='westside-p2-home-pose')
+    window.P2ApplyHomePose(event.data);
+  });
 
  // These are the seven exact Design OS color roles already used by Olive 04.
  const token=['--ws-water','--ws-first-light','--ws-pale-gold','--ws-olive','--ws-harvest','--ws-harvest','--ws-daylight-mauve'];
@@ -410,6 +418,13 @@
    }else{
     side.current.style.clipPath='none';side.next.style.clipPath='inset(0 0 100% 0)';
     shown=scenes[i];
+   }
+   // Retain the last rendered engraving behind both live apertures while their sources decode.
+   const settledImage=currentReady?side.current:nextReady?side.next:null;
+   if(settledImage){
+    side.art.style.backgroundImage=`url("${settledImage.src}")`;
+    side.art.style.backgroundSize='cover';
+    side.art.style.backgroundPosition='center';
    }
    // Travel stays inside the original two opposing clip apertures:
    // the upper image descends to rest, the lower image rises to rest.

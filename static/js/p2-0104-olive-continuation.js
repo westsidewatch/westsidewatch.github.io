@@ -1026,12 +1026,15 @@
   // scroll away from that origin cancels it (never merely being on a pair).
   if(handoffTarget&&handoffOriginD!==null&&Math.abs(d-handoffOriginD)>.12)
    resetHandoff();
-  if(base.contentWindow)base.contentWindow.postMessage({
+  const child=base.contentWindow;
+  const pose={
    type:'westside-p2-home-pose',
    distance:Math.min(d,9.34),
    legacyProgress:hostLegacyProgress===null?originalProgress(d):hostLegacyProgress,
    active:embedded?hostActive:true
-  },location.origin);
+  };
+  if(child?.P2ApplyHomePose)child.P2ApplyHomePose(pose);
+  else child?.postMessage(pose,location.origin);
   const g=measure();
   output.textContent=d.toFixed(2);slider.value=String(d);
   stage.dataset.p2Distance=d.toFixed(4);
@@ -1419,7 +1422,7 @@
    d<T.indexStart?'04 / 07 · TWELVE VOICES':
    '04 / 07 · THE TWELVE';
  }
- function schedule(){if(!queued){queued=true;requestAnimationFrame(paint)}}
+ function schedule(){if(!queued){queued=true;requestAnimationFrame(()=>{if(queued)paint()})}}
  function go(d){
   if(handoffTarget||handoffProgress>.001)resetHandoff();
   const top=track.getBoundingClientRect().top+scrollY+clamp(d,0,T.end)*Math.max(1,innerHeight);
@@ -1437,17 +1440,19 @@
  if(embedded){
   // The home scroll drives all P2 distance. A nested continuation must not
   // create a second vertical scrollbar or alter the released 01–03 clock.
-  addEventListener('message',event=>{
-   if(event.origin!==location.origin||event.source!==parent||
-      event.data?.type!=='westside-p2-home-pose')return;
-   const distance=Number(event.data.distance),legacy=Number(event.data.legacyProgress);
+  window.P2ApplyHomePose=data=>{
+   const distance=Number(data.distance),legacy=Number(data.legacyProgress);
    if(!Number.isFinite(distance)||!Number.isFinite(legacy))return;
    hostDistance=clamp(distance,0,T.end);
    hostLegacyProgress=clamp(legacy);
-   hostActive=event.data.active!==false;
-   hostSplit=clamp(Number(event.data.mastheadSplit)||0);
-   hostCenter=event.data.mastheadCenter||null;
-   schedule();
+   hostActive=data.active!==false;
+   hostSplit=clamp(Number(data.mastheadSplit)||0);
+   hostCenter=data.mastheadCenter||null;
+   paint();
+  };
+  addEventListener('message',event=>{
+   if(event.source===parent&&event.origin===location.origin&&event.data?.type==='westside-p2-home-pose')
+    window.P2ApplyHomePose(event.data);
   });
   schedule();
  }else{
