@@ -2,6 +2,14 @@
    Six content commands, seven cover modes, ONE render engine.
    No color, font or motion tokens defined outside existing Design OS.
    Explicitly scoped to grammar pages; preserves existing P2 and its CSS. */
+/* Isolated grammar reading pages own one masthead and one colophon.
+   Suppress only their legacy duplicate section shell, not canonical site/P2. */
+body.ws-editorial-context>.sites-layer-header,
+body.ws-editorial-context>.sites-layer-footer{display:none!important}
+body.ws-editorial-context>main#main{
+ width:100%!important;max-width:none!important;padding:0!important;margin:0!important;
+ min-height:0;overflow:visible
+}
 .ws-grammar{
   --g-accent:var(--ws-night);--g-paper:var(--ws-paper);--g-ink:var(--ws-ink);
   --g-rule:color-mix(in srgb,var(--g-accent) 30%,transparent);
