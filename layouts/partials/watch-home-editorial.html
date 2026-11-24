@@ -16,7 +16,7 @@
   <nav class="sites-home-entry" aria-label="Homepage entry points"><a href="/preview/watch-city-vol00/hosanna/">Enter the film <span lang="zh-Hant">進城 ↗</span></a><a href="#sites-first-layer">Enter Westside Watch <span lang="zh-Hant">進入西望 ↓</span></a><a href="/church/">LivingWaterWest <span lang="zh-Hant">進入教會 ↗</span></a></nav>
 </section>
 
-<section class="candidate-focus-screen ws-p2-sevenfold-host" data-current="focus" data-layer="first" data-screen="2" aria-label="Living Water — Sevenfold P2"><iframe title="P2 · Living Water Church → WESTSIDE WATCH Vol.00 → Emmaus → Olive Mountain → Dawn Library" loading="eager" allow="autoplay" src="/experiments/p2-0105-dawn-preview.html?embed=1&amp;v=r96-main-entry-20261124"></iframe></section>
+<section class="candidate-focus-screen ws-p2-sevenfold-host" data-p2-entry-ready="false" data-current="focus" data-layer="first" data-screen="2" aria-label="Living Water — Sevenfold P2"><iframe title="P2 · Living Water Church → WESTSIDE WATCH Vol.00 → Emmaus → Olive Mountain → Dawn Library" loading="eager" allow="autoplay" src="/experiments/p2-0105-dawn-preview.html?embed=1&amp;v=r96-main-entry-20261124"></iframe></section>
 <section class="candidate-focus-screen" data-current="focus" data-layer="first" data-screen="3"><iframe title="Westside Watch · 行走與敬拜" loading="eager" src="/home-chapters/walk-worship.html?v=editorial-v1"></iframe></section>
 
 <div class="sites-home-realms" id="sites-first-layer">
@@ -32,6 +32,11 @@
 /* P2 scroll host: isolate approved preview CSS in its iframe; no new global CSS authority. */
 body.home .ws-p2-sevenfold-host{position:relative!important;height:3330svh!important;min-height:3330svh!important;overflow:clip!important}
 body.home .ws-p2-sevenfold-host>iframe{position:sticky!important;top:0!important;display:block!important;width:100%!important;height:100svh!important;min-height:100svh!important;border:0!important}
+/* Hold the original film in the viewport while the nested opening scene loads. */
+body.home:has(.ws-p2-sevenfold-host[data-p2-entry-ready="false"]) .sites-home-hero{overflow:visible!important}
+body.home:has(.ws-p2-sevenfold-host[data-p2-entry-ready="false"]) .sites-home-film{position:fixed!important;inset:0!important;width:100%!important;height:100%!important}
+body.home .ws-p2-sevenfold-host[data-p2-entry-ready="false"]{background:transparent!important}
+body.home .ws-p2-sevenfold-host[data-p2-entry-ready="false"]>iframe{opacity:0!important;pointer-events:none!important}
 </style>
 <script>
 /* The published 01–03 proof remains unmodified INSIDE the 04 continuation.
@@ -73,6 +78,18 @@ addEventListener('message',event=>{
  if(!church||event.source!==church.contentWindow||church.contentDocument?.querySelector('.showcase')?.dataset.p2Phase!=='church')return;
  location.assign('/p2/church-tour.html?entry=p2');
 });
+function waitForOpeningScene(){
+ const olive=frame.contentDocument?.getElementById('p205-prior')?.contentDocument;
+ const release=olive?.getElementById('p2-0103-original')?.contentDocument;
+ const church=release?.getElementById('proof-original')?.contentDocument?.querySelector('.showcase');
+ if(frame.contentWindow?.P2ApplyHomePose&&church?.dataset.p2Progress&&church.getBoundingClientRect().height>0){
+  sync();
+  requestAnimationFrame(()=>{host.dataset.p2EntryReady='true'});
+  return;
+ }
+ requestAnimationFrame(waitForOpeningScene);
+}
+requestAnimationFrame(waitForOpeningScene);
 function schedule(){if(!queued){queued=true;requestAnimationFrame(sync)}}
 addEventListener('scroll',schedule,{passive:true});addEventListener('resize',schedule,{passive:true});frame.addEventListener('load',schedule);schedule();
 })();
