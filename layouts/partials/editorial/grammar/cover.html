@@ -25,9 +25,13 @@
       <figcaption><span lang="en">{{ $hero.issue }}</span><span>圖版 / {{ .section.nameZh }}</span></figcaption>
     </figure>
   {{ else }}
-    <div class="ws-gram-cover__identity-field" aria-hidden="true">
-      <span class="ws-gram-cover__identity-mark"></span>
-      <span lang="en">Living Water · John VII:38</span>
+    <div class="ws-gram-cover__identity-field" aria-label="教會名稱旁《約翰福音》7:38 中文豎排經文方塊">
+      <div class="ws-gram-cover__identity-square">
+        <iframe src="/experiments/scripture-studio-motherform-live.html?embed=1&amp;section=01&amp;layout=sevenfold-vertical"
+          title="約翰福音 7:38 · 既有 V60 中文豎排鉛字母版"
+          loading="eager" scrolling="no" referrerpolicy="same-origin"></iframe>
+      </div>
+      <span lang="en">John 7:38 · KJV</span>
     </div>
   {{ end }}
 </section>
