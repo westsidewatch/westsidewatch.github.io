@@ -56,7 +56,8 @@ function sync(){
  // The hero scroll already establishes the opening reveal. Enter P2 with
  // its full upper identity panel so a partial fold never exposes bare paper.
  if(legacyDistance<=churchEnd){
-  const scene=.5+Math.max(0,legacyDistance-1.8);
+  // Water starts rising as soon as the opening identity is pinned.
+  const scene=legacyDistance<=2.65?.65+.70*legacyDistance/2.65:.5+(legacyDistance-1.8);
   progress=inverseChurch(scene);
  }else{
   // Inverse of the untouched Church iframe's embeddedScene() mapping.
