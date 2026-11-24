@@ -75,3 +75,15 @@ Westside Watch 所有內頁以《西望》的編輯排版語法為共同母體�
 加入正式範例 **The Paris Review**：應研究其期號／分類／完整數位館藏與訪談閱讀秩序；結合 Emergence、Aperture、The Public Domain Review 的文章、藝術出版和史料策展方法。請見 [WESTSIDE-EXECUTABLE-EDITORIAL-GRAMMAR.md](WESTSIDE-EXECUTABLE-EDITORIAL-GRAMMAR.md)。
 
 此語法目前只接管七個隔離 `/folio/` 頁面的預覽，沒有授權覆寫首頁、Merci、P2、虛擬教會、講員海報、書局第二三層。**正式遷移仍須七頁人工視覺與內容審定。**
+
+## Editorial Art Direction R2 · 內頁藝術指導（隔離驗收）
+
+原有「內容 JSON → Hugo 網頁」編輯語法保留，但先前的文字主次、館藏圖版和版塊配色不足以構成成熟的雜誌藝術指導，因此 R1 **不是**授權的視覺定稿。
+
+**此處的內頁標題語法與已批准的 P2 動態開場不同。** 內容內頁以 Chiron Hei HK 的**中文主標為最大字階**，英文採真正 Bodoni Moda SC 的從屬題名。中英主次需要能在桌面、平板、手機實測，中文計算字級至少為英文 1.65 倍；此要求僅適用於 `.ws-grammar` 內頁，不改首頁或 P2 原有英文巨大字標的正式動效。
+
+網站先前 `typography-sitewide.css` 的英文字體強制選擇器，會覆蓋雜誌內頁的 Small Caps。解法是在共用語法中**精準標記 `data-ws-designable` 的印刷標題/頁碼**，並在本語法的唯一擁有者 CSS 針對這些部位使用 OS 正式的 `--ws-type-display-en-sc`；不得關閉全站字體強制層或修改功能 UI。
+
+**色彩秩序：** 紙與墨負責閱讀，七重疊各自 OS 原色只負責藝術身份、刊次、圖版與線；小字不得直接使用低對比的淺金。天堂電影院使用 `--ws-crimson` + `--ws-ink`，不得借西望午夜藍／黎明金充當電影院品牌。內頁玻璃只在教會經文等獲准材質使用；圖書館史料應保持紙張、原件與圖說的資料性。
+
+編譯器與實際 CSS：`layouts/partials/editorial/grammar/*`、`static/css/westside-editorial-grammar.css`。視覺標準、外部研究、七頁分工與人工評審見 [WESTSIDE-EDITORIAL-ART-DIRECTION-R2.md](WESTSIDE-EDITORIAL-ART-DIRECTION-R2.md)。七版塊與新生成的第八頁必須在 Chromium 實際驗收，且不得以 CI 全綠代替人工藝術評審。

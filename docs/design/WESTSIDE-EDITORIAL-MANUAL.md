@@ -385,3 +385,11 @@ These files remain archived intact; they do not operate as independent OS author
 新增 [可執行雜誌編輯語法](WESTSIDE-EXECUTABLE-EDITORIAL-GRAMMAR.md)，為全站唯一 Westside Design OS 的實際網頁生產方法。增補研究案例 [The Paris Review](https://www.theparisreview.org/)：其季度期號、分門別類的完整數位檔案、訪談與正文閱讀方式，以及 Pentagram 2021 版重視作品、字體與書本閱讀感的出版方法。
 
 **不是再寫視覺分析：** 七個版塊採相同 Hugo 解析／編譯器，七種封面藝術構圖和六種可移動的編輯模組由 JSON 真正輸出 HTML。所有字體、色彩仍使用原 OS。每新增一篇內容可使用 `node scripts/editorial-grammar-new.mjs` 產生實際 Hugo 內頁；CI 必須真生成第八張測試頁。此為候選系統，尚不得直接覆蓋原版已確認動效。
+
+## 全站編輯式內頁 · Art Direction R2（2026-11-23）
+
+新一輪的目的並非再次增加模板。保留已運作的 Editorial Grammar 網頁生產鏈，直接深化字體、配色、藝術來源與閱讀編輯能力。**中文主標具有第一視覺權限；英文譯題是次級 Small Caps；文字元資料需可讀，來源圖版需真的可見。**
+
+所據原始參考：The Paris Review/Pentagram 的藝術與文學出版秩序、Aperture 的圖像與印刷傳統、Emergence Magazine 的不同內容敘事、The Public Domain Review 的史料策展。全部藉由原 Westside Design OS 的 Chiron、Bodoni Moda SC、Noto Serif TC、紙墨和七重疊既定版塊色彩實作；不拿範例的文字或資產直接充當本站內容。
+
+工程以 `scripts/editorial-art-direction-os-contract.mjs` + `tests/editorial-sevenfold-browser.cjs` 把四項失敗固化為測試：英文字體被降級成普通 Bodoni、中文標題過小、編輯小字對比不足、版塊顏色混用。完整對照、保護邊界及藝術評審見 [WESTSIDE-EDITORIAL-ART-DIRECTION-R2.md](WESTSIDE-EDITORIAL-ART-DIRECTION-R2.md)。

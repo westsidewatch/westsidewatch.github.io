@@ -12,6 +12,8 @@ on:
       - 'scripts/editorial-sevenfold-contract.mjs'
       - 'scripts/editorial-grammar-new.mjs'
       - 'scripts/editorial-grammar-links.mjs'
+      - 'scripts/editorial-art-direction-os-contract.mjs'
+      - 'docs/design/WESTSIDE-EDITORIAL-ART-DIRECTION-R2.md'
       - 'tests/editorial-sevenfold-browser.cjs'
       - 'fixtures/editorial-grammar/**'
       - '.github/workflows/editorial-sevenfold.yml'
@@ -28,6 +30,8 @@ jobs:
           extended: true
       - name: Validate the production grammar and all seven original realms
         run: node scripts/editorial-sevenfold-contract.mjs
+      - name: Enforce OS editorial typography, palette and publishing art-direction authority
+        run: node scripts/editorial-art-direction-os-contract.mjs
       - name: Create a completely new article from editorial grammar input
         run: |
           node scripts/editorial-grammar-new.mjs \

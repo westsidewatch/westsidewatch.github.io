@@ -7,10 +7,11 @@
     "eyebrow": "Westside Watch · Vol.00",
     "titleZh": "西望",
     "titleEn": "The Journal",
-    "deck": "一份仍在生長的數位雜誌，讓聖經、藝術、人物與城市在同一份出版物中相遇。",
+    "deck": "守望，一座光明的城。那座有根基的城，就是神所經營、所建造的。",
     "art": {
       "src": "/images/xiwang-poster-a-night-blue-approved-p2.svg",
-      "alt": "《西望》P2 已確認的午夜藍藝術圖稿"
+      "alt": "《西望》P2 已確認的午夜藍藝術圖稿",
+      "caption": "西望 · Vol.00"
     },
     "issue": "02 / Issue 00"
   },
@@ -20,27 +21,27 @@
       "id": "issue",
       "mode": "issue-toc",
       "eyebrow": "In This Edition",
-      "title": "從本期目錄進入閱讀",
+      "title": "創刊號目錄",
       "entries": [
         {
-          "title": "期刊首頁",
-          "label": "西望雜誌",
-          "href": "/journal/"
-        },
-        {
-          "title": "創刊號",
+          "title": "守望，一座光明的城",
           "label": "Vol.00",
           "href": "/vol-00/"
         },
         {
-          "title": "閱讀目錄",
-          "label": "本期欄目索引",
-          "href": "/vol-00/#contents"
+          "title": "黃淑華",
+          "label": "人物",
+          "href": "/vol-00/huang-shuhua/"
         },
         {
-          "title": "多雷探索",
-          "label": "出版與史地資源",
-          "href": "/dore/search/"
+          "title": "姜秀琴",
+          "label": "人物",
+          "href": "/vol-00/jiang-xiuqin/"
+        },
+        {
+          "title": "亞杜蘭",
+          "label": "Adullam",
+          "href": "/vol-00/adullam/"
         }
       ]
     },
@@ -49,10 +50,10 @@
       "id": "editor-note",
       "mode": "narrow",
       "eyebrow": "Editor's Note",
-      "title": "藝術與內容，應該彼此成就",
+      "title": "城上的守望",
       "paragraphs": [
-        "每一期《西望》都是一組有目的的閱讀線索。不同媒體的文章、圖像和經文可以採用不同構圖，但卷次、編輯秩序與來源註記應始終清晰。",
-        "期刊不應淪為其他版塊的普通導航頁。它以完整的出版面貌，連結教會、查經、講道、書籍、影像與生活。"
+        "城牆上的守望者，在長夜之中等待黎明。以賽亞書六十二章以耶路撒冷為中心，將守望與不止息的禱告聯繫在一起。",
+        "希伯來書十一章則將亞伯拉罕的盼望指向一座有根基的城。這座城的建造者是神；信心使人不只看見眼前的土地，也仰望神所應許的家鄉。"
       ]
     },
     {
@@ -62,7 +63,7 @@
       "eyebrow": "Visual Essay",
       "src": "/images/xiwang-poster-a-night-blue-approved-p2.svg",
       "alt": "西望原有藝術字形圖版",
-      "caption": "西望 · 既有 P2 原版圖稿"
+      "caption": "西望藝術字形圖版"
     },
     {
       "type": "scripture",

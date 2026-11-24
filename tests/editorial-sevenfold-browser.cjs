@@ -40,7 +40,51 @@ const viewports=[{name:'desktop',width:1440,height:900},{name:'tablet',width:768
        fontEn:getComputedStyle(document.querySelector('.ws-gram-cover__title-en')).fontFamily,
        assetCount:img.length,
        masthead:!!document.querySelector('.ws-grammar__masthead img'),
-       navAvailable:!!document.querySelector('.ws-grammar__directory summary')
+       artDirection:(()=>{
+         const chinese=document.querySelector('.ws-gram-cover__title-zh');
+         const english=document.querySelector('.ws-gram-cover__title-en');
+         const eyebrow=cover.querySelector('.ws-grammar__eyebrow');
+         const size=x=>parseFloat(getComputedStyle(x).fontSize);
+         const toRgb=(s)=>{
+           if(s.startsWith('#')){
+             let h=s.slice(1);
+             if(h.length===3)h=[...h].map(x=>x+x).join('');
+             return [0,2,4].map(i=>parseInt(h.slice(i,i+2),16)/255);
+           }
+           let m=s.match(/^rgba?\(([^)]+)\)$/);
+           if(m)return m[1].split(/[\s,\/]+/).slice(0,3).map(Number).map(n=>n/255);
+           m=s.match(/^color\(srgb\s+([^)]*)\)$/);
+           if(m)return m[1].split(/[\s\/]+/).slice(0,3).map(Number);
+           throw new Error('Unsupported computed CSS color: '+s);
+         };
+         const lum=a=>a.map(x=>x<=.04045?x/12.92:((x+.055)/1.055)**2.4).reduce((t,x,i)=>t+x*[.2126,.7152,.0722][i],0);
+         const osColor=v=>getComputedStyle(article).getPropertyValue(v).trim();
+         const fg=lum(toRgb(getComputedStyle(eyebrow).color));
+         const bg=lum(toRgb(getComputedStyle(article).getPropertyValue(cover.dataset.mode==='cinematic'?'--ws-ink':'--ws-paper').trim()));
+         const contrast=(Math.max(fg,bg)+.05)/(Math.min(fg,bg)+.05);
+         return {
+          zhSize:chinese?size(chinese):null,
+          enSize:size(english),
+          ratio:chinese?size(chinese)/size(english):null,
+          zhFamily:chinese?getComputedStyle(chinese).fontFamily:null,
+          zhWeight:chinese?parseInt(getComputedStyle(chinese).fontWeight):null,
+          enFamily:getComputedStyle(english).fontFamily,
+          scToken:getComputedStyle(english).getPropertyValue('--ws-type-display-en-sc').trim(),
+          zhToken:getComputedStyle(chinese||english).getPropertyValue('--ws-type-display-zh').trim(),
+          designableHead:english.closest('[data-ws-designable]')?.tagName||null,
+          enWeight:getComputedStyle(english).fontWeight,
+          bodyScope:document.body.getAttribute('data-ws-scope'),
+          accent:osColor('--g-accent'),
+          ink:osColor('--ws-ink'),paper:osColor('--ws-paper'),
+          eyebrowInk:getComputedStyle(eyebrow).color,
+          eyebrowContrast:contrast,
+          numeralSemantics:getComputedStyle(document.querySelector('.ws-grammar__folio-no')).fontFamily
+         };
+       })(),
+       navAvailable:!!document.querySelector('.ws-grammar__directory summary'),
+       legacyShellHidden:[...document.querySelectorAll('body>.sites-layer-header,body>.sites-layer-footer')]
+         .every(x=>getComputedStyle(x).display==='none'),
+       singleMagazineHeader:document.querySelectorAll('.ws-grammar__topline').length===1
       };
     });
     assert.equal(computed.realm,realm);
@@ -49,7 +93,21 @@ const viewports=[{name:'desktop',width:1440,height:900},{name:'tablet',width:768
     assert(computed.width<=viewport.width+3,realm+' page horizontally overflows at '+viewport.width+': '+JSON.stringify(computed));
     assert(computed.titleWithin&&computed.titleClipped,realm+' cover title clips at '+viewport.width+': '+JSON.stringify(computed));
     assert(computed.fontEn.includes('Bodoni'),realm+' English OS font not present');
+    const a=computed.artDirection;
+    assert(a.enFamily.includes('Bodoni Moda SC')&&a.numeralSemantics.includes('Bodoni Moda SC'),
+       realm+' is using fake Small Caps rather than OS Bodoni Moda SC '+JSON.stringify(a));
+    if(realm!=='church'){
+      assert(a.zhFamily.includes('Chiron')&&a.zhWeight>=600,
+        realm+' Chinese editorial display violates Chiron authority '+JSON.stringify(a));
+      assert(a.ratio>=1.65,
+        realm+' English is too large beside Chinese (must be <=60% at this editorial tier) '+JSON.stringify(a));
+    }
+    assert(a.eyebrowContrast>=4.5,
+      realm+' tiny editorial metadata fails 4.5:1 readability '+JSON.stringify(a));
+
     assert(computed.masthead&&computed.navAvailable);
+    assert(computed.legacyShellHidden&&computed.singleMagazineHeader,
+      realm+' appears with duplicate canonical section masthead/footer '+JSON.stringify(computed));
     if(realm!=='church')assert(computed.assetCount>=1,realm+' actual cover image absent');
     if(realm==='church'){
       const iframe=page.locator('.ws-gram-cover__identity-square iframe');
@@ -103,8 +161,29 @@ const viewports=[{name:'desktop',width:1440,height:900},{name:'tablet',width:768
         const img=node.locator('img');
         await img.scrollIntoViewIfNeeded();
         await img.evaluate(async x=>{x.loading='eager';if(x.decode)await x.decode()});
-        const m=await img.evaluate(x=>({loaded:x.naturalWidth>0,w:x.getBoundingClientRect().width,h:x.getBoundingClientRect().height}));
-        assert(m.loaded&&m.w>75&&m.h>75,'Editorial asset invisible even though URL exists '+JSON.stringify(m));
+        const m=await img.evaluate(x=>({
+          loaded:x.naturalWidth>0,w:x.getBoundingClientRect().width,h:x.getBoundingClientRect().height,
+          visible:getComputedStyle(x).visibility,opacity:getComputedStyle(x).opacity,
+          display:getComputedStyle(x).display,
+          source:x.currentSrc
+        }));
+        assert(m.loaded&&m.w>75&&m.h>75&&m.visible==='visible'&&m.display!=='none'&&Number(m.opacity)>.3,
+          'Editorial artwork source/geometry/styling invisible '+JSON.stringify(m));
+        if(viewport.name==='desktop'){
+          const imageProof=await img.screenshot({
+            path:'artifacts/sevenfold-editorial/'+realm+'-'+block.id+'-artwork.png',
+            animations:'disabled',timeout:90000
+          });
+          assert(imageProof.byteLength>14000,
+            realm+' actual artwork screenshot is nearly blank despite successful download '+JSON.stringify({bytes:imageProof.byteLength,...m}));
+          console.log('EDITORIAL_ARTWORK_PIXELS',realm,block.id,imageProof.byteLength);
+          const sectionProof=await node.screenshot({
+            path:'artifacts/sevenfold-editorial/'+realm+'-'+block.id+'-section.png',
+            animations:'disabled',timeout:90000
+          });
+          assert(sectionProof.byteLength>15000,'On-screen art section is blank '+realm+'/'+block.id);
+
+        }
       }
     }
     if(viewport.name==='desktop'||viewport.name==='phone'){
