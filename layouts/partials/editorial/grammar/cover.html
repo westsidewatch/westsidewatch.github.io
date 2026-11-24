@@ -1,37 +1,30 @@
-{{/* Supported cover modes: identity, poster, atlas, portrait, ledger, cinematic, quiet.
-   Different composition, same typography, colors, measure and editorial ownership. */}}
+{{/* R3: the opening is a publication spread, not an application hero.
+     Preserve the finite content grammar and original scripture printing plate. */}}
 {{ $hero := .cover }}
-<section class="ws-gram-cover" data-mode="{{ $hero.mode }}" aria-label="本篇導讀">
-  <div class="ws-gram-cover__text">
-    <p class="ws-grammar__eyebrow" lang="en">{{ $hero.eyebrow }}</p>
-    <h1 id="ws-grammar-title" class="ws-gram-cover__title" data-ws-designable data-ws-type-role="editorial-display">
-      {{ if eq $hero.mode "identity" }}
-        <span class="ws-gram-cover__official-identity" role="img" aria-label="神召會活水堂西區教會"></span>
-        <span class="ws-gram-cover__title-en ws-gram-cover__title-en--official" lang="en">{{ $hero.titleEn }}</span>
-      {{ else }}
-        <span class="ws-gram-cover__title-zh">{{ $hero.titleZh }}</span>
-        <span class="ws-gram-cover__title-en" lang="en">{{ $hero.titleEn }}</span>
-      {{ end }}
-    </h1>
-    <p class="ws-gram-cover__deck">{{ $hero.deck }}</p>
-    <div class="ws-gram-cover__meta">
-      <span lang="en">{{ $hero.issue }}</span>
-      <a href="#ws-grammar-content">繼續閱讀 <span aria-hidden="true">↓</span></a>
+<section class="ws-gram-cover" data-mode="{{ $hero.mode }}" aria-label="{{ $hero.titleZh }}">
+  <p class="ws-grammar__eyebrow" lang="en" data-ws-designable>{{ $hero.eyebrow }}</p>
+  <h1 id="ws-grammar-title" class="ws-gram-cover__title" data-ws-designable data-ws-type-role="editorial-display">
+    {{ if eq $hero.mode "identity" }}
+      <span class="ws-gram-cover__official-identity"><img src="{{ $hero.art.src }}" alt="{{ $hero.titleZh }}" decoding="async"></span>
+    {{ else }}
+      <span class="ws-gram-cover__title-zh">{{ $hero.titleZh }}</span>
+    {{ end }}
+    <span class="ws-gram-cover__title-en" lang="en">{{ $hero.titleEn }}</span>
+  </h1>
+  {{ if eq $hero.mode "identity" }}
+    <div class="ws-gram-cover__identity-field">
+      <div class="ws-gram-cover__identity-square">
+        <iframe src="/experiments/scripture-studio-motherform-live.html?embed=1&amp;section=01&amp;layout=sevenfold-vertical" title="{{ .section.refZh }}" loading="eager" scrolling="no" referrerpolicy="same-origin"></iframe>
+      </div>
+      <cite>{{ .section.refZh }}</cite>
     </div>
-  </div>
-  {{ if ne $hero.mode "identity" }}
+    <figure class="r3-architecture"><a href="/p2/church-tour.html?entry=p2"><img src="/p2-maquette/maquette-fallback.webp" alt="活水堂西區教會建築模型" decoding="async"></a><figcaption><a href="/p2/church-tour.html?entry=p2">走進教會 ↗</a></figcaption></figure>
+  {{ else }}
     <figure class="ws-gram-cover__visual">
       <img src="{{ $hero.art.src }}" alt="{{ $hero.art.alt }}" loading="eager" decoding="async">
-      <figcaption><span lang="en">{{ $hero.issue }}</span><span>圖版 / {{ .section.nameZh }}</span></figcaption>
+      {{ with $hero.art.caption }}<figcaption>{{ . }}</figcaption>{{ end }}
     </figure>
-  {{ else }}
-    <div class="ws-gram-cover__identity-field" aria-label="教會名稱旁《約翰福音》7:38 中文豎排經文方塊">
-      <div class="ws-gram-cover__identity-square">
-        <iframe src="/experiments/scripture-studio-motherform-live.html?embed=1&amp;section=01&amp;layout=sevenfold-vertical"
-          title="約翰福音 7:38 · 既有 V60 中文豎排鉛字母版"
-          loading="eager" scrolling="no" referrerpolicy="same-origin"></iframe>
-      </div>
-      <span lang="en">John 7:38 · KJV</span>
-    </div>
   {{ end }}
+  <p class="ws-gram-cover__deck">{{ $hero.deck }}</p>
+  <div class="ws-gram-cover__meta"><cite>{{ .section.refZh }}</cite><a href="#ws-grammar-content">閱讀 ↓</a></div>
 </section>
