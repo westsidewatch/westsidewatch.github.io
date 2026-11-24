@@ -18,11 +18,15 @@ const approx=(a,b,tol=.035)=>Math.abs(a-b)<tol;
    const page=await browser.newPage({viewport:{width,height},reducedMotion:'reduce'});
    const errors=[];page.on('pageerror',e=>errors.push(e.message));
    try{
-    const response=await page.goto('http://127.0.0.1:4173/experiments/p2-0105-dawn-preview.html?d=26.2&merci-0405=R87',
+    const response=await page.goto('http://127.0.0.1:4173/experiments/p2-0105-dawn-preview.html?d=26.2&merci-0405=R88',
      {waitUntil:'domcontentloaded',timeout:45000});
     assert.equal(response?.status(),200,device+': native original P2 scene missing');
     await page.waitForFunction(()=>document.querySelector('#p205-stage')?.dataset.p205Scene&&
       document.querySelector('#p205-prior')?.contentWindow,null,{timeout:25000});
+    // An empty olive field was precisely the R87 visual defect; the source
+    // historical impression must be actually loaded, not merely scheduled.
+    await page.waitForFunction(()=>document.querySelector('#p205-engraving-bridge')?.dataset.historyReady==='true',
+      null,{timeout:18000});
     async function sample(d,filename){
      await page.evaluate(d=>{
       const t=document.querySelector('#p205-track');
@@ -84,7 +88,8 @@ const approx=(a,b,tol=.035)=>Math.abs(a-b)<tol;
       device+': 04 must stay full bleed while its ink lifts, never shrink to a boxed page '+JSON.stringify(retreat));
     assert(engrave.retired&&engrave.priorVisibility==='hidden'&&
       engrave.bridgeVisible&&engrave.realmVisibility==='hidden'&&engrave.m===0&&
-      engrave.ink>.55&&engrave.historyOpacity>.55,
+      engrave.ink>.55&&engrave.historyOpacity>.55&&engrave.historyImageReady&&
+      engrave.historyReady==='true'&&!!engrave.historySrc,
       device+': blank olive bridge returned instead of coherent historical underprint '+JSON.stringify(engrave));
     assert(/04-olive-mount-terrain-contours-v1\.svg/.test(engrave.terrainMask)&&
       /04-olive-field-v79-1\.svg/.test(engrave.botanicalMask),
