@@ -8,8 +8,8 @@ const {chromium}=require('playwright');
 const home=fs.readFileSync('layouts/partials/watch-home-editorial.html','utf8');
 const bridge=fs.readFileSync('static/js/p2-magazine-live-bridge.js','utf8');
 const church=fs.readFileSync('static/p2/living-water.html','utf8');
-assert.match(home,/p2-0104-olive-continuation\.html\?embed=1/,'homepage must mount the 04 wrapper around the protected 01–03 source');
-assert.match(home,/height:2730svh!important/,'P2 host must append 04 after the untouched Emmaus passage');
+assert.match(home,/p2-0105-dawn-preview\.html\?embed=1/,'homepage must mount the 05 wrapper around the protected 01–04 source');
+assert.match(home,/height:3330svh!important/,'P2 host must append 05 after the untouched 01–04 passage');
 assert.match(home,/magazineEnd=6\.5/,'Magazine movement must span separate pinned viewports');
 assert.match(church,/p2-magazine-live-bridge\.js/,'church P2 must append the new Magazine bridge');
 assert.match(bridge,/handoffVh=3\.36/,'the Magazine must only start AFTER Red Sea at 2.37 and original GLB completion at 3.27');
@@ -131,9 +131,10 @@ const data=()=>{
     innerHeight*4.5,behavior:'instant'});
   });
   await homePage.waitForFunction(()=>{
-   const release=document.querySelector('.ws-p2-sevenfold-host>iframe')?.contentDocument;
+   const dawn=document.querySelector('.ws-p2-sevenfold-host>iframe')?.contentDocument;
+   const release=dawn?.getElementById('p205-prior')?.contentDocument;
    const source=release?.getElementById('p2-0103-original')?.contentDocument||release;
-   const root=release?.querySelector('#proof-original')?.contentDocument?.querySelector('.showcase');
+   const root=source?.querySelector('#proof-original')?.contentDocument?.querySelector('.showcase');
    return !!source?.getElementById('emmaus')&&
     !!root?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)')?.contentDocument?.querySelector('#dual-stage');
   },null,{timeout:30000});
@@ -153,7 +154,8 @@ const data=()=>{
     window.scrollTo({top:window.scrollY+host.getBoundingClientRect().top+innerHeight*d,behavior:'instant'});
    },distance);
    await homePage.waitForFunction(({scene,wantVh})=>{
-    const release=document.querySelector('.ws-p2-sevenfold-host>iframe')?.contentDocument;
+    const dawn=document.querySelector('.ws-p2-sevenfold-host>iframe')?.contentDocument;
+   const release=dawn?.getElementById('p205-prior')?.contentDocument;
    const source=release?.getElementById('p2-0103-original')?.contentDocument||release;
     const root=source?.getElementById('proof-original')?.contentDocument?.querySelector('.showcase');
     return source?.body.dataset.proofScene===scene&&root&&
@@ -161,7 +163,8 @@ const data=()=>{
    },{scene:expectedScene,wantVh},{timeout:24000});
    await homePage.waitForTimeout(190);
    const state=await homePage.evaluate(()=>{
-    const release=document.querySelector('.ws-p2-sevenfold-host>iframe')?.contentDocument;
+    const dawn=document.querySelector('.ws-p2-sevenfold-host>iframe')?.contentDocument;
+   const release=dawn?.getElementById('p205-prior')?.contentDocument;
    const source=release?.getElementById('p2-0103-original')?.contentDocument||release;
     const root=source?.getElementById('proof-original')?.contentDocument?.querySelector('.showcase');
     const em=source?.getElementById('emmaus');
@@ -169,7 +172,7 @@ const data=()=>{
       vh:+root?.dataset.p2Progress,magazine:+root?.dataset.p2MagazineProgress,
       originalDoors:root?.querySelectorAll('.water-door').length||0,
       schedule:!!root?.querySelector('.church-schedule-source .sunday-schedule'),
-      emVisible:em?release.defaultView.getComputedStyle(em).visibility:'missing',
+      emVisible:em?source.defaultView.getComputedStyle(em).visibility:'missing',
       oneBooks:source?.querySelectorAll('#emmaus-rail .emmaus__number').length||0,
       scriptureChars:source?.querySelector('#em-scripture-verses')?.textContent?.trim().length||0,
       hasOlive:!!source?.querySelector('#olive-proof'),
