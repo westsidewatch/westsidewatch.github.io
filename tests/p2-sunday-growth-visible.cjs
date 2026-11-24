@@ -5,7 +5,7 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const base=process.env.P2_TEST_ORIGIN||'http://127.0.0.1:4173';
 (async()=>{
- const browser=await chromium.launch({headless:true,args:['--no-sandbox','--disable-webgl']});
+ const browser=await chromium.launch({headless:true,args:['--no-sandbox','--enable-webgl','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
  try{
   fs.mkdirSync('artifacts/p2-sunday-growth',{recursive:true});
   for(const screen of [{name:'desktop',width:1440,height:900},{name:'reference-screenshot',width:1158,height:850},{name:'phone',width:390,height:844}]){
@@ -21,6 +21,9 @@ const base=process.env.P2_TEST_ORIGIN||'http://127.0.0.1:4173';
      scripts:[...document.scripts].map(s=>s.src).filter(Boolean).slice(-9),
      frame:document.querySelector('.church-editorial__maquette')?.outerHTML.slice(0,240)
    }))),JSON.stringify(pageErrors));
+   // Opt-in churchPreview=1 deliberately starts at pose 2.37 (Red Sea open),
+   // when the original white GLB MUST still be hidden. Move to mid-build.
+   await page.evaluate(()=>{const d=(2.885-2.37)/.58*innerHeight;window.scrollTo({top:d,behavior:'instant'});});
    await page.waitForFunction(()=>document.querySelector('.showcase')?.classList.contains('p2-church-model-visible'),null,{timeout:12000});
    await page.waitForFunction(()=>!!document.querySelector('.church-editorial__maquette')?.getAttribute('src'),null,{timeout:12000});
    const result=await page.evaluate(()=>{
@@ -48,6 +51,8 @@ const base=process.env.P2_TEST_ORIGIN||'http://127.0.0.1:4173';
       scheduleDisplay:getComputedStyle(programme).display};
    });
    console.log('P2_FULL_LAYOUT_METRICS',screen.name,JSON.stringify(result));
+   // Preserve actual browser proof even if a historical geometry assertion fails.
+   await page.screenshot({path:'artifacts/p2-sunday-growth/'+screen.name+'.png',animations:'disabled'});
    assert.equal(result.modelActive,true,screen.name+' not displaying the Church visual');
    assert.equal(result.programme,true,screen.name+' missing Sunday programme');
    assert.equal(result.leftContainsModel,true,screen.name+' model absent from LEFT water-engraving pane');

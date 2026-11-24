@@ -1,0 +1,4 @@
+/* Shared Sunday status, scoped to church surfaces; OS tokens remain authoritative. */
+.ws-sunday-source-status{font:400 clamp(11px,.8vw,13px)/1.55 var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);letter-spacing:.025em;color:var(--ws-water,#557b8c);margin:0 0 10px;text-wrap:pretty;word-break:normal}
+.church-schedule-source .ws-sunday-source-status{padding:3px 0 5px;border-bottom:1px solid color-mix(in srgb,var(--ws-water,#557b8c) 25%,transparent)}
+.ws-ministry-story__sunday .ws-sunday-source-status{font-size:11px;line-height:1.4;margin:0 0 5px}

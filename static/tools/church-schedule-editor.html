@@ -1,0 +1,38 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>教會主日程序編輯 · 活水西區</title><link rel="stylesheet" href="/css/westside-design-os.css">
+<style>
+body{margin:0;background:#f6f5ef;color:#263d41;font:400 15px/1.7 var(--ws-type-display-zh,sans-serif)}
+*{box-sizing:border-box}header,main,footer{max-width:1040px;margin:auto;padding:25px 24px}
+header{display:flex;justify-content:space-between;gap:20px;border-bottom:1px solid #b6c8c4}
+header a{color:#45656b}.eyebrow{font:400 13px var(--ws-type-display-en-sc,serif);color:#ad8b43;letter-spacing:.12em}
+h1{font-size:clamp(27px,4vw,45px);font-weight:200}h2{font-size:23px;font-weight:400;margin:46px 0 18px;border-bottom:1px solid #b7c9c6;padding-bottom:12px}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:18px}.fields label,.schedule-row label{display:block;font-size:14px}
+input,select,textarea{display:block;width:100%;font:inherit;color:inherit;border:1px solid #aebfba;background:white;border-radius:0;padding:9px 12px;margin-top:6px}
+.schedule-row{display:grid;grid-template-columns:145px 1fr 1.1fr;gap:15px;padding:15px 0;border-bottom:1px solid #d2dcd9}
+button{border:1px solid #9b803f;background:#e9dfc9;color:inherit;padding:12px 18px;font:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid #ab8b43;outline-offset:2px}
+.actions{display:flex;gap:14px;flex-wrap:wrap;margin:35px 0 20px}.note{font-size:13px;color:#54737a;line-height:1.85}
+#preview{background:#eaf0e9;padding:15px 20px;margin:18px 0;white-space:pre-wrap;font-size:13px}
+@media(max-width:690px){.fields,.schedule-row{grid-template-columns:1fr}.schedule-row{gap:8px}header,main,footer{padding:16px}}
+</style><script defer src="/js/church-schedule-editor.js?v=20261123"></script></head><body data-ws-scope="tool">
+<header><a href="/church/visit/#sunday">教會頁</a><span>主日程序資料編輯</span></header>
+<main><p class="eyebrow">LIVING WATER WEST · SUNDAY EDITOR</p><h1>編輯主日崇拜日程</h1>
+<p>只需修改這一份主日資料，P2、3D 教會第二層及靜態教會頁便會同步顯示。此編輯器不保存資料到伺服器，也不需要公開帳號密碼。</p>
+<form id="sunday-editor">
+<h2>本週資料</h2><div class="fields">
+<label>崇拜日期<input required type="date" name="date"></label><label>資料狀態<select name="status"><option value="archive">歷史存檔</option><option value="current">現行主日公告</option></select></label>
+<label>崇拜主題<input name="theme"></label><label>崇拜時間<input name="serviceTime"></label>
+<label>聚會地點<input name="location"></label><label>證道主題<input name="sermonTitle"></label>
+<label>主任牧師<input name="pastor"></label><label>司會主席<input name="chair"></label>
+<label>敬拜主領<input name="worshipLeader"></label><label>今日證道<input name="speaker"></label>
+</div><h2>七段崇拜程序</h2><div id="sunday-rows"></div>
+<h2>主題經文</h2><div id="sunday-scriptures"></div>
+<h2>下週事奉（可空白）</h2><div class="fields">
+<label>日期<input type="date" name="nextDate"></label><label>證道<input name="nextSpeaker"></label>
+<label>主席<input name="nextChair"></label><label>敬拜<input name="nextWorship"></label>
+</div><div class="actions"><button type="button" id="download-sunday">下載本週 JSON</button><button type="button" id="copy-sunday">複製 JSON</button></div>
+<div id="preview" role="status" aria-live="polite">正在讀取資料…</div>
+</form><p class="note"><strong>發布方法：</strong>檢查七段日程後下載 JSON，將它上傳並取代 GitHub 原倉庫 <code>static/data/church/current-sunday.json</code>，提交後等待正常發布。不要把這份檔案另放到第二層；第二層會自動同步。</p>
+<a href="https://github.com/westsidewatch/westsidewatch.github.io/edit/main/static/data/church/current-sunday.json" target="_blank" rel="noopener noreferrer">在 GitHub 編輯唯一的資料檔</a>
+</main><footer><small>歷史日程必須標示為「歷史存檔」。只有經核對的主日資料才能設為「現行主日公告」。</small></footer></body></html>

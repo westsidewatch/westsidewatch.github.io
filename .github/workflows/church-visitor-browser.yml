@@ -1,0 +1,39 @@
+name: Church static visitor browser QA
+on:
+  pull_request:
+    paths:
+      - 'static/church/**'
+      - 'static/js/church-*'
+      - 'static/css/church-*'
+      - 'static/data/church/**'
+      - 'static/tools/church-schedule-editor.html'
+      - 'tests/church-visitor-browser.cjs'
+      - '.github/workflows/church-visitor-browser.yml'
+jobs:
+  visitor-browser:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: '0.167.0'
+          extended: true
+      - name: Build real static site
+        run: hugo --gc --minify --baseURL 'http://127.0.0.1:4174/'
+      - name: Install Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright
+          npx playwright install chromium
+      - name: Test church overview, QR, editor and secure form fallback
+        run: |
+          python3 -m http.server 4174 --directory public > /tmp/church-visitor-http.log 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          node tests/church-visitor-browser.cjs
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: church-visitor-browser
+          path: artifacts/church-visitor/
+          retention-days: 14
+          if-no-files-found: ignore

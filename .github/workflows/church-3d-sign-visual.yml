@@ -1,0 +1,39 @@
+name: Church real 3D south-sign browser proof
+on:
+  pull_request:
+    paths:
+      - 'static/p2/church-tour.js'
+      - 'static/js/p2-church-ministry.js'
+      - 'static/css/p2-church-ministry.css'
+      - 'tests/church-3d-sign-visual.cjs'
+      - '.github/workflows/church-3d-sign-visual.yml'
+  workflow_dispatch:
+jobs:
+  real-church:
+    runs-on: ubuntu-latest
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: '0.167.0'
+          extended: true
+      - name: Build actual church renderer and GLB parts
+        run: hugo --gc --minify --baseURL 'http://127.0.0.1:4176/'
+      - name: Install software WebGL Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright
+          npx playwright install chromium
+      - name: Render original 3D South Wall and final church cross on desktop/phone
+        run: |
+          python3 -m http.server 4176 --directory public >/tmp/church-sign-http.log 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          node tests/church-3d-sign-visual.cjs
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: church-3d-sign-visual
+          path: artifacts/church-sign/
+          retention-days: 14
+          if-no-files-found: ignore

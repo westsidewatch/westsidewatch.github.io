@@ -12,8 +12,8 @@ assert.match(home,/p2-0104-olive-continuation\.html\?embed=1/,'homepage must mou
 assert.match(home,/height:2730svh!important/,'P2 host must append 04 after the untouched Emmaus passage');
 assert.match(home,/magazineEnd=6\.5/,'Magazine movement must span separate pinned viewports');
 assert.match(church,/p2-magazine-live-bridge\.js/,'church P2 must append the new Magazine bridge');
-assert.match(bridge,/handoffVh=2\.37/,'the new magazine cannot replace the prior Church scene');
-assert.match(bridge,/embedded\?4:5\.2/,'standalone P2 must also have ample room for Magazine');
+assert.match(bridge,/handoffVh=3\.36/,'the Magazine must only start AFTER Red Sea at 2.37 and original GLB completion at 3.27');
+assert.match(bridge,/finalVh=5\.18/,'standalone and embedded Magazine must finish after the protected building hold');
 assert.match(bridge,/MutationObserver/,'the bridge follows the existing P2 scroll clock');
 assert.match(bridge,/magazine\.replaceChildren\(film,frame\)/,'replace only the retired Magazine placeholder with film and folio');
 assert.match(bridge,/watch-cover-playback/,'the reused homepage film must pause offstage');

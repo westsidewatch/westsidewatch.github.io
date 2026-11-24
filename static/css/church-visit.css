@@ -1,0 +1,583 @@
+/* Living Water West / static visitor edition — native Westside Design OS.
+   Only this folio is changed. No global colors/type, no parallel design system. */
+body.church-visit{
+ /* Local scope inherits the only Westside OS tokens: no second palette. */
+ --ws-branch:var(--ws-water);
+ --ws-surface:var(--ws-paper);
+ --ws-text:var(--ws-ink);
+ /* OS semantic roles must be resolved inside the church scope;
+    inherited root --ws-deep was previously evaluated with journal gold. */
+ --ws-deep:color-mix(in oklab,var(--ws-water) 68%,var(--ws-ink));
+ --ws-interaction:color-mix(in oklab,var(--ws-water) 86%,var(--ws-ink));
+ --ws-raised:color-mix(in oklab,var(--ws-water) 4%,var(--ws-surface));
+ margin:0;min-width:0;overflow-x:clip;background:var(--ws-surface);color:var(--ws-text);
+ font-family:var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif);font-synthesis:none;
+}
+.church-visit *,.church-visit *:before,.church-visit *:after{box-sizing:border-box}
+.church-visit a{color:inherit;text-decoration-thickness:1px;text-underline-offset:.28em}
+.church-visit a:focus-visible{outline:2px solid var(--ws-first-light);outline-offset:5px}
+.church-skip{position:absolute;z-index:100;top:-200px;left:12px;background:var(--ws-surface);padding:12px}
+.church-skip:focus{top:12px}
+.church-visit__top{
+ width:100%;min-height:70px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
+ padding:16px clamp(18px,3.5vw,68px);gap:20px;
+ border-bottom:1px solid var(--ws-line);background:var(--ws-surface);
+}
+.church-visit__back{display:inline-flex;align-items:center;gap:12px;justify-self:start;text-decoration:none!important;
+ font:var(--ws-weight-standard) var(--ws-type-scale-reading)/1.25 var(--ws-type-display-en-sc,"Bodoni Moda SC",serif);
+ white-space:nowrap}
+.church-visit__back-mark{display:grid;place-items:center;width:27px;height:27px;border:1px solid var(--ws-text);
+ font:var(--ws-weight-standard) var(--ws-type-scale-reading)/.9 var(--ws-type-display-en,"Bodoni Moda",serif);color:var(--ws-first-light)}
+.church-visit__top nav{display:flex;align-items:center;gap:clamp(14px,2vw,32px);white-space:nowrap}
+.church-visit__top nav a,.church-visit__tour{font-size:var(--ws-type-scale-ui);font-weight:var(--ws-weight-air);text-decoration:none}
+.church-visit__top nav a:hover,.church-visit__tour:hover{color:var(--ws-first-light)}
+.church-visit__tour{justify-self:end;border-bottom:1px solid var(--ws-first-light);padding:4px 0}
+.church-visit__hero{
+ position:relative;isolation:isolate;max-width:none;margin:0;background:var(--ws-surface);overflow:hidden;
+ border-bottom:1px solid var(--ws-line);
+}
+.church-visit__hero:after{content:"";position:absolute;z-index:-1;inset:0;pointer-events:none;opacity:.15;
+ background:repeating-radial-gradient(ellipse 145% 68% at 12% 88%,transparent 0 27px,
+ color-mix(in srgb,var(--ws-water) 45%,transparent) 27.5px 28px,transparent 28.5px 50px)}
+.church-visit__hero-folio,.church-visit__hero-bottom{
+ max-width:1600px;margin:0 auto;padding:22px clamp(18px,3.5vw,68px);
+ display:flex;align-items:center;justify-content:space-between;gap:25px;
+ color:color-mix(in srgb,var(--ws-text) 68%,var(--ws-water));
+ font:var(--ws-weight-standard) var(--ws-type-scale-micro)/1.3 var(--ws-type-display-en-sc,"Bodoni Moda SC",serif);letter-spacing:.075em;
+}
+.church-visit__hero-bottom{border-top:1px solid var(--ws-line);margin-top:0}
+.church-visit__hero-bottom a{font:var(--ws-weight-air) var(--ws-type-scale-meta) var(--ws-type-display-zh,sans-serif);text-decoration:none}
+.church-visit__hero-grid{
+ width:100%;max-width:1600px;margin:0 auto;
+ display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,.72fr);
+ min-height:660px;padding:0 clamp(18px,3.5vw,68px) clamp(28px,5vw,80px);
+ gap:clamp(20px,2.6vw,54px);align-items:stretch;
+}
+.church-visit__hero-copy{min-width:0;display:flex;flex-direction:column;justify-content:center;
+ padding:clamp(15px,5vw,65px) 0 10px}
+.church-visit__seal{margin:0 0 clamp(20px,4vh,48px);color:var(--ws-first-light);
+ font:var(--ws-weight-standard) var(--ws-type-scale-reading)/1.4 var(--ws-type-display-en-sc,serif);letter-spacing:.12em}
+.church-visit__identity-lockup{display:grid;grid-template-columns:minmax(0,1.03fr) minmax(0,.97fr);
+ align-items:end;column-gap:clamp(10px,2.5vw,43px);width:100%;max-width:950px}
+.church-visit__name{display:flex;flex-direction:column;min-width:0;margin:0!important;
+ font-family:var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif)!important;
+ font-weight:var(--ws-weight-section,900)!important;font-size:var(--ws-type-scale-display-xl)!important;
+ line-height:1.05!important;letter-spacing:-.035em!important;white-space:nowrap;text-align:left;
+ font-synthesis:none}
+.church-visit__name span{display:block}
+.church-visit__english{
+ display:flex;flex-direction:column;justify-content:flex-end;min-width:0;margin:0 0 .15em;
+ border-left:1px solid var(--ws-first-light);padding-left:clamp(11px,1.7vw,27px);
+ font-family:var(--ws-type-display-en-sc,"Bodoni Moda SC","Bodoni Moda",serif)!important;
+ font-size:var(--ws-type-scale-title-lg);font-weight:var(--ws-weight-standard)!important;
+ line-height:1.04;letter-spacing:-.042em;font-synthesis:none;
+}
+.church-visit__english span{display:block;white-space:nowrap}
+.church-visit__english-kicker{font:var(--ws-weight-standard) var(--ws-type-scale-reading)/1.45 var(--ws-type-display-en-sc,serif);
+ letter-spacing:.08em;color:var(--ws-first-light);margin-bottom:15px}
+.church-visit__formal{max-width:100%;margin:clamp(28px,4vh,48px) 0 0;
+ font-size:var(--ws-type-scale-ui);line-height:1.7;font-weight:var(--ws-weight-air);letter-spacing:.07em}
+.church-visit__formal span[lang=en]{font-family:var(--ws-type-display-en-sc,serif);font-weight:var(--ws-weight-standard);letter-spacing:.03em}
+.church-visit__formal-divider{padding:0 9px;color:var(--ws-first-light)}
+.church-visit__intro{font:var(--ws-weight-air) var(--ws-type-scale-title-md)/1.8 var(--ws-type-display-zh,sans-serif);
+ margin:clamp(25px,4vh,43px) 0 0;max-width:36em;letter-spacing:.02em;word-break:keep-all}
+.church-visit__intro span{white-space:nowrap}
+.church-visit__hero-links{display:flex;gap:clamp(18px,3vw,48px);margin-top:clamp(28px,5vh,50px);flex-wrap:wrap}
+.church-visit__hero-links a{display:flex;justify-content:space-between;align-items:center;gap:12px;
+ min-width:130px;padding:9px 0;border-bottom:1px solid var(--ws-first-light);text-decoration:none;
+ font-size:var(--ws-type-scale-reading);font-weight:var(--ws-weight-standard)}
+.church-visit__scripture-tile{position:relative;align-self:stretch;isolation:isolate;overflow:hidden;
+ background:var(--ws-deep);color:var(--ws-surface);display:flex;flex-direction:column;
+ justify-content:space-between;min-height:610px;padding:clamp(23px,3.3vw,65px) clamp(18px,2.6vw,48px)}
+.church-visit__scripture-tile:before{content:"";position:absolute;z-index:-1;inset:14px;
+ border:1px solid color-mix(in srgb,var(--ws-surface) 28%,transparent);pointer-events:none}
+.church-visit__tile-index{font:var(--ws-weight-standard) var(--ws-type-scale-meta)/1.35 var(--ws-type-display-en-sc,serif);
+ letter-spacing:.11em;color:var(--ws-morning-gold,var(--ws-morning-gold))}
+.church-visit__tile-chapter{display:block;margin:8px 0 -10px;
+ font:var(--ws-weight-standard) var(--ws-type-scale-display-xl)/.95 var(--ws-type-display-en,"Bodoni Moda",serif);
+ letter-spacing:-.09em;color:var(--ws-morning-gold,var(--ws-morning-gold))}
+.church-visit__tile-chapter span{font-size:.6em}
+.church-visit__scripture-tile blockquote{margin:clamp(15px,2vw,35px) 0 13px;
+ font:var(--ws-weight-standard) var(--ws-type-scale-title-sm)/1.86 var(--ws-type-display-zh,sans-serif);
+ word-break:keep-all;letter-spacing:.015em;max-width:26em}
+.church-visit__scripture-tile blockquote strong{display:block;font-weight:var(--ws-weight-anchor);font-family:inherit}
+.church-visit__scripture-tile p{margin:8px 0 15px;font:italic var(--ws-weight-standard) var(--ws-type-scale-reading)/1.75
+ var(--ws-type-display-en,"Bodoni Moda",serif);color:var(--ws-surface)}
+.church-visit__scripture-tile cite{font:var(--ws-weight-standard) var(--ws-type-scale-micro)/1.4 var(--ws-type-display-zh,sans-serif);
+ color:var(--ws-morning-gold,var(--ws-morning-gold));font-style:normal;white-space:normal}
+.church-visit__scripture-tile .ws-scripture-reference{color:inherit}
+.church-visit__water-engraving{display:block;position:absolute;bottom:0;left:-2%;width:104%;height:115px;
+ color:var(--ws-water);opacity:.43;z-index:-1;pointer-events:none}
+.church-visit__section{max-width:1600px;margin:auto;display:grid;
+ grid-template-columns:minmax(215px,26%) minmax(0,1fr);
+ gap:clamp(28px,4.5vw,75px);
+ padding:clamp(65px,8vw,134px) clamp(18px,3.5vw,68px);
+ border-bottom:1px solid var(--ws-line);scroll-margin-top:35px}
+.church-visit__section-head{min-width:0;grid-column:1}
+.church-visit__section-head>span{display:block;color:var(--ws-first-light);letter-spacing:.095em;
+ font:var(--ws-weight-standard) var(--ws-type-scale-ui)/1.5 var(--ws-type-display-en-sc,serif)}
+.church-visit__section-head h2{font:var(--ws-weight-section) var(--ws-type-scale-title-lg)/1.19
+ var(--ws-type-display-zh,"Chiron Hei HK WS",sans-serif)!important;
+ margin:18px 0 23px;letter-spacing:.015em;word-break:keep-all;font-synthesis:none}
+.church-visit__section-head>p{font-size:var(--ws-type-scale-reading);font-weight:var(--ws-weight-air);line-height:1.9;margin:0;word-break:keep-all}
+.church-visit__about-grid,#church-sunday-live,.church-visit__gatherings,.church-visit__ministries,
+.church-visit__intake-grid,.church-visit__gate,.church-visit__muted,.church-visit__contact-grid{
+ min-width:0;grid-column:2
+}
+.church-visit__about-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+ gap:clamp(22px,4vw,70px)}
+.church-visit__about-grid h3{font-size:var(--ws-type-scale-title-md);font-weight:var(--ws-weight-air);margin:0 0 21px;line-height:1.35}
+.church-visit__about-grid p{font-size:var(--ws-type-scale-reading);line-height:2;word-break:normal;max-width:38em;margin:0 0 20px}
+.church-visit__textlink{display:inline-block;margin-top:15px;padding-bottom:5px;border-bottom:1px solid var(--ws-first-light);
+ text-decoration:none;font-size:var(--ws-type-scale-ui);font-weight:var(--ws-weight-standard)}
+#church-sunday-live{max-width:none}
+#church-sunday-live h3{font:var(--ws-weight-section) var(--ws-type-scale-title-lg)/1.15 var(--ws-type-display-zh,sans-serif);margin:17px 0}
+.ws-sunday-source-status{font-size:var(--ws-type-scale-ui)!important;color:var(--ws-first-light)!important}
+.ws-church-lead{font-size:var(--ws-type-scale-reading);font-weight:var(--ws-weight-air);line-height:1.7}
+.ws-church-sunday-rows{display:block;margin:32px 0 0;border-top:1px solid var(--ws-line)}
+.ws-church-sunday-row{display:grid;grid-template-columns:clamp(95px,12vw,170px) 1fr;gap:clamp(15px,2vw,45px);
+ border-bottom:1px solid var(--ws-line);padding:clamp(12px,2vw,25px) 0}
+.ws-church-sunday-row time{font:var(--ws-weight-standard) var(--ws-type-scale-reading)/1.4 var(--ws-type-display-en,serif);
+ white-space:nowrap;color:var(--ws-first-light)}
+.ws-church-sunday-row strong{font:var(--ws-weight-standard) var(--ws-type-scale-title-sm)/1.45 var(--ws-type-display-zh,sans-serif)}
+.ws-church-sunday-row p{font-size:var(--ws-type-scale-reading);font-weight:var(--ws-weight-air);line-height:1.7;margin:7px 0 0}
+.ws-church-muted{font-size:var(--ws-type-scale-meta);font-weight:var(--ws-weight-air);color:var(--ws-text)}
+.ws-church-scriptures{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,2vw,36px);
+ padding-top:27px;margin-top:40px;border-top:2px solid var(--ws-first-light)}
+.ws-church-scriptures p{margin:0;font:var(--ws-weight-standard) var(--ws-type-scale-meta)/1.85 var(--ws-type-display-zh,sans-serif)}
+.ws-church-scriptures small{display:block;font:italic var(--ws-weight-standard) var(--ws-type-scale-meta)/1.5 var(--ws-type-display-en,serif);
+ color:var(--ws-first-light);margin-top:12px}
+.church-visit__gatherings,.church-visit__ministries,.church-visit__intake-grid{
+ display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:1px;
+ background:var(--ws-line);border:1px solid var(--ws-line)}
+.church-visit__gathering,.church-visit__ministry{min-width:0;padding:clamp(22px,2.4vw,42px);
+ background:var(--ws-surface);display:flex;flex-direction:column;align-items:flex-start}
+.church-visit__gathering{grid-column:span 3;min-height:215px}
+.church-visit__gathering:nth-child(1){grid-column:span 4;background:color-mix(in srgb,var(--ws-water) 12%,var(--ws-surface))}
+.church-visit__gathering:nth-child(2){grid-column:span 2}
+.church-visit__gathering span,.church-visit__ministry small{font:var(--ws-weight-standard) var(--ws-type-scale-meta)/1.35 var(--ws-type-display-en-sc,serif);
+ color:var(--ws-first-light);letter-spacing:.08em}
+.church-visit__gathering h3,.church-visit__ministry h3{
+ font:var(--ws-weight-section) var(--ws-type-scale-title-md)/1.24 var(--ws-type-display-zh,sans-serif)!important;
+ margin:25px 0 9px;word-break:keep-all}
+.church-visit__gathering p,.church-visit__ministry p{font:var(--ws-weight-air) var(--ws-type-scale-reading)/1.85
+ var(--ws-type-display-zh,sans-serif);margin:8px 0 14px;max-width:36em}
+.church-visit__gathering small{font-size:var(--ws-type-scale-meta);font-weight:var(--ws-weight-air);line-height:1.7;color:var(--ws-text)}
+.church-visit__ministry{grid-column:span 3;min-height:255px}
+.church-visit__ministry:nth-child(1){grid-column:span 4;background:var(--ws-deep);color:var(--ws-surface)}
+.church-visit__ministry:nth-child(1) :is(small,a){color:var(--ws-morning-gold,var(--ws-morning-gold))}
+.church-visit__ministry:nth-child(2){grid-column:span 2;background:color-mix(in srgb,var(--ws-water) 10%,var(--ws-surface))}
+.church-visit__ministry:nth-child(3),.church-visit__ministry:nth-child(4){grid-column:span 3}
+.church-visit__ministry:nth-child(5){grid-column:span 2}
+.church-visit__ministry:nth-child(6){grid-column:span 4}
+.church-visit__ministry:last-child{grid-column:1/-1;min-height:185px;
+ display:grid;grid-template-columns:1fr 2fr;gap:8px 24px;
+ background:color-mix(in srgb,var(--ws-first-light) 10%,var(--ws-surface))}
+.church-visit__ministry:last-child :is(small,h3){grid-column:1}
+.church-visit__ministry:last-child :is(p,a){grid-column:2}
+.church-visit__ministry a{display:inline-block;margin-top:auto;padding-bottom:4px;font-size:var(--ws-type-scale-meta);
+ border-bottom:1px solid var(--ws-first-light);text-decoration:none}
+.church-visit__prayer{background:color-mix(in srgb,var(--ws-water) 5%,var(--ws-surface))}
+.church-visit__intake-grid{grid-column:2}
+.church-visit__intake-grid article{grid-column:span 3;min-height:360px;
+ min-width:0;background:var(--ws-surface);padding:clamp(20px,2.3vw,38px);
+ display:grid;grid-template-rows:auto auto 1fr auto;grid-template-columns:1fr auto;gap:6px 18px;align-items:start}
+.church-visit__intake-grid article:nth-child(2){background:var(--ws-deep);color:var(--ws-surface)}
+.church-visit__intake-grid article:nth-child(2)>span:first-child{color:var(--ws-morning-gold,var(--ws-morning-gold))}
+.church-visit__intake-grid article:nth-child(3){grid-column:span 2}
+.church-visit__intake-grid article:nth-child(4){grid-column:span 4}
+.church-visit__intake-grid article>span:first-child{color:var(--ws-first-light);
+ font:var(--ws-weight-standard) var(--ws-type-scale-meta) var(--ws-type-display-en,serif);grid-column:1/-1}
+.church-visit__intake-grid h3{grid-column:1/-1;align-self:start;
+ font:var(--ws-weight-section) var(--ws-type-scale-title-md)/1.25 var(--ws-type-display-zh,sans-serif)!important;margin:11px 0 8px}
+.church-visit__intake-grid p{grid-column:1/-1;align-self:start;
+ font:var(--ws-weight-air) var(--ws-type-scale-reading)/1.8 var(--ws-type-display-zh,sans-serif);margin:0 0 15px}
+.church-visit__intake-grid a{grid-column:1;align-self:end;font-size:var(--ws-type-scale-meta);text-decoration:none;
+ border-bottom:1px solid var(--ws-first-light);padding-bottom:6px;margin:0}
+.church-visit__intake-grid article:nth-child(2) a{color:var(--ws-morning-gold,var(--ws-morning-gold))}
+.church-visit__qr{grid-column:2;align-self:end;justify-self:end;
+ width:115px;height:115px;background:var(--ws-surface);border:7px solid white;margin:0}
+.church-visit__qr canvas{display:block;width:100%;height:100%;image-rendering:pixelated}
+.church-visit__gate{display:flex;align-items:center;justify-content:space-between;gap:25px;
+ border-top:1px solid var(--ws-line);margin-top:clamp(35px,4vw,65px);padding-top:30px}
+.church-visit__gate h3{font-size:var(--ws-type-scale-title-sm);font-weight:var(--ws-weight-air);margin:0 0 10px}
+.church-visit__gate p{font-size:var(--ws-type-scale-meta);line-height:1.8;margin:0;max-width:43em}
+.church-visit__gate-link{display:inline-block;flex:none;font-size:var(--ws-type-scale-meta);text-decoration:none;
+ border-bottom:1px solid var(--ws-first-light);padding:7px 0}
+.church-visit__muted{font:var(--ws-weight-air) var(--ws-type-scale-micro)/1.8 var(--ws-type-display-zh,sans-serif);
+ margin:0;color:color-mix(in srgb,var(--ws-text) 80%,var(--ws-water))}
+.church-visit__contact-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+ gap:clamp(18px,2vw,35px)}
+.church-visit__contact-grid p{min-width:0;font:var(--ws-weight-standard) var(--ws-type-scale-ui)/1.9 var(--ws-type-display-zh,sans-serif);margin:0}
+.church-visit__contact-grid strong{display:block;font-weight:var(--ws-weight-section);color:var(--ws-first-light);margin-bottom:15px}
+.church-visit__contact-grid a{display:block;overflow-wrap:anywhere}
+.church-visit__contact-grid small{color:color-mix(in srgb,var(--ws-text) 65%,var(--ws-water))}
+.church-visit__footer{max-width:1600px;margin:auto;padding:35px clamp(18px,3.5vw,68px) 65px;
+ display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;font-size:var(--ws-type-scale-meta);font-weight:var(--ws-weight-air)}
+.church-visit__footer span[lang=en]{font:var(--ws-weight-standard) var(--ws-type-scale-meta) var(--ws-type-display-en-sc,serif)}
+.church-visit__footer nav{display:flex;gap:clamp(13px,2vw,30px)}
+.church-visit__footer a{text-decoration:none;border-bottom:1px solid var(--ws-first-light)}
+@media(min-width:1700px){.church-visit__hero-grid{min-height:745px}.church-visit__scripture-tile{min-height:680px}}
+@media(max-width:1120px){
+ .church-visit__hero-grid{grid-template-columns:minmax(0,1.14fr) minmax(0,.86fr);gap:20px;min-height:560px}
+ .church-visit__name{font-size:var(--ws-type-scale-display-lg)!important}
+ .church-visit__english{font-size:var(--ws-type-scale-title-md)}
+ .church-visit__scripture-tile{min-height:545px}
+ .church-visit__section{grid-template-columns:minmax(170px,27%) minmax(0,1fr);gap:28px}
+ .church-visit__intake-grid article{grid-column:span 3}
+ .church-visit__intake-grid article:nth-child(3){grid-column:span 3}
+ .church-visit__intake-grid article:nth-child(4){grid-column:span 3}
+ .church-visit__qr{width:95px;height:95px}
+}
+@media(max-width:760px){
+ .church-visit__top{grid-template-columns:1fr auto;row-gap:14px;padding:14px 18px}
+ .church-visit__top nav{grid-column:1/-1;grid-row:2;justify-content:space-between;gap:12px;padding-top:12px;border-top:1px solid var(--ws-line)}
+ .church-visit__tour{grid-column:2;grid-row:1}
+ .church-visit__hero-folio,.church-visit__hero-bottom{padding:16px 18px}
+ .church-visit__hero-grid{display:flex;flex-direction:column;min-height:0;padding:20px 18px 34px;gap:35px}
+ .church-visit__hero-copy{padding:28px 0 0}
+ .church-visit__seal{margin-bottom:25px}
+ .church-visit__identity-lockup{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);column-gap:10px}
+ .church-visit__name{font-size:var(--ws-type-scale-display-lg)!important;line-height:1.1!important}
+ .church-visit__english{font-size:var(--ws-type-scale-title-lg);padding-left:12px}
+ .church-visit__intro{font-size:var(--ws-type-scale-title-sm)}
+ .church-visit__scripture-tile{min-height:410px;padding:24px 27px 35px}
+ .church-visit__tile-chapter{font-size:var(--ws-type-scale-display-xl)}
+ .church-visit__section{display:block;padding:65px 18px}
+ .church-visit__section-head{margin-bottom:33px;max-width:620px}
+ .church-visit__section-head h2{font-size:var(--ws-type-scale-title-lg)!important;margin:11px 0 15px}
+ .church-visit__about-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .ws-church-scriptures{grid-template-columns:1fr}
+ .church-visit__contact-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:540px){
+ .church-visit__hero-folio span:nth-child(2){display:none}
+ .church-visit__seal{font-size:var(--ws-type-scale-micro)}
+ .church-visit__name{font-size:var(--ws-type-scale-title-lg)!important;letter-spacing:-.045em!important}
+ .church-visit__english{font-size:var(--ws-type-scale-title-md)}
+ .church-visit__english-kicker{font-size:var(--ws-type-scale-micro);margin-bottom:8px}
+ .church-visit__formal{font-size:var(--ws-type-scale-micro);margin-top:24px}
+ .church-visit__intro span{white-space:normal}
+ .church-visit__scripture-tile{min-height:430px}
+ .church-visit__scripture-tile blockquote{font-size:var(--ws-type-scale-reading)}
+ .church-visit__about-grid,.church-visit__contact-grid{grid-template-columns:1fr;gap:28px}
+ .church-visit__gatherings,.church-visit__ministries,.church-visit__intake-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .church-visit__gathering,.church-visit__gathering:nth-child(1),.church-visit__gathering:nth-child(2){grid-column:1/-1;min-height:165px}
+ .church-visit__ministry,.church-visit__ministry:nth-child(n){grid-column:1/-1;min-height:180px}
+ .church-visit__ministry:last-child{display:flex;gap:0}
+ .church-visit__intake-grid article,.church-visit__intake-grid article:nth-child(n){grid-column:1/-1;min-height:250px}
+ .church-visit__intake-grid h3{font-size:var(--ws-type-scale-title-sm)!important}
+ .church-visit__qr{width:102px;height:102px}
+ .ws-church-sunday-row{grid-template-columns:110px minmax(0,1fr);gap:12px}
+ .ws-church-sunday-row time{font-size:var(--ws-type-scale-meta)}
+ .church-visit__gate{flex-direction:column;align-items:flex-start}
+ .church-visit__footer{padding:27px 18px 60px}
+}
+@media(max-width:355px){
+ .church-visit__identity-lockup{grid-template-columns:1fr;row-gap:18px}
+ .church-visit__top nav{gap:7px}.church-visit__top nav a{font-size:var(--ws-type-scale-micro)}
+ .church-visit__name{font-size:var(--ws-type-scale-title-lg)!important}
+ .church-visit__english{font-size:var(--ws-type-scale-reading)}
+ .church-visit__formal-divider{padding:0 5px}
+ .church-visit__scripture-tile{min-height:405px}
+ .church-visit__tile-chapter{font-size:var(--ws-type-scale-display-xl)}
+}
+@media(prefers-reduced-motion:reduce){
+ .church-visit *, .church-visit *:before,.church-visit *:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+/* R3 / authoritative CHURCH NAME. Exact P2 composition:
+   approved Chinese artwork ABOVE a single official English line.
+   The PNG is the existing P2 export of the artwork; never typeset it anew. */
+.church-visit__identity-lockup{
+ display:flex;flex-direction:column;align-items:center;justify-content:center;
+ width:min(100%,950px);max-width:100%;gap:0;
+}
+.church-visit__name{
+ display:block!important;width:100%!important;height:auto!important;margin:0!important;
+ line-height:1!important;padding:0!important;overflow:visible!important
+}
+.church-visit__official-artwork{
+ display:block!important;width:100%;aspect-ratio:1800/193;
+ background:var(--ws-first-light);
+ -webkit-mask:url("/images/living-water-west-church-name.png") center/contain no-repeat;
+ mask:url("/images/living-water-west-church-name.png") center/contain no-repeat;
+}
+.church-visit__identity-lockup .church-visit__english{
+ display:block!important;align-self:center;text-align:center;width:100%;min-width:0;
+ border:0!important;padding:0!important;margin:clamp(7px,1.1vw,18px) 0 0!important;
+ font:var(--ws-weight-standard) var(--ws-type-scale-title-md)/1.22 var(--ws-type-display-en-sc,"Bodoni Moda SC",serif)!important;
+ white-space:normal;letter-spacing:0!important;
+}
+.church-visit__identity-lockup .church-visit__formal{
+ align-self:center;text-align:center;margin:clamp(10px,1.2vw,17px) 0 0!important;
+ font:italic var(--ws-weight-standard) var(--ws-type-scale-ui)/1.5 var(--ws-type-display-en,"Bodoni Moda",serif);
+ color:color-mix(in srgb,var(--ws-text) 68%,var(--ws-water));
+}
+@media(max-width:760px){
+ .church-visit__identity-lockup{width:100%;max-width:100%;gap:0}
+ .church-visit__identity-lockup .church-visit__english{font-size:var(--ws-type-scale-reading)!important;letter-spacing:0!important}
+ .church-visit__identity-lockup .church-visit__formal{font-size:var(--ws-type-scale-meta)}
+}
+@media(max-width:355px){
+ .church-visit__identity-lockup{display:flex!important;flex-direction:column;row-gap:0}
+ .church-visit__identity-lockup .church-visit__english{font-size:var(--ws-type-scale-meta)!important}
+}
+
+
+/* OS / Church glass surfaces, adapted from the existing 3D ministry glass.
+   Translucency and blur are effects, not a competing church palette. */
+body.church-visit{
+ background:
+  radial-gradient(ellipse 85% 55% at 12% 16%,
+   color-mix(in oklab,var(--ws-water) 12%,var(--ws-surface)),transparent 76%),
+  radial-gradient(ellipse 100% 48% at 92% 80%,
+   color-mix(in oklab,var(--ws-first-light) 8%,var(--ws-surface)),transparent 78%),
+  var(--ws-surface);
+}
+.church-visit__top{
+ background:color-mix(in srgb,var(--ws-surface) 78%,transparent);
+ border-color:var(--ws-line);
+ box-shadow:inset 0 1px 0 color-mix(in srgb,var(--ws-surface) 88%,transparent);
+ -webkit-backdrop-filter:blur(24px) saturate(1.3);
+ backdrop-filter:blur(24px) saturate(1.3);
+}
+.church-visit__hero{background:transparent}
+.church-visit__hero:after{
+ opacity:var(--ws-engraving-opacity,.09);
+ background-image:repeating-radial-gradient(ellipse 115% 65% at 21% 85%,
+   transparent 0 20px,
+   color-mix(in oklab,var(--ws-water) 53%,transparent) 20.5px 21px,
+   transparent 21.5px 37px);
+}
+.church-visit__scripture-tile{
+ border:1px solid color-mix(in oklab,var(--ws-water) 40%,transparent);
+ border-top:2px solid var(--ws-first-light);
+ background:
+  linear-gradient(138deg,
+    color-mix(in srgb,var(--ws-surface) 17%,transparent),
+    transparent 39%),
+  linear-gradient(150deg,
+    color-mix(in oklab,var(--ws-deep) 90%,transparent),
+    color-mix(in oklab,var(--ws-water) 72%,var(--ws-ink)) 100%);
+ color:var(--ws-surface);
+ box-shadow:0 20px 60px color-mix(in srgb,var(--ws-water) 18%,transparent),
+  inset 0 1px 0 color-mix(in srgb,var(--ws-surface) 65%,transparent);
+ -webkit-backdrop-filter:blur(25px) saturate(1.35);
+ backdrop-filter:blur(25px) saturate(1.35);
+}
+.church-visit__scripture-tile:before{border-color:color-mix(in srgb,var(--ws-surface) 28%,transparent)}
+.church-visit__scripture-tile p{color:var(--ws-surface)}
+.church-visit__gatherings,.church-visit__ministries,.church-visit__intake-grid{
+ background:transparent;
+ border-color:var(--ws-line);
+ gap:clamp(8px,1.1vw,18px);
+ border:0;
+}
+.church-visit__gathering,.church-visit__ministry,.church-visit__intake-grid article{
+ position:relative;isolation:isolate;
+ border:1px solid var(--ws-line);
+ border-top:2px solid color-mix(in srgb,var(--ws-first-light) 55%,var(--ws-water));
+ background:
+  linear-gradient(138deg,
+   color-mix(in srgb,var(--ws-surface) 83%,transparent) 0%,
+   color-mix(in srgb,var(--ws-surface) 55%,transparent) 47%,
+   color-mix(in srgb,var(--ws-water) 13%,transparent) 100%);
+ box-shadow:0 15px 42px color-mix(in srgb,var(--ws-water) 12%,transparent),
+  inset 0 1px 0 color-mix(in srgb,var(--ws-surface) 80%,transparent);
+ -webkit-backdrop-filter:blur(22px) saturate(1.32);
+ backdrop-filter:blur(22px) saturate(1.32);
+}
+.church-visit__gathering:before,.church-visit__ministry:before,
+.church-visit__intake-grid article:before{
+ content:"";position:absolute;top:9px;right:9px;pointer-events:none;
+ width:25%;height:26%;border-top:1px solid color-mix(in srgb,var(--ws-surface) 90%,transparent);
+ border-right:1px solid color-mix(in srgb,var(--ws-surface) 85%,transparent);
+}
+.church-visit__gathering:nth-child(1),.church-visit__ministry:nth-child(2),
+.church-visit__ministry:last-child{
+ background:
+  linear-gradient(148deg,
+   color-mix(in srgb,var(--ws-surface) 72%,transparent),
+   color-mix(in srgb,var(--ws-water) 20%,transparent));
+}
+.church-visit__ministry:nth-child(1),.church-visit__intake-grid article:nth-child(2){
+ color:var(--ws-surface);
+ background:
+  linear-gradient(142deg,
+    color-mix(in srgb,var(--ws-surface) 15%,transparent),
+    transparent 27%),
+  color-mix(in srgb,var(--ws-deep) 91%,transparent);
+ border-top:2px solid var(--ws-first-light);
+}
+.church-visit__ministry:nth-child(1) :is(small,a),
+.church-visit__intake-grid article:nth-child(2) :is(a,span:first-child){
+ color:var(--ws-morning-gold);
+}
+.church-visit__intake-grid article:nth-child(2) p{color:var(--ws-surface)}
+.church-visit__prayer{
+ background:color-mix(in srgb,var(--ws-surface) 70%,transparent)
+}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+ .church-visit__top,.church-visit__gathering,.church-visit__ministry,
+ .church-visit__intake-grid article{background:var(--ws-raised)}
+ .church-visit__scripture-tile,.church-visit__ministry:nth-child(1),
+ .church-visit__intake-grid article:nth-child(2){background:var(--ws-deep)}
+}
+@media(prefers-contrast:more){
+ .church-visit__gathering,.church-visit__ministry,.church-visit__intake-grid article{
+  background:var(--ws-surface);box-shadow:none;
+ }
+ .church-visit__ministry:nth-child(1),.church-visit__intake-grid article:nth-child(2){
+  background:var(--ws-deep);
+ }
+}
+
+/* Gathering metadata is Chinese content, never Bodoni SC glyph substitution. */
+.church-visit__gathering>span{
+ font:var(--ws-weight-air) var(--ws-type-scale-meta)/1.5 var(--ws-type-display-zh);
+ color:var(--ws-first-light);letter-spacing:.07em;
+}
+
+/* Scripture cross-references contain Chinese book names. Never force
+   Bodoni-only glyph coverage onto those Han characters. */
+.church-visit .ws-church-scriptures small{
+ font:var(--ws-weight-standard) var(--ws-type-scale-meta)/1.5 var(--ws-type-display-zh);
+ color:var(--ws-first-light);font-style:normal;
+}
+
+/* R7 / composition geometry acceptance.
+   The invitation title owns its own full-width editorial row (never floats
+   under the cards). The entrance scripture is precisely one square.
+   Existing OS colors, glass material and approved bilingual church identity
+   remain authoritative, not redrawn here. */
+.church-visit__hero-grid{
+ grid-template-columns:minmax(0,1.14fr) minmax(0,.86fr);
+ align-items:center;
+}
+.church-visit__scripture-group{
+ min-width:0;width:100%;max-width:550px;justify-self:end;align-self:center;
+ display:flex;flex-direction:column;gap:clamp(12px,1.45vw,22px);
+}
+.church-visit__hero-grid .church-visit__scripture-tile{
+ display:flex;flex-direction:column;justify-content:space-between;
+ width:100%;min-width:0;min-height:0;height:auto;max-height:none;
+ aspect-ratio:1/1;align-self:auto;
+ padding:clamp(20px,2.25vw,37px);
+}
+.church-visit__tile-chapter{
+ font-size:var(--ws-type-scale-display-md);
+ line-height:var(--ws-type-leading-display,.9);
+ margin:clamp(3px,.5vw,10px) 0;
+}
+.church-visit__hero-grid .church-visit__scripture-tile blockquote{
+ margin:0;
+ font:var(--ws-weight-standard) var(--ws-type-scale-reading-lg)/1.58 var(--ws-type-display-zh);
+ word-break:normal;line-break:strict;
+ text-wrap:pretty;
+}
+.church-visit__hero-grid .church-visit__scripture-tile blockquote strong{
+ font-weight:var(--ws-weight-anchor);
+}
+.church-visit__hero-grid .church-visit__scripture-tile cite{
+ margin-top:clamp(8px,1vw,17px);
+ font:var(--ws-weight-air) var(--ws-type-scale-meta)/1.45 var(--ws-type-display-zh);
+}
+.church-visit__scripture-translation{
+ margin:0;max-width:100%;min-width:0;
+ font:italic var(--ws-weight-standard) var(--ws-type-scale-reading)/1.52 var(--ws-type-display-en);
+ text-align:left;letter-spacing:.002em;
+ color:var(--ws-text);text-wrap:pretty;
+}
+.church-visit__scripture-translation span{
+ display:inline;white-space:nowrap;
+ font-style:normal;color:var(--ws-first-light);
+ font-family:var(--ws-type-display-en-sc);
+ font-size:var(--ws-type-scale-meta);
+}
+.church-visit__scripture-group .church-visit__water-engraving{
+ height:19%;opacity:var(--ws-engraving-opacity,.11);
+}
+@media(min-width:761px){
+ .church-visit__invitation{
+  grid-template-columns:repeat(12,minmax(0,1fr));
+  column-gap:clamp(14px,2vw,30px);
+  row-gap:clamp(26px,3vw,50px);
+ }
+ .church-visit__invitation>.church-visit__section-head{
+  grid-column:1/-1;min-width:0;
+  display:grid;grid-template-columns:repeat(12,minmax(0,1fr));
+  column-gap:inherit;row-gap:clamp(8px,1.2vw,17px);
+  align-items:end;margin:0;
+ }
+ .church-visit__invitation>.church-visit__section-head>span{grid-column:1/-1}
+ .church-visit__invitation>.church-visit__section-head h2{
+  grid-column:1/9;min-width:0;margin:0;
+  font-size:var(--ws-type-scale-title-lg)!important;
+  line-height:var(--ws-type-leading-title,1.12)!important;
+  overflow-wrap:normal;word-break:normal;
+ }
+ .church-visit__invitation>.church-visit__section-head>p{
+  grid-column:9/-1;margin:0;max-width:35em;
+  word-break:normal;text-wrap:pretty;
+ }
+ .church-visit__invitation>.church-visit__intake-grid,
+ .church-visit__invitation>.church-visit__gate,
+ .church-visit__invitation>.church-visit__muted{grid-column:1/-1}
+ .church-visit__invitation .church-visit__intake-grid{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  column-gap:clamp(11px,1.35vw,22px);row-gap:clamp(11px,1.35vw,22px);
+ }
+ .church-visit__invitation .church-visit__intake-grid>article:nth-child(n){
+  grid-column:auto;min-width:0;min-height:clamp(275px,24vw,348px);
+ }
+}
+.church-visit__intake-grid h3{
+ min-width:0;max-width:100%;overflow-wrap:normal;
+ word-break:normal;line-break:strict;text-wrap:balance;
+}
+.church-visit__intake-grid article p{word-break:normal;line-break:strict;text-wrap:pretty}
+@media(max-width:760px){
+ .church-visit__hero-grid .church-visit__scripture-group{
+  max-width:520px;width:100%;margin:0 auto;
+ }
+ .church-visit__scripture-translation{font-size:var(--ws-type-scale-reading)}
+ .church-visit__invitation>.church-visit__section-head{
+  display:block;max-width:100%;margin-bottom:clamp(24px,4vw,42px)
+ }
+ .church-visit__invitation .church-visit__intake-grid{
+  display:grid;grid-template-columns:1fr;
+ }
+ .church-visit__invitation .church-visit__intake-grid>article:nth-child(n){
+  grid-column:1/-1;min-width:0;min-height:265px;
+ }
+}
+@media(max-width:480px){
+ .church-visit__hero-grid .church-visit__scripture-tile{padding:clamp(17px,4.4vw,23px)}
+ .church-visit__tile-chapter{font-size:var(--ws-type-scale-title-lg);line-height:1}
+ .church-visit__hero-grid .church-visit__scripture-tile blockquote{
+  font-size:var(--ws-type-scale-reading);
+  line-height:1.53;
+ }
+ .church-visit__hero-grid .church-visit__scripture-tile cite{
+  font-size:var(--ws-type-scale-micro);line-height:1.32;
+ }
+ .church-visit__scripture-translation{font-size:var(--ws-type-scale-reading)}
+ .church-visit__invitation .church-visit__intake-grid>article:nth-child(n){
+  min-height:260px;
+ }
+}
+
+/* R8 / EXACT V60 Chinese-horizontal mother forme from Scripture Studio.
+   The OS surface owns color + rectilinear frosted glass. The child is a
+   transparent impression: do not typeset another independent quotation. */
+.church-visit__hero-grid .church-visit__scripture-tile--letterpress{
+ padding:0!important;aspect-ratio:1!important;position:relative;overflow:hidden;
+ isolation:isolate;
+}
+.church-visit__letterpress-frame{
+ display:block;position:absolute;inset:0;z-index:2;width:100%;height:100%;
+ border:0;background:transparent;overflow:hidden;pointer-events:none;
+}
+.church-visit__scripture-tile--letterpress .church-visit__water-engraving{z-index:1;opacity:var(--ws-engraving-opacity,.09)}
+.church-visit__sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;
+ margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}

@@ -109,3 +109,9 @@
 .mersi-church .sites-church-footer strong{font-weight:300;font-size:clamp(1.3rem,2.5vw,2.5rem)}
 @media(max-width:850px){.mersi-church .mc-hero{padding:clamp(2rem,6vw,4rem)}.mersi-church .mc-hero img{max-width:90vw}.mersi-church .mc-scene .ws-bilingual-heading__en{font-size:clamp(2.7rem,11vw,5rem)}.mersi-church .mc-scene .ws-bilingual-heading__zh{font-size:clamp(1.2rem,5vw,2rem)}.mersi-church .sites-church-scripture{padding:12vw 7vw}}
 @media(prefers-reduced-motion:reduce){.mersi-church .mc-journey .mc-scene{opacity:1!important;visibility:visible!important}.mersi-church .mc-scene .ws-bilingual-heading{transform:none!important}}
+
+/* One discreet visitor doorway from the preserved /church/ story. */
+.church-front-visitor-link{margin:13px auto 0;text-align:center;position:relative;z-index:3}
+.church-front-visitor-link a{color:inherit;text-decoration:none;border-bottom:1px solid var(--ws-first-light,#ad8b45);
+font:400 14px/1.5 var(--ws-type-display-zh,sans-serif);padding:3px 0}
+.church-front-visitor-link a:focus-visible{outline:2px solid var(--ws-first-light,#ad8b45);outline-offset:4px}
