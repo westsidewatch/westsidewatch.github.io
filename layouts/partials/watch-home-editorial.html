@@ -44,7 +44,7 @@ body.home .ws-p2-sevenfold-host>iframe{position:sticky!important;top:0!important
 @supports (-moz-appearance:none){
  body.home .ws-p2-sevenfold-host[data-p2-viewport-pinned="true"]{overflow:visible!important}
  body.home .ws-p2-sevenfold-host[data-p2-viewport-pinned="true"]>iframe{
-  position:fixed!important;inset:0!important;height:100%!important;min-height:0!important;
+  position:fixed!important;inset:var(--p2-viewport-entry-top,0px) 0 auto!important;height:100%!important;min-height:0!important;
  }
 }
 /* Hold the original film in the viewport while the nested opening scene loads. */
@@ -66,7 +66,8 @@ function sync(){
  queued=false;
  const rect=host.getBoundingClientRect(),height=Math.max(1,innerHeight);
  const distance=clamp(-rect.top/height,0,32.30);
- host.dataset.p2ViewportPinned=String(rect.top<=0&&rect.bottom>=height);
+ host.style.setProperty('--p2-viewport-entry-top',Math.max(0,rect.top)+'px');
+ host.dataset.p2ViewportPinned=String(rect.top<height&&rect.bottom>=height);
  const churchEnd=3.0775,magazineEnd=6.5,legacyDistance=Math.min(distance,magazineEnd);
  let progress;
  // The hero scroll already establishes the opening reveal. Enter P2 with
