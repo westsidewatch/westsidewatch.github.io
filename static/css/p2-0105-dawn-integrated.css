@@ -3247,3 +3247,61 @@
  #dawn-realm .dawn-world__page,
  #dawn-realm .dawn-world__art img{will-change:auto!important}
 }
+
+
+/* R87 — source-owned Olive exit → shared engraver's register → MERSI 05.
+   The outgoing page is an ENTIRE iframe, moving as one printed folio.
+   A real, already-admitted Olive topographic plate remains underneath;
+   no incoming Jerusalem image can cut through an outgoing speaker portrait.
+   Keep the 04 JS/CSS and its twelve original poster images untouched. */
+#p205-stage{background:var(--ws-olive)!important}
+#p205-prior{
+ z-index:2!important;
+ transform-origin:center center!important;
+ will-change:transform,opacity;
+}
+#p205-engraving-bridge{
+ position:absolute;inset:0;z-index:1;
+ display:block;overflow:hidden;pointer-events:none;
+ background:var(--ws-olive);visibility:hidden;isolation:isolate;
+}
+#p205-engraving-bridge .p205-engraving-bridge__terrain,
+#p205-engraving-bridge .p205-engraving-bridge__botanical{
+ position:absolute;pointer-events:none;
+ background:var(--ws-morning-gold);
+ -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+ -webkit-mask-size:contain;mask-size:contain;
+}
+#p205-engraving-bridge .p205-engraving-bridge__terrain{
+ width:min(85vw,1150px);height:140%;right:-8%;top:-21%;
+ opacity:.30;transform:translate3d(var(--p205-engraving-shift,0%),0,0);
+ -webkit-mask-image:url('/images/p2-realms/v15/04-olive-mount-terrain-contours-v1.svg');
+ mask-image:url('/images/p2-realms/v15/04-olive-mount-terrain-contours-v1.svg');
+ -webkit-mask-position:center center;mask-position:center center;
+}
+#p205-engraving-bridge .p205-engraving-bridge__botanical{
+ width:min(48vw,680px);height:122%;left:-13%;top:-8%;opacity:.16;
+ -webkit-mask-image:url('/images/p2-realms/v15/v79-botanical-field/04-olive-field-v79-1.svg');
+ mask-image:url('/images/p2-realms/v15/v79-botanical-field/04-olive-field-v79-1.svg');
+ -webkit-mask-position:center center;mask-position:center center;
+}
+#p205-engraving-bridge .p205-engraving-bridge__register{
+ position:absolute;left:clamp(14px,5vw,80px);right:clamp(14px,5vw,80px);
+ top:50%;height:1px;transform:translateY(-50%);
+ background:var(--ws-morning-gold);opacity:.22;
+}
+#dawn-realm.dawn-realm{
+ z-index:3!important;
+ background:transparent!important;
+}
+@media(max-width:650px){
+ #p205-engraving-bridge .p205-engraving-bridge__terrain{
+  width:120%;height:95%;right:-48%;top:0;opacity:.32;
+ }
+ #p205-engraving-bridge .p205-engraving-bridge__botanical{
+  width:85%;height:105%;left:-45%;top:-4%;opacity:.12;
+ }
+}
+@media(prefers-reduced-motion:reduce){
+ #p205-prior{will-change:auto}
+}
