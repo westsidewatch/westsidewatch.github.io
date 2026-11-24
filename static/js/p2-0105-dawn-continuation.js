@@ -19,13 +19,13 @@
  // R87 / one source-owned exit, one shared engraved register, then MERSI.
  // These stations are shared by layout and QA; d=28.4 remains the already
  // published stable P2 05 entrance for all existing reading-room links.
- const relay=Object.freeze({holdEnd:26.45,retireEnd:27.13,
+ const relay=Object.freeze({holdEnd:26.45,backgroundStart:27.33,retireEnd:27.58,
   merciStart:27.58,merciEnd:28.26,twinEnd:28.38});
  const bridge=$('#p205-engraving-bridge');
  const underprint=$('#p205-engraving-history'),underprintRight=$('#p205-engraving-history-right');
  // R92 anchor proof: read the two actual mastheads, never a guessed viewport point.
  // The isolated proof holds the original 04 background while the masthead moves.
- const anchorProof=new URLSearchParams(location.search).get('anchor')==='1';
+ const anchorProof=true;
  const anchorLayer=document.createElement('div');
  anchorLayer.setAttribute('aria-hidden','true');
  Object.assign(anchorLayer.style,{position:'absolute',inset:'0',zIndex:'25',pointerEvents:'none',visibility:'hidden',overflow:'hidden'});
@@ -50,11 +50,14 @@
   const b={x:tr.left+tr.width/2-st.left,y:tr.top+tr.height/2-st.top,size:tr.height};
   stage.dataset.p205AnchorSource=JSON.stringify(a);
   stage.dataset.p205AnchorTarget=JSON.stringify(b);
-  const moving=d>=26.45&&d<27.58;
+  const moving=d>=26.45&&d<27.33;
   if(!moving){
-   if(anchorSource)anchorSource.style.removeProperty('opacity');
+   if(d>=27.33&&source)source.style.opacity='0';
+   if(anchorSource)anchorSource.style.opacity=d>=26.45?'0':'';
    anchorLayer.style.visibility='hidden';
-   if(d>=27.58&&p<.001){twins.style.visibility='visible';twins.style.opacity='1';}
+   if(d>=27.33&&p<.001){twins.style.visibility='visible';twins.style.opacity='1';}
+   if(d<26.45)stage.dataset.p205AnchorPhase='source';
+   else stage.dataset.p205AnchorPhase='registered';
    return;
   }
   if(anchorSource!==source||!anchorClone){
@@ -70,10 +73,12 @@
   anchorLayer.style.visibility='visible';
   prior.style.visibility='visible';prior.style.opacity='1';
   bridge.style.visibility='hidden';
-  realm.style.visibility='hidden';
+  realm.style.visibility='visible';
+  world.style.visibility='hidden';
   // The target itself is the real 05 masthead, above the still-held 04 field.
   twins.style.visibility=replace>0?'visible':'hidden';
   twins.style.opacity=String(replace);
+  squares.forEach(square=>{square.style.visibility=replace>0?'visible':'hidden';});
   stage.dataset.p205AnchorPhase=travel<1?'translate':turn<1?'rotate':replace<1?'replace':'registered';
  }
  function progress(){return clamp(-track.getBoundingClientRect().top/Math.max(1,innerHeight),0,32.3)}
@@ -82,7 +87,7 @@
   // THE ORIGINAL 01–04 FILES REMAIN UNMODIFIED AND BEHIND THEIR OWN STAGE.
   // R88: keep 04 full-bleed for its ENTIRE exit. R87's scaling created
   // an obvious box within a box; lift all old printing ink together instead.
-  const exit=clamp((d-relay.holdEnd)/(relay.retireEnd-relay.holdEnd));
+  const exit=clamp((d-relay.backgroundStart)/(relay.retireEnd-relay.backgroundStart));
   const lift=ease((exit-.09)/.91);
   prior.contentWindow?.postMessage({type:'westside-p2-home-pose',
    distance:Math.min(d,26.3),legacyProgress:clamp(d/26.3),
@@ -95,7 +100,7 @@
   // The actual historic engraving takes its ink from the same 04 terrain
   // underneath the outgoing 04 printing. No featureless olive pause and no
   // Jerusalem rectangle entering while any poster remains on stage.
-  const ink=ease((d-(relay.holdEnd+.04))/(relay.merciStart-relay.holdEnd-.04));
+  const ink=ease((d-relay.backgroundStart)/(relay.merciStart-relay.backgroundStart));
   bridge.style.setProperty('--p205-ink-transfer',ink.toFixed(5));
   // R91: retain a fixed print register; the old plates surrender ink, not geometry.
   bridge.style.setProperty('--p205-engraving-shift','0%');
@@ -109,9 +114,10 @@
   const phase=clamp((d-relay.merciStart)/(relay.merciEnd-relay.merciStart));
   const rightReveal=ease(phase/.55),leftReveal=ease((phase-.52)/.48);
   // Clear the bridge only after both registered colour plates cover it.
-  bridge.style.visibility=d>=relay.holdEnd&&phase<1?'visible':'hidden';
+  bridge.style.visibility=d>=relay.backgroundStart&&phase<1?'visible':'hidden';
   const settled=ease((d-relay.merciEnd)/(relay.twinEnd-relay.merciEnd));
-  realm.style.visibility=phase>.00001?'visible':'hidden';
+  realm.style.visibility=d>=27.13?'visible':'hidden';
+  world.style.visibility=phase>.00001?'visible':'hidden';
   realm.inert=settled<.98||p>.001;
   realm.setAttribute('aria-hidden',settled<.98||p>.001?'true':'false');
   realm.style.pointerEvents=settled>.98&&p<.001?'auto':'none';
@@ -141,10 +147,10 @@
   stage.dataset.p205MerciLeft=leftReveal.toFixed(4);
   stage.dataset.p205MerciRight=rightReveal.toFixed(4);
   stage.dataset.p205MerciMethod='olive-ink-underprint-then-opposed-merci';
-  twins.style.visibility=settled>.02?'visible':'hidden';
+  twins.style.visibility=d>=27.13?'visible':'hidden';
    // Keep the original paired masthead rendered above the image stage.
-   squares.forEach(square=>{square.style.visibility='visible';square.style.opacity='1';});
-  twins.style.opacity=String(settled*(1-ease((p-.01)/.16)));
+   squares.forEach(square=>{square.style.visibility=d>=27.13?'visible':'hidden';square.style.opacity='1';});
+  twins.style.opacity=String(ease((d-27.13)/.20)*(1-ease((p-.01)/.16)));
   twins.style.transform='translate(-50%,-50%)';
   paintWorld(d);
   stage.dataset.p205Scene=d<relay.holdEnd?'04-protected':
