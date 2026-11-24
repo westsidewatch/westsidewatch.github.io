@@ -97,7 +97,7 @@ async function audit(path,width){
  await page.goto(origin+'/'+path,{waitUntil:'load',timeout:45000});await page.evaluate(()=>document.fonts.ready);
  const cdp=await page.context().newCDPSession(page);await cdp.send('DOM.enable');await cdp.send('CSS.enable');
  report.en=await measure(page,'[data-workchain-title="en"]',cdp);report.zh=await measure(page,'[data-workchain-title="zh"]',cdp);
- assert.match(report.en.text,/Living Water/i);assert.match(report.zh.text,/活水堂/);
+ assert.match(report.en.text,/Living\s+Water/i);assert.match(report.zh.text,/活水堂/);
  validatePair(report);
  assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'horizontal overflow');
  assert(await page.evaluate(()=>[...document.images].every(i=>i.complete&&i.naturalWidth>0)),'broken images');
@@ -105,6 +105,17 @@ async function audit(path,width){
  // Immutable V01–V05 are historical comparison evidence, not current approval candidates.
  if(!/^experiments\/church-foundation-v0[1-5]\//.test(path)){
    report.navigationArrows=await findNavigationArrows(page);
+   report.wall=await page.evaluate(()=>{
+     const cells=[...document.querySelectorAll('.watch-wall a[data-realm]')];
+     const active=cells.filter(a=>a.getAttribute('aria-current')==='page');
+     const marks=cells.map(a=>{const svg=a.querySelector('svg');const r=svg.getBoundingClientRect();return {id:a.dataset.realm,shape:svg.querySelector('use').getAttribute('href'),color:getComputedStyle(svg).color,x:r.x,right:r.right,bottom:r.bottom}});
+     return {marks,active:active.map(a=>a.dataset.realm),expected:getComputedStyle(document.body).getPropertyValue('--ws-water').trim(),destinations:[...document.querySelectorAll('a[data-destination]')].map(a=>({expected:a.dataset.destination,actual:a.querySelector('svg[data-ornament]')?.dataset.ornament}))};
+   });
+   if(path.includes('church-foundation-v06/')){
+     const w=report.wall;assert.equal(w.marks.length,7,'seven wall sections');assert.equal(new Set(w.marks.map(m=>m.shape)).size,7,'distinct symbol references');assert.deepEqual(w.active,['church']);assert.equal(w.marks[0].color,w.expected,'church identity color');assert.equal(new Set(w.marks.slice(1).map(m=>m.color)).size,1,'silent wall color');assert.notEqual(w.marks[0].color,w.marks[1].color,'current is lit');
+     for(let i=1;i<7;i++){assert(Math.abs(w.marks[i-1].right-w.marks[i].x)<1,'wall gap');assert(Math.abs(w.marks[0].bottom-w.marks[i].bottom)<1,'wall baseline')}
+     assert(w.destinations.length>0&&w.destinations.every(d=>d.expected===d.actual),'destination shape mismatch');
+   }
    assert.equal(report.navigationArrows.length,0,'decorative navigation arrow: '+JSON.stringify(report.navigationArrows));
  }
  report.pass=true;
@@ -120,7 +131,7 @@ try{
  const candidates=walk(join(staticRoot,'experiments')).filter(p=>/\/church-foundation-v(?!01\/|02\/)\d+\/.*\.html$/.test(p));
  // All subsequent church candidate pages are audited, not just nominated files.
  for(const file of candidates){const p=relative(staticRoot,file);for(const width of [320,390,768,1440])await audit(p,width)}
- const bad=results.filter(r=>!old.includes(r.path)&&!r.pass);
+ const bad=results.filter(r=>!/^experiments\/church-foundation-v0[1-5]\//.test(r.path)&&!r.pass);
  console.log('Candidates:',candidates.length,'failed:',bad.length);
  if(bad.length)process.exitCode=1;
 }finally{
