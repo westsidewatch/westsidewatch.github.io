@@ -1,0 +1,98 @@
+{{/* Block compiler for the finite OS editorial grammar.
+     Each JSON command becomes semantic, accessible, linkable HTML.
+     It is deliberately not a general-purpose HTML injection engine. */}}
+{{ $b := .block }}
+{{ $section := .section }}
+{{ if eq $b.type "essay" }}
+  <section class="ws-gram-block ws-gram-essay" data-type="essay" data-mode="{{ $b.mode }}" id="{{ $b.id }}" aria-labelledby="{{ $b.id }}-title">
+    <header class="ws-gram-block__head">
+      <p class="ws-grammar__eyebrow" lang="en">{{ $b.eyebrow }}</p>
+      <h2 id="{{ $b.id }}-title">{{ $b.title }}</h2>
+    </header>
+    <div class="ws-gram-essay__text">
+      {{ range $b.paragraphs }}<p>{{ . }}</p>{{ end }}
+      {{ with $b.note }}<aside class="ws-gram-essay__note">{{ . }}</aside>{{ end }}
+    </div>
+  </section>
+{{ else if eq $b.type "scripture" }}
+  <section class="ws-gram-block ws-gram-scripture" data-type="scripture" data-mode="{{ $b.mode }}" id="{{ $b.id }}">
+    <header class="ws-gram-scripture__heading">
+      <p class="ws-grammar__eyebrow" lang="en">{{ $section.refEn }}</p>
+      <h2>{{ $b.heading }}</h2>
+      <p>{{ $section.quoteZh }}</p>
+      <cite>{{ $section.refZh }}</cite>
+    </header>
+    <div class="ws-gram-scripture__plate">
+      <div class="ws-gram-scripture__square">
+        <iframe src="/experiments/scripture-studio-motherform-live.html?embed=1&amp;section={{ $section.p2 }}&amp;layout=sevenfold-vertical"
+          title="{{ $section.refZh }} · 主站原有 V60 中文豎排鉛字母版" loading="lazy" scrolling="no" referrerpolicy="same-origin"></iframe>
+        <blockquote class="ws-gram-scripture__accessible">{{ $section.quoteZh }} <cite>{{ $section.refZh }}</cite></blockquote>
+      </div>
+      <p class="ws-gram-scripture__kjv" lang="en">{{ $section.quoteEn }} <span>{{ $section.refEn }}</span></p>
+    </div>
+  </section>
+{{ else if eq $b.type "index" }}
+  <section class="ws-gram-block ws-gram-index" data-type="index" data-mode="{{ $b.mode }}" id="{{ $b.id }}" aria-labelledby="{{ $b.id }}-title">
+    <div class="ws-gram-block__head">
+      <p class="ws-grammar__eyebrow" lang="en">{{ $b.eyebrow }}</p>
+      <h2 id="{{ $b.id }}-title">{{ $b.title }}</h2>
+    </div>
+    <ol class="ws-gram-index__items">
+      {{ range $i, $item := $b.entries }}
+        <li><a href="{{ $item.href }}">
+          <span class="ws-gram-index__num" lang="en">{{ printf "%02d" (add $i 1) }}</span>
+          <span class="ws-gram-index__name">{{ $item.title }}</span>
+          <span class="ws-gram-index__label">{{ $item.label }}</span>
+          <span class="ws-gram-index__arrow" aria-hidden="true">↗</span>
+        </a></li>
+      {{ end }}
+    </ol>
+  </section>
+{{ else if eq $b.type "plate" }}
+  <figure class="ws-gram-block ws-gram-plate" data-type="plate" data-mode="{{ $b.mode }}" id="{{ $b.id }}">
+    <div class="ws-gram-plate__image">
+      <img src="{{ $b.src }}" alt="{{ $b.alt }}" loading="lazy" decoding="async">
+    </div>
+    <figcaption>
+      <span class="ws-grammar__eyebrow" lang="en">{{ $b.eyebrow }}</span>
+      <span>{{ $b.caption }}</span>
+    </figcaption>
+  </figure>
+{{ else if eq $b.type "conversation" }}
+  <section class="ws-gram-block ws-gram-conversation" data-type="conversation" data-mode="{{ $b.mode }}" id="{{ $b.id }}" aria-labelledby="{{ $b.id }}-title">
+    <div class="ws-gram-block__head">
+      <p class="ws-grammar__eyebrow" lang="en">{{ $b.eyebrow }}</p>
+      <h2 id="{{ $b.id }}-title">{{ $b.title }}</h2>
+    </div>
+    <dl class="ws-gram-conversation__body">
+      {{ range $b.pairs }}
+        <div class="ws-gram-conversation__pair">
+          <dt>{{ .question }}</dt>
+          <dd>{{ .answer }}</dd>
+        </div>
+      {{ end }}
+    </dl>
+  </section>
+{{ else if eq $b.type "shelf" }}
+  <section class="ws-gram-block ws-gram-shelf" data-type="shelf" data-mode="{{ $b.mode }}" id="{{ $b.id }}" aria-labelledby="{{ $b.id }}-title">
+    <div class="ws-gram-block__head">
+      <p class="ws-grammar__eyebrow" lang="en">{{ $b.eyebrow }}</p>
+      <h2 id="{{ $b.id }}-title">{{ $b.title }}</h2>
+    </div>
+    <ol class="ws-gram-shelf__works">
+      {{ range $i, $item := $b.entries }}
+        <li>
+          <a href="{{ $item.href }}">
+            <small lang="en">{{ printf "%02d" (add $i 1) }}</small>
+            <span class="ws-gram-shelf__kind">{{ $item.type }}</span>
+            <strong>{{ $item.title }}</strong>
+            <p>{{ $item.desc }}</p>
+            <span class="ws-gram-shelf__go" aria-hidden="true">↗</span>
+          </a>
+        </li>
+      {{ end }}
+    </ol>
+  </section>
+{{ else }}
+  {{ errorf "Unsupported Westside Editorial Grammar block: %s / %s" $b.type $b.id }}
+{{ end }}
