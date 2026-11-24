@@ -16,7 +16,7 @@
   <nav class="sites-home-entry" aria-label="Homepage entry points"><a href="/preview/watch-city-vol00/hosanna/">Enter the film <span lang="zh-Hant">進城 ↗</span></a><a href="#sites-first-layer">Enter Westside Watch <span lang="zh-Hant">進入西望 ↓</span></a><a href="/church/">LivingWaterWest <span lang="zh-Hant">進入教會 ↗</span></a></nav>
 </section>
 
-<section class="candidate-focus-screen ws-p2-sevenfold-host" data-current="focus" data-layer="first" data-screen="2" aria-label="Living Water — Sevenfold P2"><iframe title="P2 · Living Water Church → WESTSIDE WATCH Vol.00 → Emmaus → Olive Mountain · Second Layer" loading="eager" allow="autoplay" src="/experiments/p2-0104-olive-continuation.html?embed=1&amp;v=p2-main-church-growth-visible-20261120"></iframe></section>
+<section class="candidate-focus-screen ws-p2-sevenfold-host" data-current="focus" data-layer="first" data-screen="2" aria-label="Living Water — Sevenfold P2"><iframe title="P2 · Living Water Church → WESTSIDE WATCH Vol.00 → Emmaus → Olive Mountain → Dawn Library" loading="eager" allow="autoplay" src="/experiments/p2-0105-dawn-preview.html?embed=1&amp;v=r96-main-entry-20261124"></iframe></section>
 <section class="candidate-focus-screen" data-current="focus" data-layer="first" data-screen="3"><iframe title="Westside Watch · 行走與敬拜" loading="eager" src="/home-chapters/walk-worship.html?v=editorial-v1"></iframe></section>
 
 <div class="sites-home-realms" id="sites-first-layer">
@@ -30,7 +30,7 @@
 </div>
 <style>
 /* P2 scroll host: isolate approved preview CSS in its iframe; no new global CSS authority. */
-body.home .ws-p2-sevenfold-host{position:relative!important;height:2730svh!important;min-height:2730svh!important;overflow:clip!important}
+body.home .ws-p2-sevenfold-host{position:relative!important;height:3330svh!important;min-height:3330svh!important;overflow:clip!important}
 body.home .ws-p2-sevenfold-host>iframe{position:sticky!important;top:0!important;display:block!important;width:100%!important;height:100svh!important;min-height:100svh!important;border:0!important}
 </style>
 <script>
@@ -44,7 +44,7 @@ const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
 function sync(){
  queued=false;
  const rect=host.getBoundingClientRect(),height=Math.max(1,innerHeight);
- const entry=clamp((height-rect.top)/height,0,1),distance=clamp(-rect.top/height,0,26.30);
+ const entry=clamp((height-rect.top)/height,0,1),distance=clamp(-rect.top/height,0,32.30);
  const churchEnd=3.0775,magazineEnd=6.5,legacyDistance=Math.min(distance,magazineEnd);
  let progress;
  if(rect.top>0){progress=entry*.1/2.9}
