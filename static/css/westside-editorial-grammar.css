@@ -376,29 +376,38 @@ body.sites-surface.ws-editorial-context .ws-grammar .ws-gram-cover__visual figca
  font:var(--ws-weight-air) var(--ws-type-scale-reading)/1.95 var(--ws-type-display-zh)
 }
 .ws-gram-shelf .ws-gram-block__head{margin-bottom:clamp(30px,4vw,60px)}
+/* Paris Review / historical catalogue inspired reading list:
+   A true typographic bibliography, not another row of generic UI cards. */
 .ws-gram-shelf__works{
- display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
- gap:clamp(13px,2vw,38px);list-style:none;margin:0;padding:0
+ display:block;list-style:none;margin:0;padding:0;border-top:1px solid var(--g-rule)
 }
-.ws-gram-shelf__works li{list-style:none;min-width:0}
+.ws-gram-shelf__works li{list-style:none;min-width:0;border-bottom:1px solid var(--g-rule)}
 .ws-gram-shelf__works a{
- position:relative;display:flex;flex-direction:column;align-items:flex-start;
- min-height:320px;min-width:0;padding:clamp(24px,2.7vw,40px);
- border-top:2px solid var(--g-accent);border-bottom:1px solid var(--g-rule);
- background:color-mix(in srgb,var(--g-accent) 5%,var(--g-paper))
+ display:grid;grid-template-columns:clamp(29px,3vw,52px) minmax(100px,1fr) minmax(0,2fr) minmax(0,1.8fr) 26px;
+ align-items:baseline;column-gap:clamp(12px,2vw,40px);row-gap:11px;
+ min-height:0;padding:clamp(27px,3.4vw,55px) 5px;
+ background:transparent;
 }
-.ws-gram-shelf__works small{font:var(--ws-weight-standard) var(--ws-type-scale-meta)/1.2 var(--ws-type-display-en-sc);color:var(--g-accent)}
-.ws-gram-shelf__kind{margin-top:22px;color:var(--g-accent);
- font:var(--ws-weight-air) var(--ws-type-scale-ui)/1.5 var(--ws-type-display-zh)}
+.ws-gram-shelf__works small{
+ color:var(--g-label-ink);
+ font:var(--ws-weight-standard) var(--ws-type-scale-meta)/1.25 var(--ws-type-display-en-sc)
+}
+.ws-gram-shelf__kind{
+ margin:0;color:var(--g-label-ink);
+ font:var(--ws-weight-air) var(--ws-type-scale-ui)/1.4 var(--ws-type-display-zh)
+}
 .ws-gram-shelf__works strong{
- font:var(--ws-weight-section) var(--ws-type-scale-title-md)/1.3 var(--ws-type-display-zh);
- margin-top:20px;word-break:normal
+ margin:0;min-width:0;word-break:normal;line-break:strict;
+ font:var(--ws-weight-section) var(--ws-type-scale-title-md)/1.38 var(--ws-type-display-zh)
 }
 .ws-gram-shelf__works p{
- font:var(--ws-weight-air) var(--ws-type-scale-reading)/1.8 var(--ws-type-display-zh);
- margin-top:20px;max-width:24em
+ margin:0;max-width:28em;color:var(--g-muted);
+ font:var(--ws-weight-standard) var(--ws-type-scale-reading)/1.8 var(--ws-type-reading-zh)
 }
-.ws-gram-shelf__go{margin-top:auto;align-self:flex-end;font-family:var(--ws-type-display-en);color:var(--g-accent)}
+.ws-gram-shelf__go{
+ align-self:center;justify-self:end;color:var(--g-label-ink);
+ font-family:var(--ws-type-display-en)
+}
 .ws-grammar__colophon{
  display:grid;grid-template-columns:1fr 1fr auto;gap:20px;align-items:center;
  padding:clamp(36px,5vw,70px) var(--g-edge) clamp(60px,8vw,100px)
@@ -474,7 +483,9 @@ body.sites-surface.ws-editorial-context .ws-grammar .ws-gram-cover__visual figca
  .ws-gram-index .ws-gram-block__head{margin-bottom:30px}
  .ws-gram-index__items{width:100%}
  .ws-gram-conversation .ws-gram-block__head{margin-bottom:24px}
- .ws-gram-shelf__works{grid-template-columns:1fr 1fr}
+ .ws-gram-shelf__works a{grid-template-columns:28px minmax(70px,.7fr) minmax(0,1.8fr) 22px;row-gap:8px}
+ .ws-gram-shelf__works p{grid-column:3;grid-row:2}
+ .ws-gram-shelf__go{grid-column:4;grid-row:1}
  .ws-grammar__colophon{grid-template-columns:1fr 1fr}
 }
 @media(max-width:510px){
@@ -494,8 +505,12 @@ body.sites-surface.ws-editorial-context .ws-grammar .ws-gram-cover__visual figca
  .ws-gram-index[data-mode="columns"] .ws-gram-index__items li{border-bottom:0}
  .ws-gram-index[data-mode="columns"] .ws-gram-index__items li:last-child{border-bottom:1px solid var(--g-rule)}
  .ws-gram-plate figcaption{display:flex;flex-direction:column;gap:7px}
- .ws-gram-shelf__works{grid-template-columns:1fr}
- .ws-gram-shelf__works a{min-height:235px}
+ .ws-gram-shelf__works a{grid-template-columns:27px minmax(0,1fr) 18px;row-gap:8px}
+ .ws-gram-shelf__kind{grid-column:2;grid-row:1}
+ .ws-gram-shelf__works small{grid-column:1;grid-row:1}
+ .ws-gram-shelf__works strong{grid-column:2;grid-row:2}
+ .ws-gram-shelf__works p{grid-column:2;grid-row:3}
+ .ws-gram-shelf__go{grid-column:3;grid-row:1}
  .ws-grammar__colophon{display:flex;flex-direction:column;align-items:flex-start}
 }
 @media(max-width:350px){
