@@ -95,6 +95,7 @@ try {
   });
   await three.ready;
   window.__JERUSALEM3000__.setHousingBatches=value=>three.setHousingBatches(value);
+  window.__JERUSALEM3000__.inspectRoadSurfaces=()=>three.inspectRoadSurfaces();
   window.__JERUSALEM3000__.inspectHousingBatches=options=>three.inspectHousingBatches(options);
   window.__JERUSALEM3000__.inspectCityObject=id=>three.inspectCityObject(id);
   window.__JERUSALEM3000__.inspectSourceLifecycleContext=id=>three.inspectSourceLifecycleContext(id);

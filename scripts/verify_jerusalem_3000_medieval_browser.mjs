@@ -12,7 +12,7 @@ try{
  await page.getByRole('button',{name:'空間骨架對照',exact:true}).click();
  for(const phase of [13,14,15,16,17,16,15,12,11,10,17,16,13]){
   await page.locator('.j3k-scrubber').evaluate((el,value)=>{el.value=String(value);el.dispatchEvent(new Event('input',{bubbles:true}));},phase===17?17:phase+.9);
-  await page.waitForFunction(value=>{const s=window.__JERUSALEM3000__;return s.historicalTime.position===value&&s.renderDiagnostics.phase===s.historicalTime.phase;},phase===17?17:phase+.9);
+  await page.waitForFunction(value=>{const s=window.__JERUSALEM3000__;return s.historicalTime.position===value&&s.renderDiagnostics.phase===s.historicalTime.phase&&s.renderDiagnostics.cityGenerationStatus==='ready';},phase===17?17:phase+.9);
   const read=()=>page.evaluate(()=>{const s=window.__JERUSALEM3000__;return {foundation:s.inspectCityFoundation(),skeleton:s.inspectSpatialSkeleton(),inheritance:s.inheritanceState,overview:s.renderDiagnostics.cityOverview,camera:s.renderDiagnostics.terrainPresentation.camera};});
   const state=await read();assert.equal(state.foundation.owner,'independent-later-skeleton');assert.equal(state.foundation.renderer.unboundComponents,0);assert.equal(state.foundation.renderer.provisionalInheritedComponents,0);assert.equal(state.inheritance.active,false);assert.equal(state.skeleton.domains.routes.spatialObjects,({10:6,11:9,12:10,13:12,14:11,15:16,16:19,17:20})[phase]||3);assert.equal(state.overview.framePhase,phase>=16?'independent-expansion-shared-window':'independent-later-shared-window');
   if(first.has(phase))assert.deepEqual(state.skeleton.features,first.get(phase),'return must restore exact same map identities and geometry');else first.set(phase,state.skeleton.features);

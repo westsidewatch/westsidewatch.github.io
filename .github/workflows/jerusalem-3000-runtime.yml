@@ -54,6 +54,7 @@ jobs:
           node scripts/verify_jerusalem_3000_sepulchre_shells.mjs
           node scripts/verify_jerusalem_3000_ritual_service.mjs
           node scripts/verify_jerusalem_3000_western_market.mjs
+          node scripts/verify_jerusalem_3000_road_contact.mjs
           node scripts/verify_jerusalem_3000_access_joins.mjs
           node scripts/verify_jerusalem_3000_earlier_routes.mjs
           node scripts/verify_jerusalem_3000_precinct_routes.mjs
@@ -150,6 +151,7 @@ jobs:
           node scripts/verify_jerusalem_3000_async_later_browser.mjs
           node scripts/verify_jerusalem_3000_visual_hierarchy_browser.mjs
           node scripts/verify_jerusalem_3000_landmark_silhouette_browser.mjs
+          node scripts/verify_jerusalem_3000_city_streets_browser.mjs
           node scripts/verify_jerusalem_3000_terrain_readability_browser.mjs
           node scripts/verify_jerusalem_3000_main_view_browser.mjs
           node scripts/verify_jerusalem_3000_era_comparison_browser.mjs

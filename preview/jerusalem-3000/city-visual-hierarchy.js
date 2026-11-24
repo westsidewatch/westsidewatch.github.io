@@ -15,7 +15,7 @@ export function hierarchyColor(color,role,confidence){
  if(role==='uncertain')return color.clone();
  const c=color.clone(),hsl={};c.getHSL(hsl);let l=hsl.l;
  if(role==='housing')l+=.28*(1-l);
- if(role==='road')l+=.58*(1-l);
+ if(role==='road')l*=.48; // Readable stone paving; no invented street rank.
  if(role==='connector')l*=.55;
  if(role==='defense')l*=confidence==='inferred'?.78:.62;
  if(role==='core')l*=.88;

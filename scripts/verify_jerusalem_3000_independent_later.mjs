@@ -9,7 +9,7 @@ import {compileIndependentLaterSkeleton,buildIndependentLaterSkeleton} from '../
 import {createLaterMorphologyLedger} from '../preview/jerusalem-3000/later-morphology-ledger.js';
 import {TemporalCityCore} from '../preview/jerusalem-3000/temporal-city-core.js';
 import {pointInPolygon,polygonsOverlap} from '../preview/jerusalem-3000/urban-exclusion.js';
-import {roadClearancePolygons} from '../preview/jerusalem-3000/district-infill.js';
+import {roadClearancePolygons,clipBlockToEnvelope} from '../preview/jerusalem-3000/district-infill.js';
 import {collectSpatialSkeleton} from '../preview/jerusalem-3000/spatial-skeleton.js';
 const root=new URL('../preview/jerusalem-3000/',import.meta.url),json=p=>JSON.parse(fs.readFileSync(new URL(p,root))),packs=['roman-byzantine-islamic','medieval-ottoman','expansion-modern'].map(name=>json(`data/urban/${name}.skeleton.v1.json`)),data=packs[0],phases=json('data/continuous-build-timeline.json').phases;
 const material=new THREE.MeshStandardMaterial({opacity:.2,transparent:true}),materials={inferred:material},terrain={grid:{origin:data.origin},heightAtWorld:(x,z)=>100+x*.03-z*.1},core=new TemporalCityCore({phases,terrain}),publisher=createLaterMorphologyLedger(core);
@@ -29,7 +29,13 @@ for(const pack of packs)for(const phase of Object.keys(pack.phases)){
  const monuments=runtime.ledgerRecords.filter(r=>r.type==='monument');assert.equal(monuments.length,phase==='aelia'?1:phase==='byzantine'?3:4);for(const monument of monuments){assert.ok(registration.sources.includes(monument.source.urls[0]));assert.equal(monument.metadata.geometryVerified,false);assert.equal(monument.metadata.wholePhaseSimultaneity,false);const record=core.get(monument.id);assert.equal(record.predecessorIds.length,0);assert.equal(record.successorIds.length,0);assert.ok(record.lifecycle.events.every(e=>e.phase===phase||e.state==='unresolved'));assert.ok(runtime.meshes.some(m=>m.userData.cityObject.objectId===monument.id));}
  for(const block of runtime.ledgerRecords.filter(r=>r.type==='block')){assert.ok(monuments.every(r=>!polygonsOverlap(block.geometry.polygon,r.geometry.polygon)));assert.ok(registration.districts.some(d=>d.id===block.source.districtId));assert.ok(registration.reservations.every(r=>!polygonsOverlap(block.geometry.polygon,r.geometry.polygon)));assert.ok(roadClearancePolygons(registration.roads,5).every(r=>!polygonsOverlap(block.geometry.polygon,r.polygon)));}
  for(const mesh of runtime.meshes){const p=mesh.geometry.attributes.position;assert.ok(Array.from(p.array).every(Number.isFinite));if(mesh.userData.cityObject.kind==='block'){for(let i=0;i<p.count;i++){const d=p.getY(i)-terrain.heightAtWorld(p.getX(i),p.getZ(i));assert.ok(Math.abs(d-.2)<1e-4||Math.abs(d-6)<1e-4,'all coarse cell vertices follow the same slope');}const normal=mesh.geometry.attributes.normal;assert.ok(normal.getY(0)>0,'coarse cap must face up');}}
- for(const mesh of runtime.meshes.filter(m=>m.userData.cityObject.kind==='road')){const a=mesh.geometry.attributes.position;const polygon=[0,2,3,1].map(i=>({x:a.getX(i),z:a.getZ(i)}));assert.ok(monuments.every(r=>!polygonsOverlap(polygon,r.geometry.polygon)),'display roads must not cross core envelopes');}
+ for(const mesh of runtime.meshes.filter(m=>m.userData.cityObject.kind==='road')){
+  const a=mesh.geometry.attributes.position,index=mesh.geometry.index;
+  for(let i=0;i<(index?.count??a.count);i+=3){
+   const polygon=[0,1,2].map(k=>{const j=index?index.getX(i+k):i+k;return{x:a.getX(j),z:a.getZ(j)};});
+   for(const r of monuments){const intersections=clipBlockToEnvelope(polygon,r.geometry.polygon,{minArea:.00001});const area=intersections.reduce((sum,p)=>sum+Math.abs(p.reduce((s,a,i)=>{const b=p[(i+1)%p.length];return s+a.x*b.z-b.x*a.z;},0))/2,0);assert.ok(area<.01,'actual paving triangle must not occupy a core interior; touching its edge is allowed');}
+  }
+ }
  const snapshot=collectSpatialSkeleton(core,terrain,{phaseId:phase,position:phases.findIndex(p=>p.id===phase)+.9});assert.ok(snapshot.domains.districts.spatialObjects>0);assert.equal(snapshot.domains.routes.spatialObjects,registration.roads.length);assert.equal(snapshot.domains.sacredCivic.spatialObjects,monuments.length);
  const bad={...runtime,ledgerRecords:runtime.ledgerRecords.map(r=>r.type==='block'?{...r,source:{...r.source,districtId:'missing'}}:r)},isolated=new TemporalCityCore({phases,terrain}),rejected=createLaterMorphologyLedger(isolated);
  assert.throws(()=>rejected.bind(bad),/district relation missing/);assert.equal(isolated.objects.size,0);rejected.dispose();
