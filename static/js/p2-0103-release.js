@@ -566,8 +566,8 @@
   const greenAngle=-86*archive;
   emCover.style.clipPath='none';
   emCover.style.transform='perspective(6400px) rotateY('+greenAngle.toFixed(2)+'deg)';
-  emCover.style.opacity=String(move>.001&&archive<.999?1:0);
-  emCover.style.visibility=move>.001&&archive<.999?'visible':'hidden';
+  emCover.style.opacity=String(galleryTurn&&archive<.999?1:0);
+  emCover.style.visibility=galleryTurn&&archive<.999?'visible':'hidden';
   const edge=$('.emmaus__magazine-turn-edge');
   if(edge){
    edge.style.left='0';
@@ -702,13 +702,12 @@
     if(magazineUnderlay)magazineUnderlay.style.visibility='hidden';
    }
    if(magazineUnderlay){
-     // PR #1381 genuine green underleaf stays behind the first flip;
-     // the original full-size 03 #em-entry-cover hinges over Doré
-     // for the SECOND book turn, without a cropped green stripe.
+     // Retire the inner green leaf before the full-size cover takes over.
+     const showUnderleaf=move>.001&&move<.998;
      magazineUnderlay.style.transform='none';
      magazineUnderlay.style.clipPath='none';
-     magazineUnderlay.style.visibility=move>.001?'visible':'hidden';
-     magazineUnderlay.style.display=move>.001?'block':'none';
+     magazineUnderlay.style.visibility=showUnderleaf?'visible':'hidden';
+     magazineUnderlay.style.display=showUnderleaf?'block':'none';
      magazineUnderlay.style.opacity=String(smooth((move-.25)/.40));
     }
   }

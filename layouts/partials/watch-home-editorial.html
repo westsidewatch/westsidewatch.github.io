@@ -29,6 +29,13 @@
 <section class="sites-home-realm fl-first-look-host" data-realm="life" id="first-look-life" aria-label="Daylight Café"><iframe data-fl-realm-frame="life" src="/first-look-editorial/life.html?v=editorial-v1" title="Daylight Café · First Look" loading="lazy" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></section>
 </div>
 <style>
+/* The closed menu button floats over the content without painting a full-width header. */
+body.home .sites-home-nav--floating:not(:has(details[open])){
+ background:transparent!important;box-shadow:none!important;border:0!important;
+ -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+}
+body.home .sites-home-nav--floating:not(:has(details[open]))::before,
+body.home .sites-home-nav--floating:not(:has(details[open]))::after{content:none!important}
 /* P2 scroll host: isolate approved preview CSS in its iframe; no new global CSS authority. */
 body.home .ws-p2-sevenfold-host{position:relative!important;height:3330svh!important;min-height:3330svh!important;overflow:clip!important}
 body.home .ws-p2-sevenfold-host>iframe{position:sticky!important;top:0!important;display:block!important;width:100%!important;height:100svh!important;min-height:100svh!important;border:0!important}
