@@ -1,111 +1,113 @@
-/* Sevenfold Westside editorial folios — real Hugo + Chromium layout acceptance.
-   Screen captures are the acceptance evidence, not assertions of award quality. */
+/* Real-browser proof that DESIGN GRAMMAR == rendered website.
+   Tests 7 distinct compositions and one freshly generated publication route. */
 const {chromium}=require('playwright');
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
-const origin=process.env.EDITORIAL_TEST_ORIGIN||'http://127.0.0.1:4186';
-const realms=['church','journal','emmaus','olive','dawn-library','cinema','daylight-cafe'];
-const screens=[{name:'desktop',width:1440,height:900},{name:'phone',width:390,height:844},{name:'small',width:320,height:720}];
+const base=process.env.EDITORIAL_TEST_ORIGIN||'http://127.0.0.1:4186';
+const manifest=JSON.parse(fs.readFileSync('data/editorial/sevenfold.json','utf8'));
+const realms=manifest.sequence;
+const viewports=[{name:'desktop',width:1440,height:900},{name:'tablet',width:768,height:950},{name:'phone',width:390,height:844},{name:'small',width:320,height:720}];
 (async()=>{
  fs.mkdirSync('artifacts/sevenfold-editorial',{recursive:true});
  const browser=await chromium.launch({headless:true,args:['--no-sandbox','--disable-dev-shm-usage']});
- let checked=0;
+ let checks=0;
  try{
-   for(const realm of realms){
-     const sizes= screens;
-     for(const screen of sizes){
-       const page=await browser.newPage({viewport:{width:screen.width,height:screen.height},deviceScaleFactor:1});
-       const errors=[];page.on('pageerror',e=>errors.push(e.message));
-       const path='/'+realm+'/folio/';
-       const response=await page.goto(origin+path,{waitUntil:'domcontentloaded',timeout:50000});
-       assert(response&&response.status()===200,realm+' should render at '+path);
-       await page.evaluate(()=>document.fonts.ready);
-       await page.waitForFunction(()=>{
-         const frame=document.querySelector('.ws-interior__verse-composition');
-         const d=frame?.contentDocument;
-         return !!d?.body?.classList.contains('p2SevenfoldVertical')&&
-           d.querySelectorAll('#formeZh .column>.piece.zh').length>0;
-       },null,{timeout:70000});
-       const m=await page.evaluate(()=>{
-         const root=document.querySelector('.ws-interior');
-         const hero=document.querySelector('.ws-interior__opening-text');
-         const box=document.querySelector('.ws-interior__verse-frame');
-         const a=hero.getBoundingClientRect(),b=box.getBoundingClientRect();
-         const heading=document.querySelector('#ws-interior-heading');
-         const head=heading.getBoundingClientRect();
-         const frame=document.querySelector('.ws-interior__verse-composition');
-         const doc=frame.contentDocument;
-         const form=doc.querySelector('#formeZh');
-         const plate=doc.querySelector('#plateZh');
-         const p=plate.getBoundingClientRect();
-         const glyphs=[...doc.querySelectorAll('#formeZh .column>.piece')].map(x=>x.getBoundingClientRect());
-         const nav=[...document.querySelectorAll('.ws-interior__chapters a')];
-         const cards=[...document.querySelectorAll('.ws-interior__index-list a')];
-         const overlap=a.left<b.right-2&&a.right>b.left+2&&a.top<b.bottom-2&&a.bottom>b.top+2;
-         const fonts=getComputedStyle(document.querySelector('.ws-interior__title-en')||document.querySelector('.ws-interior__church-en')).fontFamily;
-         const quoteFont=getComputedStyle(doc.querySelector('#formeZh .piece.zh')).fontFamily;
-         return{
-           scrollWidth:document.documentElement.scrollWidth,
-           root:root?.dataset.wsEditorialRealm,
-           nav:nav.length,selected:nav.filter(x=>x.getAttribute('aria-current')==='page').length,
-           links:cards.length,linksValid:cards.every(x=>x.getAttribute('href')?.startsWith('/')),
-           square:Math.abs(b.width-b.height)<2,width:b.width,height:b.height,
-           overlap,headingInside:head.left>=-2&&head.right<=innerWidth+2,
-           sourceVerse:doc.querySelectorAll('#formeZh .piece.zh').length>0,
-           vertical:doc.body.classList.contains('p2SevenfoldVertical')&&
-             getComputedStyle(doc.querySelector('#formeZh .piece.zh')).writingMode==='vertical-rl',
-           unrotated:!form.style.transform.includes('rotate('),
-           glyphFit:glyphs.length>0&&glyphs.every(g=>g.left>=p.left-6&&g.right<=p.right+6&&g.top>=p.top-6&&g.bottom<=p.bottom+6),
-           font:fonts,quoteFont,
-           scope:getComputedStyle(root).getPropertyValue('--ws-interior-accent').trim(),
-           gallery:document.querySelectorAll('.ws-interior__feature-art').length,
-           imageReady:(()=>{
-             const im=document.querySelector('.ws-interior__feature-art>img');
-             return !im||im.complete&&im.naturalWidth>0;
-           })()
-         };
-       });
-       if(screen.name==='desktop')console.log('SEVENFOLD_METRICS',realm,JSON.stringify(m));
-       assert(m.root===realm&&m.nav===7&&m.selected===1,realm+' must belong to complete 7-node navigation '+JSON.stringify(m));
-       assert(m.links>=3&&m.linksValid&&m.gallery===1,realm+' needs real contents and feature');
-       assert(m.imageReady,realm+' uses an unrenderable/404 illustration '+JSON.stringify(m));
-       assert(m.square&&m.width>240&&m.headingInside,realm+' square/heading invalid '+JSON.stringify(m));
-       assert(!m.overlap,realm+' title/verse overlap '+JSON.stringify(m));
-       assert(m.vertical&&m.unrotated&&m.glyphFit,realm+' canonical Chinese vertical type clipping '+JSON.stringify(m));
-       assert(m.scrollWidth<=screen.width+3,realm+' has horizontal document overflow '+JSON.stringify(m));
-       assert(m.font.includes('Bodoni')&&m.quoteFont.includes('Chiron'),
-         realm+' failed shared OS font role '+JSON.stringify(m));
-       assert.equal(errors.length,0,realm+' browser runtime errors: '+errors.join('\n'));
-       if(screen.name!=='small'){
-         const img=page.locator('.ws-interior__feature-art img');
-         if(await img.count()){
-           await img.scrollIntoViewIfNeeded();
-           await img.evaluate(async element=>{
-             element.loading='eager';
-             if(element.decode)await element.decode();
-           });
-           const art=await img.evaluate(element=>{
-             const b=element.getBoundingClientRect(),s=getComputedStyle(element);
-             return {width:b.width,height:b.height,opacity:s.opacity,display:s.display,
-               visibility:s.visibility,src:element.currentSrc,loaded:element.naturalWidth>0};
-           });
-           assert(art.loaded&&art.width>70&&art.height>70&&art.display!=='none'&&art.visibility==='visible'&&Number(art.opacity)>.25,
-             realm+' editorial artwork must actually be visible '+JSON.stringify(art));
-           console.log('SEVENFOLD_ARTWORK',realm,JSON.stringify(art));
-         }
-         await page.locator('.ws-interior__feature-art').screenshot({
-           path:'artifacts/sevenfold-editorial/'+realm+'-'+screen.name+'-feature.png',
-           animations:'disabled',timeout:90000
-         });
-         await page.evaluate(()=>window.scrollTo(0,0));
-         await page.screenshot({path:'artifacts/sevenfold-editorial/'+realm+'-'+screen.name+'.png',fullPage:true,animations:'disabled',timeout:90000});
-         await page.locator('.ws-interior__opening').screenshot({
-           path:'artifacts/sevenfold-editorial/'+realm+'-'+screen.name+'-opening.png',animations:'disabled',timeout:90000});
-       }
-       checked++;
-       await page.close();
-     }
+  for(const realm of realms){
+   const data=JSON.parse(fs.readFileSync('data/editorial/grammar/'+realm+'.json','utf8'));
+   for(const viewport of viewports){
+    const page=await browser.newPage({viewport:{width:viewport.width,height:viewport.height},deviceScaleFactor:1});
+    const errors=[];page.on('pageerror',e=>errors.push(e.message));
+    const response=await page.goto(base+'/'+realm+'/folio/',{waitUntil:'domcontentloaded',timeout:50000});
+    assert.equal(response.status(),200,realm+' page must really exist on Hugo');
+    await page.evaluate(()=>document.fonts.ready);
+    const computed=await page.evaluate(()=>{
+      const cover=document.querySelector('.ws-gram-cover');
+      const title=document.querySelector('#ws-grammar-title');
+      const article=document.querySelector('.ws-grammar');
+      const rect=x=>x.getBoundingClientRect();
+      const t=rect(title);
+      const cv=rect(cover);
+      const blocks=[...document.querySelectorAll('.ws-grammar__body [data-type]')];
+      const img=[...cover.querySelectorAll('img')];
+      return {
+       realm:article?.dataset.wsEditorialRealm,
+       cover:cover?.dataset.mode,
+       blockTypes:blocks.map(x=>x.dataset.type),
+       width:document.documentElement.scrollWidth,
+       titleWithin:t.left>=-2&&t.right<=innerWidth+2,
+       titleClipped:t.height>0&&t.bottom<=cv.bottom+3,
+       fontZh:getComputedStyle(document.querySelector('.ws-gram-cover__title-zh')||document.querySelector('.ws-gram-cover__title-en')).fontFamily,
+       fontEn:getComputedStyle(document.querySelector('.ws-gram-cover__title-en')).fontFamily,
+       assetCount:img.length,
+       masthead:!!document.querySelector('.ws-grammar__masthead img'),
+       navAvailable:!!document.querySelector('.ws-grammar__directory summary')
+      };
+    });
+    assert.equal(computed.realm,realm);
+    assert.equal(computed.cover,data.cover.mode);
+    assert.deepEqual(computed.blockTypes,data.blocks.map(x=>x.type),realm+' markup must follow editable JSON composition order');
+    assert(computed.width<=viewport.width+3,realm+' page horizontally overflows at '+viewport.width+': '+JSON.stringify(computed));
+    assert(computed.titleWithin&&computed.titleClipped,realm+' cover title clips at '+viewport.width+': '+JSON.stringify(computed));
+    assert(computed.fontEn.includes('Bodoni'),realm+' English OS font not present');
+    assert(computed.masthead&&computed.navAvailable);
+    if(realm!=='church')assert(computed.assetCount>=1,realm+' actual cover image absent');
+    await page.locator('.ws-grammar__directory summary').click();
+    assert.equal(await page.locator('.ws-grammar__directory nav a').count(),7,'Full sevenfold navigation required');
+    assert.equal(await page.locator('.ws-grammar__directory nav a[aria-current=page]').count(),1);
+    await page.locator('.ws-grammar__directory summary').click();
+    for(const block of data.blocks){
+      const node=page.locator('#'+block.id);
+      assert.equal(await node.getAttribute('data-type'),block.type,'Block not compiled from JSON');
+      assert.equal(await node.getAttribute('data-mode'),block.mode,'Composition mode ignored');
+      if(block.type==='scripture'){
+        await node.locator('iframe').scrollIntoViewIfNeeded();
+        await page.waitForFunction(id=>{
+          const iframe=document.querySelector('#'+id+' iframe');
+          const inner=iframe?.contentDocument;
+          return inner?.body?.classList.contains('p2SevenfoldVertical')&&
+            inner.querySelectorAll('#formeZh .piece.zh').length>0;
+        },block.id,{timeout:70000});
+        const m=await node.evaluate(el=>{
+          const s=el.querySelector('.ws-gram-scripture__square').getBoundingClientRect();
+          const d=el.querySelector('iframe').contentDocument;
+          const f=d.querySelector('#formeZh');
+          return {
+            square:Math.abs(s.width-s.height)<2,
+            cjkVertical:getComputedStyle(d.querySelector('#formeZh .piece.zh')).writingMode==='vertical-rl',
+            unchanged:!f.style.transform.includes('rotate('),
+            originalFont:getComputedStyle(d.querySelector('#formeZh .piece.zh')).fontFamily.includes('Chiron')
+          };
+        });
+        assert(Object.values(m).every(Boolean),'Original scripture V60 mother-form not actually reused: '+JSON.stringify(m));
+      }
+      if(block.type==='plate'){
+        const img=node.locator('img');
+        await img.scrollIntoViewIfNeeded();
+        await img.evaluate(async x=>{x.loading='eager';if(x.decode)await x.decode()});
+        const m=await img.evaluate(x=>({loaded:x.naturalWidth>0,w:x.getBoundingClientRect().width,h:x.getBoundingClientRect().height}));
+        assert(m.loaded&&m.w>75&&m.h>75,'Editorial asset invisible even though URL exists '+JSON.stringify(m));
+      }
+    }
+    if(viewport.name==='desktop'||viewport.name==='phone'){
+      const images=page.locator('.ws-gram-cover__visual img');
+      if(await images.count())await images.first().evaluate(async img=>{img.loading='eager';if(img.decode)await img.decode()});
+      await page.evaluate(()=>window.scrollTo(0,0));
+      await page.screenshot({path:'artifacts/sevenfold-editorial/'+realm+'-'+viewport.name+'.png',fullPage:true,animations:'disabled',timeout:90000});
+      await page.locator('.ws-gram-cover').screenshot({path:'artifacts/sevenfold-editorial/'+realm+'-'+viewport.name+'-cover.png',animations:'disabled',timeout:90000});
+    }
+    assert.equal(errors.length,0,realm+' JS errors: '+errors.join('\n'));
+    if(viewport.name==='desktop')console.log('EDITORIAL_GRAMMAR_METRICS',realm,JSON.stringify(computed));
+    checks++;await page.close();
    }
-   console.log('SEVENFOLD_EDITORIAL_BROWSER_PASS',JSON.stringify({folios:realms.length,viewports:screens.map(x=>x.width),measurements:checked,screenshots:realms.length*4}));
+  }
+  const generated=await browser.newPage({viewport:{width:1280,height:850}});
+  const r=await generated.goto(base+'/journal/grammar-proof/',{waitUntil:'domcontentloaded',timeout:40000});
+  assert.equal(r.status(),200,'One-command generator must produce a *new actual website*');
+  assert.equal(await generated.locator('.ws-grammar').getAttribute('data-ws-grammar'),'journal-grammar-proof');
+  assert.match(await generated.locator('h1').textContent(),/編輯語法實作驗證/);
+  assert.equal(await generated.locator('.ws-grammar__body [data-type]').count(),2);
+  await generated.screenshot({path:'artifacts/sevenfold-editorial/generated-new-page.png',fullPage:true,animations:'disabled',timeout:90000});
+  await generated.close();
+  console.log('EDITORIAL_GRAMMAR_BROWSER_PASS',JSON.stringify({realms:7,responsiveWidths:viewports.map(x=>x.width),verifiedPages:checks+1,newRoute:'/journal/grammar-proof/'}));
  }finally{await browser.close()}
 })().catch(e=>{console.error(e.stack||e);process.exit(1)});
