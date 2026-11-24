@@ -311,7 +311,8 @@
 .ws-gram-plate{padding-block:clamp(75px,8vw,135px);margin:0}
 .ws-gram-plate__image{margin:0 auto;max-width:1180px;min-width:0;overflow:hidden}
 .ws-gram-plate img{
- display:block;width:100%;height:auto;max-height:720px;object-fit:contain
+ display:block;width:100%;height:clamp(300px,54vw,700px);max-height:720px;
+ object-fit:contain;object-position:center;min-width:0;flex:none
 }
 .ws-gram-plate figcaption{
  margin:18px auto 0;max-width:1180px;display:flex;align-items:baseline;
@@ -320,13 +321,13 @@
  font:var(--ws-weight-air) var(--ws-type-scale-ui)/1.4 var(--ws-type-display-zh)
 }
 .ws-gram-plate[data-mode="portrait-folio"] .ws-gram-plate__image{max-width:720px}
-.ws-gram-plate[data-mode="portrait-folio"] img{max-height:720px}
+.ws-gram-plate[data-mode="portrait-folio"] img{height:clamp(390px,65vw,690px);max-height:720px}
 .ws-gram-plate[data-mode="letterbox"]{
  background:var(--ws-night);color:var(--ws-paper);
  --g-rule:color-mix(in srgb,var(--ws-paper) 32%,transparent)
 }
 .ws-gram-plate[data-mode="letterbox"] .ws-gram-plate__image{max-width:950px}
-.ws-gram-plate[data-mode="letterbox"] img{max-height:440px}
+.ws-gram-plate[data-mode="letterbox"] img{height:clamp(240px,32vw,420px);max-height:440px}
 .ws-gram-plate[data-mode="letterbox"] .ws-grammar__eyebrow{color:var(--ws-morning-gold)}
 .ws-gram-conversation{display:grid;grid-template-columns:4fr 8fr;gap:clamp(26px,4vw,70px)}
 .ws-gram-conversation__body{min-width:0;margin:0}
@@ -419,7 +420,7 @@
  .ws-gram-cover[data-mode="poster"] .ws-gram-cover__title-zh{
   font-size:clamp(60px,12vw,92px)!important
  }
- .ws-gram-cover__visual img{height:auto;max-height:510px;min-height:250px}
+ .ws-gram-cover__visual img{height:clamp(240px,65vw,450px);max-height:510px;min-height:0;object-fit:contain}
  .ws-gram-cover__deck{font-size:var(--ws-type-scale-reading)}
  .ws-gram-cover__meta{margin-top:27px}
  .ws-gram-block{padding-block:65px}
@@ -467,7 +468,7 @@
  .ws-grammar__return{font-size:var(--ws-type-scale-meta)}
  .ws-gram-cover[data-mode="poster"] .ws-gram-cover__title-zh{font-size:55px!important}
  .ws-gram-cover__title-en{font-size:22px!important}
- .ws-gram-cover__visual img{min-height:160px}
+ .ws-gram-cover__visual img{height:clamp(185px,66vw,280px);min-height:0}
  .ws-gram-scripture__heading h2{font-size:var(--ws-type-scale-title-md)!important}
 }
 @media(prefers-reduced-motion:reduce){
