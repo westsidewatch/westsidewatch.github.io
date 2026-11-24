@@ -96,7 +96,8 @@
  // NOT leave Emmaus for the following P2 realm. Treat mouse-wheel vertical
  // deltas as horizontal movement on this one-row canonical book rail.
  rail.addEventListener('wheel',event=>{
-  if(event.ctrlKey)return;
+  // In the homepage embed, vertical wheel input belongs to the homepage.
+  if(event.ctrlKey||new URLSearchParams(location.search).get('embed')==='1')return;
   const unit=event.deltaMode===1?16:event.deltaMode===2?rail.clientWidth:1;
   if(Math.abs(event.deltaY)>Math.abs(event.deltaX)&&rail.scrollWidth>rail.clientWidth){
    event.preventDefault();

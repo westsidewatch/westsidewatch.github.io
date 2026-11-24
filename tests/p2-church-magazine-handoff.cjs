@@ -153,6 +153,29 @@ const data=()=>{
    });
   });
   assert.deepEqual(immediateScenes,['01','02','03','02','01']);
+  // Use actual wheel input over the pinned P2, including the opening range.
+  await homePage.evaluate(()=>{
+   const host=document.querySelector('.ws-p2-sevenfold-host');
+   window.scrollTo({top:scrollY+host.getBoundingClientRect().top,behavior:'instant'});
+  });
+  await homePage.waitForFunction(()=>{
+   const host=document.querySelector('.ws-p2-sevenfold-host');
+   const church=host.querySelector('iframe').contentDocument?.getElementById('p205-prior')?.contentDocument
+    ?.getElementById('p2-0103-original')?.contentDocument?.getElementById('proof-original')?.contentDocument;
+   return Math.abs(Number(church?.querySelector('.showcase')?.dataset.p2Progress)-.65)<.015;
+  });
+  await homePage.mouse.move(720,450);
+  for(const delta of [600,-600]){
+   await homePage.mouse.wheel(0,delta);
+   const expected=delta>0?.65+.70*(600/900)/2.65:.65;
+   await homePage.waitForFunction(expected=>{
+    const host=document.querySelector('.ws-p2-sevenfold-host');
+    const church=host.querySelector('iframe').contentDocument?.getElementById('p205-prior')?.contentDocument
+     ?.getElementById('p2-0103-original')?.contentDocument?.getElementById('proof-original')?.contentDocument;
+    return Math.abs(Number(church?.querySelector('.showcase')?.dataset.p2Progress)-expected)<.025;
+   },expected,{timeout:5000});
+  }
+  console.log('HOME opening responds to wheel and reverse wheel PASS');
   const realScroll=[
    ['church',2.65,'01',1.35,0],
    ['magazine-start',4.45,'02',3.405,.025],
