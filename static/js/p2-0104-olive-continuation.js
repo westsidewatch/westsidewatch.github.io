@@ -48,7 +48,7 @@
  // Production's home page is the only scroll authority. The approved 01–03
  // iframe keeps its exact source and receives its original published pose.
  const embedded=document.documentElement.classList.contains('p2-main-embedded');
- let hostDistance=null,hostLegacyProgress=null,hostActive=true;
+ let hostDistance=null,hostLegacyProgress=null,hostActive=true,hostSplit=0,hostCenter=null;
  const currentDistance=()=>hostDistance===null?
   clamp(-track.getBoundingClientRect().top/Math.max(1,innerHeight),0,T.end):hostDistance;
  const ease=v=>{const u=clamp(v);return u*u*(3-2*u)};
@@ -958,8 +958,25 @@
    const from=anchors[i%2];
    const targetX=leftX+(i%cols)*(posterW+gapX);
    const targetY=topY+Math.floor(i/cols)*(posterH+rowGap);
-   position(card,mix(from.x,targetX,t),mix(from.y,targetY,t),
-    mix(from.w,posterW,t),mix(from.h,posterH,t));
+   // R94: reserve the actual horizontal 05 masthead footprint, not a guessed column.
+   let x=targetX,y=targetY,w=posterW,h=posterH;
+   if(hostSplit>0&&hostCenter){
+    const bounds=folio.getBoundingClientRect(),stageRect=stage.getBoundingClientRect();
+    const cx=Number(hostCenter.x)+stageRect.left-bounds.left;
+    const cy=Number(hostCenter.y)+stageRect.top-bounds.top;
+    const half=Number(hostCenter.size),pad=g.w<700?5:12;
+    const wingCols=g.w<700?2:3,wingRows=6/wingCols;
+    const side=i%2,slot=Math.floor(i/2);
+    const left=side===0?pad:cx+half+pad;
+    const right=side===0?cx-half-pad:g.w-pad;
+    const gap=g.w<700?4:8;
+    const ww=Math.max(1,Math.min((right-left-(wingCols-1)*gap)/wingCols,(g.h-2*pad-(wingRows-1)*gap)/wingRows*.75));
+    const hh=ww*4/3,groupW=wingCols*ww+(wingCols-1)*gap,groupH=wingRows*hh+(wingRows-1)*gap;
+    const xx=left+(right-left-groupW)/2+(slot%wingCols)*(ww+gap);
+    const yy=Math.max(pad,Math.min(g.h-pad-groupH,cy-groupH/2))+Math.floor(slot/wingCols)*(hh+gap);
+    x=mix(x,xx,hostSplit);y=mix(y,yy,hostSplit);w=mix(w,ww,hostSplit);h=mix(h,hh,hostSplit);
+   }
+   position(card,mix(from.x,x,t),mix(from.y,y,t),mix(from.w,w,t),mix(from.h,h,t));
   });
   overview.style.setProperty('--index-caption-alpha',
     String(ease((t-.69)/.31)));
@@ -1420,6 +1437,8 @@
    hostDistance=clamp(distance,0,T.end);
    hostLegacyProgress=clamp(legacy);
    hostActive=event.data.active!==false;
+   hostSplit=clamp(Number(event.data.mastheadSplit)||0);
+   hostCenter=event.data.mastheadCenter||null;
    schedule();
   });
   schedule();
