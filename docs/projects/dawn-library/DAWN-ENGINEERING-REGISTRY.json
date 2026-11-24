@@ -1,0 +1,349 @@
+{
+  "schema": "dawn.library.unified-engineering-registry.v1",
+  "updated": "2026-11-22",
+  "parentIssue": 273,
+  "repository": "westsidewatch/westsidewatch.github.io",
+  "workingBranch": "work/p2-05-integration-repair-20261121",
+  "presentationPR": 1411,
+  "authority": "docs/projects/dawn-library/DAWN-UNIFIED-ENGINEERING-ROOT.md",
+  "method": "Entries are discovered lineage, not exhaustive repository audit. status separated from tests.",
+  "canonical": {
+    "path": "static/dawn-library/canonical/root.json",
+    "workCount": 203448,
+    "shards": 21,
+    "authorityBackedWorks": 201336,
+    "claimScope": "manifest"
+  },
+  "entries": [
+    {
+      "id": "genesis",
+      "kind": "governance",
+      "source": "https://github.com/westsidewatch/westsidewatch.github.io/issues/273",
+      "status": "content-verified",
+      "next": "connect related historical issues/PRs"
+    },
+    {
+      "id": "ingest",
+      "kind": "admission",
+      "source": "dore-core/knowledge/library/LIMING-LIVE-INGEST-CONTRACT-v1.md",
+      "status": "located",
+      "next": "confirm actual path, contract and current runtime"
+    },
+    {
+      "id": "formal",
+      "kind": "formal-edition",
+      "source": "docs/dawn-library-formal-edition/PHASE-01..08-AUDIT.md",
+      "branch": "dore/dawn-library-formal-edition",
+      "status": "located",
+      "next": "read each phase and runtime binding"
+    },
+    {
+      "id": "canonical",
+      "kind": "work-identity",
+      "source": "static/dawn-library/canonical/root.json",
+      "status": "content-verified",
+      "next": "Full root/shard/identity report script added; await Actions artifact and browser HTTP/rights check",
+      "auditScript": "scripts/audit-dawn-library-shards.cjs"
+    },
+    {
+      "id": "living",
+      "kind": "subject-projection",
+      "source": "static/dawn-library/living/root.json",
+      "status": "content-verified",
+      "next": "Full root/shard/identity report script added; await Actions artifact and browser HTTP/rights check",
+      "auditScript": "scripts/audit-dawn-library-shards.cjs"
+    },
+    {
+      "id": "cover",
+      "kind": "image-projection",
+      "source": "static/dawn-library/cover-preview/root.json",
+      "status": "located",
+      "next": "Full root/shard/identity report script added; await Actions artifact and browser HTTP/rights check",
+      "auditScript": "scripts/audit-dawn-library-shards.cjs"
+    },
+    {
+      "id": "cover-authority",
+      "kind": "image-verification",
+      "source": "static/dawn-library/cover-authority/authority-000001.json",
+      "branch": "dore/dawn-cover-integrity-cut",
+      "status": "located",
+      "next": "verify authority mapping and all legacy validators"
+    },
+    {
+      "id": "chinese",
+      "kind": "language",
+      "source": "static/dawn-library/chinese-collection.json",
+      "status": "located",
+      "next": "distinguish 47 public / 2994 language facet / actual translations"
+    },
+    {
+      "id": "translation",
+      "kind": "reading",
+      "source": "static/dawn-library/formal-edition/runtime/translation-surface.mjs",
+      "status": "located",
+      "next": "test materialized bilingual content, not UI contract"
+    },
+    {
+      "id": "reading-pointers",
+      "kind": "reading",
+      "source": "static/dawn-library/reading-pointer-map.json",
+      "status": "located",
+      "next": "verify licensed working reading pointers"
+    },
+    {
+      "id": "personal",
+      "kind": "reader-state",
+      "source": "static/dawn-library/formal-edition/runtime/personal-state.mjs",
+      "status": "content-verified-via-bridge",
+      "next": "verify import/export and origin migration"
+    },
+    {
+      "id": "dual-index",
+      "kind": "editorial-canon",
+      "source": "docs/projects/dawn-library/DUAL-INDEX-CANON.md",
+      "branch": "dawn/full-library-editorial-scan-v1",
+      "status": "content-verified",
+      "next": "materialize proven semantic joins in P2"
+    },
+    {
+      "id": "projection",
+      "kind": "editorial-canon",
+      "source": "docs/projects/dawn-library/EDITORIAL-PROJECTION-CANON.md",
+      "branch": "dawn/full-library-editorial-scan-v1",
+      "status": "content-verified",
+      "next": "bind projections with original Work IDs"
+    },
+    {
+      "id": "editorial-scan",
+      "kind": "research-pipeline",
+      "source": "docs/projects/dawn-library/FULL-LIBRARY-EDITORIAL-SCAN-V1.md",
+      "branch": "dawn/full-library-editorial-scan-v1",
+      "status": "content-verified",
+      "next": "reconcile P0/P1 ACTIVE P2-P6 QUEUED with newer work"
+    },
+    {
+      "id": "chinese-acquisition",
+      "kind": "ingest-pipeline",
+      "source": "docs/projects/dawn-library/CHINESE-ACQUISITION-PRODUCTION-LINE.md",
+      "branch": "dawn/full-library-editorial-scan-v1",
+      "status": "located",
+      "next": "inspect workflow and admission evidence"
+    },
+    {
+      "id": "iiif",
+      "kind": "image-runtime",
+      "source": "dore_core/capabilities/surface_mounts.py",
+      "branch": "dawn/step5-iiif-runtime-mount",
+      "status": "located",
+      "next": "inspect 4 ahead commits and IIIF tests"
+    },
+    {
+      "id": "visual-graph",
+      "kind": "visual-governance",
+      "branch": "dawn-library-visual-graph-phase1",
+      "status": "located",
+      "next": "trace rights/source/representation interfaces"
+    },
+    {
+      "id": "jerusalem",
+      "kind": "curation",
+      "source": "static/dawn-library/p2-exhibitions/jerusalem-3000.json",
+      "branch": "dawn/jerusalem-3000-curated-v2",
+      "status": "located",
+      "next": "validate 18 scenes with work/source IDs"
+    },
+    {
+      "id": "p2",
+      "kind": "surface",
+      "source": "static/experiments/p2-0105-dawn-preview.html",
+      "branch": "work/p2-05-integration-repair-20261121",
+      "pr": 1411,
+      "status": "integrated-not-approved",
+      "next": "browser regression and art acceptance"
+    },
+    {
+      "id": "p2-gallery",
+      "kind": "adapter",
+      "source": "static/js/p2-dawn-canonical-gallery.mjs",
+      "branch": "work/p2-05-integration-repair-20261121",
+      "status": "integrated-static-validated",
+      "next": "Real-browser QA of global indexed search including zero results, race conditions, book opening, pagination restore; index coverage not exhaustive corpus scan",
+      "evidence": {
+        "commit": "adbc0829f655a899c964dc5b66fd9784dcb0e360",
+        "glueCommit": "562d67bfca8fe8986c6e129e08db5a0c98c56310",
+        "syntax": "module/main script PASS by Function parse",
+        "browser": "NOT VERIFIED"
+      }
+    },
+    {
+      "id": "p2-personal",
+      "kind": "adapter",
+      "source": "static/js/p2-dawn-personal-bridge.mjs",
+      "branch": "work/p2-05-integration-repair-20261121",
+      "status": "content-verified",
+      "next": "cross-origin and complete user journeys"
+    },
+    {
+      "id": "dore-art",
+      "kind": "research",
+      "source": "docs/design/DAWN-DORÉ-EXPLORATION-20261122.md",
+      "branch": "work/p2-05-integration-repair-20261121",
+      "status": "content-verified",
+      "next": "source-rights and visual acceptance"
+    },
+    {
+      "id": "daily-bread",
+      "kind": "consumer",
+      "source": "https://github.com/westsidewatch/westsidewatch.github.io/issues/278",
+      "status": "located",
+      "next": "retain as #273 subproject"
+    },
+    {
+      "id": "historical-21k",
+      "kind": "secondary-catalogue",
+      "source": "static/dawn-library/catalogue/index.json",
+      "status": "located",
+      "next": "keep distinct from 203448 Work substrate"
+    },
+    {
+      "id": "p2-second-layer-workline",
+      "kind": "implementation-plan",
+      "source": "docs/projects/dawn-library/P2-SECOND-LAYER-COLLECTION-WORKLINE-20261122.md",
+      "branch": "work/p2-05-integration-repair-20261121",
+      "status": "content-planned",
+      "next": "Second layer second pass: real category membership instead of lexical search; visual and interaction QA"
+    },
+    {
+      "id": "p2-living-membership",
+      "kind": "original-living-adapter",
+      "source": "static/js/p2-dawn-living-membership.mjs",
+      "branch": "work/p2-05-integration-repair-20261121",
+      "status": "integrated-static-validated",
+      "evidence": {
+        "adapterCommit": "d1c574f8d69391b6d3e88fe0b2fc60f953dcca6c",
+        "wiringCommit": "d36d4ed13996e676ae1e7e543971162767ca01b6",
+        "test": "mocked V8 runtime PASS",
+        "browser": "NOT VERIFIED"
+      },
+      "next": "Cloudflare desktop/mobile browser test, true 21 shard membership verification, class page returns"
+    },
+    {
+      "id": "dawn-shard-integrity-audit",
+      "kind": "read-only-quality-gate",
+      "source": "scripts/audit-dawn-library-shards.cjs",
+      "workflow": ".github/workflows/dawn-library-shard-integrity.yml",
+      "branch": "work/p2-05-integration-repair-20261121",
+      "status": "full-ci-verified-with-warnings",
+      "evidence": {
+        "sampledCovers": {
+          "000001": {
+            "manifest": 500,
+            "shard": 463,
+            "items": 463
+          },
+          "000002": {
+            "manifest": 500,
+            "shard": 500,
+            "items": 499
+          },
+          "000003": {
+            "manifest": 500,
+            "shard": 500,
+            "items": 498
+          },
+          "000010": {
+            "manifest": 500,
+            "shard": 500,
+            "items": 498
+          },
+          "000407": {
+            "manifest": 448,
+            "shard": 448,
+            "items": 425
+          }
+        },
+        "livingShard21": {
+          "workRefs": 3448,
+          "newTestamentLeaf": 519,
+          "adapterMatching": 8
+        },
+        "fullWorkflowRun": "v1 verified WARN 0 errors; v2 expanded reconciliation re-run pending",
+        "runId": 45001795311,
+        "runUrl": "https://github.com/westsidewatch/westsidewatch.github.io/actions/runs/45001795311",
+        "baseline": {
+          "canonical": {
+            "shards": 21,
+            "records": 203448,
+            "duplicateIds": 0,
+            "shaMismatches": 0
+          },
+          "living": {
+            "shards": 21,
+            "records": 203448,
+            "classified": 54883,
+            "duplicateIds": 0,
+            "shaMismatches": 0
+          },
+          "covers": {
+            "shards": 407,
+            "records": 202428,
+            "withImage": 200417,
+            "placeholder": 2011,
+            "duplicateIds": 0,
+            "hashMismatches": 335,
+            "countDriftShards": 335,
+            "missingVsCanonical": 1020
+          }
+        },
+        "v2Run": {
+          "id": 45001956068,
+          "url": "https://github.com/westsidewatch/westsidewatch.github.io/actions/runs/45001956068",
+          "artifactId": 14746081666,
+          "status": "WARN",
+          "errors": 0,
+          "missingWorkIdsCount": 1020,
+          "corrections": 335
+        }
+      },
+      "next": "Use v2 exact Work IDs and corrections to review source-generated repair candidate; report available"
+    },
+    {
+      "id": "dawn-cover-reconciliation-stage",
+      "kind": "staged-canonical-repair",
+      "source": "scripts/stage-dawn-cover-reconciliation.cjs",
+      "branch": "work/p2-05-integration-repair-20261121",
+      "status": "staging-ci-verified-not-deployed",
+      "evidence": {
+        "runId": 45003268137,
+        "runUrl": "https://github.com/westsidewatch/westsidewatch.github.io/actions/runs/45003268137",
+        "artifactId": 14746433995,
+        "canonicalWorks": 203448,
+        "originalPreviewRows": 202428,
+        "missingWorks": 1020,
+        "newShards": 3,
+        "proposedShards": 410,
+        "proposedTotal": 203448,
+        "declaredImagesForMissing": 0
+      },
+      "next": "Promote only after checking staged root/shard hash, same-Work images, full cursor boundary, Cloudflare visual QA; keep original 407 source files"
+    }
+  ],
+  "auditGates": [
+    "historical-branch-and-pr-inventory",
+    "canonical-shard-hash-and-unique-work-id",
+    "subject-membership-joins",
+    "cover-shard-integrity-and-rights",
+    "translation-and-reading-materialization",
+    "personal-state-cross-origin",
+    "curation-provenance",
+    "p2-visual-regression",
+    "cloudflare-preview"
+  ],
+  "nonNegotiables": [
+    "never-use-Sites",
+    "never-overwrite-protected-branches",
+    "never-merge-P2-before-visual-approval",
+    "never-duplicate-canonical-Work",
+    "never-claim-coverage-from-manifest-alone"
+  ]
+}

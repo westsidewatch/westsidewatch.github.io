@@ -6,12 +6,24 @@
 <meta name="robots" content="noindex,nofollow">
 <title>黎明書局 · Westside Watch</title>
 <link rel="stylesheet" href="/css/westside-design-os.css">
-<link rel="stylesheet" href="/css/p2-0105-dawn-continuation.css?v=r36-bookstore-repair-20261121">
+<link rel="stylesheet" href="/css/p2-0105-dawn-integrated.css?v=r90-colour-separation-merci-20261123">
 </head>
 <body data-ws-scope="p2">
 <main class="p205-track" id="p205-track" aria-label="Westside Watch 連續閱讀">
  <div class="p205-stage" id="p205-stage">
-  <iframe id="p205-prior" title="Westside Watch" src="/experiments/p2-0104-olive-continuation.html?embed=1&amp;v=20261120-04-protected" allow="autoplay" loading="eager"></iframe>
+  <!-- The complete 04 printed folio departs before either 05 image appears.
+       Shared original topography is a short visual registration bridge. -->
+  <div class="p205-engraving-bridge" id="p205-engraving-bridge" aria-hidden="true">
+   <div class="p205-engraving-bridge__paper"></div>
+   <div class="p205-engraving-bridge__history-pair" aria-hidden="true">
+    <img class="p205-engraving-bridge__history" id="p205-engraving-history" alt="" decoding="async">
+    <img class="p205-engraving-bridge__history" id="p205-engraving-history-right" alt="" decoding="async">
+   </div>
+   <div class="p205-engraving-bridge__botanical"></div>
+   <div class="p205-engraving-bridge__terrain"></div>
+   <div class="p205-engraving-bridge__register"></div>
+  </div>
+  <iframe id="p205-prior" title="Westside Watch" src="/experiments/p2-0104-olive-continuation.html?embed=1&amp;v=r95-speaker-clearance" allow="autoplay" loading="eager"></iframe>
   <section class="dawn-realm" id="dawn-realm" aria-labelledby="dawn-heading" inert aria-hidden="true">
    <div class="dawn-realm__half dawn-realm__half--left" aria-hidden="true"></div>
    <div class="dawn-realm__half dawn-realm__half--right" aria-hidden="true"></div>
@@ -81,45 +93,116 @@
   </section>
   <div class="dawn-handoff" id="dawn-handoff" aria-hidden="true"></div>
   <section class="dawn-second" id="dawn-second" data-ws-scope="dawn-library" inert aria-hidden="true">
-   <nav class="dawn-second__global-nav" aria-label="黎明書局導航">
-    <button type="button" class="dawn-second__return" id="dawn-return" aria-label="返回黎明書局第一層"><span aria-hidden="true">←</span><span>返回黎明書局</span><span class="dawn-second__return-en" aria-hidden="true">BACK TO DAWN LIBRARY</span></button>
-    <button type="button" class="dawn-second__all-works" id="dawn-open-catalogue-top">全部館藏 <span aria-hidden="true">↗</span></button>
+   <nav class="dawn-second__global-nav" aria-label="返回上一層">
+    <button type="button" class="dawn-second__return" id="dawn-return" aria-label="返回黎明書局第一層">
+      <span class="dawn-second__return-mark" aria-hidden="true">↖</span>
+      <span class="dawn-second__nav-zh">返回</span>
+    </button>
    </nav>
    <div class="dawn-second__press dawn-second__press--motherform" aria-label="經文鉛字母版 · 詩篇 119:18">
-    <iframe class="dawn-second__motherform" title="Scripture Studio · 黎明書局縱橫鉛字經文母版" src="/experiments/scripture-studio-motherform-live.html?embed=1&amp;section=05&amp;layout=dawn-spread&amp;r36=1" loading="eager"></iframe>
+    <iframe class="dawn-second__motherform" title="Scripture Studio · 黎明書局縱橫鉛字經文母版" src="/experiments/scripture-studio-motherform-live.html?embed=1&amp;section=05&amp;layout=dawn-spread&amp;r38=1" loading="eager"></iframe>
     <div class="dawn-press-landing dawn-press-landing--zh" id="dawn-plate-zh" aria-hidden="true"></div>
     <div class="dawn-press-landing dawn-press-landing--en" id="dawn-plate-en" aria-hidden="true"></div>
    </div>
    <section class="dawn-wall dawn-reading-room" id="dawn-wall" aria-label="黎明書局閱讀室">
     <div class="dawn-wall__grid dawn-wall__grid--curated" id="dawn-wall-grid" aria-live="polite">
       <button type="button" class="dawn-wall__tile dawn-wall__tile--portal dawn-wall__tile--stars dawn-feature" data-dawn-portal="三晨星" aria-label="探索三晨星館藏">
-        <span class="dawn-feature__art" aria-hidden="true"><img src="https://archive.org/services/img/theseweregodspeo0000mart_b2l3" alt="" loading="lazy" decoding="async" class="dawn-feature__cover dawn-feature__cover--1"><img src="https://archive.org/services/img/calltochristianc0000shel" alt="" loading="lazy" decoding="async" class="dawn-feature__cover dawn-feature__cover--2"><img src="https://archive.org/services/img/jesushischurchst0000rnew_q8m2" alt="" loading="lazy" decoding="async" class="dawn-feature__cover dawn-feature__cover--3"></span>
+        <span class="dawn-feature__art" aria-hidden="true"><span class="dawn-feature__plate dawn-feature__cover--1"><span class="dawn-feature__plate-title">The Future of New Testament Theology</span></span><span class="dawn-feature__plate dawn-feature__cover--2"><span class="dawn-feature__plate-title">Skeppingsorg</span></span><span class="dawn-feature__plate dawn-feature__cover--3"><span class="dawn-feature__plate-title">Biblical Texts in Digitalization</span></span></span>
         <span class="dawn-feature__editorial"><small>01 / READING</small><span class="dawn-feature__titles"><strong>三晨星</strong><em>THE THREE MORNING STARS</em></span><span class="dawn-feature__open">EXPLORE <span aria-hidden="true">↗</span></span></span>
       </button>
       <button type="button" class="dawn-wall__tile dawn-wall__tile--portal dawn-wall__tile--curation dawn-feature" data-dawn-portal="策展集" aria-label="探索策展集館藏">
-        <span class="dawn-feature__art" aria-hidden="true"><img src="https://archive.org/services/img/randmcnallybible0000krae_e6d4" alt="" loading="lazy" decoding="async" class="dawn-feature__cover dawn-feature__cover--1"><img src="https://archive.org/services/img/gri_33125008626323" alt="" loading="lazy" decoding="async" class="dawn-feature__cover dawn-feature__cover--2"><img src="https://archive.org/services/img/gri_33125008626554" alt="" loading="lazy" decoding="async" class="dawn-feature__cover dawn-feature__cover--3"></span>
+        <span class="dawn-feature__art" aria-hidden="true"><span class="dawn-feature__plate dawn-feature__cover--1"><span class="dawn-feature__plate-title">Peregrinatio in Terram Sanctam</span></span><span class="dawn-feature__plate dawn-feature__cover--2"><span class="dawn-feature__plate-title">Jewish Antiquities</span></span><span class="dawn-feature__plate dawn-feature__cover--3"><span class="dawn-feature__plate-title">Madaba Map</span></span></span>
         <span class="dawn-feature__editorial"><small>02 / EXHIBITIONS</small><span class="dawn-feature__titles"><strong>策展集</strong><em>CURATED EXHIBITIONS</em></span><span class="dawn-feature__open">EXPLORE <span aria-hidden="true">↗</span></span></span>
       </button>
       <button type="button" class="dawn-wall__tile dawn-wall__tile--portal dawn-wall__tile--spectrum dawn-feature" data-dawn-portal="光譜" aria-label="探索光譜館藏">
-        <span class="dawn-feature__art" aria-hidden="true"><img src="https://standardebooks.org/ebooks/edgar-rice-burroughs/a-fighting-man-of-mars/downloads/cover.jpg" alt="" loading="lazy" decoding="async" class="dawn-feature__cover dawn-feature__cover--1"><img src="https://standardebooks.org/ebooks/italo-svevo/confessions-of-zeno/beryl-de-zoete/downloads/cover.jpg" alt="" loading="lazy" decoding="async" class="dawn-feature__cover dawn-feature__cover--2"><img src="https://standardebooks.org/ebooks/arthur-conan-doyle/sir-nigel/downloads/cover.jpg" alt="" loading="lazy" decoding="async" class="dawn-feature__cover dawn-feature__cover--3"></span>
+        <span class="dawn-feature__art" aria-hidden="true"><span class="dawn-feature__plate dawn-feature__cover--1"><span class="dawn-feature__plate-title">The Samaritan Pentateuch</span></span><span class="dawn-feature__plate dawn-feature__cover--2"><span class="dawn-feature__plate-title">The Canon of the Hebrew Bible</span></span><span class="dawn-feature__plate dawn-feature__cover--3"><span class="dawn-feature__plate-title">Post-Biblical History</span></span></span>
         <span class="dawn-feature__editorial"><small>03 / SPECTRUM</small><span class="dawn-feature__titles"><strong>光譜</strong><em>THE SPECTRUM</em></span><span class="dawn-feature__open">EXPLORE <span aria-hidden="true">↗</span></span></span>
       </button>
+      <section class="dawn-reading-list__series" aria-labelledby="dawn-reading-list-heading">
+        <div class="dawn-reading-list__series-grid">
+          <div class="dawn-reading-list__marker">
+            <span class="dawn-reading-list__marker-kicker" lang="en">READING LISTS · ISSUE 01</span>
+            <h2 id="dawn-reading-list-heading">書單</h2>
+            <p>從一個問題開始，循著一組作品閱讀，讓不同作者彼此對話。</p>
+            <div class="dawn-reading-list__marker-count"><strong>03</strong><span>份書單</span><strong>22</strong><span>部作品</span></div>
+          </div>
+          <button type="button" class="dawn-wall__tile dawn-reading-list__tile dawn-reading-list__tile--gospel" data-dawn-reading-list="gospel-essentials" aria-label="閱讀書單：福音必讀，六部作品">
+            <span class="dawn-reading-list__serial">書單 <span lang="en">/ 01</span></span>
+            <span class="dawn-reading-list__face" aria-hidden="true"><span class="dawn-reading-list__quantity" lang="en">06</span><i>WORKS / 作品</i></span>
+            <span class="dawn-reading-list__caption"><strong>福音必讀</strong><small>信仰與門徒生活 <span aria-hidden="true">↗</span></small></span>
+          </button>
+          <button type="button" class="dawn-wall__tile dawn-reading-list__tile dawn-reading-list__tile--life" data-dawn-reading-list="inner-life" aria-label="閱讀書單：內在生活，九部作品">
+            <span class="dawn-reading-list__serial">書單 <span lang="en">/ 02</span></span>
+            <span class="dawn-reading-list__face" aria-hidden="true"><span class="dawn-reading-list__quantity" lang="en">09</span><i>WORKS / 作品</i></span>
+            <span class="dawn-reading-list__caption"><strong>內在生活</strong><small>祈禱與日常操練 <span aria-hidden="true">↗</span></small></span>
+          </button>
+          <button type="button" class="dawn-wall__tile dawn-reading-list__tile dawn-reading-list__tile--history" data-dawn-reading-list="church-history" aria-label="閱讀書單：教會歷史，七部作品">
+            <span class="dawn-reading-list__serial">書單 <span lang="en">/ 03</span></span>
+            <span class="dawn-reading-list__face" aria-hidden="true"><span class="dawn-reading-list__quantity" lang="en">07</span><i>WORKS / 作品</i></span>
+            <span class="dawn-reading-list__caption"><strong>教會歷史</strong><small>歷史與原始見證 <span aria-hidden="true">↗</span></small></span>
+          </button>
+          <div class="dawn-reading-list__featured-caption" aria-hidden="true">
+            <span lang="en">EDITOR'S PICKS</span><strong>精選書影</strong><small>四部代表作品 <span aria-hidden="true">↗</span></small>
+          </div>
+        </div>
+        <div class="dawn-reading-list__featured" id="dawn-reading-list-featured" aria-label="書單精選圖像：點擊圖像展開作品導讀">
+          <span class="dawn-reading-list__featured-placeholder">從本期書單精選</span>
+        </div>
+      </section>
+      <div class="dawn-wall__collection-divider" aria-label="館藏選讀"><strong>館藏選讀</strong><span lang="en">FROM THE COLLECTION</span></div>
     </div>
-    <div class="dawn-wall__tail"><button type="button" id="dawn-open-catalogue">全部館藏 <span aria-hidden="true">＋</span></button></div>
+    <section class="dawn-reading-room__departments" aria-labelledby="dawn-departments-heading" hidden>
+      <div class="dawn-reading-room__departments-intro">
+        <span>07 <span aria-hidden="true">/</span> SUBJECTS</span>
+        <h3 id="dawn-departments-heading"><span lang="en">SEVEN SUBJECTS</span><strong>七大學科</strong></h3>
+        <p>循著七個知識領域走入館藏，從聖經、歷史、神學到門徒生活。</p>
+      </div>
+      <nav class="dawn-reading-room__department-grid" id="dawn-department-grid" aria-label="七大學科館藏入口">
+        <p class="dawn-reading-room__department-loading">載入原館藏學科中…</p>
+      </nav>
+      <p class="dawn-reading-room__department-status" id="dawn-department-status" role="status" aria-live="polite"></p>
+    </section>
+    <div class="dawn-wall__tail">
+     <button type="button" id="dawn-open-catalogue">全部館藏 <span aria-hidden="true">＋</span></button>
+     <button type="button" class="dawn-wall__personal" id="dawn-personal-open" aria-haspopup="dialog" aria-controls="dawn-personal-dialog">我的書房 <span id="dawn-personal-count">0</span></button>
+    </div>
    </section>
-   <section class="dawn-catalogue" id="dawn-catalogue" aria-labelledby="dawn-catalogue-title" hidden>
+   <section class="dawn-catalogue" id="dawn-catalogue" aria-label="黎明書局館藏" hidden>
     <button type="button" class="dawn-catalogue__back" id="dawn-close-catalogue">返回館藏</button>
     <header class="dawn-catalogue__heading">
-     <div><span>DAWN LIBRARY</span><h2 id="dawn-catalogue-title">THE COLLECTION</h2><p id="dawn-catalogue-focus" aria-live="polite"></p></div>
+     <div><span>DAWN LIBRARY</span><h2 id="dawn-catalogue-title"></h2><p id="dawn-catalogue-focus" aria-live="polite"></p></div>
      <div class="dawn-catalogue__total"><output id="dawn-total">—</output><span>館藏記錄</span></div>
     </header>
+    <nav class="dawn-catalogue__primary-nav" aria-label="館藏主要分類">
+     <button type="button" id="dawn-primary-categories">全部分類</button>
+     <button type="button" id="dawn-primary-chinese">中文圖書</button>
+     <button type="button" id="dawn-primary-records">全部書目</button>
+     <button type="button" id="dawn-primary-historical">歷史古籍</button>
+    </nav>
     <div class="dawn-catalogue__introduction" id="dawn-catalogue-introduction" hidden></div>
+    <section class="dawn-catalogue__classification" id="dawn-classification" aria-label="圖書分類" hidden>
+     <nav class="dawn-classification__breadcrumbs" id="dawn-classification-path" aria-label="館藏分類路徑"></nav>
+     <div class="dawn-catalogue__classification-tree" id="dawn-classification-tree"></div>
+     <section class="dawn-classification__results" id="dawn-classification-results" hidden aria-live="polite"></section>
+     <div class="dawn-catalogue__facets" id="dawn-classification-facets"></div>
+    </section>
     <nav class="dawn-catalogue__nav" aria-label="黎明書局內容入口">
-     <label>館藏搜尋 <input id="dawn-search" type="search" placeholder="按書名或作者搜尋已載入的館藏" autocomplete="off"></label>
+     <label>館藏搜尋 <input id="dawn-search" type="search" placeholder="搜尋全館索引的書名與作者" autocomplete="off"></label>
     </nav>
     <ol class="dawn-catalogue__works dawn-catalogue__works--sleeves" id="dawn-works" aria-live="polite"></ol>
     <div class="dawn-catalogue__more"><button type="button" id="dawn-prev">上一頁</button><button type="button" id="dawn-more">下一頁館藏</button><output id="dawn-page-status" aria-live="polite"></output></div>
    </section>
+   <dialog class="dawn-personal" id="dawn-personal-dialog" aria-labelledby="dawn-personal-heading">
+    <header class="dawn-personal__head"><h2 id="dawn-personal-heading">我的書房</h2><button type="button" id="dawn-personal-close" aria-label="關閉我的書房">關閉</button></header>
+    <nav class="dawn-personal__actions" aria-label="個人閱讀紀錄">
+     <button type="button" id="dawn-personal-view">保存目前書架</button>
+     <button type="button" id="dawn-personal-trail" aria-pressed="false">開始記錄閱讀足跡</button>
+     <button type="button" id="dawn-personal-export">匯出我的書房</button>
+     <label class="dawn-personal__import">匯入我的書房<input type="file" id="dawn-personal-import" accept="application/json,.json"></label>
+    </nav>
+    <p id="dawn-personal-status" role="status" aria-live="polite"></p>
+    <div id="dawn-personal-items"></div>
+   </dialog>
    <section class="dawn-book-detail" id="dawn-book-detail" aria-labelledby="dawn-book-title" hidden>
     <div class="dawn-book-detail__nav">
      <button type="button" id="dawn-book-back" class="dawn-book-detail__back">← 返回館藏</button>
@@ -135,6 +218,7 @@
       <h2 id="dawn-book-title"></h2>
       <p id="dawn-book-author" class="dawn-book-detail__author"></p>
       <div class="dawn-book-detail__text" id="dawn-book-text" aria-live="polite"></div>
+      <button type="button" class="dawn-book-detail__bookmark" id="dawn-book-bookmark" disabled>收藏到我的書房</button>
       <a id="dawn-book-source" class="dawn-book-detail__source" target="_blank" rel="noopener noreferrer" hidden>閱讀原書 ↗</a>
       <p class="dawn-book-detail__return-hint" id="dawn-book-source-hint" hidden>原書於新分頁開啟。</p>
      </article>
@@ -143,6 +227,8 @@
   </section>
  </div>
 </main>
-<script src="/js/p2-0105-dawn-continuation.js?v=r36-bookstore-repair-20261121"></script>
+<script src="/js/p2-0105-dawn-continuation.js?v=r96-opposed-merci"></script>
+<script type="module" src="/js/p2-dawn-personal-bridge.mjs?v=r85-no-giant-top-nav-20261123"></script>
+<script type="module" src="/js/p2-dawn-editorial-art.mjs?v=r85-no-giant-top-nav-20261123"></script>
 </body>
 </html>

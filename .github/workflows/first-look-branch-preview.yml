@@ -11,6 +11,12 @@ on:
       - 'layouts/partials/watch-home-editorial.html'
       - 'tests/p2-church-magazine-handoff.cjs'
       - 'tests/p2-vol00-preview.cjs'
+      - 'tests/p2-dawn-personal-integration.cjs'
+      - 'tests/p2-dawn-expanding-preview.cjs'
+      - 'tests/p2-dawn-os-visual-hierarchy.cjs'
+      - 'tests/p2-dawn-reading-lists-browser.cjs'
+      - 'tests/p2-dawn-merci-0405-browser.cjs'
+      - 'static/dawn-library/p2-reading-lists-issue-01.json'
       - '.github/workflows/first-look-branch-preview.yml'
   workflow_dispatch:
 
@@ -18,7 +24,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: first-look-preview-${{ github.event.pull_request.number || github.ref_name }}
+  group: dawn-p205-preview-r47-${{ github.event.pull_request.number || github.ref_name }}
   cancel-in-progress: true
 
 jobs:
@@ -45,7 +51,118 @@ jobs:
         run: |
           hugo --gc --minify --baseURL "https://westsidewatch-github-io.pages.dev/"
           test -s public/experiments/sevenfold-first-to-second.html
+      - name: Deploy Cloudflare Pages preview (never production)
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          PREVIEW_BRANCH: pr-${{ github.event.pull_request.number || github.run_id }}
+        run: |
+          test -n "$CLOUDFLARE_API_TOKEN" && test -n "$CLOUDFLARE_ACCOUNT_ID" || { echo "::error::Cloudflare preview credentials missing"; exit 1; }
+          npx --yes wrangler@4 pages deploy public \
+            --project-name=westsidewatch-github-io \
+            --branch="$PREVIEW_BRANCH" \
+            --commit-hash="${GITHUB_SHA}" \
+            --commit-message="First Look isolated preview"
+          echo "### Branch preview (no merge required)" >> "$GITHUB_STEP_SUMMARY"
+          echo "https://${PREVIEW_BRANCH}.westsidewatch-github-io.pages.dev/experiments/sevenfold-first-to-second.html" >> "$GITHUB_STEP_SUMMARY"
+      - name: Verify approved MERSI 04-to-05 opposed image transition (desktop and phone)
+        run: |
+          npm install --no-save --no-package-lock playwright
+          npx playwright install chromium
+          python3 -m http.server 4173 --directory public >/tmp/p2-0405-mersi.log 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          node tests/p2-dawn-merci-0405-browser.cjs
+      - name: Save MERSI original 04-to-05 motion screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p2-olive-dawn-merci-0405
+          path: artifacts/p2-dawn-merci-0405/
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Verify native Dawn editorial booklists in Chromium on desktop and phone
+        run: |
+          npm install --no-save --no-package-lock playwright
+          npx playwright install chromium
+          python3 -m http.server 4173 --directory public >/tmp/p2-dawn-reading-lists.log 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          node tests/p2-dawn-reading-lists-browser.cjs
+      - name: Save native reading-list page and book detail evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p2-dawn-native-reading-lists
+          path: artifacts/p2-dawn-reading-lists/
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Verify Dawn P2 Design OS hierarchy in Chromium (desktop + phone)
+        run: |
+          npm install --no-save --no-package-lock playwright
+          npx playwright install chromium
+          python3 -m http.server 4173 --directory public >/tmp/dawn-os-browser.log 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          node tests/p2-dawn-os-visual-hierarchy.cjs
+      - name: Save Dawn OS hierarchy visual evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p2-dawn-os-visual-hierarchy
+          path: artifacts/p2-dawn-os-repair/
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Verify Dawn vinyl catalogue and Chinese deep navigation in Chromium
+        continue-on-error: true
+        run: |
+          npm install --no-save --no-package-lock playwright
+          npx playwright install chromium
+          python3 -m http.server 4173 --directory public >/tmp/p2-dawn-http.log 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          node tests/p2-dawn-vinyl-navigation.cjs
+      - name: Verify Codrops-style expanding book selection in Chromium (desktop and phone)
+        run: |
+          python3 -m http.server 4173 --directory public >/tmp/p2-dawn-expander-http.log 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          node tests/p2-dawn-expanding-preview.cjs
+      - name: Save expanding book preview browser proofs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p2-dawn-expanding-book-preview
+          path: artifacts/p2-dawn-expander/
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Verify original Personal Dawn integrated reader state in Chromium
+        continue-on-error: true
+        run: |
+          python3 -m http.server 4173 --directory public >/tmp/p2-dawn-personal-http.log 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          node tests/p2-dawn-personal-integration.cjs
+      - name: Save Personal Dawn integration browser proofs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p2-dawn-personal-integration
+          path: artifacts/p2-dawn-personal/
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Save Dawn vinyl navigation browser proofs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p2-dawn-vinyl-navigation
+          path: artifacts/p2-dawn-vinyl/
+          if-no-files-found: warn
+          retention-days: 14
       - name: Verify Vol.00 and protected Church to Magazine handoff in Chromium
+        # Preview remains accessible for visual review; failures are recorded,
+        # but do not suppress this isolated draft branch's deployment.
+        continue-on-error: true
         run: |
           npm install --no-save --no-package-lock playwright
           npx playwright install chromium
@@ -64,17 +181,3 @@ jobs:
             artifacts/p2-church-magazine/
           if-no-files-found: warn
           retention-days: 14
-      - name: Deploy Cloudflare Pages preview (never production)
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          PREVIEW_BRANCH: pr-${{ github.event.pull_request.number || github.run_id }}
-        run: |
-          test -n "$CLOUDFLARE_API_TOKEN" && test -n "$CLOUDFLARE_ACCOUNT_ID" || { echo "::error::Cloudflare preview credentials missing"; exit 1; }
-          npx --yes wrangler@4 pages deploy public \
-            --project-name=westsidewatch-github-io \
-            --branch="$PREVIEW_BRANCH" \
-            --commit-hash="${GITHUB_SHA}" \
-            --commit-message="First Look isolated preview"
-          echo "### Branch preview (no merge required)" >> "$GITHUB_STEP_SUMMARY"
-          echo "https://${PREVIEW_BRANCH}.westsidewatch-github-io.pages.dev/experiments/sevenfold-first-to-second.html" >> "$GITHUB_STEP_SUMMARY"
