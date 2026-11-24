@@ -88,6 +88,7 @@ const data=()=>{
      // Above the 75% threshold the normalized input is 0..1.
      return Math.abs(v-target)<.014;
     },value,{timeout:5000});
+    await page.waitForTimeout(250);
     const m=await page.evaluate(data);
     const faults=[];
     if(!m.originalWater||!m.originalChurchSchedule||m.originalDoorCount!==2)
@@ -113,7 +114,7 @@ const data=()=>{
     if(errors.length)faults.push('PAGE_ERROR '+errors.join('; '));
     await page.screenshot({path:path.join(out,screen+'-'+label+'.png'),animations:'allow'});
     results.push({id:screen+'-'+label,metrics:m,errors:faults});
-    console.log(screen,label,faults.length?faults:'PASS');
+    console.log(screen,label,faults.length?{faults,metrics:m}:'PASS');
    }
    await page.close();
   }
@@ -224,10 +225,11 @@ const data=()=>{
     await dawn.locator('#dawn-close-catalogue').click();
     await dawn.locator('#dawn-return').click();
     await dawn.locator('#dawn-twins').waitFor({state:'visible'});
-    await seek(4.25);
+    await seek(4.35);
     const church=dawn.frameLocator('#p205-prior').frameLocator('#p2-0103-original').frameLocator('#proof-original');
     const link=church.locator('.church-folio__identity-link');
     await link.waitFor({state:'visible',timeout:30000});
+    await reader.waitForFunction(()=>{const d=document.querySelector('.ws-p2-sevenfold-host>iframe')?.contentDocument?.querySelector('#p205-prior')?.contentDocument?.querySelector('#p2-0103-original')?.contentDocument?.querySelector('#proof-original')?.contentDocument;const r=d?.querySelector('.showcase');return r?.dataset.p2Phase==='church'&&r?.dataset.p2ChurchBuildPhase==='complete'&&!d.querySelector('.church-editorial').inert;},null,{timeout:30000});
     assert.match(await link.getAttribute('href'),/\/p2\/church-tour\.html/);
     assert.match(await church.locator('.church-folio__model-entry').getAttribute('href'),/\/p2\/church-tour\.html/);
     await Promise.all([reader.waitForURL('**/p2/church-tour.html?entry=p2',{timeout:30000}),link.click({timeout:30000})]);

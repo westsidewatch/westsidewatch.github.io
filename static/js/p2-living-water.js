@@ -139,6 +139,10 @@ document.addEventListener('click',event=>{
   ))return;
   const url=new URL('/p2/church-tour.html?entry=p2', window.location.href);
   event.preventDefault();
+  if(window.top!==window&&window.top.document.querySelector('.ws-p2-sevenfold-host')){
+    window.top.postMessage({type:'westside-p2-church-enter'},location.origin);
+    return;
+  }
   // A user-activated top-level navigation, even when P2 lives in its
   // original homepage iframe; fallback to this frame if top is restricted.
   try{

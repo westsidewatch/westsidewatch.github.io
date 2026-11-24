@@ -64,6 +64,12 @@ function sync(){
     active:rect.bottom>0&&rect.top<innerHeight
    },location.origin);
 }
+addEventListener('message',event=>{
+ if(event.origin!==location.origin||event.data?.type!=='westside-p2-church-enter')return;
+ const church=frame.contentDocument?.querySelector('#p205-prior')?.contentDocument?.querySelector('#p2-0103-original')?.contentDocument?.querySelector('#proof-original');
+ if(!church||event.source!==church.contentWindow||church.contentDocument?.querySelector('.showcase')?.dataset.p2Phase!=='church')return;
+ location.assign('/p2/church-tour.html?entry=p2');
+});
 function schedule(){if(!queued){queued=true;requestAnimationFrame(sync)}}
 addEventListener('scroll',schedule,{passive:true});addEventListener('resize',schedule,{passive:true});frame.addEventListener('load',schedule);schedule();
 })();
