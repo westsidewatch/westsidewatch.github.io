@@ -8,8 +8,8 @@ const {chromium}=require('playwright');
 const home=fs.readFileSync('layouts/partials/watch-home-editorial.html','utf8');
 const bridge=fs.readFileSync('static/js/p2-magazine-live-bridge.js','utf8');
 const church=fs.readFileSync('static/p2/living-water.html','utf8');
-assert.match(home,/p2-0104-olive-continuation\.html\?embed=1/,'homepage must mount the 04 wrapper around the protected 01–03 source');
-assert.match(home,/height:2730svh!important/,'P2 host must append 04 after the untouched Emmaus passage');
+assert.match(home,/p2-0105-dawn-preview\.html\?embed=1/,'homepage must mount the 05 wrapper around the protected 01–04 source');
+assert.match(home,/height:3330svh!important/,'P2 host must append 05 after the untouched 01–04 passage');
 assert.match(home,/magazineEnd=6\.5/,'Magazine movement must span separate pinned viewports');
 assert.match(church,/p2-magazine-live-bridge\.js/,'church P2 must append the new Magazine bridge');
 assert.match(bridge,/handoffVh=3\.36/,'the Magazine must only start AFTER Red Sea at 2.37 and original GLB completion at 3.27');
@@ -22,7 +22,7 @@ assert.match(bridge,/westside-p2-dual-progress/,'forward one scroll-owned clock 
 const out='artifacts/p2-church-magazine';
 fs.mkdirSync(out,{recursive:true});
 const screens=[['desktop',1648,928],['tablet',768,1024],['phone',390,844],['small',320,720]];
-const stages=[['ocean',38],['church-open',55],['handoff',62],['star-ink',91],['contents',100],['reverse-church',55]];
+const stages=[['ocean',28],['church-open',58],['handoff',74],['star-ink',94],['contents',100],['reverse-church',58]];
 const results=[];
 const data=()=>{
  const frame=document.getElementById('p2-scene');
@@ -40,7 +40,10 @@ const data=()=>{
   magazinePhase:magazine?.dataset.magazineStage||'',
   magazineProgress:+(root?.dataset.p2MagazineProgress||0),
   magazineVisibility:magazine?getComputedStyle(magazine).visibility:'missing',
-  magazinePaper:magazine?.style.background||'',
+  magazinePaperTransparent:magazine?(()=>{
+   const style=doc.defaultView.getComputedStyle(magazine);
+   return style.backgroundImage==='none'&&style.backgroundColor==='rgba(0, 0, 0, 0)';
+  })():false,
   magazineChildren:magazine?.children.length||0,
   filmSrc:magazine?.querySelector('.p2-magazine__home-film')?.getAttribute('src')||'',
   filmOpacity:+(magazine?.querySelector('.p2-magazine__home-film')?.style.opacity||0),
@@ -84,36 +87,37 @@ const data=()=>{
      const root=document.querySelector('#p2-scene')?.contentDocument?.querySelector('.showcase');
      if(!root)return false;
      const v=+(root.dataset.p2Progress||0);
-     const target=expected<=75?expected/75*2.9:2.9+(expected/100-.75)/.25*1.1;
+     const p=expected/100;const target=p<=.7?p/.7*3.25:3.25+(p-.7)/.3*2;
      // Above the 75% threshold the normalized input is 0..1.
      return Math.abs(v-target)<.014;
     },value,{timeout:5000});
+    await page.waitForTimeout(250);
     const m=await page.evaluate(data);
     const faults=[];
     if(!m.originalWater||!m.originalChurchSchedule||m.originalDoorCount!==2)
      faults.push('existing V75 water, Church Sunday schedule or Red Sea doors were replaced');
     if(m.scrollWidth>width+2)faults.push('handoff laboratory horizontal overflow');
-    if(value===38&&!(m.rootPhase==='ocean-rise'&&m.waterVisible==='visible'&&
+    if(value===28&&!(m.rootPhase==='ocean-rise'&&m.waterVisible==='visible'&&
        m.waterLevel>.01&&m.waterLevel<1&&m.magazineVisibility==='hidden'))
      faults.push('the original moving water must own its stage before Magazine');
-    if(value===55&&!(m.rootPhase==='red-sea'&&m.churchVisible==='visible'&&
+    if(value===58&&!(m.rootPhase==='church'&&m.churchVisible==='visible'&&
        m.doorsVisible==='visible'&&m.magazineVisibility==='hidden'&&!m.churchInert))
      faults.push('the original Church and opening water doors must remain accessible on reverse');
-    if(value===62&&!(m.rootPhase==='church-to-magazine'&&m.magazineProgress>0&&
+    if(value===74&&!(m.rootPhase==='church-to-magazine'&&m.magazineProgress>0&&
        m.magazineProgress<.1&&m.magazineVisibility==='visible'&&m.churchInert&&
-       m.filmOpacity===0&&m.magazinePaper==='transparent'))
+       m.waterLevel===1&&m.filmOpacity===0&&m.magazinePaperTransparent))
      faults.push('the approved Magazine must begin only after the Church door is open');
-    if(value===91&&!(m.magazineProgress>.7&&m.starInk==='single-rising-incision'&&m.heroOriginal))
+    if(value===94&&!(m.magazineProgress>.7&&m.starInk==='single-rising-incision'&&m.heroOriginal))
      faults.push('the Morning Star must bring the original ink title into the spread');
     if(value===100&&!(m.magazineProgress>.999&&m.magazinePhase==='contents-final'&&
       m.coverStage==='contents-final'&&m.activeDesign==='10'&&m.count===12&&m.originalCover&&
-      m.magazinePaper==='transparent'&&m.magazineChildren===2&&m.filmOpacity>.999&&
+      m.magazinePaperTransparent&&m.magazineChildren===2&&m.filmOpacity>.999&&
       m.filmSrc.startsWith('/preview/watch-city-vol00/hosanna/?cover=1')))
      faults.push('the live P2 must reach its genuine two-page cover and all twelve Contents desks');
     if(errors.length)faults.push('PAGE_ERROR '+errors.join('; '));
     await page.screenshot({path:path.join(out,screen+'-'+label+'.png'),animations:'allow'});
     results.push({id:screen+'-'+label,metrics:m,errors:faults});
-    console.log(screen,label,faults.length?faults:'PASS');
+    console.log(screen,label,faults.length?{faults,metrics:m}:'PASS');
    }
    await page.close();
   }
@@ -131,21 +135,56 @@ const data=()=>{
     innerHeight*4.5,behavior:'instant'});
   });
   await homePage.waitForFunction(()=>{
-   const release=document.querySelector('.ws-p2-sevenfold-host>iframe')?.contentDocument;
+   const dawn=document.querySelector('.ws-p2-sevenfold-host>iframe')?.contentDocument;
+   const release=dawn?.getElementById('p205-prior')?.contentDocument;
    const source=release?.getElementById('p2-0103-original')?.contentDocument||release;
-   const root=release?.querySelector('#proof-original')?.contentDocument?.querySelector('.showcase');
+   const root=source?.querySelector('#proof-original')?.contentDocument?.querySelector('.showcase');
    return !!source?.getElementById('emmaus')&&
     !!root?.querySelector('.p2-magazine iframe:not(.p2-magazine__home-film)')?.contentDocument?.querySelector('#dual-stage');
   },null,{timeout:30000});
+  // Observe the nested scene inside the same call, before another animation frame can run.
+  const immediateScenes=await homePage.evaluate(()=>{
+   const dawn=document.querySelector('.ws-p2-sevenfold-host>iframe').contentWindow;
+   const olive=dawn.document.querySelector('#p205-prior').contentWindow;
+   const release=olive.document.querySelector('#p2-0103-original').contentWindow;
+   return [2.65,6.4,9.3,6.4,2.65].map(distance=>{
+    dawn.P2ApplyHomePose({distance,legacyProgress:.5,active:true});
+    return release.document.body.dataset.proofScene;
+   });
+  });
+  assert.deepEqual(immediateScenes,['01','02','03','02','01']);
+  // Use actual wheel input over the pinned P2, including the opening range.
+  await homePage.evaluate(()=>{
+   const host=document.querySelector('.ws-p2-sevenfold-host');
+   window.scrollTo({top:scrollY+host.getBoundingClientRect().top,behavior:'instant'});
+  });
+  await homePage.waitForFunction(()=>{
+   const host=document.querySelector('.ws-p2-sevenfold-host');
+   const church=host.querySelector('iframe').contentDocument?.getElementById('p205-prior')?.contentDocument
+    ?.getElementById('p2-0103-original')?.contentDocument?.getElementById('proof-original')?.contentDocument;
+   return Math.abs(Number(church?.querySelector('.showcase')?.dataset.p2Progress)-.65)<.015;
+  });
+  await homePage.mouse.move(720,450);
+  for(const delta of [600,-600]){
+   await homePage.mouse.wheel(0,delta);
+   const expected=delta>0?.65+.70*(600/900)/2.65:.65;
+   await homePage.waitForFunction(expected=>{
+    const host=document.querySelector('.ws-p2-sevenfold-host');
+    const church=host.querySelector('iframe').contentDocument?.getElementById('p205-prior')?.contentDocument
+     ?.getElementById('p2-0103-original')?.contentDocument?.getElementById('proof-original')?.contentDocument;
+    return Math.abs(Number(church?.querySelector('.showcase')?.dataset.p2Progress)-expected)<.025;
+   },expected,{timeout:5000});
+  }
+  console.log('HOME opening responds to wheel and reverse wheel PASS');
   const realScroll=[
-   ['church',2.65,'01',1.80,.01],
-   ['magazine-start',3.10,'02',2.381,.02],
-   ['star-rising',5.10,'02',3.333,.59],
-   ['contents',6.40,'02',3.952,.97],
-   ['emmaus-green-cover',7.30,'03',4.00,1],
-   ['emmaus-dore',8.06,'03',4.00,1],
-   ['emmaus-reading',9.30,'03',4.00,1],
-   ['church-reverse',2.65,'01',1.80,.01]
+   ['church',2.65,'01',1.35,0],
+   ['magazine-start',4.45,'02',3.405,.025],
+   ['star-rising',5.70,'02',4.53,.643],
+   ['contents',6.40,'02',5.16,.989],
+   ['emmaus-green-cover',7.30,'03',5.25,1],
+   ['emmaus-dore',8.06,'03',5.25,1],
+   ['emmaus-reading',9.30,'03',5.25,1],
+   ['church-reverse',2.65,'01',1.35,0]
   ];
   for(const [name,distance,expectedScene,wantVh,wantMagazine] of realScroll){
    await homePage.evaluate(d=>{
@@ -153,7 +192,8 @@ const data=()=>{
     window.scrollTo({top:window.scrollY+host.getBoundingClientRect().top+innerHeight*d,behavior:'instant'});
    },distance);
    await homePage.waitForFunction(({scene,wantVh})=>{
-    const release=document.querySelector('.ws-p2-sevenfold-host>iframe')?.contentDocument;
+    const dawn=document.querySelector('.ws-p2-sevenfold-host>iframe')?.contentDocument;
+   const release=dawn?.getElementById('p205-prior')?.contentDocument;
    const source=release?.getElementById('p2-0103-original')?.contentDocument||release;
     const root=source?.getElementById('proof-original')?.contentDocument?.querySelector('.showcase');
     return source?.body.dataset.proofScene===scene&&root&&
@@ -161,7 +201,8 @@ const data=()=>{
    },{scene:expectedScene,wantVh},{timeout:24000});
    await homePage.waitForTimeout(190);
    const state=await homePage.evaluate(()=>{
-    const release=document.querySelector('.ws-p2-sevenfold-host>iframe')?.contentDocument;
+    const dawn=document.querySelector('.ws-p2-sevenfold-host>iframe')?.contentDocument;
+   const release=dawn?.getElementById('p205-prior')?.contentDocument;
    const source=release?.getElementById('p2-0103-original')?.contentDocument||release;
     const root=source?.getElementById('proof-original')?.contentDocument?.querySelector('.showcase');
     const em=source?.getElementById('emmaus');
@@ -169,7 +210,7 @@ const data=()=>{
       vh:+root?.dataset.p2Progress,magazine:+root?.dataset.p2MagazineProgress,
       originalDoors:root?.querySelectorAll('.water-door').length||0,
       schedule:!!root?.querySelector('.church-schedule-source .sunday-schedule'),
-      emVisible:em?release.defaultView.getComputedStyle(em).visibility:'missing',
+      emVisible:em?source.defaultView.getComputedStyle(em).visibility:'missing',
       oneBooks:source?.querySelectorAll('#emmaus-rail .emmaus__number').length||0,
       scriptureChars:source?.querySelector('#em-scripture-verses')?.textContent?.trim().length||0,
       hasOlive:!!source?.querySelector('#olive-proof'),
@@ -191,7 +232,47 @@ const data=()=>{
    await homePage.screenshot({path:path.join(out,'homepage-'+name+'.png'),animations:'allow'});
    console.log('HOME 01–03',name,'PASS',state);
   }
+  // Actual visitor navigation: open the native Dawn layers by clicking P2,
+  // never by the standalone layer=second/catalogue shortcut.
   await homePage.close();
+  for(const [device,width,height] of [['desktop',1440,900],['phone',390,844]]){
+   const reader=await browser.newPage({viewport:{width,height},reducedMotion:'reduce'});
+   try{
+    await reader.goto('http://127.0.0.1:4173/',{waitUntil:'domcontentloaded',timeout:45000});
+    const seek=async d=>reader.evaluate(d=>{
+     const host=document.querySelector('.ws-p2-sevenfold-host');
+     window.scrollTo({top:window.scrollY+host.getBoundingClientRect().top+innerHeight*d,behavior:'instant'});
+    },d);
+    await seek(28.4);
+    const dawn=reader.frameLocator('.ws-p2-sevenfold-host>iframe');
+    await dawn.locator('#dawn-twins').waitFor({state:'visible',timeout:30000});
+    await reader.waitForFunction(()=>{
+     const d=document.querySelector('.ws-p2-sevenfold-host>iframe')?.contentDocument;
+     return d?.querySelector('#dawn-realm')?.getAttribute('aria-hidden')==='false'&&d?.querySelector('#p205-stage')?.dataset.p205Wordmark==='v9-final';
+    },null,{timeout:30000});
+    await dawn.locator('#dawn-twins').click({timeout:30000});
+    await reader.waitForFunction(()=>{
+     const d=document.querySelector('.ws-p2-sevenfold-host>iframe')?.contentDocument;
+     return d?.querySelector('#dawn-second')?.getAttribute('aria-hidden')==='false';
+    },null,{timeout:30000});
+    assert.equal(await dawn.locator('[data-dawn-portal]').count(),3,device+': all editorial columns must be available');
+    await dawn.locator('[data-dawn-reading-list="gospel-essentials"]').click({timeout:30000});
+    await dawn.locator('#dawn-catalogue').waitFor({state:'visible',timeout:30000});
+    await reader.screenshot({path:path.join(out,'homepage-dawn-third-'+device+'.png')});
+    await dawn.locator('#dawn-close-catalogue').click();
+    await dawn.locator('#dawn-return').click();
+    await dawn.locator('#dawn-twins').waitFor({state:'visible'});
+    await seek(4.35);
+    const church=dawn.frameLocator('#p205-prior').frameLocator('#p2-0103-original').frameLocator('#proof-original');
+    const link=church.locator('.church-folio__identity-link');
+    await link.waitFor({state:'visible',timeout:30000});
+    await reader.waitForFunction(()=>{const d=document.querySelector('.ws-p2-sevenfold-host>iframe')?.contentDocument?.querySelector('#p205-prior')?.contentDocument?.querySelector('#p2-0103-original')?.contentDocument?.querySelector('#proof-original')?.contentDocument;const r=d?.querySelector('.showcase');return r?.dataset.p2Phase==='church'&&r?.dataset.p2ChurchBuildPhase==='complete'&&!d.querySelector('.church-editorial').inert;},null,{timeout:30000});
+    assert.match(await link.getAttribute('href'),/\/p2\/church-tour\.html/);
+    assert.match(await church.locator('.church-folio__model-entry').getAttribute('href'),/\/p2\/church-tour\.html/);
+    await Promise.all([reader.waitForURL('**/p2/church-tour.html?entry=p2',{timeout:30000}),link.click({timeout:30000})]);
+    console.log('HOME Dawn layers and Church tour navigation',device,'PASS');
+   }finally{await reader.close();}
+  }
  }finally{await browser.close()}
  fs.writeFileSync(path.join(out,'manifest.json'),JSON.stringify({scenes:results},null,2));
  if(results.some(s=>s.errors.length))process.exitCode=1;

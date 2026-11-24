@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="{{ "css/westside-square-geometry.css" | relURL }}?v=20261013-square-geometry-r1">
     {{ if .IsHome }}<link rel="stylesheet" href="{{ "css/westside-home-hero-composition.css" | relURL }}?v=20261012-home-composition-r18-cover-palette-r1-p2-owner-r2">{{ end }}
     {{ if $sitesSurface }}<link rel="stylesheet" href="{{ "css/westside-editorial-navigation.css" | relURL }}?v=20261013-editorial-nav-r1">{{ end }}
-    {{ if .Params.os_editorial }}<link rel="stylesheet" href="{{ "css/westside-editorial-grammar.css" | relURL }}?v=20261123-grammar-v1">{{ end }}
+    {{ if .Params.os_editorial }}<link rel="stylesheet" href="{{ "css/westside-editorial-grammar.css" | relURL }}?v=20261124-grammar-r4-096">{{ end }}
   </head>
   <body data-ws-design-system="westside-v1" data-ws-scope="{{ if .IsHome }}home{{ else if eq .RelPermalink "/dore/search/" }}search{{ else if .Section }}{{ .Section }}{{ else }}tool{{ end }}"{{ if eq .Section "one" }} data-ws-product="one" data-ws-color-family="bible"{{ else if eq .RelPermalink "/dore/search/" }} data-ws-product="search" data-ws-color-family="neutral"{{ end }} class="{{ if .IsHome }}home sites-home-isolated{{ else if $sitesSurface }}sites-surface sites-section-{{ .Section }}{{ else }}publication-shell{{ if .Section }} section-{{ .Section }}{{ else if eq .RelPermalink "/about/" }} section-about{{ end }}{{ end }}{{ if .Params.os_editorial }} ws-editorial-context{{ end }}">
     <a class="skip-link" href="#main">Skip to content</a>

@@ -96,7 +96,8 @@
  // NOT leave Emmaus for the following P2 realm. Treat mouse-wheel vertical
  // deltas as horizontal movement on this one-row canonical book rail.
  rail.addEventListener('wheel',event=>{
-  if(event.ctrlKey)return;
+  // In the homepage embed, vertical wheel input belongs to the homepage.
+  if(event.ctrlKey||new URLSearchParams(location.search).get('embed')==='1')return;
   const unit=event.deltaMode===1?16:event.deltaMode===2?rail.clientWidth:1;
   if(Math.abs(event.deltaY)>Math.abs(event.deltaX)&&rail.scrollWidth>rail.clientWidth){
    event.preventDefault();
@@ -565,8 +566,8 @@
   const greenAngle=-86*archive;
   emCover.style.clipPath='none';
   emCover.style.transform='perspective(6400px) rotateY('+greenAngle.toFixed(2)+'deg)';
-  emCover.style.opacity=String(move>.001&&archive<.999?1:0);
-  emCover.style.visibility=move>.001&&archive<.999?'visible':'hidden';
+  emCover.style.opacity=String(galleryTurn&&archive<.999?1:0);
+  emCover.style.visibility=galleryTurn&&archive<.999?'visible':'hidden';
   const edge=$('.emmaus__magazine-turn-edge');
   if(edge){
    edge.style.left='0';
@@ -701,13 +702,12 @@
     if(magazineUnderlay)magazineUnderlay.style.visibility='hidden';
    }
    if(magazineUnderlay){
-     // PR #1381 genuine green underleaf stays behind the first flip;
-     // the original full-size 03 #em-entry-cover hinges over Doré
-     // for the SECOND book turn, without a cropped green stripe.
+     // Retire the inner green leaf before the full-size cover takes over.
+     const showUnderleaf=move>.001&&move<.998;
      magazineUnderlay.style.transform='none';
      magazineUnderlay.style.clipPath='none';
-     magazineUnderlay.style.visibility=move>.001?'visible':'hidden';
-     magazineUnderlay.style.display=move>.001?'block':'none';
+     magazineUnderlay.style.visibility=showUnderleaf?'visible':'hidden';
+     magazineUnderlay.style.display=showUnderleaf?'block':'none';
      magazineUnderlay.style.opacity=String(smooth((move-.25)/.40));
     }
   }
@@ -874,7 +874,7 @@
   phase.textContent=section;document.body.dataset.proofScene=section.split(' / ')[0];
   seek.value=String(fullDistance/timelineMax*100);percent.textContent=(fullDistance/timelineMax*100).toFixed(0)+'%';lastPaint=distance;
  }
- function requestPaint(){if(!queued){queued=true;requestAnimationFrame(paint)}}
+ function requestPaint(){if(!queued){queued=true;requestAnimationFrame(()=>{if(queued)paint()})}}
  function seekTo(distance,updateUrl=false){
   const target=track.getBoundingClientRect().top+scrollY+distance*innerHeight;
   scrollTo({top:target,behavior:'instant'});requestPaint();
@@ -892,14 +892,16 @@
  if(hosted){
   // Parent's page scroll is the sole 01–03 progress owner. Never scroll
   // the nested 03 iframe or replay the preview slider's opening seek.
-  addEventListener('message',event=>{
-   if(event.origin!==location.origin||event.source!==parent||
-      event.data?.type!=='westside-p2-home-pose')return;
-   const distance=Number(event.data.distance),legacy=Number(event.data.legacyProgress);
+  window.P2ApplyHomePose=data=>{
+   const distance=Number(data.distance),legacy=Number(data.legacyProgress);
    if(!Number.isFinite(distance)||!Number.isFinite(legacy))return;
    hostPose={distance:clamp(distance,0,timelineMax),
-    legacyProgress:clamp(legacy),active:event.data.active!==false};
-   requestPaint();
+    legacyProgress:clamp(legacy),active:data.active!==false};
+   paint();
+  };
+  addEventListener('message',event=>{
+   if(event.source===parent&&event.origin===location.origin&&event.data?.type==='westside-p2-home-pose')
+    window.P2ApplyHomePose(event.data);
   });
   requestPaint();
  }else{

@@ -39,6 +39,7 @@ const viewports=[{name:'desktop',width:1440,height:900},{name:'tablet',width:768
        fontZh:getComputedStyle(document.querySelector('.ws-gram-cover__title-zh')||document.querySelector('.ws-gram-cover__title-en')).fontFamily,
        fontEn:getComputedStyle(document.querySelector('.ws-gram-cover__title-en')).fontFamily,
        assetCount:img.length,
+       titleArtSeparated:(()=>{const art=cover.querySelector('.ws-gram-cover__visual,.ws-gram-cover__identity-field');if(!art)return true;const a=rect(art);return Math.min(a.right,t.right)-Math.max(a.left,t.left)<=2||Math.min(a.bottom,t.bottom)-Math.max(a.top,t.top)<=2})(),
        masthead:!!document.querySelector('.ws-grammar__masthead img'),
        artDirection:(()=>{
          const chinese=document.querySelector('.ws-gram-cover__title-zh');
@@ -60,7 +61,7 @@ const viewports=[{name:'desktop',width:1440,height:900},{name:'tablet',width:768
          const lum=a=>a.map(x=>x<=.04045?x/12.92:((x+.055)/1.055)**2.4).reduce((t,x,i)=>t+x*[.2126,.7152,.0722][i],0);
          const osColor=v=>getComputedStyle(article).getPropertyValue(v).trim();
          const fg=lum(toRgb(getComputedStyle(eyebrow).color));
-         const bg=lum(toRgb(getComputedStyle(article).getPropertyValue(cover.dataset.mode==='cinematic'?'--ws-ink':'--ws-paper').trim()));
+         const bg=lum(toRgb(getComputedStyle(cover).backgroundColor));
          const contrast=(Math.max(fg,bg)+.05)/(Math.min(fg,bg)+.05);
          return {
           zhSize:chinese?size(chinese):null,
@@ -106,6 +107,7 @@ const viewports=[{name:'desktop',width:1440,height:900},{name:'tablet',width:768
       realm+' tiny editorial metadata fails 4.5:1 readability '+JSON.stringify(a));
 
     assert(computed.masthead&&computed.navAvailable);
+    assert(computed.titleArtSeparated,realm+' content and artwork must occupy distinct reading spaces');
     assert(computed.legacyShellHidden&&computed.singleMagazineHeader,
       realm+' appears with duplicate canonical section masthead/footer '+JSON.stringify(computed));
     if(realm!=='church')assert(computed.assetCount>=1,realm+' actual cover image absent');

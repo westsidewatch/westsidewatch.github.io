@@ -164,108 +164,6 @@ body.p2Embedded.p2OliveSpread .plate.inverse .cornerCitation{
   flex-basis:43vw!important;width:43vw!important
  }
 }
-/* Living Water static visitor adapter:
-   Reuse precisely the existing V60 second (rotated, Chinese-horizontal)
-   mother forme. This only changes the host framing, not glyph spacing, search,
-   fonts, vertical reference rail, or the V60 rendering algorithm. */
-html:has(body.p2ChurchHorizontal),body.p2ChurchHorizontal{background:transparent!important;margin:0!important;overflow:hidden!important}
-body.p2Embedded.p2ChurchHorizontal .shell,
-body.p2Embedded.p2ChurchHorizontal .work,
-body.p2Embedded.p2ChurchHorizontal .pair,
-body.p2Embedded.p2ChurchHorizontal .impression{
- display:block!important;position:relative!important;
- width:100%!important;height:100%!important;max-width:none!important;
- padding:0!important;margin:0!important;overflow:hidden!important;
-}
-body.p2Embedded.p2ChurchHorizontal .pair{
- display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:0!important;
-}
-body.p2Embedded.p2ChurchHorizontal .impression:first-child{display:none!important}
-body.p2Embedded.p2ChurchHorizontal .impression:nth-child(2){display:block!important;max-width:100%!important}
-body.p2Embedded.p2ChurchHorizontal .plate.inverse{
- display:block;width:100%!important;height:100%!important;aspect-ratio:1!important;
- background:transparent!important;border:0!important;
- color:var(--section-text,#FAF9F5)!important;
-}
-body.p2Embedded.p2ChurchHorizontal .plate.inverse .piece.zh{
- color:color-mix(in srgb,var(--section-text,#FAF9F5) 84%,var(--section-bg,#5B8FA8))!important
-}
-body.p2Embedded.p2ChurchHorizontal .plate.inverse .piece.en{
- color:var(--section-text,#FAF9F5)!important
-}
-body.p2Embedded.p2ChurchHorizontal .plate.inverse .cornerCitation{
- color:var(--section-text,#FAF9F5)!important
-}
-body.p2Embedded.p2ChurchHorizontal .plate.experimental:after,
-body.p2Embedded.p2ChurchHorizontal .guard{display:none!important}
-/* Church visitor: use the original FIRST V60 mother-form (Chinese vertical).
-   Keep the compositor, editorial break units and font audit untouched.
-   Only the host's plate selection and glass-surface ink are scoped here. */
-html:has(body.p2ChurchVertical),body.p2ChurchVertical{
- background:transparent!important;margin:0!important;overflow:hidden!important
-}
-body.p2Embedded.p2ChurchVertical .shell,
-body.p2Embedded.p2ChurchVertical .work,
-body.p2Embedded.p2ChurchVertical .pair,
-body.p2Embedded.p2ChurchVertical .impression{
- display:block!important;position:relative!important;
- width:100%!important;height:100%!important;max-width:none!important;
- padding:0!important;margin:0!important;overflow:hidden!important
-}
-body.p2Embedded.p2ChurchVertical .pair{
- display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:0!important
-}
-body.p2Embedded.p2ChurchVertical .impression:first-child{
- display:block!important;max-width:100%!important
-}
-body.p2Embedded.p2ChurchVertical .impression:nth-child(2){display:none!important}
-body.p2Embedded.p2ChurchVertical .plate:not(.inverse){
- display:block!important;width:100%!important;height:100%!important;aspect-ratio:1!important;
- background:transparent!important;border:0!important;
- color:var(--section-text,#FAF9F5)!important
-}
-body.p2Embedded.p2ChurchVertical .plate:not(.inverse) .piece.zh{
- color:var(--section-text,#FAF9F5)!important
-}
-body.p2Embedded.p2ChurchVertical .plate:not(.inverse) .piece.en{
- color:var(--section-text,#FAF9F5)!important
-}
-body.p2Embedded.p2ChurchVertical .plate:not(.inverse) .cornerCitation{
- color:var(--section-text,#FAF9F5)!important
-}
-body.p2Embedded.p2ChurchVertical .plate.experimental:after,
-body.p2Embedded.p2ChurchVertical .guard{display:none!important}
-/* SEVENFOLD EDITORIAL / V60 existing Chinese-vertical plate.
-   One scoped adapter for all seven current P2 section IDs, not seven rewrites. */
-html:has(body.p2SevenfoldVertical),body.p2SevenfoldVertical{
- background:transparent!important;overflow:hidden!important;margin:0!important
-}
-body.p2Embedded.p2SevenfoldVertical .shell,
-body.p2Embedded.p2SevenfoldVertical .work,
-body.p2Embedded.p2SevenfoldVertical .pair,
-body.p2Embedded.p2SevenfoldVertical .impression{
- display:block!important;position:relative!important;
- width:100%!important;height:100%!important;
- max-width:none!important;min-width:0!important;
- margin:0!important;padding:0!important;overflow:hidden!important
-}
-body.p2Embedded.p2SevenfoldVertical .pair{
- display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:0!important
-}
-body.p2Embedded.p2SevenfoldVertical .impression:first-child{display:block!important}
-body.p2Embedded.p2SevenfoldVertical .impression:nth-child(2){display:none!important}
-body.p2Embedded.p2SevenfoldVertical .plate:not(.inverse){
- width:100%!important;height:100%!important;aspect-ratio:1!important;
- border:0!important;background:transparent!important;
- color:var(--section-text,#FAF9F5)!important
-}
-body.p2Embedded.p2SevenfoldVertical .plate:not(.inverse) .piece.zh,
-body.p2Embedded.p2SevenfoldVertical .plate:not(.inverse) .piece.en,
-body.p2Embedded.p2SevenfoldVertical .plate:not(.inverse) .cornerCitation{
- color:var(--section-text,#FAF9F5)!important
-}
-body.p2Embedded.p2SevenfoldVertical .plate.experimental:after,
-body.p2Embedded.p2SevenfoldVertical .guard{display:none!important}
 /* Print proof uses the SAME live mother forme and its verified self-hosted font files. */
 @media print{
  @page{size:A4 landscape;margin:11mm}
@@ -281,7 +179,51 @@ body.p2Embedded.p2SevenfoldVertical .guard{display:none!important}
  .plate.experimental:after{display:none}
  .plateTitle{font-size:10pt}
 }
-</style></head>
+</style>
+<style>
+/* P2 05 — CONSOLIDATED DAWN LETTERPRESS (embedded only).
+   Preserves original passage, engraving algorithm and 05 color role;
+   replaces contradictory compact R23 and oversize R32 layouts. */
+body.p2Embedded.p2DawnSpread{background:transparent!important;color:#252525}
+body.p2Embedded.p2DawnSpread .shell,
+body.p2Embedded.p2DawnSpread .work{
+ width:100%!important;max-width:710px!important;margin:0 auto!important;
+ overflow:visible!important;padding:0!important;background:transparent!important;
+}
+body.p2Embedded.p2DawnSpread .pair{
+ display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+ width:100%!important;align-items:start!important;justify-content:center!important;
+ gap:clamp(10px,2.5vw,24px)!important;
+}
+body.p2Embedded.p2DawnSpread .impression{
+ width:100%!important;min-width:0!important;max-width:none!important;flex:initial!important;
+}
+body.p2Embedded.p2DawnSpread .plate{
+ width:100%!important;max-width:none!important;aspect-ratio:1/1!important;
+ box-sizing:border-box!important;overflow:hidden!important;
+}
+body.p2Embedded.p2DawnSpread .plate:not(.inverse){
+ background:#FAF9F5!important;color:#252525!important;border:1px solid #B8944A!important;
+}
+body.p2Embedded.p2DawnSpread .plate:not(.inverse) .piece.zh{color:#252525!important}
+body.p2Embedded.p2DawnSpread .plate:not(.inverse) .piece.en,
+body.p2Embedded.p2DawnSpread .plate:not(.inverse) .cornerCitation{color:#B8944A!important}
+body.p2Embedded.p2DawnSpread .plate.inverse{
+ background:#B8944A!important;color:#252525!important;border:0!important;
+}
+body.p2Embedded.p2DawnSpread .plate.inverse .piece,
+body.p2Embedded.p2DawnSpread .plate.inverse .cornerCitation{color:#252525!important}
+body.p2Embedded.p2DawnSpread .plate .cornerCitation{
+ font-size:clamp(13px,2.6cqw,24px)!important;
+}
+@media(max-width:440px){
+ body.p2Embedded.p2DawnSpread .pair{gap:8px!important}
+ body.p2Embedded.p2DawnSpread .plate .cornerCitation{font-size:clamp(10px,2.5cqw,16px)!important}
+}
+</style>
+
+
+</head>
 <body>
 <header><div><div class="micro">WESTSIDE WATCH / SCRIPTURE STUDIO / Studio  / MOTHER FORME</div><h1>經文鉛字 · 雙向母版</h1></div><div class="micro">Isaiah 62:6 · Chinese Union / KJV · Draft</div></header>
 <div class="shell"><aside>
@@ -643,7 +585,7 @@ const p2Sections=[
  {id:'02',zh:'西望',en:'THE JOURNAL',color:'#102A43',ink:'#FAF9F5',latinInk:'#E9C46A'},
  {id:'03',zh:'以馬忤斯',en:'EMMAUS',color:'#A2872A',ink:'#FAF9F5',latinInk:'#FFF4D7'},
  {id:'04',zh:'橄欖山',en:'OLIVE MOUNTAIN',color:'#738A5A',ink:'#FAF9F5',latinInk:'#FFE4A0'},
- {id:'05',zh:'黎明書局',en:'DAWN BOOKS',color:'#FAF9F5',ink:'#252525',latinInk:'#A14D57'},
+ {id:'05',zh:'黎明書局',en:'DAWN BOOKS',color:'#FAF9F5',ink:'#252525',latinInk:'#B8944A'},
  {id:'06',zh:'電影院',en:'CINEMA',color:'#A14D57',ink:'#FAF9F5',latinInk:'#FFE0A6'},
  {id:'07',zh:'白晝咖啡館',en:'DAYLIGHT CAFÉ',color:'#B8944A',ink:'#252525',latinInk:'#FFF9E9'}
 ];
@@ -914,8 +856,8 @@ for(const [id,mode] of [['plateZh','vertical'],['plateEn','horizontal']]){
  ref.dataset.orientation=mode;plate.append(ref);
 }
 renderP2Palette();
-$('plateZh').classList.toggle('experimental',!!stage.provisional);
-$('plateEn').classList.toggle('experimental',!!stage.provisional);
+$('plateZh').classList.toggle('experimental',!!stage.provisional&&!document.body.classList.contains('p2Embedded'));
+$('plateEn').classList.toggle('experimental',!!stage.provisional&&!document.body.classList.contains('p2Embedded'));
 $('squareStudyStatus').textContent='版面：'+$('artDirection').selectedOptions[0].text+' · '+(stage.provisional?'V18 語義斷點為研究候選；構圖仍待 H4/H6 與實際字型驗收，不可正式匯出':'初步構圖驗收；仍需完成印刷與跨經文檢驗');
 $('plateZh').classList.toggle('showGuides',showGuides);$('plateEn').classList.toggle('showGuides',showGuides);
 const allZh=[...$('formeZh').querySelectorAll('.column>.piece.zh')].map(n=>n.dataset.original).join(''),allEn=[...$('formeZh').querySelectorAll('.column>.piece.en')].map(n=>n.dataset.original).join('');const printedEn=[...$('formeZh').querySelectorAll('.column>.piece.en')].map(n=>n.textContent).join('');const exact=allZh===zhExact&&allEn===enExact&&printedEn===enDisplay;
@@ -1032,9 +974,7 @@ const themeFromUrl=(p2Params.get('theme')||'').toUpperCase();
 if(toolThemes.some(x=>x.id===themeFromUrl&&!x.pending)){activeTheme=themeFromUrl;activeP2=null}
 if(p2Params.get('embed')==='1')document.body.classList.add('p2Embedded');
 if(p2Params.get('layout')==='olive-spread'&&p2Params.get('embed')==='1'&&activeP2==='04')document.body.classList.add('p2OliveSpread');
-if(p2Params.get('layout')==='church-horizontal'&&p2Params.get('embed')==='1'&&activeP2==='01')document.body.classList.add('p2ChurchHorizontal');
-if(p2Params.get('layout')==='church-vertical'&&p2Params.get('embed')==='1'&&activeP2==='01')document.body.classList.add('p2ChurchVertical');
-if(p2Params.get('layout')==='sevenfold-vertical'&&p2Params.get('embed')==='1'&&p2Sections.some(x=>x.id===activeP2))document.body.classList.add('p2SevenfoldVertical');
+if(p2Params.get('layout')==='dawn-spread'&&p2Params.get('embed')==='1'&&activeP2==='05')document.body.classList.add('p2DawnSpread');
 addEventListener('message',event=>{
  if(event.origin!==location.origin)return;
  const data=event.data;

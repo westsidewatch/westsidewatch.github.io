@@ -1,0 +1,446 @@
+{
+  "schema": "dawn.library.chinese-contemporary-discovery.v1",
+  "version": "2026-11-22",
+  "status": "editorial-source-discovery-not-canonical-admission",
+  "scope": "Modern Chinese Christian works and translated classics; publisher-owned and institution-owned sources",
+  "rightsPolicy": {
+    "copyright": "No fulltext or cover mirroring without explicit authorization or documented reuse terms.",
+    "reading": "Free reading or free downloads only, including free subscriptions if publisher explicitly labels them free. Paid or unverified books are not reader-facing.",
+    "workIdentity": "Discovery candidate IDs are not canonical Dawn Work IDs. Promotion requires Work identity, edition, rights, cover provenance, reading access."
+  },
+  "sources": [
+    {
+      "id": "chinese-christian-elibrary",
+      "name": "基督教電子書圖書館",
+      "url": "https://my-elibrary.net/",
+      "kind": "publisher-catalogue",
+      "coverage": "Contemporary Chinese theology, devotions, biographies and Chinese translations",
+      "access": "Free subscription stated on individual product pages; account/availability may vary",
+      "priority": "A"
+    },
+    {
+      "id": "chinese-lutheran-books",
+      "name": "中華福音道路德會中文書庫",
+      "url": "https://lutheranchinese.org/chinese-lutheran-books/",
+      "kind": "publisher-index",
+      "coverage": "Chinese translated Reformation, confession and Lutheran theological books",
+      "access": "Some sample chapters; full books not presumed freely licensed",
+      "priority": "A"
+    },
+    {
+      "id": "china-christian-books",
+      "name": "中國基督教書刊",
+      "url": "https://www.chinachristianbooks.org/Home/",
+      "kind": "online-reading-index",
+      "coverage": "Reformed historical texts and Chinese translations of Christian classics",
+      "access": "Page-level reading to be checked per work, no redistribution inference",
+      "priority": "A"
+    },
+    {
+      "id": "bible-org-chinese",
+      "name": "Bible.org 中文 NET 聖經資源",
+      "url": "https://bible.org/chinese/t",
+      "kind": "reading-resources",
+      "coverage": "Chinese NET Bible and translated biblical study materials",
+      "access": "Copyright-restricted; private study uses described by publisher",
+      "priority": "B"
+    },
+    {
+      "id": "gets-library-resources",
+      "name": "GETS 神學院電子資源清單",
+      "url": "https://gets.edu/ch/page/tushuguan/dianziziyuan",
+      "kind": "research-directory",
+      "coverage": "Links to China Christian Books, HKBU Christian collections, Globethics and open theological library",
+      "access": "Provider-specific; list is discovery not license grant",
+      "priority": "B"
+    },
+    {
+      "id": "lutheran-seminary-library",
+      "name": "信義宗神學院電子資源",
+      "url": "https://lts.edu/cht/lib_e_resources",
+      "kind": "institutional-library",
+      "coverage": "HyRead Chinese eBooks and theology databases",
+      "access": "Institution/library login may be required",
+      "priority": "C"
+    },
+    {
+      "id": "pr-china-project",
+      "name": "P&R 中国翻译计划／Frame-Poythress",
+      "url": "https://frame-poythress.org/chinese-zw/",
+      "kind": "official-licensed-PDF-index",
+      "coverage": "Publisher-backed Chinese translations of pastoral, family and student theology; projected 450–500 titles, actual releases linked incrementally",
+      "access": "Official website permits free PDF linking and private sharing but expressly forbids rehosting, editing or changing download URL origin",
+      "priority": "A"
+    },
+    {
+      "id": "9marks-traditional-chinese",
+      "name": "健康教會九標誌－繁體中文書庫",
+      "url": "https://tc.9marks.org/books",
+      "kind": "publisher-free-ebook-directory",
+      "coverage": "Translated contemporary church, preaching, discipleship and gospel ebooks in Traditional Chinese",
+      "access": "Publisher supplies direct ePub or personal-use download, copyright prohibits reupload or redistribution to other platforms",
+      "priority": "A"
+    },
+    {
+      "id": "ccma-literature",
+      "name": "澳洲中信文字事工",
+      "url": "https://ccma.org.au/literature",
+      "kind": "official-open-reading-PDF-index",
+      "coverage": "Newer Chinese Christian books and 2026 Chinese Today magazine; seven visible source PDFs plus magazine issues",
+      "access": "Official direct PDF reading; mirror rights are not established; link to source",
+      "priority": "A"
+    }
+  ],
+  "candidates": [
+    {
+      "candidateId": "dawn:discovery:zh:2026:luther-prayer",
+      "title": "一個簡單的祈禱方法－給理髮師彼得的信",
+      "author": "馬丁路德",
+      "authorOriginal": "Martin Luther",
+      "translator": null,
+      "translation": "Chinese translation",
+      "editionYear": null,
+      "language": "zh-Hant",
+      "category": "靈命塑造／禱告",
+      "type": "translated-classic",
+      "publisher": "Christian Chinese Library Ltd",
+      "isbn": "9780645448535",
+      "sourceId": "chinese-christian-elibrary",
+      "sourceUrl": "https://my-elibrary.net/product/%E4%B8%80%E5%80%8B%E7%B0%A1%E5%96%AE%E7%9A%84%E7%A5%88%E7%A6%B1%E6%96%B9%E6%B3%95-%E7%B5%A6%E7%90%86%E9%AB%AE%E5%B8%AB%E5%BD%BC%E5%BE%97%E7%9A%84%E4%BF%A1/",
+      "sourceKind": "publisher-book-detail",
+      "access": "free-subscription-on-publisher; third-party full-text copy not permitted",
+      "coverUrl": "https://my-elibrary.net/wp-content/uploads/2024/02/600x850_E1004_%E4%B8%80%E5%80%8B%E7%B0%A1%E5%96%AE%E7%9A%84%E7%A5%88%E7%A6%B1%E6%96%B9%E6%B3%95-%E2%80%93-%E7%B5%A6%E7%90%86%E9%AB%AE%E5%B8%AB%E5%BD%BC%E5%BE%97%E7%9A%84%E4%BF%A1-450x638.jpg",
+      "admission": "candidate-only",
+      "coverProvenance": {
+        "kind": "publisher-referenced-product-image",
+        "publisherPage": "https://my-elibrary.net/product/%E4%B8%80%E5%80%8B%E7%B0%A1%E5%96%AE%E7%9A%84%E7%A5%88%E7%A6%B1%E6%96%B9%E6%B3%95-%E7%B5%A6%E7%90%86%E9%AB%AE%E5%B8%AB%E5%BD%BC%E5%BE%97%E7%9A%84%E4%BF%A1/",
+        "identityMatch": "exact publisher product page image",
+        "availability": "image link discovered but HTTP body and embedding not yet tested",
+        "rights": "publisher-owned; display as external linked preview only; do not copy to repository"
+      },
+      "freeReading": {
+        "status": "verified-free-subscription",
+        "evidenceUrl": "https://my-elibrary.net/product/%E4%B8%80%E5%80%8B%E7%B0%A1%E5%96%AE%E7%9A%84%E7%A5%88%E7%A6%B1%E6%96%B9%E6%B3%95-%E7%B5%A6%E7%90%86%E9%AB%AE%E5%B8%AB%E5%BD%BC%E5%BE%97%E7%9A%84%E4%BF%A1/",
+        "notes": "Publisher indicates 免費訂閲 / free subscription; no payment asserted; registration may be required"
+      }
+    },
+    {
+      "candidateId": "dawn:discovery:zh:2026:murray-prayer",
+      "title": "不住禱告",
+      "author": "慕安德烈",
+      "authorOriginal": "Andrew Murray",
+      "translator": null,
+      "translation": "Chinese translation",
+      "editionYear": null,
+      "language": "zh-Hant",
+      "category": "靈命塑造／禱告",
+      "type": "translated-classic",
+      "publisher": "Christian Chinese Library Ltd",
+      "isbn": "9781923383005",
+      "sourceId": "chinese-christian-elibrary",
+      "sourceUrl": "https://my-elibrary.net/product/%E4%B8%8D%E4%BD%8F%E7%A6%B1%E5%91%8A/",
+      "sourceKind": "publisher-book-detail",
+      "access": "free-subscription-on-publisher; third-party full-text copy not permitted",
+      "coverUrl": "https://my-elibrary.net/wp-content/uploads/2025/02/600x850_E1027_%E4%B8%8D%E4%BD%8F%E7%A6%B1%E5%91%8A-450x638.png",
+      "admission": "candidate-only",
+      "coverProvenance": {
+        "kind": "publisher-referenced-product-image",
+        "publisherPage": "https://my-elibrary.net/product/%E4%B8%8D%E4%BD%8F%E7%A6%B1%E5%91%8A/",
+        "identityMatch": "exact publisher product page image",
+        "availability": "image link discovered but HTTP body and embedding not yet tested",
+        "rights": "publisher-owned; display as external linked preview only; do not copy to repository"
+      },
+      "freeReading": {
+        "status": "verified-free-subscription",
+        "evidenceUrl": "https://my-elibrary.net/product/%E4%B8%8D%E4%BD%8F%E7%A6%B1%E5%91%8A/",
+        "notes": "Publisher indicates 免費訂閲 / free subscription; no payment asserted; registration may be required"
+      }
+    },
+    {
+      "candidateId": "dawn:discovery:zh:2026:preus-concord",
+      "title": "認識協同書的神學",
+      "author": "羅伯特·普宜時",
+      "authorOriginal": "Robert Preus",
+      "translator": "李明知、魯思豪",
+      "translation": "Chinese translation",
+      "editionYear": 2022,
+      "language": "zh-Hant",
+      "category": "神學／宗教改革",
+      "type": "translated-theology",
+      "publisher": "中華福音道路德會",
+      "isbn": null,
+      "sourceId": "chinese-lutheran-books",
+      "sourceUrl": "https://lutheranchinese.org/2026/04/17/getting-in-to-the-theology-of-concord-a-study-of-the-book-of-concord-2022/",
+      "sourceKind": "publisher-book-detail",
+      "access": "publisher listing; sample/license must be checked",
+      "coverUrl": null,
+      "admission": "candidate-only",
+      "freeReading": {
+        "status": "not-verified",
+        "evidenceUrl": "https://lutheranchinese.org/2026/04/17/getting-in-to-the-theology-of-concord-a-study-of-the-book-of-concord-2022/",
+        "notes": "Publisher bibliographic listing or excerpt; free complete reading/download not verified"
+      }
+    },
+    {
+      "candidateId": "dawn:discovery:zh:2026:concordia-chinese-2021",
+      "title": "協同書：基督教信義宗信仰告白，信徒版",
+      "author": "保羅·麥肯（總編輯）",
+      "authorOriginal": "Paul Timothy McCain",
+      "translator": "闞小玲",
+      "translation": "Chinese translation",
+      "editionYear": 2021,
+      "language": "zh-Hant",
+      "category": "神學／歷史信條",
+      "type": "translated-theology",
+      "publisher": "路德傳產基金會",
+      "isbn": "9789869640336",
+      "sourceId": "chinese-lutheran-books",
+      "sourceUrl": "https://lutheranchinese.org/2026/04/03/the-book-of-concord-2021/",
+      "sourceKind": "publisher-book-detail",
+      "access": "publisher sample available; full book not presumed licensed for repost",
+      "coverUrl": null,
+      "admission": "candidate-only",
+      "freeReading": {
+        "status": "not-verified",
+        "evidenceUrl": "https://lutheranchinese.org/2026/04/03/the-book-of-concord-2021/",
+        "notes": "Publisher bibliographic listing or excerpt; free complete reading/download not verified"
+      }
+    },
+    {
+      "candidateId": "dawn:discovery:zh:2026:tang-anthropology",
+      "title": "系統神學叢書07－凡人論",
+      "author": "唐佑之",
+      "authorOriginal": null,
+      "translator": null,
+      "translation": "original Chinese",
+      "editionYear": null,
+      "language": "zh-Hant",
+      "category": "神學／系統神學",
+      "type": "modern-original",
+      "publisher": "Christian Chinese Library Ltd",
+      "isbn": null,
+      "sourceId": "chinese-christian-elibrary",
+      "sourceUrl": "https://my-elibrary.net/product/%E7%B3%BB%E7%B5%B1%E7%A5%9E%E5%AD%B8%E5%8F%A2%E6%9B%B807-%E5%87%A1%E4%BA%BA%E8%AB%96/",
+      "sourceKind": "publisher-book-detail",
+      "access": "free-subscription-on-publisher; reuse rights unknown",
+      "coverUrl": "https://my-elibrary.net/wp-content/uploads/2025/11/600x850_E1039-%E7%B3%BB%E7%B5%B1%E7%A5%9E%E5%AD%B8%E5%8F%A2%E6%9B%B807%E2%80%93%E5%87%A1%E4%BA%BA%E8%AB%96-450x638.jpg",
+      "admission": "candidate-only",
+      "coverProvenance": {
+        "kind": "publisher-referenced-product-image",
+        "publisherPage": "https://my-elibrary.net/product/%E7%B3%BB%E7%B5%B1%E7%A5%9E%E5%AD%B8%E5%8F%A2%E6%9B%B807-%E5%87%A1%E4%BA%BA%E8%AB%96/",
+        "identityMatch": "exact publisher product page image",
+        "availability": "image link discovered but HTTP body and embedding not yet tested",
+        "rights": "publisher-owned; display as external linked preview only; do not copy to repository"
+      },
+      "freeReading": {
+        "status": "verified-free-subscription",
+        "evidenceUrl": "https://my-elibrary.net/product/%E7%B3%BB%E7%B5%B1%E7%A5%9E%E5%AD%B8%E5%8F%A2%E6%9B%B807-%E5%87%A1%E4%BA%BA%E8%AB%96/",
+        "notes": "Publisher indicates 免費訂閲 / free subscription; no payment asserted; registration may be required"
+      }
+    },
+    {
+      "candidateId": "dawn:discovery:zh:2026:nie-six-graces",
+      "title": "神恩六記",
+      "author": "聶錦勳",
+      "authorOriginal": null,
+      "translator": null,
+      "translation": "original Chinese",
+      "editionYear": null,
+      "language": "zh-Hant",
+      "category": "見證／傳記",
+      "type": "modern-original",
+      "publisher": "Christian Chinese Library Ltd",
+      "isbn": null,
+      "sourceId": "chinese-christian-elibrary",
+      "sourceUrl": "https://my-elibrary.net/product/%E7%A5%9E%E6%81%A9%E5%85%AD%E8%A8%98/",
+      "sourceKind": "publisher-book-detail",
+      "access": "free-subscription-on-publisher; reuse rights unknown",
+      "coverUrl": "https://my-elibrary.net/wp-content/uploads/2026/09/600x850_TC01066_%E7%A5%9E%E6%81%A9%E5%85%AD%E8%A8%98-450x638.jpg",
+      "admission": "candidate-only",
+      "coverProvenance": {
+        "kind": "publisher-referenced-product-image",
+        "publisherPage": "https://my-elibrary.net/product/%E7%A5%9E%E6%81%A9%E5%85%AD%E8%A8%98/",
+        "identityMatch": "exact publisher product page image",
+        "availability": "image link discovered but HTTP body and embedding not yet tested",
+        "rights": "publisher-owned; display as external linked preview only; do not copy to repository"
+      },
+      "freeReading": {
+        "status": "verified-free-subscription",
+        "evidenceUrl": "https://my-elibrary.net/product/%E7%A5%9E%E6%81%A9%E5%85%AD%E8%A8%98/",
+        "notes": "Publisher indicates 免費訂閲 / free subscription; no payment asserted; registration may be required"
+      }
+    },
+    {
+      "candidateId": "dawn:discovery:zh:2026:eileen-memoir",
+      "title": "師母手記－李吳惠冰",
+      "author": "李吳惠冰",
+      "authorOriginal": null,
+      "translator": null,
+      "translation": "original Chinese",
+      "editionYear": null,
+      "language": "zh-Hant",
+      "category": "見證／傳記",
+      "type": "modern-original",
+      "publisher": "Christian Chinese Library Ltd",
+      "isbn": "9780645448542",
+      "sourceId": "chinese-christian-elibrary",
+      "sourceUrl": "https://my-elibrary.net/product/%E5%B8%AB%E6%AF%8D%E6%89%8B%E8%A8%98-%E6%9D%8E%E5%90%B3%E6%83%A0%E5%86%B0/",
+      "sourceKind": "publisher-book-detail",
+      "access": "free-subscription-on-publisher; reuse rights unknown",
+      "coverUrl": "https://my-elibrary.net/wp-content/uploads/2024/02/600x850_E1003_%E5%B8%AB%E6%AF%8D%E6%89%8B%E8%A8%98-%E2%80%93-%E6%9D%8E%E5%90%B3%E6%83%A0%E5%86%B0-450x638.jpg",
+      "admission": "candidate-only",
+      "freeReading": {
+        "status": "verified-free-subscription",
+        "evidenceUrl": "https://my-elibrary.net/product/%E5%B8%AB%E6%AF%8D%E6%89%8B%E8%A8%98-%E6%9D%8E%E5%90%B3%E6%83%A0%E5%86%B0/",
+        "notes": "Publisher indicates 免費訂閲 / free subscription; no payment asserted; registration may be required"
+      },
+      "coverProvenance": {
+        "kind": "official-product-page-image",
+        "publisherPage": "https://my-elibrary.net/product/%E5%B8%AB%E6%AF%8D%E6%89%8B%E8%A8%98-%E6%9D%8E%E5%90%B3%E6%83%A0%E5%86%B0/",
+        "identityMatch": "same work original publisher image link",
+        "rights": "external presentation only; no file copied to Dawn",
+        "availability": "requires runtime load verification"
+      }
+    },
+    {
+      "candidateId": "dawn:discovery:zh:2026:dever-great-commission",
+      "title": "認識大使命",
+      "author": "狄馬可",
+      "authorOriginal": "Mark Dever",
+      "translator": null,
+      "translation": "Chinese translation",
+      "editionYear": null,
+      "language": "zh-Hant",
+      "category": "教會與事奉／宣教",
+      "type": "translated-church-practice",
+      "publisher": "9Marks／合作中文出版",
+      "isbn": null,
+      "sourceId": "9marks-traditional-chinese",
+      "sourceUrl": "https://tc.9marks.org/book/understanding-the-great-commission-cht",
+      "sourceKind": "publisher-book-detail",
+      "access": "free publisher ePub link, personal reading only; copyright prohibits rehosting",
+      "coverUrl": "https://9marks-static.oss-cn-hongkong.aliyuncs.com/wp/2021/12/UnderstandingtheGreatCommission.CHT_.cover_.png?x-oss-process=image%2Fresize%2Cw_700",
+      "admission": "candidate-only",
+      "freeReading": {
+        "status": "verified-free-download",
+        "evidenceUrl": "https://tc.9marks.org/book/understanding-the-great-commission-cht",
+        "notes": "Official site provides a free EPUB download for personal reading"
+      },
+      "coverProvenance": {
+        "kind": "official-product-page-image",
+        "publisherPage": "https://tc.9marks.org/book/understanding-the-great-commission-cht",
+        "identityMatch": "same work original publisher image link",
+        "rights": "external presentation only; no file copied to Dawn",
+        "availability": "requires runtime load verification"
+      }
+    },
+    {
+      "candidateId": "dawn:discovery:zh:2026:helm-preaching",
+      "title": "解經式講道",
+      "author": "大衛·赫爾姆",
+      "authorOriginal": "David Helm",
+      "translator": null,
+      "translation": "Chinese translation",
+      "editionYear": null,
+      "language": "zh-Hant",
+      "category": "教會與事奉／講道",
+      "type": "translated-church-practice",
+      "publisher": "9Marks／合作中文出版",
+      "isbn": null,
+      "sourceId": "9marks-traditional-chinese",
+      "sourceUrl": "https://tc.9marks.org/book/expositional-preaching-cht",
+      "sourceKind": "publisher-book-detail",
+      "access": "free publisher ePub; personal reading only, no mirrored copy",
+      "coverUrl": "https://9marks-static.oss-cn-hongkong.aliyuncs.com/wp/2026/06/expositional-preaching-cht.png?x-oss-process=image%2Fresize%2Cw_700",
+      "admission": "candidate-only",
+      "freeReading": {
+        "status": "verified-free-download",
+        "evidenceUrl": "https://tc.9marks.org/book/expositional-preaching-cht",
+        "notes": "Official site provides a free EPUB download for personal reading"
+      },
+      "coverProvenance": {
+        "kind": "official-product-page-image",
+        "publisherPage": "https://tc.9marks.org/book/expositional-preaching-cht",
+        "identityMatch": "same work original publisher image link",
+        "rights": "external presentation only; no file copied to Dawn",
+        "availability": "requires runtime load verification"
+      }
+    },
+    {
+      "candidateId": "dawn:discovery:zh:2026:anyabwile-member",
+      "title": "健康的教會成員",
+      "author": "安泰博",
+      "authorOriginal": "Thabiti Anyabwile",
+      "translator": null,
+      "translation": "Chinese translation",
+      "editionYear": null,
+      "language": "zh-Hant",
+      "category": "教會與事奉／教會生活",
+      "type": "translated-church-practice",
+      "publisher": "9Marks／合作中文出版",
+      "isbn": null,
+      "sourceId": "9marks-traditional-chinese",
+      "sourceUrl": "https://tc.9marks.org/book/what-is-a-healthy-church-member-cht",
+      "sourceKind": "publisher-book-detail",
+      "access": "free official publisher ebook or download, personal use only; no reproduction",
+      "coverUrl": "https://9marks-static.oss-cn-hongkong.aliyuncs.com/wp/2025/08/healthy-church-member-cht.png?x-oss-process=image%2Fresize%2Cw_700",
+      "admission": "candidate-only",
+      "freeReading": {
+        "status": "verified-free-download",
+        "evidenceUrl": "https://tc.9marks.org/book/what-is-a-healthy-church-member-cht",
+        "notes": "Official site provides a free EPUB download for personal reading"
+      },
+      "coverProvenance": {
+        "kind": "official-product-page-image",
+        "publisherPage": "https://tc.9marks.org/book/what-is-a-healthy-church-member-cht",
+        "identityMatch": "same work original publisher image link",
+        "rights": "external presentation only; no file copied to Dawn",
+        "availability": "requires runtime load verification"
+      }
+    },
+    {
+      "candidateId": "dawn:discovery:zh:2026:gilbert-trust-bible",
+      "title": "為何相信聖經",
+      "author": "紀格睿",
+      "authorOriginal": "Greg Gilbert",
+      "translator": null,
+      "translation": "Chinese translation",
+      "editionYear": null,
+      "language": "zh-Hant",
+      "category": "神學／護教",
+      "type": "translated-apologetics",
+      "publisher": "9Marks／合作中文出版",
+      "isbn": null,
+      "sourceId": "9marks-traditional-chinese",
+      "sourceUrl": "https://tc.9marks.org/book/why-trust-the-bible-cht",
+      "sourceKind": "publisher-book-detail",
+      "access": "free official publisher ebook download for personal use only; no republication",
+      "coverUrl": "https://9marks-static.oss-cn-hongkong.aliyuncs.com/wp/2020/02/WhyTrusttheBible.CHT_.cover_.png?x-oss-process=image%2Fresize%2Cw_700",
+      "admission": "candidate-only",
+      "freeReading": {
+        "status": "verified-free-download",
+        "evidenceUrl": "https://tc.9marks.org/book/why-trust-the-bible-cht",
+        "notes": "Official site provides a free EPUB download for personal reading"
+      },
+      "coverProvenance": {
+        "kind": "official-product-page-image",
+        "publisherPage": "https://tc.9marks.org/book/why-trust-the-bible-cht",
+        "identityMatch": "exact Traditional Chinese work from 9Marks book page",
+        "rights": "external publisher image reference, no local reproduction",
+        "availability": "requires runtime load verification"
+      }
+    }
+  ],
+  "audit": {
+    "candidateCount": 11,
+    "translationCount": 8,
+    "originalCount": 3,
+    "proof": "Official/publisher title listings linked above; no full text or cover copied",
+    "validatedAt": "2026-11-22",
+    "freeReadingConfirmed": 9,
+    "freeReadingNotVerified": 2,
+    "admissionRule": "Only works with publisher-verified free reading/download or free subscription are exposed in library; unverified and paid sources remain internal and unlisted",
+    "coverUrlCount": 9,
+    "eligibleFreeCount": 9
+  }
+}

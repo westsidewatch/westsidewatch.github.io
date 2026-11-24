@@ -342,6 +342,25 @@ These files remain archived intact; they do not operate as independent OS author
 
 **Revision rule:** update the relevant chapter *here* for any new editorial judgment; update OS tokens only if an approved cross-surface token truly changes. Never import original research documents as CSS/JS, and never replace an existing HTML asset merely to attach the manual.
 
+### 9.6 — 設計基因生成內容空間：第一輪實際轉譯（2026-11-24）
+
+本節依據已認可的八項探索摘要，原始完整研究稿仍待回收核對；不是重新命名或重造一套設計系統。R02 將城垛附加在既有版面的方式已被否決：基本元素必須生成構圖及內容關係，不得淪為裝飾。
+
+| 探索機制 | 第一輪實作位置 |
+| --- | --- |
+| Whitney：內容決定空間 | 既有七種 cover modes 不再共用相同的首屏分欄；正文 narrow / reading-with-margin 亦真正形成不同閱讀寬度 |
+| Philbrook：觀看窗口 | 教會原 V60 經文方塊與真實建築圖、導覽入口組成可閱讀窗口，不再增加假識別方塊 |
+| Hood：嵌入、咬合、退讓 | 教會建築、橄欖山肖像與書局圖版各自占有完整網格區域，文字不覆蓋內容 |
+| Serpentine：彈性開口 | 以十二欄彈性網格與實際內容長度形成留白，手機改成自然閱讀流 |
+| MIT Media Lab：同源異形 | 七版塊共享既有 OS 紙墨、語義色彩與刊頭，不複製同一構圖 |
+| Poster House：版緣裁切 | 期刊、地圖與全幅圖版可延伸至頁緣；原圖完整保留，不裁文字 |
+| Cooper Hewitt：持續編輯 | 原 JSON → Hugo 工作鏈保留，期號目錄、編目與出版系列獲得不同的編輯結構 |
+| MoMA：視覺重力 | 講員肖像、圖版、建築和作品目錄各自成為閱讀主角，非均等產品卡 |
+
+**工作鏈修正（2026-11-24）**：設計判斷須先回到現有 [Figma Visual Language Lab / LAB 06](https://www.figma.com/design/v0LXKYZznCRmXWhk36zARN?node-id=21-2)；節點 21:9 的導航是純文字，21:27、21:28 等為極細結構線。這是既有母版的實際證據，不是新增設計權威。新編輯頁的入口、目錄與作品標題不得使用通用箭頭裝飾；保留原有連結、焦點與文字辨識。此項僅修正已查明的局部違規，不代表完成所有 Figma 組件、9.6 原始研究及全站畫面對照。
+
+**第一輪施工範圍**：既有七個 /folio/ 實際頁面及既有共用 CSS/partial；不改已整合 P2、首頁影片、原 3D、書局原有二三層或正式入口。這是局部設計轉譯，非全站完成。須由既有 Chromium 逐頁、逐尺寸與使用者的實際畫面判斷；原研究全文和後續實際頁面移植仍待完成。
+
 ## 10. Scrapling × 主站統一視覺元素：隔離技術驗證（2026-11-14）
 
 **狀態：研究／待實測；不是已安裝、已通過或已部署。** 本節隸屬既有單一 Westside Design OS 編輯手冊與 §9「多雷探索」，不建立平行規範。Scrapling 候選來源：https://github.com/D4Vinci/Scrapling 。版本、MCP 工具、授權及安全性須在實測時重新核對，不將宣傳描述視為驗收證據。
