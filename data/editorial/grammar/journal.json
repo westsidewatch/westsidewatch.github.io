@@ -1,0 +1,74 @@
+{
+  "schema": "westside.editorial-grammar.v1",
+  "realm": "journal",
+  "genre": "publication",
+  "cover": {
+    "mode": "poster",
+    "eyebrow": "Westside Watch · Vol.00",
+    "titleZh": "西望",
+    "titleEn": "The Journal",
+    "deck": "一份仍在生長的數位雜誌，讓聖經、藝術、人物與城市在同一份出版物中相遇。",
+    "art": {
+      "src": "/images/xiwang-poster-a-night-blue-approved-p2.svg",
+      "alt": "《西望》P2 已確認的午夜藍藝術圖稿"
+    },
+    "issue": "02 / Issue 00"
+  },
+  "blocks": [
+    {
+      "type": "index",
+      "id": "issue",
+      "mode": "issue-toc",
+      "eyebrow": "In This Edition",
+      "title": "從本期目錄進入閱讀",
+      "entries": [
+        {
+          "title": "期刊首頁",
+          "label": "西望雜誌",
+          "href": "/journal/"
+        },
+        {
+          "title": "創刊號",
+          "label": "Vol.00",
+          "href": "/vol-00/"
+        },
+        {
+          "title": "閱讀目錄",
+          "label": "本期欄目索引",
+          "href": "/vol-00/#contents"
+        },
+        {
+          "title": "多雷探索",
+          "label": "出版與史地資源",
+          "href": "/dore/search/"
+        }
+      ]
+    },
+    {
+      "type": "essay",
+      "id": "editor-note",
+      "mode": "narrow",
+      "eyebrow": "Editor's Note",
+      "title": "藝術與內容，應該彼此成就",
+      "paragraphs": [
+        "每一期《西望》都是一組有目的的閱讀線索。不同媒體的文章、圖像和經文可以採用不同構圖，但卷次、編輯秩序與來源註記應始終清晰。",
+        "期刊不應淪為其他版塊的普通導航頁。它以完整的出版面貌，連結教會、查經、講道、書籍、影像與生活。"
+      ]
+    },
+    {
+      "type": "plate",
+      "id": "poster-art",
+      "mode": "wide",
+      "eyebrow": "Visual Essay",
+      "src": "/images/xiwang-poster-a-night-blue-approved-p2.svg",
+      "alt": "西望原有藝術字形圖版",
+      "caption": "西望 · 既有 P2 原版圖稿"
+    },
+    {
+      "type": "scripture",
+      "id": "watch",
+      "mode": "folio",
+      "heading": "城上的守望"
+    }
+  ]
+}
