@@ -40,6 +40,37 @@ const viewports=[{name:'desktop',width:1440,height:900},{name:'tablet',width:768
        fontEn:getComputedStyle(document.querySelector('.ws-gram-cover__title-en')).fontFamily,
        assetCount:img.length,
        masthead:!!document.querySelector('.ws-grammar__masthead img'),
+       artDirection:(()=>{
+         const chinese=document.querySelector('.ws-gram-cover__title-zh');
+         const english=document.querySelector('.ws-gram-cover__title-en');
+         const eyebrow=cover.querySelector('.ws-grammar__eyebrow');
+         const size=x=>parseFloat(getComputedStyle(x).fontSize);
+         const toRgb=(s)=>{
+           let m=s.match(/^rgba?\\(([^)]+)\\)$/);
+           if(m)return m[1].split(/[\\s,\\/]+/).slice(0,3).map(Number).map(n=>n/255);
+           m=s.match(/^color\\(srgb\\s+([^)]*)\\)$/);
+           if(m)return m[1].split(/[\\s\\/]+/).slice(0,3).map(Number);
+           return [0,0,0];
+         };
+         const lum=a=>a.map(x=>x<=.04045?x/12.92:((x+.055)/1.055)**2.4).reduce((t,x,i)=>t+x*[.2126,.7152,.0722][i],0);
+         const osColor=v=>getComputedStyle(article).getPropertyValue(v).trim();
+         const fg=lum(toRgb(getComputedStyle(eyebrow).color));
+         const bg=lum(toRgb(getComputedStyle(article).getPropertyValue(cover.dataset.mode==='cinematic'?'--ws-ink':'--ws-paper').trim()));
+         const contrast=(Math.max(fg,bg)+.05)/(Math.min(fg,bg)+.05);
+         return {
+          zhSize:chinese?size(chinese):null,
+          enSize:size(english),
+          ratio:chinese?size(chinese)/size(english):null,
+          zhFamily:chinese?getComputedStyle(chinese).fontFamily:null,
+          zhWeight:chinese?parseInt(getComputedStyle(chinese).fontWeight):null,
+          enFamily:getComputedStyle(english).fontFamily,
+          accent:osColor('--g-accent'),
+          ink:osColor('--ws-ink'),paper:osColor('--ws-paper'),
+          eyebrowInk:getComputedStyle(eyebrow).color,
+          eyebrowContrast:contrast,
+          numeralSemantics:getComputedStyle(document.querySelector('.ws-grammar__folio-no')).fontFamily
+         };
+       })(),
        navAvailable:!!document.querySelector('.ws-grammar__directory summary')
       };
     });
@@ -49,6 +80,18 @@ const viewports=[{name:'desktop',width:1440,height:900},{name:'tablet',width:768
     assert(computed.width<=viewport.width+3,realm+' page horizontally overflows at '+viewport.width+': '+JSON.stringify(computed));
     assert(computed.titleWithin&&computed.titleClipped,realm+' cover title clips at '+viewport.width+': '+JSON.stringify(computed));
     assert(computed.fontEn.includes('Bodoni'),realm+' English OS font not present');
+    const a=computed.artDirection;
+    assert(a.enFamily.includes('Bodoni Moda SC')&&a.numeralSemantics.includes('Bodoni Moda SC'),
+       realm+' is using fake Small Caps rather than OS Bodoni Moda SC '+JSON.stringify(a));
+    if(realm!=='church'){
+      assert(a.zhFamily.includes('Chiron')&&a.zhWeight>=600,
+        realm+' Chinese editorial display violates Chiron authority '+JSON.stringify(a));
+      assert(a.ratio>=1.65,
+        realm+' English is too large beside Chinese (must be <=60% at this editorial tier) '+JSON.stringify(a));
+    }
+    assert(a.eyebrowContrast>=4.5,
+      realm+' tiny editorial metadata fails 4.5:1 readability '+JSON.stringify(a));
+
     assert(computed.masthead&&computed.navAvailable);
     if(realm!=='church')assert(computed.assetCount>=1,realm+' actual cover image absent');
     if(realm==='church'){
