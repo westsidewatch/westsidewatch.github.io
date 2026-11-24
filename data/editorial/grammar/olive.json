@@ -1,0 +1,74 @@
+{
+  "schema": "westside.editorial-grammar.v1",
+  "realm": "olive",
+  "genre": "people",
+  "cover": {
+    "mode": "portrait",
+    "eyebrow": "Olive Mountain · Voices",
+    "titleZh": "橄欖山",
+    "titleEn": "Olive Mountain",
+    "deck": "讓講員的聲音、經文與人物檔案彼此對話；每位講員有自己的完整圖像與講道脈絡。",
+    "art": {
+      "src": "/images/olive/david-pawson-editorial.png",
+      "alt": "橄欖山已有的大衛鮑森編輯肖像"
+    },
+    "issue": "04 / Voices"
+  },
+  "blocks": [
+    {
+      "type": "plate",
+      "id": "portrait",
+      "mode": "portrait-folio",
+      "eyebrow": "A Portrait",
+      "src": "/images/olive/david-pawson-editorial.png",
+      "alt": "大衛鮑森原有編輯肖像",
+      "caption": "David Pawson / 主站橄欖山既有講員圖版"
+    },
+    {
+      "type": "essay",
+      "id": "people",
+      "mode": "reading-with-margin",
+      "eyebrow": "Voices & Scripture",
+      "title": "人物是主角，設計不是",
+      "paragraphs": [
+        "講道頁應讓講員的聲音與所傳講的經文清晰可見。肖像、講道系列與經文彼此支撐，而不是以多餘框線和翻轉效果取代閱讀。",
+        "十二位講員的既有版面與藝術成果保留於橄欖山原頁；這裡示範內容內頁如何以同一編輯語法承接。"
+      ]
+    },
+    {
+      "type": "index",
+      "id": "speakers",
+      "mode": "numbered",
+      "eyebrow": "Speakers",
+      "title": "繼續聆聽",
+      "entries": [
+        {
+          "title": "橄欖山首頁",
+          "label": "十二位講員與系列",
+          "href": "/olive/"
+        },
+        {
+          "title": "大衛鮑森",
+          "label": "講員資料",
+          "href": "/olive/david-pawson/"
+        },
+        {
+          "title": "葉光明",
+          "label": "講員資料",
+          "href": "/olive/derek-prince/"
+        },
+        {
+          "title": "寇紹恩",
+          "label": "講員資料",
+          "href": "/olive/kou-shao-en/"
+        }
+      ]
+    },
+    {
+      "type": "scripture",
+      "id": "word",
+      "mode": "inset",
+      "heading": "信道是從聽道來的"
+    }
+  ]
+}
