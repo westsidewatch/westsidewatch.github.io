@@ -7,7 +7,7 @@
   <section class="ws-gram-block ws-gram-essay" data-type="essay" data-mode="{{ $b.mode }}" id="{{ $b.id }}" aria-labelledby="{{ $b.id }}-title">
     <header class="ws-gram-block__head">
       <p class="ws-grammar__eyebrow" lang="en">{{ $b.eyebrow }}</p>
-      <h2 id="{{ $b.id }}-title">{{ $b.title }}</h2>
+      <h2 id="{{ $b.id }}-title" data-ws-designable data-ws-type-role="editorial-heading">{{ $b.title }}</h2>
     </header>
     <div class="ws-gram-essay__text">
       {{ range $b.paragraphs }}<p>{{ . }}</p>{{ end }}
@@ -18,7 +18,7 @@
   <section class="ws-gram-block ws-gram-scripture" data-type="scripture" data-mode="{{ $b.mode }}" id="{{ $b.id }}">
     <header class="ws-gram-scripture__heading">
       <p class="ws-grammar__eyebrow" lang="en">{{ $section.refEn }}</p>
-      <h2>{{ $b.heading }}</h2>
+      <h2 data-ws-designable data-ws-type-role="editorial-heading">{{ $b.heading }}</h2>
       <p>{{ $section.quoteZh }}</p>
       <cite>{{ $section.refZh }}</cite>
     </header>
@@ -35,7 +35,7 @@
   <section class="ws-gram-block ws-gram-index" data-type="index" data-mode="{{ $b.mode }}" id="{{ $b.id }}" aria-labelledby="{{ $b.id }}-title">
     <div class="ws-gram-block__head">
       <p class="ws-grammar__eyebrow" lang="en">{{ $b.eyebrow }}</p>
-      <h2 id="{{ $b.id }}-title">{{ $b.title }}</h2>
+      <h2 id="{{ $b.id }}-title" data-ws-designable data-ws-type-role="editorial-heading">{{ $b.title }}</h2>
     </div>
     <ol class="ws-gram-index__items">
       {{ range $i, $item := $b.entries }}
@@ -62,7 +62,7 @@
   <section class="ws-gram-block ws-gram-conversation" data-type="conversation" data-mode="{{ $b.mode }}" id="{{ $b.id }}" aria-labelledby="{{ $b.id }}-title">
     <div class="ws-gram-block__head">
       <p class="ws-grammar__eyebrow" lang="en">{{ $b.eyebrow }}</p>
-      <h2 id="{{ $b.id }}-title">{{ $b.title }}</h2>
+      <h2 id="{{ $b.id }}-title" data-ws-designable data-ws-type-role="editorial-heading">{{ $b.title }}</h2>
     </div>
     <dl class="ws-gram-conversation__body">
       {{ range $b.pairs }}
@@ -77,7 +77,7 @@
   <section class="ws-gram-block ws-gram-shelf" data-type="shelf" data-mode="{{ $b.mode }}" id="{{ $b.id }}" aria-labelledby="{{ $b.id }}-title">
     <div class="ws-gram-block__head">
       <p class="ws-grammar__eyebrow" lang="en">{{ $b.eyebrow }}</p>
-      <h2 id="{{ $b.id }}-title">{{ $b.title }}</h2>
+      <h2 id="{{ $b.id }}-title" data-ws-designable data-ws-type-role="editorial-heading">{{ $b.title }}</h2>
     </div>
     <ol class="ws-gram-shelf__works">
       {{ range $i, $item := $b.entries }}
