@@ -924,6 +924,13 @@
   nextLeft.style.visibility=withNext&&transition>0?'visible':'hidden';
   nextRight.style.visibility=withNext&&transition>0?'visible':'hidden';
  }
+ // Parent and child share same-origin geometry; apply the clearance before painting the moving masthead.
+ window.P2SetDawnSplit=(value,center)=>{
+  if(!embedded)return;
+  hostSplit=clamp(Number(value)||0);hostCenter=center;
+  const g=measure();
+  if(g&&hostDistance!==null&&hostDistance>=T.indexEnd)layoutIndex(g,1);
+ };
  function layoutIndex(g,t){
   // R39: the two approved square blocks own a physical editorial
   // rail. Never place a poster underneath the masthead; on narrow
@@ -961,7 +968,7 @@
    // R94: reserve the actual horizontal 05 masthead footprint, not a guessed column.
    let x=targetX,y=targetY,w=posterW,h=posterH;
    if(hostSplit>0&&hostCenter){
-    const bounds=folio.getBoundingClientRect(),stageRect=stage.getBoundingClientRect();
+    const bounds=overview.getBoundingClientRect(),stageRect=stage.getBoundingClientRect();
     const cx=Number(hostCenter.x)+stageRect.left-bounds.left;
     const cy=Number(hostCenter.y)+stageRect.top-bounds.top;
     const half=Number(hostCenter.size),pad=g.w<700?5:12;
@@ -981,6 +988,7 @@
   overview.style.setProperty('--index-caption-alpha',
     String(ease((t-.69)/.31)));
   overview.dataset.columns=String(cols);
+  overview.dataset.dawnSplit=hostSplit.toFixed(4);
  }
  function revealSplitField(node,u){
   const reveal=clamp(u);
