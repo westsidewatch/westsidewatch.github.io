@@ -1,0 +1,49 @@
+{
+  "schema": "westside.editorial-grammar.v1",
+  "realm": "journal",
+  "genre": "publication",
+  "cover": {
+    "mode": "poster",
+    "eyebrow": "Westside Watch · Working Proof",
+    "titleZh": "編輯語法實作驗證",
+    "titleEn": "From Grammar to Page",
+    "deck": "這個頁面由單一內容資料自動產生，用來驗證編輯指令確實能輸出可閱讀的 Hugo 網頁，而不是只有視覺規範。",
+    "art": {
+      "src": "/images/xiwang-poster-a-night-blue-approved-p2.svg",
+      "alt": "西望原有批准的圖稿"
+    },
+    "issue": "02 / Editorial Proof"
+  },
+  "blocks": [
+    {
+      "type": "essay",
+      "id": "workflow",
+      "mode": "narrow",
+      "eyebrow": "A Working Production Path",
+      "title": "填寫內容，直接生成頁面",
+      "paragraphs": [
+        "這個專題使用與正式七個版塊完全相同的 Hugo 編輯語法。改變內容檔案、版面指令或圖像位置，網站就會重新輸出對應的語義化 HTML。",
+        "它是 CI 中自動建立的測試頁，不需要另外撰寫 HTML 或 CSS，也不修改原有的 P2 動效。"
+      ]
+    },
+    {
+      "type": "index",
+      "id": "proof-links",
+      "mode": "numbered",
+      "eyebrow": "Next Reading",
+      "title": "閱讀入口",
+      "entries": [
+        {
+          "title": "西望雜誌",
+          "label": "正式期刊入口",
+          "href": "/journal/"
+        },
+        {
+          "title": "黎明書局",
+          "label": "延伸內容",
+          "href": "/dawn-library/"
+        }
+      ]
+    }
+  ]
+}
