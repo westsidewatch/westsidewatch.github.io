@@ -11,3 +11,6 @@ body[data-ws-scope="p2"] .church-editorial__copy .sunday-schedule__place p::befo
 body[data-ws-scope="p2"] .church-editorial__copy .church-p2-visit{display:inline-block;font:200 clamp(10px,.85vw,14px)/1.5 var(--ws-type-display-zh);color:var(--ws-ink);text-decoration:underline;text-underline-offset:.2em;pointer-events:auto;margin-top:.25rem}
 body[data-ws-scope="p2"] .church-editorial__copy .church-p2-visit:focus-visible{outline:2px solid var(--ws-ink);outline-offset:3px}
 @media(max-width:680px){body[data-ws-scope="p2"] .church-p2-index{gap:.4rem}body[data-ws-scope="p2"] .church-p2-name-seal{width:24px}}
+
+body[data-ws-scope="p2"] .church-editorial__copy > .church-folio__identity > .church-p2-index{grid-column:1;grid-row:1;align-self:start;justify-self:stretch;min-width:0;margin:0;font:400 var(--ws-type-scale-meta)/var(--ws-type-leading-ui) var(--ws-type-display-en-sc);letter-spacing:.1em}
+body[data-ws-scope="p2"] .church-editorial__copy .sunday-schedule__place > .church-p2-visit{grid-column:1/-1;grid-row:auto;justify-self:start;min-height:24px}
