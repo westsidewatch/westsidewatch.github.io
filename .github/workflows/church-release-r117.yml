@@ -23,9 +23,10 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: '0.147.9'
+          hugo-version: '0.164.0'
           extended: true
-      - run: hugo --minify --destination public
+      - run: python3 scripts/normalize_hugo_frontmatter.py
+      - run: hugo --minify --baseURL / --destination public
       - run: npm install --no-save --no-package-lock playwright && npx playwright install --with-deps chromium
       - run: |
           python3 -m http.server 4173 --directory public >/tmp/church-release-http.log 2>&1 &
