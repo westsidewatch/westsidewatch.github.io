@@ -1,0 +1,90 @@
+{
+  "schema": "dore.explore-evidence.v0",
+  "episode": "italian-editorial-dna-v0",
+  "corpus": "Gio Ponti / Domus / Stile bridge",
+  "period": "1928-1957",
+  "admission_status": "EVIDENCE_ONLY_NOT_CAPABILITY_PASS",
+  "research_role": "First bridge after Campo Grafico: test what Italian editorial intelligence preserves, mutates or rejects across publication identity, media, wartime constraint and postwar reconstruction.",
+  "verified_evidence": [
+    {
+      "finding": "PUBLICATION_AS_WORLD_NOT_CATEGORY",
+      "evidence": "Domus began as a broad culture-of-living publication and Ponti's editorial field brought architecture, applied arts, graphics, objects and domestic life into one publication rather than treating them as isolated disciplines.",
+      "transfer": "An editorial system may be coherent because it has a worldview, not because every contribution belongs to one media category."
+    },
+    {
+      "finding": "EDITOR_IS_ALSO_A_MAKER",
+      "evidence": "Ponti worked simultaneously as architect/designer and editor, writing articles, notes, aphorisms and precise captions across decades.",
+      "transfer": "Editorial judgement is strongest when writing, image choice, object design and spatial composition can inform one another instead of being serial handoffs."
+    },
+    {
+      "finding": "IMAGE_SIZE_CAN_GENERATE_WHITESPACE",
+      "evidence": "Giorgio Casali's square negatives were frequently reframed into unpredictable rectangular prints; the resulting different image sizes required free white space in Domus layouts.",
+      "transfer": "Whitespace can be a consequence of image truth and editorial relation rather than a preset luxury-magazine motif."
+    },
+    {
+      "finding": "MATERIAL_CHANGE_CAN_SIGNAL_SEMANTIC_CHANGE",
+      "evidence": "Postwar Domus rhythm used coloured strip inserts and different paper stocks; coarse pale-blue paper could signal a subject change while half-page colour films altered rhythm without stopping flow.",
+      "transfer": "Material, colour field and partial interruption can function as semantic punctuation."
+    },
+    {
+      "finding": "PUBLICATION_CAN_BE_CREATED_BY_AFFINITY",
+      "evidence": "Lisa Ponti described the Domus method as a worldwide effort by affinity, with architects, designers and artists directly indicating and documenting one another's work.",
+      "transfer": "Contributor networks can act as distributed editorial sensing; central authority need not flatten local voices."
+    },
+    {
+      "finding": "CONSTRAINT_MUST_NOT_BE_CONFUSED_WITH_STYLE",
+      "evidence": "Stile's late-war form became a modest red-black-white booklet under material scarcity while carrying ideas for intelligent, inexpensive reconstruction; Domus itself suspended publication in 1945 amid paper/distribution difficulty.",
+      "transfer": "Scarcity-driven visual reduction is historical constraint evidence, not an aesthetic recipe to imitate."
+    },
+    {
+      "finding": "REASON_AND_FANTASY_CAN_ALTERNATE",
+      "evidence": "Bruno Munari's 1944 Domus work explicitly examined historical oscillation between controlled Reason and convoluted Fantasy, while his layouts moved away from austere rigidity toward a more flexible and intuitive formula.",
+      "transfer": "Editorial intelligence can compose controlled and expressive states as meaningful alternation rather than choosing one permanent visual temperament."
+    },
+    {
+      "finding": "ARCHIVE_CAN_BE_REANIMATED_NOT_MEMORIALIZED",
+      "evidence": "The later Pontian Atlas deliberately used Ponti as corpus/subtext for contemporary artists rather than reproducing a commemorative historical style.",
+      "transfer": "Historical evidence may be reactivated through new relations and contemporary interpretation without reenactment."
+    }
+  ],
+  "relation_to_campo_grafico": {
+    "continuities": [
+      "coherence does not require sameness",
+      "material and production can carry meaning",
+      "editorial form may respond to content rather than fixed template",
+      "historical/source objects should retain identity when their identity matters"
+    ],
+    "mutations": [
+      "Campo Grafico foregrounds publication-as-workshop and evidence; Ponti expands publication into a total cultural world of living, making and seeing.",
+      "Campo Grafico often makes production itself editorial content; Domus increasingly turns photography, material rhythm and contributor affinity into an editorial sensing system.",
+      "Ponti adds a stronger model of editor-as-maker whose writing, design, architecture and image judgement coexist."
+    ]
+  },
+  "candidate_grammars_for_experiment": [
+    "publication-as-world-not-category",
+    "image-truth-generates-whitespace",
+    "material-change-signals-semantic-change",
+    "distributed-affinity-with-central-judgement",
+    "reason-fantasy-alternation",
+    "archive-reactivation-without-reenactment"
+  ],
+  "rejection_memory": [
+    "Do not learn Ponti as a decorative 1950s look.",
+    "Do not imitate Domus mastheads, covers, period furniture, colour palettes or typography as identity shortcuts.",
+    "Do not convert wartime scarcity into a minimalist style prescription.",
+    "Do not treat whitespace as automatically refined; it must have a compositional or semantic reason.",
+    "Do not force architecture-magazine neutrality: Domus history itself includes colour, energy and changing visual systems.",
+    "Do not confuse historical continuity with fixed visual sameness."
+  ],
+  "sources": [
+    "https://www.domusweb.it/en/gio-ponti/Ponti_the_Writer.html",
+    "https://www.domusweb.it/en/biographies/gio-ponti.html",
+    "https://www.domusweb.it/en/architecture/2008/09/04/gio-ponti.html",
+    "https://www.domusweb.it/en/interviews/2012/03/23/lisa-ponti-you-don-t-have-to-do-much.amp.html",
+    "https://www.domusweb.it/en/from-the-archive/2012/03/24/bruno-munari-art-director-1943-1944.html",
+    "https://www.domusweb.it/en/speciali/novanta-anni/2018/domus-19281957.html",
+    "https://www.domusweb.it/en/gio-ponti/Pontian_Atlas.html",
+    "https://www.domusweb.it/en/from-the-archive/2024/04/30/when-renato-de-fusco-1929-2024-wrote-the-history-of-domus.html"
+  ],
+  "next": "Feed these bridge grammars into the existing blind experimental loop while continuing the historical bridge through postwar Domus/Casabella and the 1958-1977 period. No capability promotion yet."
+}

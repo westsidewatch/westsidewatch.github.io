@@ -1,0 +1,93 @@
+{
+  "schema": "dore.dimensional-writing-capability.v0",
+  "id": "publishing.dimensional-writing",
+  "status": "learning-candidate",
+  "owner": "dore-core",
+  "purpose": "Cultivate transferable dimensional-writing and editorial-design judgement from verified research, real publication work, rejection evidence and blind transfer.",
+  "governing_rule": "Research notes alone are not capability. Evidence must be compressed into transferable judgement, verified, admitted, recalled in real work, and reused without method re-teaching.",
+  "consumers": ["journal", "multiwrite", "design", "dawn"],
+  "inputs": [
+    "canonical research evidence",
+    "editorial decision evidence",
+    "rejection memory",
+    "real publication tasks"
+  ],
+  "learning_episode": {
+    "id": "evolution:italian-editorial-dna-v0",
+    "domain": "editorial-design",
+    "trigger": "Italian editorial-design research from Campo Grafico forward",
+    "source_branch": "feat/aw-011-camera-corridor",
+    "source_artifacts": [
+      "docs/design/emergence-italian-editorial/README.md",
+      "docs/design/emergence-italian-editorial/research-round-01.md",
+      "docs/design/emergence-italian-editorial/campo-grafico-pass-01.md",
+      "docs/design/emergence-italian-editorial/campo-grafico-1933-issue-ledger.md",
+      "docs/design/emergence-italian-editorial/campo-grafico-1933-issue-ledger.v1.json",
+      "docs/design/emergence-italian-editorial/campo-grafico-1934-issue-ledger.v1.json",
+      "docs/design/emergence-italian-editorial/campo-grafico-1935-issue-ledger.v1.json",
+      "static/dore-design/italian-editorial-grammars.v1.json"
+    ],
+    "known_transferable_grammar_candidates": [
+      "publication-as-workshop",
+      "cover-as-threshold-object",
+      "foreign-object-insertion",
+      "attached-evidence",
+      "layout-as-editorial-subject",
+      "production-knowledge-as-editorial-content",
+      "distributed-production-as-editorial-ecology",
+      "foreign-local-grammar",
+      "cadence-is-design",
+      "hierarchy-before-decoration",
+      "clarity-as-aesthetic-duty",
+      "technical-success-does-not-equal-editorial-success"
+    ]
+  },
+  "admission_gates": [
+    {
+      "id": "G1-corpus-provenance",
+      "pass_when": "Research evidence is canonical, source-addressable and confidence-preserving; conflicts remain visible rather than silently normalized."
+    },
+    {
+      "id": "G2-same-source-differentiation",
+      "pass_when": "The same frozen source image produces materially distinct editorial intelligence across selected families/eras, not merely font, colour or crop variation."
+    },
+    {
+      "id": "G3-cross-source-transfer",
+      "pass_when": "The same learned grammar remains meaningful on a second semantically different source without copying historical motifs, mastheads or surface cosplay."
+    },
+    {
+      "id": "G4-unprompted-task-recall",
+      "pass_when": "A new Journal/design task can retrieve and apply relevant learned judgement without naming Campo Grafico, Italian design, or a grammar ID."
+    },
+    {
+      "id": "G5-negative-selection",
+      "pass_when": "Doré declines irrelevant Italian-derived grammar when the content ontology does not justify it."
+    },
+    {
+      "id": "G6-provenance-backtrace",
+      "pass_when": "Applied judgement can be traced backward to grammar, supporting issues/evidence and source provenance without fabricated rationale."
+    },
+    {
+      "id": "G7-later-blind-reuse",
+      "pass_when": "A later materially different-domain task reuses the capability without procedural re-teaching."
+    }
+  ],
+  "promotion": {
+    "current": "discoverable-learning-candidate",
+    "target": "validated-transferable-capability",
+    "forbidden": [
+      "promotion from research volume alone",
+      "promotion from one successful styled output",
+      "promotion from self-reported memory",
+      "promotion by adding a parallel memory subsystem"
+    ]
+  },
+  "memory_rule": {
+    "canonical_truth": "GitHub canonical records",
+    "recall": "Doré Memory Core",
+    "system_identity": "System Atlas",
+    "capability_discovery": "Capability Registry",
+    "execution": "A2A / Core execution paths as appropriate",
+    "no_new_memory_layer": true
+  }
+}

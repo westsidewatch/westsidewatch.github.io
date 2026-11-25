@@ -1,0 +1,88 @@
+{
+  "schema": "dore.explore-evidence.v0",
+  "episode": "italian-editorial-dna-v0",
+  "corpus": "Campo Grafico",
+  "year": 1939,
+  "year_label": "Year VII",
+  "coverage": {
+    "numbered_issues": [1, 2, 3, 4, 5],
+    "physical_issue_objects": ["1", "2", "3-4-5"],
+    "terminal_issue": "3-4-5 / March-April-May 1939"
+  },
+  "primary_sources": [
+    "https://www.campografico.org/journal/1-1939",
+    "https://www.campografico.org/journal/2-1939",
+    "https://www.campografico.org/journal/3-4-5-1939",
+    "https://www.campografico.org/",
+    "https://www.campografico.org/articles/edizioni-di-campo-grafico"
+  ],
+  "observations": [
+    {
+      "issue": "1",
+      "evidence": [
+        "24 pages; cover Sergio Franciscone; printed by La Tipostampa Moderna; Luigi Minardi managing director.",
+        "Enrico Bona's editorial on the graphic designer runs with Franciscone poster reproductions.",
+        "Campo Grafico Documents eighth installment and real typographic artifacts are glued into the issue.",
+        "Rassegna del brutto remains active, so rejection/critique is still part of the editorial system."
+      ]
+    },
+    {
+      "issue": "2",
+      "evidence": [
+        "26 pages; cover Enrico Bona; art direction Carlo Dradi and Luigi Veronesi.",
+        "The cover is itself a composition made from reproductions of six other covers: identity is built by editorial relation among heterogeneous prior works.",
+        "Material, technical and aesthetic topics coexist: paper, color harmony, layout practice, real letterhead artifact and Rassegna del brutto.",
+        "The issue includes period autarky material; this is retained as historical context, not promoted into transferable editorial DNA."
+      ]
+    },
+    {
+      "issue": "3-4-5",
+      "evidence": [
+        "68 pages; March-April-May combined terminal issue; cover Enrico Bona; printed by La Tipostampa Moderna.",
+        "Enrico Bona is both designer and editor-in-chief director.",
+        "The archive identifies this as the last fascicle and notes that the magazine had long been searching desperately for financing and had been transferred to Carlo Baldini.",
+        "The terminal issue is dedicated to Marinetti and Futurism; period ideological/political material is evidence of historical circumstance and is explicitly excluded from style/capability admission."
+      ]
+    }
+  ],
+  "transferable_grammars": [
+    {
+      "id": "identity-survives-format-instability",
+      "rule": "Editorial identity can remain legible while cadence, page count, contributors, cover logic and physical structure change."
+    },
+    {
+      "id": "archive-can-become-new-composition",
+      "rule": "Previously independent artifacts may become new editorial material when their relations create a new argument; do not flatten them into one visual style."
+    },
+    {
+      "id": "critique-is-part-of-aesthetic-memory",
+      "rule": "Aesthetic intelligence requires preserved rejection evidence as well as admired examples."
+    },
+    {
+      "id": "material-evidence-before-abstraction",
+      "rule": "When an artifact's physical form carries meaning, preserve that local grammar before abstracting it into a house system."
+    },
+    {
+      "id": "terminal-pressure-is-not-style",
+      "rule": "Changes caused by financial, institutional, political or terminal production pressure must not automatically be learned as aesthetic preference."
+    },
+    {
+      "id": "ending-is-evidence-not-canon",
+      "rule": "A publication's final state is historical evidence about constraints and editorial choices, not a privileged definition of its mature visual identity."
+    }
+  ],
+  "rejection_memory": [
+    "Do not learn 1939 political or ideological material as Italian editorial DNA.",
+    "Do not infer that combined issues, reduced cadence or terminal concentration are intrinsically superior design choices; separate necessity from editorial judgement.",
+    "Do not imitate Futurist motifs merely because the terminal issue focused on Futurism.",
+    "Do not turn the seven-year corpus into a single Campo Grafico look; the archive itself records that every issue was intentionally different."
+  ],
+  "corpus_closeout": {
+    "span": "January 1933-May 1939",
+    "numbered_issues": 66,
+    "archive_statement": "The Campo Grafico Association describes the run as 66 numbered issues in 500-copy circulation.",
+    "learned_center": "The durable intelligence is not a visual recipe but an editorial method: structure and judgement govern variation; content and media may rewrite form; material artifacts retain local grammar; cadence and binding carry meaning; critique trains taste; identity persists without visual sameness.",
+    "next": "Close Campo Grafico as a foundational corpus and begin the next Italian family. Validate transfer through same-source and unseen-task tests before capability admission."
+  },
+  "admission_status": "EVIDENCE_ONLY_NOT_CAPABILITY_PASS"
+}
