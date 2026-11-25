@@ -498,3 +498,33 @@ body[data-church-entry="p2"] #church-canvas{touch-action:none}
     animation:none!important;opacity:1!important;filter:none!important;transform:none!important;
   }
 }
+
+/* R48 visitor pathways: editorial copy lives inside the existing scripture
+   folio, not as floating rectangles obscuring the cross or 3D building. */
+.ws-ministry-story__content-link{display:inline-block;margin-top:15px;padding:4px 0 7px;
+ border-bottom:1px solid var(--dawn);font:400 12px/1.6 var(--ws-type-display-zh,sans-serif);
+ color:var(--ink);text-decoration:none;letter-spacing:.015em}
+.ws-ministry-story__final-identity{display:none;position:absolute;left:clamp(15px,2.2vw,42px);
+ bottom:clamp(14px,2.8vh,35px);width:min(315px,34vw);
+ text-shadow:0 1px 6px rgba(255,255,255,.8);pointer-events:none}
+.ws-ministry-story.is-finale .ws-ministry-story__final-identity{display:block}
+.ws-ministry-story__final-identity strong{display:block;font:600 clamp(15px,1.2vw,20px)/1.4 var(--ws-type-display-zh,sans-serif);letter-spacing:.03em}
+.ws-ministry-story__final-identity span{display:block;margin-top:4px;font:400 clamp(11px,.9vw,14px)/1.45 var(--ws-type-display-en-sc,serif)}
+@media(max-width:680px){
+ .ws-ministry-story__final-identity{left:16px;bottom:auto;top:calc(100svh - 100px);
+  width:calc(100% - 32px);max-width:340px}
+ .ws-ministry-story__final-identity strong{font-size:15px}
+ .ws-ministry-story__final-identity span{font-size:11px}
+}
+
+/* Canonical church identity: same original P2 silhouette, not a newly rendered font. */
+.ws-ministry-story__final-artwork{
+ display:block!important;width:100%;aspect-ratio:1800/193;
+ background:#a2872a;
+ -webkit-mask:url("/images/living-water-west-church-name.png") center/contain no-repeat;
+ mask:url("/images/living-water-west-church-name.png") center/contain no-repeat;
+}
+.ws-ministry-story__final-identity span[lang=en]{
+ display:block;text-align:center;margin-top:8px;
+ font:400 clamp(11px,.9vw,14px)/1.35 var(--ws-type-display-en-sc,serif);
+}

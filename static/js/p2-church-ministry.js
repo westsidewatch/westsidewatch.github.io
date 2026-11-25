@@ -86,11 +86,11 @@
 ];
 
   const root=document.createElement('div');
-  root.className='ws-ministry-story';
+  root.className='ws-ministry-story';root.dataset.wsSeal='water';
   root.setAttribute('aria-label','活水堂教會生活與事工導覽');
   root.innerHTML=`
     <div class="ws-ministry-story__rail">
-      <div class="ws-ministry-story__eyebrow">LIVING WATER WEST · CHURCH LIFE</div>
+      <div class="ws-ministry-story__identity"><span class="ws-name-seal" data-cut="small" aria-hidden="true"></span><div class="ws-ministry-story__eyebrow">LIVING WATER WEST · CHURCH LIFE</div></div>
       <h1 class="ws-ministry-story__heading">在教會裡，遇見生命</h1>
       <div class="ws-ministry-story__rule" aria-hidden="true"></div>
       <nav class="ws-ministry-story__index" aria-label="選擇教會事工章節">
@@ -107,6 +107,10 @@
         <a class="ws-ministry-story__back" href="/" aria-label="返回 Westside Watch 主站">返回</a>
       </div>
     </div>
+    <div class="ws-ministry-story__final-identity" aria-label="教會正式名稱">
+      <span class="ws-ministry-story__final-artwork" role="img" aria-label="神召會活水堂西區教會"></span>
+      <span lang="en">P.A.O.C. Living Water Assembly West</span>
+    </div>
     <div class="ws-ministry-story__final-stack">
     <section class="ws-ministry-story__panel" aria-live="polite" aria-atomic="true" aria-label="當前事工介紹">
       <div class="ws-ministry-story__meta"><span data-story-en>WELCOME</span>
@@ -117,12 +121,13 @@
         <div class="ws-ministry-story__verse-zh" lang="zh-Hant" data-story-zh></div>
         <div class="ws-ministry-story__verse-en" lang="en" data-story-kjv></div>
         <span class="ws-ministry-story__reference" data-story-reference></span>
+        <a class="ws-ministry-story__content-link" data-story-link href="/church/visit/#ministries">了解教會生活</a>
       </div>
     </section>
     <section class="ws-ministry-story__sunday" aria-label="教會主日崇拜程序表" aria-hidden="true">
       <header class="ws-ministry-story__sunday-head">
         <span class="ws-ministry-story__eyebrow">SUNDAY WORSHIP · LIVING WATER WEST</span>
-        <h2>主日崇拜<span lang="en">The Lord's Day</span></h2>
+        <h2>主日崇拜<span lang="en">Sunday Worship</span></h2>
       </header>
       <div class="ws-ministry-story__sunday-rows">
         <div class="ws-ministry-story__sunday-row">
@@ -143,11 +148,11 @@
       </div>
       <footer>205 Wilmington Ave. · North York, ON</footer>
     </section>
-    <button class="ws-ministry-story__return-to-scene" type="button" data-action="return-scene">返回教會全景 ↑</button>
+    <button class="ws-ministry-story__return-to-scene" type="button" data-action="return-scene">返回教會全景</button>
     </div>
     <button class="ws-ministry-story__scroll-invitation" type="button" data-action="read-finale"
       aria-label="向下滑動閱讀主日程序與你們是世上的光完整經文">
-      <span>向下滑閱 · 主日程序與經文</span><span aria-hidden="true">⌄</span>
+      <span>向下滑閱 · 主日程序與經文</span>
     </button>
     <button type="button" class="ws-ministry-story__minimal" data-action="show"
        aria-label="顯示教會事工章節">教會生活　01 — 07</button>
@@ -155,6 +160,19 @@
       <div class="ws-ministry-story__progress-fill"></div>
     </div>`;
   document.body.append(root);
+  // The same source powers P2 and this 3D finale; this page has no separate Sunday editor.
+  window.WestsideSunday?.mountTour(root);
+  const ministryAction=root.querySelector('[data-story-link]');
+  let ministryItems=null;
+  const syncMinistryAction=i=>{
+    const item=ministryItems?.[i];
+    ministryAction.href=item?.href||'/church/visit/#ministries';
+    ministryAction.textContent=item?.action||'了解教會生活';
+  };
+  fetch('/data/church/ministries.json',{cache:'no-store'}).then(r=>r.ok?r.json():null)
+    .then(d=>{if(d&&Array.isArray(d.items)&&d.items.length===7)ministryItems=d.items;syncMinistryAction(active>=0?active:0);})
+    .catch(()=>{});
+
   const buttons=[...root.querySelectorAll('[data-chapter]')];
   const en=root.querySelector('[data-story-en]'),
     number=root.querySelector('[data-story-index]'),
@@ -202,6 +220,7 @@
     if(index===active)return;
     const chapter=chapters[index];
     active=index;
+    syncMinistryAction(index);
     en.textContent=chapter.en;
     number.textContent=String(index+1).padStart(2,'0')+' / 07';
     title.textContent=chapter.title;
