@@ -1,0 +1,16 @@
+(()=>{if(!document.documentElement.classList.contains('art103'))return;
+const $=(s,r=document)=>r.querySelector(s), make=(tag,cls,txt)=>{const e=document.createElement(tag);e.className=cls;if(txt)e.textContent=txt;return e};
+const history=$('#history'),hero=$('.church-visit__hero');const hf=$('.church-visit__hero-folio',hero);
+const index=$('.folio-index');const caption=$('.folio-index-caption',index);const brand=$('.church-visit__back',index);
+brand?.remove();hf.querySelector('a').href='/';
+const historyField=make('div','folio-history-field');historyField.setAttribute('aria-hidden','true');history.prepend(historyField);
+const live=$('#church-sunday-live');const programme=()=>{const title=$('.folio-programme-title',live),read=$('.folio-programme-reading',live),verses=$('.ws-church-scriptures',live);if(!title||!read||!verses||live.dataset.r103==='1')return;live.dataset.r103='1';title.append(verses);};
+new MutationObserver(programme).observe(live,{childList:true,subtree:true});programme();
+const gatherings=$('#church-gathering-list');const week=()=>{const rows=[...gatherings.querySelectorAll('article')];if(rows.length!==4||gatherings.dataset.r103==='1')return;gatherings.dataset.r103='1';const rail=make('div','folio-week-rail');rail.setAttribute('aria-hidden','true');for(const name of ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']){const e=make('span','folio-week-day',name);e.lang='en';rail.append(e)}gatherings.prepend(rail);};
+new MutationObserver(week).observe(gatherings,{childList:true,subtree:true});week();
+const ministries=$('#church-ministry-list');const spread=()=>{const rows=[...ministries.querySelectorAll('article')];if(rows.length!==7||!$('.folio-ministry-en',rows[0])||ministries.dataset.r103==='1')return;ministries.dataset.r103='1';rows.forEach((a,i)=>{const name=$('.folio-ministry-en',a);name.lang='en';const copy=make('div','folio-ministry-copy');copy.append($('h3',a),$('p',a),$('a',a));a.append(copy);if(i===2)a.classList.add('folio-worship-focus')})};
+new MutationObserver(spread).observe(ministries,{childList:true,subtree:true});spread();
+const prayer=$('#prayer'),inv=$('#invitation');const field=make('div','folio-response-field');field.setAttribute('aria-hidden','true');inv.prepend(field);
+const gate=$('.church-visit__gate',inv);const footer=$('.church-visit__footer');const mark=make('span','folio-colophon-mark');mark.setAttribute('aria-hidden','true');footer.prepend(mark);
+const closing=$('#contact .church-visit__contact-grid');const email=$('p',closing);email.classList.add('folio-contact-primary');
+})();
