@@ -1,0 +1,37 @@
+
+/* An opening is a consequence of content. No detached square or new UI card.
+   Preserve R17, R14 and original seven identities; only these two cases change. */
+.content-window-plane{display:none;position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:-1;overflow:hidden}
+body:not(.r17):not(.prior):not(.flat) :is(.church,.journal) .content-window-plane{display:block}
+body:not(.r17):not(.prior):not(.flat) :is(.church,.journal) .window-art,
+body:not(.r17):not(.prior):not(.flat) .church .water-material,
+body:not(.r17):not(.prior):not(.flat) .journal .print-stock{display:none}
+body:not(.r17):not(.prior):not(.flat) .church .water-spread{align-items:start;overflow:hidden;padding-bottom:clamp(16px,3vw,48px)}
+body:not(.r17):not(.prior):not(.flat) .church .water-verse{background:var(--ws-paper);margin-top:clamp(26px,5vw,78px);margin-left:clamp(12px,3vw,48px);margin-right:clamp(12px,3vw,48px)}
+body:not(.r17):not(.prior):not(.flat) .church .model{background:transparent;margin:clamp(26px,5vw,78px) clamp(16px,3vw,48px) 0 0;padding:0;min-width:0}
+body:not(.r17):not(.prior):not(.flat) .church .model iframe{display:block;width:100%;height:auto;aspect-ratio:1;background:var(--ws-paper);border:0}
+body:not(.r17):not(.prior):not(.flat) .church .model figcaption{background:var(--ws-paper);padding:.6rem .2rem}
+body:not(.r17):not(.prior):not(.flat) .church .service{background:var(--ws-paper);margin-right:clamp(12px,3vw,48px);padding:1rem}
+.church .plane-stock{fill:var(--ws-water);opacity:.16}
+.church .plane-engraving{opacity:.40;mix-blend-mode:multiply}
+.church .plane-art{color:var(--ws-water);opacity:.70}
+body:not(.r17):not(.prior):not(.flat) .journal .print-spread{overflow:hidden;align-items:start;min-height:0}
+body:not(.r17):not(.prior):not(.flat) .journal .cover{padding:clamp(20px,4vw,64px);margin:0;display:block;align-self:start;min-width:0}
+body:not(.r17):not(.prior):not(.flat) .journal .cover img{width:100%;height:auto;aspect-ratio:1;object-fit:contain;max-height:none;display:block}
+body:not(.r17):not(.prior):not(.flat) .journal .cover figcaption{color:var(--ws-paper);margin-top:1rem}
+body:not(.r17):not(.prior):not(.flat) .journal .journal-intro{margin-top:0;margin-bottom:0;padding:clamp(28px,5vw,80px) 0 clamp(24px,4vw,64px) clamp(24px,5vw,80px);background:transparent;align-self:center}
+.journal .plane-stock{fill:var(--ws-night)}
+.journal .plane-art{color:var(--ws-morning-gold);opacity:.43}
+.journal .plane-engraving{display:none}
+.mono .church .plane-stock{fill:var(--ws-ink)}.mono .church .plane-art{color:var(--ws-ink)}
+.mono .journal .plane-stock{fill:var(--ws-ink)}.mono .journal .plane-art{color:var(--ws-paper)}
+@media(max-width:760px){
+ body:not(.r17):not(.prior):not(.flat) .church .water-spread{padding:1rem;gap:1rem}
+ body:not(.r17):not(.prior):not(.flat) .church .water-verse{margin:0!important;padding:1rem!important}
+ body:not(.r17):not(.prior):not(.flat) .church .model{width:100%;margin:0!important;padding:0!important}
+ body:not(.r17):not(.prior):not(.flat) .church .model iframe{height:auto;aspect-ratio:1}
+ body:not(.r17):not(.prior):not(.flat) .church .service{padding:1rem!important}
+ body:not(.r17):not(.prior):not(.flat) .journal .print-spread{padding:0;gap:0}
+ body:not(.r17):not(.prior):not(.flat) .journal .print-spread .cover{background:transparent;clip-path:none;padding:clamp(18px,6vw,38px)!important;margin:0!important}
+ body:not(.r17):not(.prior):not(.flat) .journal .print-spread .journal-intro{padding:1.5rem 0!important;margin:0!important;background:var(--ws-paper)}
+}
