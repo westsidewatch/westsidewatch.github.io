@@ -121,7 +121,7 @@ function previewContents(book,onRead){
  // External reading is an explicit SECOND act only, and only if a sourced URL exists.
  const url=safeUrl(book.sourceUrl||book.source?.url);
  if(url){
-  const link=make('a','dawn-expander__source',book.discoveryOnly?'出版方介紹 ↗':'查看原書 ↗');
+  const link=make('a','dawn-expander__source',book.discoveryOnly?'出版方介紹':'查看原書');
   link.href=url;link.target='_blank';link.rel='noopener noreferrer';actions.append(link);
  }
  meta.append(actions);
