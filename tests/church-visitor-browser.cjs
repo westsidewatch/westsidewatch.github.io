@@ -118,6 +118,17 @@ const base=process.env.CHURCH_TEST_ORIGIN||'http://127.0.0.1:4174';
    assert(metrics.width<=screen.width+2,screen.label+' horizontal overflow '+JSON.stringify(metrics));
    assert(metrics.identity&&metrics.archive&&metrics.sunday===7&&metrics.ministries===7&&metrics.gatherings===4);
    assert(metrics.osGlass,screen.label+' visitor glass blur + OS typography not active '+JSON.stringify(metrics));
+   const gatheringGeometry=await page.locator('#church-gathering-list article').evaluateAll(nodes=>nodes.map(n=>{
+     const r=n.getBoundingClientRect();return {x:r.x,y:r.y,w:r.width,h:r.height,bottom:r.bottom};
+   }));
+   if(screen.width>=1121){
+     const [lead,...week]=gatheringGeometry;
+     assert(week.every(r=>r.x>=lead.x+lead.w-2),'Weekday rhythm must be right of Sunday');
+     assert(Math.abs(lead.y-week[0].y)<3&&Math.abs(lead.bottom-week[2].bottom)<3,'Sunday must span the three weekday rows');
+   }else{
+     assert(gatheringGeometry.every((r,i)=>i===0||r.y>=gatheringGeometry[i-1].bottom-2),'Narrow calendar must keep natural reading order');
+   }
+
    assert(metrics.motherForm.ready&&metrics.motherForm.mode&&metrics.motherForm.unrotated&&
      metrics.motherForm.verticalWriting&&metrics.motherForm.secondHidden&&metrics.motherForm.firstVisible,
      screen.label+' failed to reuse V60 Chinese VERTICAL mother forme '+JSON.stringify(metrics.motherForm));
@@ -172,6 +183,15 @@ const base=process.env.CHURCH_TEST_ORIGIN||'http://127.0.0.1:4174';
   assert(collision.spans===2&&!collision.overlap,
     'Gospel title must split into two lines without overlapping Scripture '+JSON.stringify(collision));
   assert.equal(await form.locator('.church-form__gospel-step').count(),3,'Love, Cross and Faith steps required');
+  for(const width of [1280,390,320]){
+    await form.setViewportSize({width,height:850});
+    const boxes=await form.locator('.church-form__gospel-step').evaluateAll(nodes=>nodes.map(n=>{
+      const r=n.getBoundingClientRect();return {x:r.x,y:r.y,w:r.width,bottom:r.bottom};
+    }));
+    assert(boxes.every((r,i)=>i===0||r.y>=boxes[i-1].bottom-2),width+' Gospel passages must retain reading order');
+    if(width>=1050)assert(boxes[1].w>boxes[0].w&&boxes[1].w>boxes[2].w,'Cross and resurrection must have editorial primacy');
+  }
+
   assert.equal(await form.locator('.church-form__scripture-pair .church-form__scripture-hint').count(),2,'Decision must have two Scripture squares');
   assert.match(await form.locator('.church-form__scripture-hint--nahum').textContent(),/耶和華本為善.*認得那些投靠他的人/s);
   assert.match(await form.locator('.church-form__scripture-hint--nahum').textContent(),/The LORD is good, a strong hold in the day of trouble/);
