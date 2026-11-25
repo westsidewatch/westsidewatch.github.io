@@ -1,0 +1,29 @@
+name: 096 R18 Content-led Window
+on:
+  pull_request:
+    paths:
+      - 'static/experiments/foundation-096-r18/**'
+      - 'tests/096-r18-content-window.cjs'
+      - '.github/workflows/096-r18-content-window.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  proof:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - run: npm install --no-save --no-package-lock playwright && npx playwright install --with-deps chromium
+      - run: |
+          python3 -m http.server 4173 --directory static >/tmp/r18-http.log 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          node tests/096-r18-content-window.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: r18-content-window
+          path: artifacts/r18-content-window/
