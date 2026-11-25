@@ -1,0 +1,28 @@
+name: 101 Exact Chinese Glyph Audit
+on:
+  pull_request:
+    paths:
+      - 'static/experiments/096-editorial-composition/**'
+      - 'static/church/visit/index.html'
+      - 'tests/101-exact-chinese-glyph.cjs'
+      - '.github/workflows/101-exact-chinese-glyph.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  proof:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - run: npm install --no-save --no-package-lock playwright && npx playwright install --with-deps chromium
+      - run: |
+          python3 -m http.server 4173 --directory static >/tmp/folio101-http.log 2>&1 &
+          node tests/101-exact-chinese-glyph.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: editorial-101
+          path: artifacts/101/

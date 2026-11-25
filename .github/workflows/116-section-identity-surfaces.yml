@@ -1,0 +1,32 @@
+name: 116 Section Identity Surfaces
+on:
+  pull_request:
+    paths:
+      - 'static/images/section-identity/**'
+      - 'static/css/westside-section-identity*.css'
+      - 'static/first-look-editorial/**'
+      - 'layouts/partials/watch-home-editorial.html'
+      - 'static/p2/church-tour.html'
+      - 'static/js/p2-church-ministry.js'
+      - 'tests/116-section-identity-surfaces.cjs'
+      - '.github/workflows/116-section-identity-surfaces.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  proof:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - run: npm install --no-save --no-package-lock playwright && npx playwright install --with-deps chromium
+      - run: |
+          python3 -m http.server 4173 --directory static >/tmp/identity116-http.log 2>&1 &
+          node tests/116-section-identity-surfaces.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: editorial-116-surfaces
+          path: artifacts/116/

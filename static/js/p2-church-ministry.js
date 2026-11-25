@@ -86,11 +86,11 @@
 ];
 
   const root=document.createElement('div');
-  root.className='ws-ministry-story';
+  root.className='ws-ministry-story';root.dataset.wsSeal='water';
   root.setAttribute('aria-label','活水堂教會生活與事工導覽');
   root.innerHTML=`
     <div class="ws-ministry-story__rail">
-      <div class="ws-ministry-story__eyebrow">LIVING WATER WEST · CHURCH LIFE</div>
+      <div class="ws-ministry-story__identity"><span class="ws-name-seal" data-cut="small" aria-hidden="true"></span><div class="ws-ministry-story__eyebrow">LIVING WATER WEST · CHURCH LIFE</div></div>
       <h1 class="ws-ministry-story__heading">在教會裡，遇見生命</h1>
       <div class="ws-ministry-story__rule" aria-hidden="true"></div>
       <nav class="ws-ministry-story__index" aria-label="選擇教會事工章節">
@@ -127,7 +127,7 @@
     <section class="ws-ministry-story__sunday" aria-label="教會主日崇拜程序表" aria-hidden="true">
       <header class="ws-ministry-story__sunday-head">
         <span class="ws-ministry-story__eyebrow">SUNDAY WORSHIP · LIVING WATER WEST</span>
-        <h2>主日崇拜<span lang="en">The Lord's Day</span></h2>
+        <h2>主日崇拜<span lang="en">Sunday Worship</span></h2>
       </header>
       <div class="ws-ministry-story__sunday-rows">
         <div class="ws-ministry-story__sunday-row">
@@ -148,11 +148,11 @@
       </div>
       <footer>205 Wilmington Ave. · North York, ON</footer>
     </section>
-    <button class="ws-ministry-story__return-to-scene" type="button" data-action="return-scene">返回教會全景 ↑</button>
+    <button class="ws-ministry-story__return-to-scene" type="button" data-action="return-scene">返回教會全景</button>
     </div>
     <button class="ws-ministry-story__scroll-invitation" type="button" data-action="read-finale"
       aria-label="向下滑動閱讀主日程序與你們是世上的光完整經文">
-      <span>向下滑閱 · 主日程序與經文</span><span aria-hidden="true">⌄</span>
+      <span>向下滑閱 · 主日程序與經文</span>
     </button>
     <button type="button" class="ws-ministry-story__minimal" data-action="show"
        aria-label="顯示教會事工章節">教會生活　01 — 07</button>

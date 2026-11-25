@@ -1,0 +1,28 @@
+name: 107 Canonical Editorial Geometry
+on:
+  pull_request:
+    paths:
+      - 'static/experiments/096-editorial-composition/**'
+      - 'static/church/visit/index.html'
+      - 'tests/107-canonical-editorial-geometry.cjs'
+      - '.github/workflows/107-canonical-editorial-geometry.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  proof:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - run: npm install --no-save --no-package-lock playwright && npx playwright install --with-deps chromium
+      - run: |
+          python3 -m http.server 4173 --directory static >/tmp/folio107-http.log 2>&1 &
+          node tests/107-canonical-editorial-geometry.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: editorial-107
+          path: artifacts/107/

@@ -223,6 +223,18 @@ body.p2Embedded.p2DawnSpread .plate .cornerCitation{
 </style>
 
 
+<style>
+/* Explicit single-impression church embedding. Both original formes retain
+   their measured viewports; the other plate is not displayed to the reader. */
+body.p2Embedded.p2ChurchSingle{background:transparent!important}
+body.p2Embedded.p2ChurchSingle .pair{position:relative;display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:0!important;width:100%;height:100%}
+body.p2Embedded.p2ChurchSingle .impression{grid-area:1/1;width:100%;min-width:0}
+body.p2Embedded.p2ChurchSingle[data-impression="zh"] .impression:has(#plateEn),
+body.p2Embedded.p2ChurchSingle[data-impression="en"] .impression:has(#plateZh){visibility:hidden;pointer-events:none}
+body.p2Embedded.p2ChurchSingle .plate{margin:0!important;width:100%!important;aspect-ratio:1!important;box-shadow:none!important;border:0!important}
+body.p2Embedded.p2ChurchSingle .plate:not(.inverse){background:transparent!important}
+body.p2Embedded.p2ChurchSingle .plate.inverse{background:transparent!important}
+</style>
 </head>
 <body>
 <header><div><div class="micro">WESTSIDE WATCH / SCRIPTURE STUDIO / Studio  / MOTHER FORME</div><h1>經文鉛字 · 雙向母版</h1></div><div class="micro">Isaiah 62:6 · Chinese Union / KJV · Draft</div></header>
@@ -973,6 +985,7 @@ if(p2Sections.some(x=>x.id===sectionFromUrl))activeP2=sectionFromUrl;
 const themeFromUrl=(p2Params.get('theme')||'').toUpperCase();
 if(toolThemes.some(x=>x.id===themeFromUrl&&!x.pending)){activeTheme=themeFromUrl;activeP2=null}
 if(p2Params.get('embed')==='1')document.body.classList.add('p2Embedded');
+if(p2Params.get('embed')==='1'&&activeP2==='01'&&p2Params.get('layout')==='church-single'&&['zh','en'].includes(p2Params.get('impression'))){document.body.classList.add('p2ChurchSingle');document.body.dataset.impression=p2Params.get('impression');const hidden=document.getElementById(p2Params.get('impression')==='zh'?'plateEn':'plateZh');hidden.closest('.impression').setAttribute('aria-hidden','true');}
 if(p2Params.get('layout')==='olive-spread'&&p2Params.get('embed')==='1'&&activeP2==='04')document.body.classList.add('p2OliveSpread');
 if(p2Params.get('layout')==='dawn-spread'&&p2Params.get('embed')==='1'&&activeP2==='05')document.body.classList.add('p2DawnSpread');
 addEventListener('message',event=>{
