@@ -1,0 +1,6 @@
+{{ $week := readFile "static/data/church/current-sunday.json" | transform.Unmarshal }}
+<section class="ww-worship-score" id="weekly-worship" aria-labelledby="ww-worship-title">
+<header class="ww-worship-identity"><p class="ww-folio-label">P.A.O.C. · Living Water Assembly West</p><h2 id="ww-worship-title"><span lang="en" class="ww-score-en">The Lord’s<br>Day.</span><span class="ww-score-zh">主日崇拜</span></h2>
+<p class="ww-score-time">{{ $week.serviceTime }}</p><p class="ww-archive-status">{{ if eq $week.status "archive" }}歷史主日程序 · {{ $week.date }}（非本週，請向教會確認最新安排）{{ else }}主日程序 · {{ $week.date }}{{ end }}</p><address>{{ $week.location }}</address>
+{{ if ne .RelPermalink "/church/sunday-worship/" }}<a class="ww-text-link" href="/church/sunday-worship/">閱讀主日程序及主題經文</a>{{ end }}<a class="ww-text-link" href="/church/visit/#sunday">聚會與聯繫</a></header>
+<ol class="ww-score-sequence">{{ range $i,$row := $week.schedule }}<li><span class="ww-score-index">{{ printf "%02d" (add $i 1) }}</span><time>{{ $row.time }}</time><div><h3>{{ $row.title }}</h3><p>{{ $row.detail }}</p></div></li>{{ end }}</ol></section>
