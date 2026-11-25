@@ -581,3 +581,6 @@ body.church-visit{
 .church-visit__scripture-tile--letterpress .church-visit__water-engraving{z-index:1;opacity:var(--ws-engraving-opacity,.09)}
 .church-visit__sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;
  margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+
+/* Original Brand Standards print-mark, not a substitute arrow. */
+.ww-print-mark{display:inline-block!important;width:2.5em!important;height:auto!important;aspect-ratio:6/1;vertical-align:middle;flex:none;color:currentColor;}

@@ -10,8 +10,8 @@
       <h1 id="church-title">{{ .Params.display_title }}</h1>
     {{ end }}
     <blockquote>「信我的人，就如經上所說：從他腹中要流出活水的江河來。」<cite>JOHN 7:38</cite></blockquote>
-    <a class="fl-door-entry" href="#church-front-schedule">進入教會生活 ↓</a>
-    <p class="church-front-visitor-link"><a href="/church/visit/">聚會時間 · 認識教會 · 訪客聯繫</a></p>
+    <a class="fl-door-entry" href="#church-front-schedule">進入教會生活 <svg class="ww-print-mark" viewBox="0 0 48 8" aria-hidden="true" focusable="false"><use href="/images/watch-rhythm-original.svg#church"/></svg></a>
+    <p class="church-front-visitor-link"><a href="/church/visit/">聚會時間 · 認識教會 · 訪客聯繫 <svg class="ww-print-mark" viewBox="0 0 48 8" aria-hidden="true" focusable="false"><use href="/images/watch-rhythm-original.svg#church"/></svg></a></p>
     <nav class="church-front-index" aria-label="教會首頁導覽"><a href="#church-front-schedule">主日敬拜 <span>01</span></a><a href="#church-journey">認識活水 <span>02</span></a><a href="#church-scripture-title">聖經與見證 <span>03</span></a><a href="#church-horizontal">教會生活 <span>04</span></a></nav>
   </section>
 
@@ -42,7 +42,7 @@
     <div class="church-front-schedule__team">
       {{ range .team }}<p><small>{{ .role }}</small> {{ .name }}</p>{{ end }}
     </div>
-    <p class="church-front-schedule__more"><a href="/church/bulletin-2026-10-11/">完整週報及下週事奉安排 →</a></p>
+    <p class="church-front-schedule__more"><a href="/church/bulletin-2026-10-11/">完整週報及下週事奉安排 <svg class="ww-print-mark" viewBox="0 0 48 8" aria-hidden="true" focusable="false"><use href="/images/watch-rhythm-original.svg#church"/></svg></a></p>
   </section>
   {{ end }}
 
@@ -107,7 +107,7 @@
     <nav class="sites-church-entries church-horizontal__entries" aria-label="教會生活">
     {{ range .Pages.ByWeight }}
       {{ $entryHref := .Params.entry_url | default .RelPermalink }}
-      <a href="{{ $entryHref }}"><span>{{ printf "%02d" .Weight }}</span><strong>{{ .Title }}</strong>{{ with .Description }}<em>{{ . }}</em>{{ end }}<b>↗</b></a>
+      <a href="{{ $entryHref }}"><span>{{ printf "%02d" .Weight }}</span><strong>{{ .Title }}</strong>{{ with .Description }}<em>{{ . }}</em>{{ end }}<svg class="ww-print-mark" viewBox="0 0 48 8" aria-hidden="true" focusable="false"><use href="/images/watch-rhythm-original.svg#church"/></svg></a>
     {{ end }}
     </nav>
   </div>
