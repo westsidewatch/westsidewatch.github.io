@@ -48,7 +48,7 @@
  // Production's home page is the only scroll authority. The approved 01–03
  // iframe keeps its exact source and receives its original published pose.
  const embedded=document.documentElement.classList.contains('p2-main-embedded');
- let hostDistance=null,hostLegacyProgress=null,hostActive=true;
+ let hostDistance=null,hostLegacyProgress=null,hostActive=true,hostSplit=0,hostCenter=null;
  const currentDistance=()=>hostDistance===null?
   clamp(-track.getBoundingClientRect().top/Math.max(1,innerHeight),0,T.end):hostDistance;
  const ease=v=>{const u=clamp(v);return u*u*(3-2*u)};
@@ -924,6 +924,13 @@
   nextLeft.style.visibility=withNext&&transition>0?'visible':'hidden';
   nextRight.style.visibility=withNext&&transition>0?'visible':'hidden';
  }
+ // Parent and child share same-origin geometry; apply the clearance before painting the moving masthead.
+ window.P2SetDawnSplit=(value,center)=>{
+  if(!embedded)return;
+  hostSplit=clamp(Number(value)||0);hostCenter=center;
+  const g=measure();
+  if(g&&hostDistance!==null&&hostDistance>=T.indexEnd)layoutIndex(g,1);
+ };
  function layoutIndex(g,t){
   // R39: the two approved square blocks own a physical editorial
   // rail. Never place a poster underneath the masthead; on narrow
@@ -958,12 +965,30 @@
    const from=anchors[i%2];
    const targetX=leftX+(i%cols)*(posterW+gapX);
    const targetY=topY+Math.floor(i/cols)*(posterH+rowGap);
-   position(card,mix(from.x,targetX,t),mix(from.y,targetY,t),
-    mix(from.w,posterW,t),mix(from.h,posterH,t));
+   // R94: reserve the actual horizontal 05 masthead footprint, not a guessed column.
+   let x=targetX,y=targetY,w=posterW,h=posterH;
+   if(hostSplit>0&&hostCenter){
+    const bounds=overview.getBoundingClientRect(),stageRect=stage.getBoundingClientRect();
+    const cx=Number(hostCenter.x)+stageRect.left-bounds.left;
+    const cy=Number(hostCenter.y)+stageRect.top-bounds.top;
+    const half=Number(hostCenter.size),pad=g.w<700?5:12;
+    const wingCols=g.w<700?2:3,wingRows=6/wingCols;
+    const side=i%2,slot=Math.floor(i/2);
+    const left=side===0?pad:cx+half+pad;
+    const right=side===0?cx-half-pad:g.w-pad;
+    const gap=g.w<700?4:8;
+    const ww=Math.max(1,Math.min((right-left-(wingCols-1)*gap)/wingCols,(g.h-2*pad-(wingRows-1)*gap)/wingRows*.75));
+    const hh=ww*4/3,groupW=wingCols*ww+(wingCols-1)*gap,groupH=wingRows*hh+(wingRows-1)*gap;
+    const xx=left+(right-left-groupW)/2+(slot%wingCols)*(ww+gap);
+    const yy=Math.max(pad,Math.min(g.h-pad-groupH,cy-groupH/2))+Math.floor(slot/wingCols)*(hh+gap);
+    x=mix(x,xx,hostSplit);y=mix(y,yy,hostSplit);w=mix(w,ww,hostSplit);h=mix(h,hh,hostSplit);
+   }
+   position(card,mix(from.x,x,t),mix(from.y,y,t),mix(from.w,w,t),mix(from.h,h,t));
   });
   overview.style.setProperty('--index-caption-alpha',
     String(ease((t-.69)/.31)));
   overview.dataset.columns=String(cols);
+  overview.dataset.dawnSplit=hostSplit.toFixed(4);
  }
  function revealSplitField(node,u){
   const reveal=clamp(u);
@@ -1001,12 +1026,15 @@
   // scroll away from that origin cancels it (never merely being on a pair).
   if(handoffTarget&&handoffOriginD!==null&&Math.abs(d-handoffOriginD)>.12)
    resetHandoff();
-  if(base.contentWindow)base.contentWindow.postMessage({
+  const child=base.contentWindow;
+  const pose={
    type:'westside-p2-home-pose',
    distance:Math.min(d,9.34),
    legacyProgress:hostLegacyProgress===null?originalProgress(d):hostLegacyProgress,
    active:embedded?hostActive:true
-  },location.origin);
+  };
+  if(child?.P2ApplyHomePose)child.P2ApplyHomePose(pose);
+  else child?.postMessage(pose,location.origin);
   const g=measure();
   output.textContent=d.toFixed(2);slider.value=String(d);
   stage.dataset.p2Distance=d.toFixed(4);
@@ -1394,7 +1422,7 @@
    d<T.indexStart?'04 / 07 · TWELVE VOICES':
    '04 / 07 · THE TWELVE';
  }
- function schedule(){if(!queued){queued=true;requestAnimationFrame(paint)}}
+ function schedule(){if(!queued){queued=true;requestAnimationFrame(()=>{if(queued)paint()})}}
  function go(d){
   if(handoffTarget||handoffProgress>.001)resetHandoff();
   const top=track.getBoundingClientRect().top+scrollY+clamp(d,0,T.end)*Math.max(1,innerHeight);
@@ -1412,15 +1440,19 @@
  if(embedded){
   // The home scroll drives all P2 distance. A nested continuation must not
   // create a second vertical scrollbar or alter the released 01–03 clock.
-  addEventListener('message',event=>{
-   if(event.origin!==location.origin||event.source!==parent||
-      event.data?.type!=='westside-p2-home-pose')return;
-   const distance=Number(event.data.distance),legacy=Number(event.data.legacyProgress);
+  window.P2ApplyHomePose=data=>{
+   const distance=Number(data.distance),legacy=Number(data.legacyProgress);
    if(!Number.isFinite(distance)||!Number.isFinite(legacy))return;
    hostDistance=clamp(distance,0,T.end);
    hostLegacyProgress=clamp(legacy);
-   hostActive=event.data.active!==false;
-   schedule();
+   hostActive=data.active!==false;
+   hostSplit=clamp(Number(data.mastheadSplit)||0);
+   hostCenter=data.mastheadCenter||null;
+   paint();
+  };
+  addEventListener('message',event=>{
+   if(event.source===parent&&event.origin===location.origin&&event.data?.type==='westside-p2-home-pose')
+    window.P2ApplyHomePose(event.data);
   });
   schedule();
  }else{

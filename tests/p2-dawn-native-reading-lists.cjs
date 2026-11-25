@@ -1,0 +1,81 @@
+'use strict';
+const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
+const root=path.resolve(__dirname,'../static');
+const read=p=>fs.readFileSync(path.join(root,p),'utf8');
+const json=JSON.parse(read('dawn-library/p2-reading-lists-issue-01.json'));
+const html=read('experiments/p2-0105-dawn-preview.html');
+const js=read('js/p2-0105-dawn-continuation.js');
+const css=read('css/p2-0105-dawn-integrated.css');
+const vm=require('node:vm');
+new vm.Script(js,{filename:'p2-0105-dawn-continuation.js'});
+assert.equal(json.schema,'dawn.p2.editorial-reading-issue.v1');
+assert.deepEqual(json.lists.map(x=>x.id),['gospel-essentials','inner-life','church-history']);
+assert.deepEqual(json.lists.map(x=>x.works.length),[6,9,7]);
+const ids=new Set();
+for(const list of json.lists){
+ assert(list.question?.length>20,'Reader question missing '+list.id);
+ assert(list.sequence?.includes('→'),'Curated reading sequence missing '+list.id);
+ assert(html.includes('data-dawn-reading-list="'+list.id+'"'),'Native reading index missing '+list.id);
+ for(const book of list.works){
+  assert(!ids.has(book.editorialKey),'Duplicate editorial work '+book.editorialKey);
+  ids.add(book.editorialKey);
+  for(const k of ['title','creator','judgement','counterpoint','comparison'])assert(book[k]?.length>=(['title','creator'].includes(k)?2:4),'Missing editorial '+k+' '+book.editorialKey);
+  if(book.libraryWorkId)assert(/^(OL\d+W|dawn:[\w:-]+)$/.test(book.libraryWorkId),'Unverified Work ID');
+  if(book.image?.startsWith('/'))assert(fs.existsSync(path.join(root,book.image)),'Missing local cover '+book.image);
+ }
+}
+assert.equal(ids.size,22);
+assert.equal((html.match(/data-dawn-portal=/g)||[]).length,3,'Original three P2 portals must remain intact');
+for(const key of ['dawn-second__motherform','dawn-wall-grid','dawn-department-grid','dawn-personal-dialog','dawn-book-detail','dawn-catalogue']){
+ assert(html.includes(key),'Original P2-05 region removed '+key);
+}
+assert(!html.includes('dawn-curation-prologue'),'Parallel Dawn homepage must not be copied');
+assert(!html.includes('>THE COLLECTION</span>')&&!html.includes('>MY LIBRARY</span>'),'Rejected giant editorial navigation billboard must be removed, not reduced');
+assert(!html.includes('id="dawn-open-catalogue-top"')&&!html.includes('class="dawn-second__nav-actions"'),'Top action row must be physically removed from P2 L2');
+assert(html.includes('class="dawn-wall__personal" id="dawn-personal-open"')&&html.includes('id="dawn-personal-count"'),'Personal library entry/count must survive on the wall');
+assert(html.includes('id="dawn-open-catalogue"'),'Original collection remains available from its native wall control');
+assert(css.includes('R85 — No giant navigation billboard')&&css.includes('position:absolute!important'),'Compact Back is an overlay utility, not a page-wide banner');
+assert(js.includes("if(activePortal==='書單')void showReadingList(ticket)"),'Original catalogue does not own booklist route');
+assert(js.includes("openCollection('書單')"),'Native catalogue navigation missing');
+assert(js.includes("renderPortalWorks(items,'書單')"),'Native six-column book gallery not reused');
+assert(js.includes("selectBookPreview(works,li,work)"),'Original cover-opening interaction removed');
+assert(js.includes("detailSource.textContent=work.sourceLabel"),'Reading version must not be mislabeled as free full text');
+assert(!html.includes('dawn-reading-room__reading-lists'),'Oversized parallel reading-list masthead must be physically removed');
+assert(!html.includes('id="dawn-issue-contents"'),'Duplicate large reading masthead has reappeared');
+assert.equal((html.match(/class="dawn-wall__tile dawn-reading-list__tile/g)||[]).length,3,'Three guided list sleeves must use existing wall tiles');
+assert(html.indexOf('data-dawn-portal="光譜"')<html.indexOf('data-dawn-reading-list="gospel-essentials"'),'Booklists must follow the original three editorial portals');
+assert(html.includes('class="dawn-reading-list__series" aria-labelledby="dawn-reading-list-heading"'),'Reading lists need an independent named chapter in the original vinyl wall');
+assert(html.includes('<h2 id="dawn-reading-list-heading">書單</h2>'),'Visible Chinese 書單 wayfinding missing');
+assert(!html.includes('dawn-reading-list__issue'),'Invisible tiny English-only strip must not return');
+assert((html.match(/<span class="dawn-reading-list__serial">書單 /g)||[]).length===3,'Each list square must say 書單, not resemble an individual book');
+assert(html.includes('dawn-reading-list__marker-count')&&html.includes('22</strong><span>部作品'),'Main square must identify a group of 22 works, not a single jacket');
+assert.deepEqual([...html.matchAll(/class="dawn-reading-list__quantity" lang="en">(\d+)<\/span>/g)].map(m=>m[1]),['06','09','07'],'List sleeves must show visible multi-work counts, not book-like titles');
+assert(html.includes('dawn-wall__collection-divider')&&html.includes('館藏選讀'),'Historical book wall must begin a separate clearly identified chapter');
+assert(html.includes('id="dawn-reading-list-featured"'),'Featured original book cover gallery missing from right-hand blank space');
+assert(html.indexOf('id="dawn-reading-list-featured"')>html.indexOf('class="dawn-reading-list__series-grid"'),'Featured books must share the same editorial chapter');
+assert(css.includes('R83 — right-hand sourced book covers')&&css.includes('grid-column:5 / span 2!important'),'Featured covers must occupy actual right-most 2x2 vinyl squares on desktop');
+assert(js.includes("const featuredKeys=['gospel-02','inner-05-chinese','history-01','inner-05']"),'Curated four same-edition references missing');
+assert(js.includes('void mountFeaturedReadingCovers()'),'Featured covers cannot be left unmounted');
+assert(js.includes("overlay.className='dawn-reading-list__featured-overlay'"),
+ 'A full-square image needs a light editorial title overlay, not a fixed shop-label strip');
+assert(js.includes("button.dataset.visualType=hasSourcedPlate?plate.kind:'edition-cover'"),
+ 'Visual source must distinguish verified interior plates from original edition covers');
+assert(js.includes("typeof plate.credit==='string'")&&js.includes("['interior-plate','engraving','map','title-page']"),
+ 'An unrelated image cannot be passed off as an illustrated page of the actual book');
+assert(css.includes('R84 / The visual square IS the image')&&css.includes('object-fit:cover!important'),
+ 'The four actual image tiles must be full-bleed square artwork, not contain-fit book products');
+assert(css.includes('.dawn-reading-list__featured-book-label{display:none!important}'),
+ 'Remove the original fixed caption zone taking space away from images');
+assert(js.includes("openReadingList(list.id,book.editorialKey)"),'Featured book jackets must link to exact book, not a generic list');
+assert(js.includes('selectBookPreview(works,li,items[idx])'),'Selected cover must open the original book preview');
+for(const key of ['gospel-02','inner-05-chinese','history-01','inner-05']){
+ assert(json.lists.some(l=>l.works.some(w=>w.editorialKey===key&&w.image&&w.imageCredit)),'Featured cover not backed by edition citation '+key);
+}
+assert(css.includes('R82 — visual hierarchy')&&css.includes('grid-column:1 / span 2!important'),'A true 2x2 editorial square is required, not border decoration');
+assert(css.includes('.dawn-reading-list__series-grid')&&css.includes('grid-column:1 / -1!important'),'Guided group must occupy a whole record-wall row without mixing with original covers');
+assert(html.includes('class="dawn-reading-room__departments" aria-labelledby="dawn-departments-heading" hidden'),'Seven subjects should not compete on editorial opening');
+assert(js.includes("works.prepend(guide)"),'Guided question square must precede original books');
+assert(js.includes("guide.className='dawn-reading-list__guide'"),'2x2 guide not rendered inside existing catalogue');
+assert(css.includes('.dawn-reading-list__tile')&&css.includes('.dawn-reading-list__guide'),'One visual grammar for small square sleeves and large 2x2 reading guide is missing');
+assert(css.includes('dawn-reading-room__departments[hidden]'),'Seven subjects may not be present on editorial landing');
+console.log('PASS: P2-05 original 3 portals, 7 subjects, native book reader, 3 guided lists, 22 editorial works');
