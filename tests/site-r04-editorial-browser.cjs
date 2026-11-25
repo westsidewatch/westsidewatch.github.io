@@ -1,0 +1,9 @@
+const {chromium}=require('playwright');
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+(async()=>{const browser=await chromium.launch({headless:true});try{
+const cases=[['church','/church/','.ww-church-field'],['worship','/church/sunday-worship/','.ww-worship-score'],['magazine','/journal/','.ww-edition-spread'],['volume','/vol-00/','.ww-volume-contents']];
+fs.mkdirSync('artifacts/096-r04',{recursive:true});
+for(const [name,path,selector] of cases)for(const width of [1440,768,390,320]){
+const page=await browser.newPage({viewport:{width,height:900},reducedMotion:'reduce'});const response=await page.goto('http://127.0.0.1:4173'+path,{waitUntil:'domcontentloaded'});assert(response&&response.ok(),name+' HTTP');await page.locator(selector).waitFor({state:'visible'});await page.evaluate(()=>document.fonts.ready);const result=await page.evaluate(s=>{const root=document.querySelector(s);return {visible:root.getBoundingClientRect().width>0,overflow:document.documentElement.scrollWidth-innerWidth,missing:[...document.querySelectorAll('main img,.ww-journal-edition img,.ww-volume-reading img,.ww-church-opening img')].filter(i=>i.complete&&!i.naturalWidth).map(i=>i.src)}},selector);await page.screenshot({path:'artifacts/096-r04/'+name+'-'+width+'.png',fullPage:true});assert(result.visible&&result.overflow<=2&&result.missing.length===0,name+' '+width+' '+JSON.stringify(result));if(name==='worship')assert.equal(await page.locator('.ww-score-sequence li').count(),7);if(name==='volume')assert.equal(await page.locator('.ww-movement li').count(),12);if(name==='church')assert.equal(await page.locator('.ww-church-place a[href="/church/visit/"]').count(),1);console.log('R04',name,width,JSON.stringify(result));await page.close();
+}}finally{await browser.close()}})().catch(e=>{console.error(e);process.exit(1)});

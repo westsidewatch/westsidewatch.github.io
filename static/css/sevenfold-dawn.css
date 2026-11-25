@@ -376,3 +376,11 @@ html.ws-dawn-active body.home .ws-dawn-scripture,
 html.ws-dawn-active body.home .ws-dawn-scripture :is(.sites-home-slogan-zh,.sites-home-scripture,.ws-scripture-reference){
  color:#fff!important;
 }
+
+/* Open Contents only: actual editorial weight, not a row of symbols. */
+@media(min-width:701px) and (min-height:571px){
+body.home .sites-home-nav--floating .sites-home-nav__panel-links.ww-editorial-contents{display:grid!important;grid-template-columns:minmax(0,5fr) minmax(0,8fr)!important;grid-auto-rows:minmax(2.4em,auto)!important;column-gap:2vw!important;row-gap:.4vh!important;align-content:start!important;}
+body.home .sites-home-nav--floating .sites-home-nav__panel-links.ww-editorial-contents>a{min-width:0;white-space:normal!important;padding:.45em 0!important;border-top:1px solid color-mix(in srgb,currentColor 30%,transparent);font-family:var(--ws-type-display-en-sc)!important;line-height:1.08!important;}
+body.home .sites-home-nav--floating .sites-home-nav__panel-links.ww-editorial-contents>a:nth-child(2){font-size:clamp(24px,2.8vw,43px)!important;}
+body.home .sites-home-nav--floating .sites-home-nav__panel-links.ww-editorial-contents>a:nth-child(1){font-size:clamp(20px,2.15vw,34px)!important;}
+}
