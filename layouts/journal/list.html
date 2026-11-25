@@ -1,19 +1,15 @@
 {{ define "main" }}
-<section data-ws-first-look="shared" data-ws-first-look-mode="editorial" data-ws-first-look-stage class="ws-first-look-stage sites-second-layer sites-magazine" aria-labelledby="magazine-title">
-  <nav class="sites-breadcrumb" aria-label="Breadcrumb"><a href="{{ site.Home.RelPermalink }}">Home</a><span aria-hidden="true">/</span><span aria-current="page">Magazine</span></nav>
-  <header class="sites-journal-head">
-    <img src="{{ "images/westside-watch-masthead-landscape.svg" | relURL }}" alt="LivingWater — Westside Watch, Vol.00, 西望">
-    <h1 id="magazine-title" class="ws-bilingual-heading"><span class="ws-bilingual-heading__en" lang="en">Magazine</span><span class="ws-bilingual-heading__zh" lang="zh-Hant">西望雜誌</span></h1>
-    {{ with .Description }}<p>{{ . }}</p>{{ end }}
-  </header>
-  <div class="fl-reader"><article><p>創刊號 · Vol.00</p><h2>{{ site.Params.volumeTitle }}</h2><blockquote lang="en">For he looked for a city which hath foundations, whose builder and maker is God.<cite>Hebrews 11:10 · KJV</cite></blockquote><p lang="zh-Hant">那座有根基的城，就是神所經營、所建造的。</p></article></div>
-  <a class="sites-journal-current" href="{{ "vol-00/" | relURL }}" aria-label="Open Vol.00: The Foundations of a Watchful City" data-dore-surface-product="journal" data-editorial-role="primary" data-editorial-weight="2">
-    <span>Current volume · Vol.00</span><strong>The Foundations<br>of a Watchful City</strong><p>A founding volume in four movements, twelve permanent columns, and three watches of the night.</p><b>Open the volume →</b>
-  </a>
-  <nav class="sites-journal-routes" aria-label="Magazine index">
-    <a href="{{ "/vol-00/#contents" | relURL }}" data-dore-surface-product="journal" data-editorial-role="secondary"><span>01 · VOL.00</span><strong>Contents</strong><em>目錄</em></a>
-    <a href="{{ "/vol-00/#opening" | relURL }}" data-dore-surface-product="journal" data-editorial-role="reading-focus"><span>02 · VOL.00</span><strong>Opening</strong><em>卷首序曲</em></a>
-    <a href="{{ "vol-00/" | relURL }}"><span>03 · VOL.00</span><strong>Read Vol.00</strong><em>開始閱讀</em></a>
-  </nav>
+<link rel="stylesheet" href="/css/westside-section-identity.css">
+<link rel="stylesheet" href="/css/journal-editorial-r118.css?v=1">
+{{ $volume := index hugo.Data.volumes "vol-00" }}
+<section class="j118" data-ws-seal="journal" aria-labelledby="magazine-title">
+ <header class="j118-register"><a href="/" aria-label="Westside Watch 首頁"><img src="/images/westside-watch-masthead-landscape.svg" alt="Westside Watch"></a><span lang="en">Journal / Vol.00</span><span class="ws-name-seal" aria-hidden="true" data-cut="fine"></span></header>
+ <div class="j118-opening">
+  <div class="j118-index"><p lang="en">Founding Volume</p><p class="j118-issue" lang="en">00</p><nav aria-label="本期閱讀"><a href="/vol-00/#opening">卷首序曲</a><a href="#j118-contents">本期目錄</a></nav></div>
+  <div class="j118-window"><div class="j118-masthead" data-ws-designable><h1 id="magazine-title"><span lang="en">WESTSIDE WATCH</span><span lang="zh-Hant">西望</span></h1></div><div class="j118-cover"><p lang="en">The Foundations<br>of a Watchful City</p><h2 lang="zh-Hant">守望，一座光明的城</h2><blockquote><p lang="en">For he looked for a city which hath foundations, whose builder and maker is God.</p><p lang="zh-Hant">因為他等候那座有根基的城，就是神所經營、所建造的。</p><cite>Hebrews 11:10 · KJV</cite></blockquote><a class="j118-principal" href="/vol-00/"><span lang="en">Read Vol.00</span><span lang="zh-Hant">開始閱讀</span></a></div></div>
+ </div>
+ <section id="j118-contents" class="j118-contents"><header class="j118-contents-head"><h2 lang="en">Contents</h2><p>四個樂章 · 十二欄目</p></header>
+ {{ range $movement := $volume.movements }}<section class="j118-movement" aria-labelledby="j118-m-{{ $movement.number }}"><header class="j118-movement-head"><span lang="en">{{ $movement.number }}</span><h3 id="j118-m-{{ $movement.number }}"><span lang="en">{{ $movement.name }}</span><span lang="zh-Hant">{{ $movement.name_zh }}</span></h3><p>{{ $movement.statement }}</p></header><ol>{{ range $column := $movement.columns }}<li><a href="/vol-00/#column-{{ $column.number }}"><span class="j118-column-no" lang="en">{{ $column.number }}</span><span class="j118-column-name"><span lang="en">{{ $column.name_en }}</span><span lang="zh-Hant">{{ $column.name }} · {{ $column.section_zh }}</span></span><span class="j118-column-title">{{ $column.title }}</span></a></li>{{ end }}</ol></section>{{ with $movement.interlude }}<div class="j118-interlude"><span lang="en">{{ .watch_en }} · {{ .name }}</span><span lang="zh-Hant">{{ .watch }} · {{ .name_zh }}</span></div>{{ end }}{{ end }}
+ </section>
 </section>
 {{ end }}
