@@ -58,12 +58,12 @@
     {
       "objectId": "j3k:object:western-street",
       "geometryType": "LineString",
-      "status": "archaeological-linework",
+      "status": "illustrative-exterior-route-pending-survey",
       "basis": "excavated western retaining-wall street/approach remains",
-      "confidence": "high-elements",
+      "confidence": "inferred-display / archaeological-existence",
       "coordinatesENU": null,
-      "registration": "awaiting sourced line vertices",
-      "renderPolicy": "prefer observed excavated segments; extension beyond evidence must be separate geometry"
+      "registration": "original provisional anchor retained; relative exterior display offset exposed separately",
+      "renderPolicy": "current width/line/length are inferred; observed-only filter must hide display candidate; no surveyed street acceptance"
     },
     {
       "objectId": "j3k:object:eastern-entry-unknown",
@@ -74,6 +74,16 @@
       "coordinatesENU": null,
       "registration": "withheld",
       "renderPolicy": "no geometry until a dated evidence-backed variant is explicitly registered"
+    },
+    {
+      "objectId": "j3k:object:temple-perimeter-porticoes",
+      "geometryType": "MultiPolygon",
+      "status": "illustrative-precinct-components-not-surveyed",
+      "basis": "literary existence and double colonnades; authored bays within inherited platform model",
+      "confidence": "inferred",
+      "coordinatesENU": null,
+      "registration": "source-admitted-footprints-pending",
+      "renderPolicy": "inferred illustrative columns and roofs only; no observed-geometry or full-precinct acceptance"
     }
   ],
   "terrainContract": {

@@ -1,0 +1,27 @@
+/* Westside Editorial Typography Authority; geometry remains surface-owned.
+   Shared tokens/font loading: /css/typography-sitewide.css.
+   Mixed runs put Bodoni before CJK families, without an intervening generic. */
+.j3k-shell{
+ --j3k-type-ui:"Bodoni Moda","Chiron Hei HK WS",sans-serif;
+ --j3k-type-reading:"Bodoni Moda","Noto Serif TC",serif;
+ font-family:var(--j3k-type-ui);
+ font-size:var(--ws-type-scale-ui);
+ font-weight:var(--ws-weight-zh-standard);
+ line-height:var(--ws-type-leading-ui);
+ font-synthesis:none;
+ font-optical-sizing:auto;
+}
+.j3k-shell :is(button,input,select,option,textarea,svg text){font-family:var(--j3k-type-ui);font-weight:400;font-synthesis:none}
+.j3k-shell h1{font-family:var(--ws-type-display-en);font-size:var(--ws-realm-en-size);font-weight:400;line-height:.9;letter-spacing:var(--ws-realm-en-tracking)}
+.j3k-shell .j3k-caption h2{font-family:var(--ws-type-display-zh);font-size:var(--ws-subject-zh-size);font-weight:var(--ws-weight-zh-air);line-height:1.25}
+.j3k-shell :is(h3,h4,h5){font-family:var(--j3k-type-ui);font-weight:var(--ws-weight-zh-anchor);line-height:var(--ws-type-leading-title)}
+.j3k-shell :is([lang^="en"],.j3k-phase-date){font-family:var(--ws-type-display-en);font-weight:400;font-synthesis:none}
+.j3k-shell :is(.j3k-kicker,.j3k-era-en,.j3k-panel-label,.j3k-markers small){font-family:var(--ws-type-display-en-sc);font-size:var(--ws-editorial-label-size);font-weight:400;letter-spacing:var(--ws-editorial-label-tracking);font-variant-caps:normal;text-transform:none}
+.j3k-shell :is(button,select,input,.j3k-playback-pace,.j3k-header p:last-child){font-size:var(--ws-type-scale-ui);line-height:var(--ws-type-leading-ui)}
+.j3k-shell .j3k-phase-date{font-size:var(--ws-type-scale-title-sm);line-height:1.2}
+.j3k-shell :is(.j3k-era-note,.j3k-evidence-panel p,.j3k-defense-panel p,.j3k-defense-source-review li){font-family:var(--j3k-type-reading);font-size:var(--ws-type-scale-reading);font-weight:400;line-height:var(--ws-type-leading-reading)}
+.j3k-shell :is(.j3k-overview-baseline,.j3k-defense-status,.j3k-royal-relief p,.j3k-royal-relief a){font-family:var(--j3k-type-ui);font-size:var(--ws-type-scale-meta);line-height:1.65}
+.j3k-shell :is(.j3k-place-references span,.j3k-place-credit,.j3k-wall-reference-credit,.j3k-geography-credit,.j3k-terrain-note,.j3k-terrain-badge,.j3k-direction){font-family:var(--j3k-type-ui);font-size:var(--ws-type-scale-meta);font-weight:400;line-height:1.5;letter-spacing:normal}
+.j3k-shell :is(table,.j3k-defense-panel table){font-family:var(--j3k-type-ui);font-size:var(--ws-type-scale-ui);line-height:1.6}
+.j3k-shell th{font-weight:var(--ws-weight-zh-anchor)}
+.j3k-shell .j3k-runtime-error{font-family:var(--j3k-type-ui);font-size:var(--ws-type-scale-ui);line-height:1.6}

@@ -1,0 +1,22 @@
+import {geographicToENU} from './terrain-runtime.js';
+import {compileRoyalSpatialLayout} from './royal-spatial-layout.js';
+const hull=points=>{const p=[...points].sort((a,b)=>a.x-b.x||a.z-b.z),half=values=>{const out=[];for(const c of values){while(out.length>1){const a=out.at(-2),b=out.at(-1);if((b.x-a.x)*(c.z-b.z)-(b.z-a.z)*(c.x-b.x)>1e-7)break;out.pop();}out.push(c);}return out;};return [...half(p).slice(0,-1),...half([...p].reverse()).slice(0,-1)];};
+function nearest(point,roads){let best=null;for(const road of roads)for(let i=1;i<road.points.length;i++){const a=road.points[i-1],b=road.points[i],dx=b.x-a.x,dz=b.z-a.z,L=dx*dx+dz*dz;if(!L)continue;const t=Math.max(0,Math.min(1,((point.x-a.x)*dx+(point.z-a.z)*dz)/L)),q={x:a.x+t*dx,z:a.z+t*dz},distance=Math.hypot(point.x-q.x,point.z-q.z);if(!best||distance<best.distanceMetres)best={routeId:road.id,point:q,distanceMetres:distance};}return best;}
+// Derived from existing displayed dwellings and paths only. The convex envelope
+// is a model index, not occupied land, an excavated quarter or a new city circuit.
+export function settlementFoundation(core,data,buildingRecords,owner){
+ const namespace=data.phase==='chalcolithic-early-bronze'?'earliest':data.phase,id=`j3k:${namespace}:district:residential-model-envelope`,points=[];
+ if(!buildingRecords.length)throw new Error('Settlement foundation requires existing dwellings');
+ for(const b of buildingRecords){const box=b.geometry.bounds;for(const x of [box.min[0],box.max[0]])for(const z of [box.min[2],box.max[2]])points.push({x,z});}
+ const polygon=hull(points);if(polygon.length<3)throw new Error('Degenerate settlement model envelope');
+ const roads=core.phase(data.phase).filter(r=>r.metadata.generationPhase===data.phase&&r.type==='road'&&r.geometry?.points?.length>1).map(r=>({id:r.id,points:r.geometry.points}));
+ if(data.phase==='david-solomon'&&data.royalCity?.spatial){const a=geographicToENU(data.spring.lat,data.spring.lon,core.terrain.grid.origin);for(const e of compileRoyalSpatialLayout(data).edges.filter(e=>e.stage==='david')){const rid=`j3k:object:royal-road:${e.id}`;if(core.get(rid)?.phaseIds.includes(data.phase))roads.push({id:rid,points:e.points.map(([x,z])=>({x:a.east+x,z:-a.north+z}))});}}
+ const relations=buildingRecords.map(b=>{const box=b.geometry.bounds,point={x:(box.min[0]+box.max[0])/2,z:(box.min[2]+box.max[2])/2},match=nearest(point,roads);return {buildingId:b.id,districtId:id,...(match||{routeId:null,distanceMetres:null,point:null}),relation:'nearest-existing-model-path-not-a-constructed-connection',entranceVerified:false,routeAccessVerified:false};});
+ const phases=[...core.phases.keys()],index=phases.indexOf(data.phase),events=[{phase:data.phase,state:'build',authority:'derived-model-context-not-historical-district-foundation'},...(phases[index+1]?[{phase:phases[index+1],state:'unresolved',authority:'subsequent-occupation-unverified'}]:[])];
+ return {district:{id,type:'district',confidence:'inferred',phaseIds:events.map(e=>e.phase),geometry:{frame:'canonical-dem-enu',primitive:'polygon',status:'derived-display-envelope-not-excavated-district',role:'residential-model-envelope',polygon},source:{dataset:data.schema,contextSource:data.historicalSource,authority:'existing-display-bounds-only; no new archaeological boundary',geometryVerified:false},lifecycle:{events},metadata:{generatedOwner:owner,generationPhase:data.phase,settlementFoundation:true,geometryVerified:false,cityBoundaryVerified:false,occupationExtentVerified:false,rendererBinding:'model-context-no-city-mesh',buildingIds:relations.map(r=>r.buildingId),routeIds:roads.map(r=>r.id)}},relations};
+}
+export function inspectSettlementFoundation(core,phaseId){
+ const records=core.phase(phaseId),districts=records.filter(r=>r.metadata.settlementFoundation&&r.metadata.generationPhase===phaseId);if(!districts.length)return null;
+ const buildings=records.filter(r=>r.type==='building'&&r.metadata.generationPhase===phaseId&&r.metadata.rendererBinding==='early-settlement-v1');
+ return {scope:'display-model-relationships-not-historical-occupation',districtIds:districts.map(r=>r.id),buildings:buildings.length,districtLinkedBuildings:buildings.filter(r=>core.get(r.source?.districtId)?.metadata.settlementFoundation).length,routeRelatedBuildings:buildings.filter(r=>core.get(r.metadata.settlementRelation?.routeId)).length,unresolvedRouteIds:buildings.filter(r=>!core.get(r.metadata.settlementRelation?.routeId)).map(r=>r.id),physicalSurvivalVerified:false,houseEntrancesVerified:false};
+}

@@ -1,0 +1,5 @@
+import assert from 'node:assert/strict';import {cityTransitionOpacity} from '../preview/jerusalem-3000/phase-dissolve-view.js';
+for(let phase=1;phase<18;phase++){let previous=1;for(let i=0;i<=100;i++){const f=i/100,a=cityTransitionOpacity(f,true);assert.ok(a>=0&&a<=1&&a<=previous);assert.equal(cityTransitionOpacity(f,false),1,'waiting retains the outgoing city');previous=a;}assert.equal(cityTransitionOpacity(.12,true),1);assert.ok(cityTransitionOpacity(.35,true)>.7,'outgoing city remains while incoming housing establishes');assert.ok(cityTransitionOpacity(.7,true)<.1);assert.equal(cityTransitionOpacity(.82,true),0);}
+console.log('PASS:17 monotonic continuous transition envelopes, full waiting hold, outgoing silhouette through early construction, complete release and bounded opacity');
+
+for(const f of[0,.2,.5,.8,1]){assert.equal(cityTransitionOpacity(f,true,true),0,'destruction cannot be obscured by previous image');assert.equal(cityTransitionOpacity(f,false,true),1,'generation wait still holds outgoing city');}

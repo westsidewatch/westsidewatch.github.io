@@ -1,3 +1,4 @@
+import {westernPrecinctRoute} from './western-precinct-route.js';
 import {resolveSpatialRegistration} from './spatial-registration.js';
 import {buildArchitecturalGrammar} from './architectural-grammar.js';
 const EVIDENCE_SURFACE={observed:'observed',reconstructed:'reconstructed',inferred:'inferred',disputed:'disputed'};
@@ -6,6 +7,7 @@ export function isWithheld(object){return String(object.spatial?.registration||'
 export function addEvidenceArchitecture(builder,object,terrain){
   const registered=resolveSpatialRegistration(object,terrain);if(!registered.renderable)return false;
   const surface=EVIDENCE_SURFACE[evidenceClass(object.evidence)];
-  if(!buildArchitecturalGrammar(builder,object,registered,surface))return false;
-  return registered;
+  const modelRegistration=['platform-enclosure','perimeter-porticoes','portico-basilica','sacred-complex'].includes(object.kind)?{...registered,precinctUp:terrain.sampleElevation(31.778,35.235),terrain}:object.kind==='pilgrimage-access'?{...registered,terrain}:object.kind==='street'?{...registered,terrain,platformEast:resolveSpatialRegistration({spatial:{anchor:{lat:31.778,lon:35.235}}},terrain).east}:registered;
+  if(!buildArchitecturalGrammar(builder,object,modelRegistration,surface))return false;
+  return object.kind==='street'?{...registered,platformEast:modelRegistration.platformEast,displayRoute:westernPrecinctRoute(modelRegistration)}:registered;
 }

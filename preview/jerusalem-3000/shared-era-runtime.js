@@ -16,10 +16,17 @@ export const isSharedGenerationPhase = id => isSharedSlicePhase(id) || id === RE
 // One provisional first-temple fabric, inherited by destruction in place.
 // Reuse is a schematic lifecycle, not evidence of surveyed period-specific parcels.
 function createParcelRuntime(parent, { reference, footprint, terrain, materials,
-  generationPhase, phaseIds, destroyedPhase = null, retainedPhase = null, getExclusions=()=>[], getRegistration=null, ledgerCore=null,
+  generationPhase, phaseIds,overview=false, destroyedPhase = null, retainedPhase = null, getExclusions=()=>[], getRegistration=null, ledgerCore=null,
   onChange = () => {}, onProgress = () => {} }) {
   const openingMaterial = materials.facadeOpening || new THREE.MeshStandardMaterial({ color: 0x3d3327, roughness: .94, metalness: 0 });
-  const sharedMaterials = { ...materials, facadeOpening: openingMaterial };
+  // Confidence stays in ledger metadata and evidence filters. Transparency makes
+  // overlapping walls/roof ranges appear hollow when inspected at street scale.
+  const lowRiseMaterial = (materials.inferred || materials.reconstructed).clone();
+  if(overview)lowRiseMaterial.color.setHex(0xb9a27e);
+  lowRiseMaterial.transparent = false;
+  lowRiseMaterial.opacity = 1;
+  lowRiseMaterial.depthWrite = true;
+  const sharedMaterials = { ...materials, facadeOpening: openingMaterial, lowRise: lowRiseMaterial };
   let current = '', pending = null, city = null, disposed = false;
   const owner=residentialOwner(generationPhase);
   let state = { status: 'idle', completed: 0, total: 0 };
@@ -41,6 +48,7 @@ function createParcelRuntime(parent, { reference, footprint, terrain, materials,
     parent.add(group);
     const controller = new AbortController();
     const task = { controller, group, publication:null };
+    const requestStarted=performance.now();
     pending = task;
     state = { status: 'generating', completed: 0, total: 0 };
     task.promise = (async () => {
@@ -55,16 +63,19 @@ function createParcelRuntime(parent, { reference, footprint, terrain, materials,
         // The whole sanctuary reserves housing space; authored approach roads end at its edge.
         // Treating that envelope as a road obstacle would cut the final approach segment.
         const exclusions=[...roadExclusions, ...(registration.reservations || [])];
+        const parcelsStarted=performance.now();
         const districtResults = registration.districts.map(district => buildEraParcelCore(core, terrain, {
           exclusions, phaseId, registration, districtId: district.id,
           dataset: registration.independentLayout ? 'first-temple-persian.spatial.v1' : `provisional-${generationPhase}-footprint-not-surveyed`,
         }));
         const parcels = {parcels:districtResults.flatMap(r=>r.parcels), blocks:districtResults.flatMap(r=>r.blocks),
           count:districtResults.reduce((n,r)=>n+r.count,0), blockCount:districtResults.reduce((n,r)=>n+r.blockCount,0)};
+        const parcelMilliseconds=performance.now()-parcelsStarted,architectureStarted=performance.now();
         const architecture = await buildEraParcelArchitectureAsync(group, core, sharedMaterials, terrain, {
-          phaseId, destroyedPhase, signal: controller.signal,
+          phaseId, destroyedPhase,overview, signal: controller.signal,
           onProgress: progress => { state = { status: 'generating', ...progress }; onProgress(progress); },
         });
+        const architectureWallMilliseconds=performance.now()-architectureStarted,finalizationStarted=performance.now();
         if (!architecture.buildings || !core.validate().ok) throw new Error('Shared era generated no valid architecture');
         // Carry the SAME records into the successor period as hypothetical ruins.
         // Do not claim Persian road continuity, burial depths or rebuilding links.
@@ -75,14 +86,14 @@ function createParcelRuntime(parent, { reference, footprint, terrain, materials,
               retentionAuthority: 'schematic-not-surveyed', burialDepthVerified: false, reuseLinksVerified: false } });
         }
         const roads = buildHerodianRoadGeometry(group, registration.roads, sharedMaterials, terrain,{exclusions:roadExclusions});
-        if(ledgerCore&&registration.independentLayout)task.publication=publishGeneratedResidentialLedger(ledgerCore,core,{registration,architecture,generationPhase,destroyedPhase,retainedPhase,owner});
+        if(ledgerCore)task.publication=publishGeneratedResidentialLedger(ledgerCore,core,{registration,architecture,generationPhase,destroyedPhase,retainedPhase,includeRegistration:!registration.independentLayout,owner});
         const projection = createCityProjection(group, [...architecture.meshes, ...roads], {
-          phaseIds, standingPhase: phaseId,
+          phaseIds, standingPhase: phaseId, stateForInfrastructure:!registration.independentLayout,
           stateForObject:task.publication?((id,phase)=>task.publication.stateFor(id,phase)):null,
           phaseStates: retainedPhase ? { [retainedPhase]: { state: 'retained-ruin', ruin: 1 } } : {},
         });
         city = { group, core, parcels, architecture, projection, publication:task.publication };
-        state = { status: 'ready', completed: architecture.buildings, total: architecture.buildings,
+        state = { status: 'ready', generationTimings:{parcelMilliseconds,architectureWallMilliseconds,finalizationMilliseconds:performance.now()-finalizationStarted,requestToReadyMilliseconds:performance.now()-requestStarted,scope:'wall time through publication; includes architecture yields, excludes GPU and first visible frame'}, completed: architecture.buildings, total: architecture.buildings,
           yields: architecture.yields, maxBatchMs: architecture.maxBatchMs, elapsedMs: architecture.elapsedMs, authority: registration.authority, independentLayout: registration.independentLayout === true,
           infillMode:registration.generation.infillMode||'street-front-scaffold',
           districtCounts:districtResults.map((r,i)=>({id:registration.districts[i].id,blocks:r.blockCount,parcels:r.count})),
@@ -104,8 +115,8 @@ function createParcelRuntime(parent, { reference, footprint, terrain, materials,
   return {
     request,
     get status() { return state.status; },
-    apply({ phaseId, ruin, evidenceAllowed, retainedVisible }) {
-      city?.projection.apply({ phaseId, ruin, evidenceAllowed, retainedVisible });
+    apply({ phaseId, ruin, evidenceAllowed, retainedVisible, constructionProgress=1 }) {
+      city?.projection.apply({ phaseId, ruin, evidenceAllowed, retainedVisible, constructionProgress });
       return Boolean(city && phaseIds.includes(phaseId) && phaseId !== retainedPhase);
     },
     acceptance(){return {status:state.status,summary:city?.publication?.summary??null,visibility:city?.projection.visibility()??null};},
@@ -114,7 +125,7 @@ function createParcelRuntime(parent, { reference, footprint, terrain, materials,
       retainedObjects: city?.core.phase(retainedPhase).filter(object => object.type === 'building').length ?? 0,
       identityPolicy: retainedPhase ? 'same-first-temple-objects-through-destruction-and-persian-retention' : 'distinct-period-objects-without-unverified-reuse-links',
       historicalRegistrationVerified: false }; },
-    dispose() { disposed = true; if (!materials.facadeOpening) openingMaterial.dispose(); pending?.controller.abort(); if (city) {city.publication?.dispose();release(city.group);} city = null; },
+    dispose() { disposed = true; lowRiseMaterial.dispose(); if (!materials.facadeOpening) openingMaterial.dispose(); pending?.controller.abort(); if (city) {city.publication?.dispose();release(city.group);} city = null; },
   };
 }
 
@@ -129,13 +140,13 @@ export function createSharedEraRuntime(parent, options) {
   const expansion = createParcelRuntime(parent, { ...options, footprint: options.expansionFootprint,
     generationPhase: EXPANSION_PHASE, phaseIds: [EXPANSION_PHASE] });
   const runtimes = [first, successor, expansion];
-  let current = '';
+  let current = '',retainedRequested=false;
   const active = () => current === EXPANSION_PHASE ? expansion : current === RETAINED_PHASE ? successor : first;
   return {
-    request(phaseId) { current = phaseId; for (const runtime of runtimes) runtime.request(phaseId); },
+    request(phaseId,{retainedVisible=false}={}) { current=phaseId;retainedRequested=retainedVisible;for(const runtime of runtimes)runtime.request(phaseId===RETAINED_PHASE&&runtime===first&&!retainedRequested?'':phaseId); },
     get status() {
-      if (current === RETAINED_PHASE && first.status === 'error') return 'error';
-      if (current === RETAINED_PHASE && successor.status === 'ready' && first.status !== 'ready') return first.status;
+      if (current === RETAINED_PHASE && retainedRequested && first.status === 'error') return 'error';
+      if (current === RETAINED_PHASE && retainedRequested && successor.status === 'ready' && first.status !== 'ready') return first.status;
       return active().status;
     },
     apply(args) { let owned = false; for (const runtime of runtimes) owned = runtime.apply(args) || owned; return owned; },
@@ -151,6 +162,7 @@ export function createSharedEraRuntime(parent, options) {
         completed: active().diagnostics().completed, total: active().diagnostics().total,
         error: active().diagnostics().error || (current === RETAINED_PHASE ? earlier.error : undefined),
         activeResidential:active().diagnostics().residentialLedger,
+        generationTimings:active().diagnostics().generationTimings,
         successor: later,
         expansion: expansion.diagnostics(),
         historicalRegistrationVerified: false };

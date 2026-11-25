@@ -10,7 +10,7 @@ const timeline=await json('data/continuous-build-timeline.json'),data=await json
 const original=globalThis.fetch;
 try {
  globalThis.fetch=async url=>({ok:true,json:()=>json(url)});invalidateCityData();
- const terrain={grid:{origin:data.spring},heightAtWorld:(x,z)=>40+x*.03+z*.01};
+ const terrain={grid:{origin:{lat:31.778,lon:35.235}},heightAtWorld:(x,z)=>40+x*.03+z*.01};
  const {core}=await loadTemporalCityCore(timeline.phases,{terrain}),parent=new THREE.Group();
  const runtime=createRoyalCity(parent,{data,terrain,core});const apply=position=>runtime.apply({position,evidenceAllowed:()=>true,ruin:1});
  apply(3.2);assert.equal(runtime.diagnostics().visibleTemple,0);assert.ok(runtime.diagnostics().visibleWalls>0);
@@ -29,7 +29,9 @@ try {
  assert.equal(core.get('j3k:object:first-temple').geometry.status,'inferred-component-assembly');assert.equal(core.validate().ok,true);
  const roads=new THREE.Group(),material=new THREE.MeshBasicMaterial();
  const meshes=buildHerodianRoadGeometry(roads,[{id:'test',confidence:'inferred',geometry:{points:[{x:-20,z:0},{x:20,z:0}]}}],{inferred:material},terrain,{exclusions:[{polygon:[{x:-6,z:-6},{x:6,z:-6},{x:6,z:6},{x:-6,z:6}]}]});
- assert.equal(meshes.length,2,'road fragments crossing reserved monument must be omitted');
+ let pavingArea=0;
+ for(const mesh of meshes){const p=mesh.geometry.attributes.position;for(let i=0;i<p.count;i+=3){const a=[p.getX(i),p.getZ(i)],b=[p.getX(i+1),p.getZ(i+1)],c=[p.getX(i+2),p.getZ(i+2)];pavingArea+=Math.abs((b[0]-a[0])*(c[1]-a[1])-(c[0]-a[0])*(b[1]-a[1]))/2;assert.ok([a,b,c].every(p=>p[0]<=-6.000001||p[0]>=5.999999||Math.abs(Math.abs(p[0])-6)<.00001),'paving must stop at the reserved monument boundary');}}
+ assert.ok(Math.abs(pavingArea-140)<.001,'retain all permitted paving, including the clipped partial cells');
  meshes.forEach(m=>m.geometry.dispose());material.dispose();runtime.dispose();assert.equal(parent.children.length,0);
  console.log('PASS: shared ledger bindings, stable geometry through ruin/reverse, unknown fate filtering, grounded collapse and road exclusions');
 } finally {globalThis.fetch=original;invalidateCityData();}

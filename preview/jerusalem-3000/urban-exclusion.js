@@ -9,3 +9,4 @@ export function polygonsOverlap(a,b){
   }
   return false;
 }
+export {inside as pointInPolygon};
