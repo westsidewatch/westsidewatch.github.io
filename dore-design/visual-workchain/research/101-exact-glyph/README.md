@@ -1,0 +1,3 @@
+# R101 — 字形來源事故修正，不改構圖
+R100 1d7586342b6c370a5afbecea35b311415aa43bd0 的實際 Chromium artifact 15001376562 中 desktop-platform-fonts.json 證明：.church-visit__section-head h2 使用 ChironHeiHK-Heavy 3 glyphs + WenQuanYiZenHei 3 glyphs；.ws-church-sunday-row strong 6 Heavy + 2 WenQuanYiZenHei。實際 desktop-sunday.png 可見「主日崇拜」與「凡事謝恩」字重不一致。舊測試只用 some() 檢查存在 Chiron，故錯誤通過。
+R100 將專用 V60 有限字符 200/900 字型登記於 OS 同名 family，干擾完整 Unicode-range variable font 的選取。R101 移除兩條局部 Chiron @font-face，直接使用 OS 原 --ws-type-display-zh 及 OS 原官方 webfont CDN，不改 OS、V60 或構圖。官方包 https://www.jsdelivr.com/package/npm/chiron-hei-hk-webfont ，官方說明 CSS family Chiron Hei HK WS，200–900；全字符覆蓋仍須實測，未假定已成功。新增所有中文 DOM 文字節點的 computed weight 和 CDP 全部字形來源審查、200/900 同句墨量對比；任何系統 fallback 即失敗。R100 保留作對照。
