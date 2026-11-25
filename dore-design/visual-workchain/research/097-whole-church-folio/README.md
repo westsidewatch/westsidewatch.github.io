@@ -1,0 +1,4 @@
+# 097 — 整體編輯構成，而非首屏美化
+用戶指出 096 首屏實驗仍保留通用 W 導航條，後續各段未改，故不得視為完成。此輪以同一原頁 ?art=097 隔離比較，不採 096 為藝術定稿。共用 OS 不改。
+參考：Philbrook https://www.pentagram.com/work/philbrook-museum-of-art （識別、網頁、app 一體）；Hood https://www.pentagram.com/work/hood-museum-of-art/story （建築幾何由大到小）；Whitney https://www.linkedbyair.net/work/60 （多媒體長卷及導航的連續閱讀）；The Paris Review https://www.theparisreview.org/ （編輯內容分類）。以上本輪已重新讀取原始來源；未以文字抓取冒充視覺驗收。
+實作：移除獨立通用頂欄，把既有入口與七章索引放入首屏的紙面；原 W 方框與箭頭移除。首屏保留原正方形經文、官方名稱、玻璃和活水刻線。後續各章大英文小中文、章次、紙墨交替、主日七段程序、聚會時間表、七事工索引、禱告查經共用玻璃面、回應四個真正 QR 方塊、聯繫和頁腳。所有原內容、資料源及連結保留；無新卡片。此為教會靜態頁從頭到尾的首個整體試驗，非已完成全站。未動首頁、P2、虛擬導覽、其他頁面、OS。視覺品質須由實際畫面評審。
