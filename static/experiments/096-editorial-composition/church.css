@@ -1,0 +1,38 @@
+
+/* Original church page composition study. Opt-in only. */
+html.art096 .church-visit__hero{background:var(--ws-surface);isolation:isolate}
+html.art096 .church-visit__hero:after{inset:0;opacity:1;background:var(--ws-night);clip-path:polygon(44.000% 0.000%,44.000% 16.667%,49.000% 16.667%,49.000% 33.333%,44.000% 33.333%,44.000% 50.000%,54.000% 50.000%,54.000% 66.667%,44.000% 66.667%,44.000% 83.333%,49.000% 83.333%,49.000% 100.000%,100% 100%,100% 0);z-index:-3}
+html.art096 .church-visit__hero:before{content:"";position:absolute;inset:0;z-index:-2;pointer-events:none;clip-path:polygon(44.000% 0.000%,44.000% 16.667%,49.000% 16.667%,49.000% 33.333%,44.000% 33.333%,44.000% 50.000%,54.000% 50.000%,54.000% 66.667%,44.000% 66.667%,44.000% 83.333%,49.000% 83.333%,49.000% 100.000%,100% 100%,100% 0);background:var(--ws-water);mask:url("/experiments/assets/living-water-contour-engraving-v10.svg") center/cover no-repeat;opacity:.75}
+html.art096 .church-visit__hero-grid{max-width:1600px;min-height:clamp(620px,58vw,830px);grid-template-columns:minmax(0,42fr) minmax(0,58fr);gap:0;align-items:center;padding-top:1rem;padding-bottom:clamp(50px,6vw,100px)}
+html.art096 .church-visit__hero-copy{padding:clamp(25px,4vw,60px) clamp(20px,4.5vw,82px) 0 0;align-items:flex-start;justify-content:center}
+html.art096 .church-visit__seal{color:var(--ws-first-light);margin:0 0 3rem}
+html.art096 .church-visit__identity-lockup{align-items:flex-start;max-width:100%}
+html.art096 .church-visit__identity-lockup .church-visit__english{text-align:left!important;font-size:clamp(1.5rem,3.35vw,3.65rem)!important;line-height:1.02!important;text-wrap:balance;margin-top:clamp(20px,2vw,32px)!important}
+html.art096 .church-visit__identity-lockup .church-visit__formal{text-align:left;align-self:flex-start;font-size:var(--ws-type-scale-meta);font-style:normal;margin-top:1.8rem!important}
+html.art096 .church-visit__intro{font-size:var(--ws-type-scale-reading-lg);line-height:1.8;margin-top:2rem}
+html.art096 .church-visit__intro span{white-space:normal}
+html.art096 .church-visit__hero-links{gap:1.8rem;margin-top:2rem}
+html.art096 .church-visit__hero-links a{min-width:0;display:inline-block;font-size:var(--ws-type-scale-reading);border:0;text-decoration:underline}
+html.art096 .church-visit__hero-links a span,html.art096 .church-visit__tour span,html.art096 .church-visit__hero-bottom a span{display:none}
+html.art096 .church-visit__scripture-group{justify-self:center;align-self:center;width:min(100%,460px);max-width:460px;gap:clamp(15px,2vw,28px);position:relative;margin-left:clamp(30px,5vw,90px)}
+html.art096 .church-visit__hero-grid .church-visit__scripture-tile{background:color-mix(in oklab,var(--ws-water) 72%,var(--ws-night));border-color:color-mix(in srgb,var(--ws-paper) 60%,transparent);border-top-width:1px;box-shadow:none;backdrop-filter:blur(25px) saturate(1.3);-webkit-backdrop-filter:blur(25px) saturate(1.3)}
+html.art096 .church-visit__scripture-tile:before{inset:0;border:none}
+html.art096 .church-visit__scripture-translation{color:var(--ws-paper);font-size:var(--ws-type-scale-reading);font-style:normal}
+html.art096 .church-visit__scripture-translation span{color:var(--ws-morning-gold)}
+html.art096 .church-visit__hero-folio,html.art096 .church-visit__hero-bottom{position:relative;border:0}
+html.art096 .church-visit__hero-folio span:last-child,html.art096 .church-visit__hero-bottom a{color:var(--ws-paper)}
+html.art096 .church-visit__hero-bottom{padding-bottom:clamp(24px,3vw,42px)}
+html.art096 .church-visit__hero-folio span:nth-child(2){visibility:hidden}
+@media(max-width:900px){
+ html.art096 .church-visit__hero:after,html.art096 .church-visit__hero:before{display:none}
+ html.art096 .church-visit__hero-grid{display:flex;flex-direction:column;gap:0;min-height:0;padding:0}
+ html.art096 .church-visit__hero-copy{width:100%;padding:clamp(25px,6vw,52px) 18px clamp(35px,8vw,70px)}
+ html.art096 .church-visit__seal{margin-bottom:1.7rem}
+ html.art096 .church-visit__identity-lockup{max-width:580px}
+ html.art096 .church-visit__identity-lockup .church-visit__english{font-size:clamp(1.65rem,5.4vw,3rem)!important;text-align:left!important}
+ html.art096 .church-visit__scripture-group{isolation:isolate;overflow:hidden;width:100%;max-width:none;margin:0;padding:clamp(28px,8vw,68px) 18px 32px;background:var(--ws-night);gap:20px;align-items:center}
+ html.art096 .church-visit__scripture-group:before{content:"";position:absolute;z-index:-1;pointer-events:none;inset:0;background:var(--ws-water);mask:url("/experiments/assets/living-water-contour-engraving-v10.svg") center/cover no-repeat;opacity:.55}
+ html.art096 .church-visit__hero-grid .church-visit__scripture-tile{max-width:460px}
+ html.art096 .church-visit__scripture-translation{max-width:460px}
+ html.art096 .church-visit__hero-folio span:last-child,html.art096 .church-visit__hero-bottom a{color:var(--ws-text)}
+}
