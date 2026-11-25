@@ -1,26 +1,14 @@
 {{ define "main" }}
 <div class="sites-church mersi-church" id="church">
-  <section data-ws-first-look="shared" data-ws-first-look-mode="door" data-ws-first-look-stage class="mc-hero sites-church-intro" data-mersi-panel aria-labelledby="church-title">
-    <div class="fl-door-leaf fl-door-leaf--left" aria-hidden="true"><span class="fl-door-label">Living<br>Water.</span></div><div class="fl-door-leaf fl-door-leaf--right" aria-hidden="true"><span class="fl-door-label">向下滑動<br>看見活水</span></div>
-    <p>P.A.O.C. · LIVING WATER ASSEMBLY WEST · VAUGHAN</p>
-    {{ with .Params.display_logo }}
-      <img src="{{ . | relURL }}" alt="神召會活水堂西區教會">
-      <h1 id="church-title" class="sites-structural-title">{{ $.Params.display_title | default "神召會活水堂西區教會" }}</h1>
-    {{ else }}
-      <h1 id="church-title">{{ .Params.display_title }}</h1>
-    {{ end }}
-    <blockquote>「信我的人，就如經上所說：從他腹中要流出活水的江河來。」<cite>JOHN 7:38</cite></blockquote>
-    <a class="fl-door-entry" href="#church-front-schedule">進入教會生活 ↓</a>
-    <p class="church-front-visitor-link"><a href="/church/visit/">聚會時間 · 認識教會 · 訪客聯繫</a></p>
-    <nav class="church-front-index" aria-label="教會首頁導覽"><a href="#church-front-schedule">主日敬拜 <span>01</span></a><a href="#church-journey">認識活水 <span>02</span></a><a href="#church-scripture-title">聖經與見證 <span>03</span></a><a href="#church-horizontal">教會生活 <span>04</span></a></nav>
-  </section>
+  <section class="ww-church-opening" aria-labelledby="church-title"><header class="ww-church-mast"><p class="ww-folio-label">P.A.O.C. · North York, Ontario</p><h1 id="church-title"><span class="ws-type-realm-en ww-church-en" lang="en"><span>Living Water</span><span>Assembly West</span></span><span class="ww-church-zh" lang="zh-Hant">{{ with .Params.display_logo }}<img class="ww-official-identity" src="{{ . | relURL }}" alt="{{ $.Params.display_title }}">{{ else }}<span class="ws-type-realm-zh">{{ .Params.display_title }}</span>{{ end }}</span></h1></header><div class="ww-church-field"><div class="ww-flow-field" aria-hidden="true"></div><blockquote class="ww-word-opening"><p class="ww-verse-number" lang="en">John<br>7:38.</p><div class="ww-verse-columns"><p class="ww-verse-zh" lang="zh-Hant">信我的人，就如經上所說：從他腹中要流出活水的江河來。</p><p class="ww-verse-en" lang="en">He that believeth on me, as the scripture hath said, out of his belly shall flow rivers of living water.</p></div><cite class="ws-scripture-reference">約翰福音 7:38 · KJV</cite></blockquote><figure class="ww-building-opening"><iframe title="活水堂西區完整三維建築白模" src="/p2-maquette/index.html?embed=1&amp;asset=parts&amp;autoplay=0&amp;progress=1" loading="lazy" tabindex="-1" aria-hidden="true"></iframe><a class="ww-building-entry" href="/p2/church-tour.html?entry=p2&amp;from=church" aria-label="進入活水堂西區虛擬教會導覽"><span lang="en">Enter the church.</span><span>認識活水 · 虛擬教會導覽</span></a></figure><aside class="ww-church-place"><p lang="en" class="ww-place-time">10:30–13:30</p><p>每週主日</p><address>205 Wilmington Ave.<br>North York, ON M3H 6B3</address><a href="/church/visit/" class="ww-text-link">認識教會 · 聚會與聯繫</a><a href="#weekly-worship" class="ww-text-link">主日崇拜</a></aside></div></section>
+{{ partial "church-weekly-score.html" . }}
 
   {{/* The worship schedule is first-layer church content, not a link-only subpage. */}}
   {{ with index site.Data.church.bulletins "2026-10-11" }}
-  <section class="church-front-schedule" id="church-front-schedule" data-mersi-panel aria-labelledby="church-front-schedule-title">
+  <details class="church-front-schedule ww-archive" id="church-front-schedule"><summary id="church-front-schedule-title">2026 年 10 月 11 日歷史週報存檔</summary>
     <div class="church-front-schedule__heading">
       <p>歷史主日週報 · {{ .date_label }} · {{ .time_label }} · <a href="/church/visit/#sunday">查看最新資料</a></p>
-      <h2 id="church-front-schedule-title">主日敬拜日程存檔</h2>
+      <h2>主日敬拜日程存檔</h2>
       <p>{{ .sermon_title }} · {{ .sermon_speaker }}</p>
       <p>{{ .address }}</p>
     </div>
@@ -42,8 +30,8 @@
     <div class="church-front-schedule__team">
       {{ range .team }}<p><small>{{ .role }}</small> {{ .name }}</p>{{ end }}
     </div>
-    <p class="church-front-schedule__more"><a href="/church/bulletin-2026-10-11/">完整週報及下週事奉安排 →</a></p>
-  </section>
+    <p class="church-front-schedule__more"><a href="/church/bulletin-2026-10-11/">閱讀完整歷史週報</a></p>
+  </details>
   {{ end }}
 
   <div class="mc-journey" id="church-journey"><div class="mc-stage"><div class="mc-scenes">
@@ -107,7 +95,7 @@
     <nav class="sites-church-entries church-horizontal__entries" aria-label="教會生活">
     {{ range .Pages.ByWeight }}
       {{ $entryHref := .Params.entry_url | default .RelPermalink }}
-      <a href="{{ $entryHref }}"><span>{{ printf "%02d" .Weight }}</span><strong>{{ .Title }}</strong>{{ with .Description }}<em>{{ . }}</em>{{ end }}<b>↗</b></a>
+      <a href="{{ $entryHref }}"><span>{{ printf "%02d" .Weight }}</span><strong>{{ .Title }}</strong>{{ with .Description }}<em>{{ . }}</em>{{ end }}</a>
     {{ end }}
     </nav>
   </div>
