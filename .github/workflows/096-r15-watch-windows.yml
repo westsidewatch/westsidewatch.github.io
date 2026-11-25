@@ -1,0 +1,40 @@
+name: 096 R15 Watch Windows Browser
+on:
+  pull_request:
+    types: [opened,synchronize,reopened]
+    paths:
+      - 'static/css/watch-window-r15.css'
+      - 'static/images/watch-windows-r15/**'
+      - 'tests/watch-window-r15.cjs'
+      - '.github/workflows/096-r15-watch-windows.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: '0.167.0'
+          extended: true
+      - run: hugo --gc --minify --baseURL 'http://127.0.0.1:4173/'
+      - run: |
+          npm install --no-save --no-package-lock playwright
+          npx playwright install --with-deps chromium
+      - name: Capture actual existing surfaces and check navigation
+        run: |
+          python3 -m http.server 4173 --directory public >/tmp/watch-window-http.log 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          node tests/watch-window-r15.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: watch-window-r15
+          path: artifacts/watch-window-r15
+          if-no-files-found: warn
