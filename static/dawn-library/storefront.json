@@ -1,6 +1,6 @@
 {
   "schema": "dawn.library.storefront.v3",
-  "generatedAt": "2026-11-21T18:28:14.430093+00:00",
+  "generatedAt": "2026-11-25T10:22:58.366315+00:00",
   "title": "黎明書局",
   "storagePolicy": "index-only",
   "principle": "映射 ≠ 導入。閱讀 ≠ 收藏。收藏 ≠ 下載。",
@@ -39,7 +39,7 @@
             "isbn": "9798668954728",
             "coverId": 419797,
             "internetArchiveId": "bwb_P9-AOL-714",
-            "resolvedAt": "2026-11-21T10:21:17.114579+00:00"
+            "resolvedAt": "2026-11-20T17:54:04.253977+00:00"
           },
           "identifiers": {
             "openLibraryWork": "/works/OL2276498W",
@@ -608,29 +608,6 @@
       "source": "Internet Archive",
       "items": [
         {
-          "id": "internet-archive-myth-and-history-in-the-bible",
-          "title": "Myth And History In The Bible",
-          "author": "",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/myth-and-history-in-the-bible",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/myth-and-history-in-the-bible",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
           "id": "internet-archive-randmcnallybible0000krae_e6d4",
           "title": "Rand McNally Bible atlas",
           "author": "Kraeling, Emil Gottlieb Heinrich, 1892-",
@@ -654,18 +631,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-postbiblicalhist01raph_0",
-          "title": "Post-Biblical history of the Jews; from the close of the Old Testament, about the year 420 B. C. E., till the destruction of the second temple in the year 70 C. E",
-          "author": "Raphall, Morris J. (Morris Jacob), 1798-1868",
+          "id": "internet-archive-storyofbibletran0000ludl",
+          "title": "The story of Bible translations",
+          "author": "Ludlow, William L",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/postbiblicalhist01raph_0",
+            "url": "https://archive.org/details/storyofbibletran0000ludl",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/postbiblicalhist01raph_0",
+            "url": "https://archive.org/services/img/storyofbibletran0000ludl",
             "mode": "source"
           },
           "rights": {
@@ -677,18 +654,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-tweetingwithgodb0000reme",
-          "title": "Tweeting with God : #Big Bang, prayer, Bible, sex, Crusades, sin, career ...",
-          "author": "Remery, Michel (Michel Petrus), author",
+          "id": "internet-archive-anglicanismbible0000unse",
+          "title": "Anglicanism and the Bible",
+          "author": "",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/tweetingwithgodb0000reme",
+            "url": "https://archive.org/details/anglicanismbible0000unse",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/tweetingwithgodb0000reme",
+            "url": "https://archive.org/services/img/anglicanismbible0000unse",
             "mode": "source"
           },
           "rights": {
@@ -700,64 +677,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-talmoncanon",
-          "title": "Shumaryahu Talmon The Canon of the Hebrew Bible",
-          "author": "Shumaryahu Talmon",
-          "language": "English",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/talmoncanon",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/talmoncanon",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-samgippanunderstandablehistoryofthebibleoldversion",
-          "title": "Sam Gipp - An Understandable History Of The Bible - (Old Version)",
-          "author": "",
-          "language": "English",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/samgippanunderstandablehistoryofthebibleoldversion",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/samgippanunderstandablehistoryofthebibleoldversion",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-reclaimingbiblef0000spon",
-          "title": "Re-claiming the Bible for a non-religious world",
-          "author": "Spong, John Shelby",
+          "id": "internet-archive-approachingbible00pole",
+          "title": "Approaching the Bible in medieval England",
+          "author": "Poleg, Eyal, author",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/reclaimingbiblef0000spon",
+            "url": "https://archive.org/details/approachingbible00pole",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/reclaimingbiblef0000spon",
+            "url": "https://archive.org/services/img/approachingbible00pole",
             "mode": "source"
           },
           "rights": {
@@ -769,18 +700,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-who-wrote-the-bible-2nd-edition-richard-elliott-friedman-1997",
-          "title": "Who Wrote The Bible ( 2nd Edition) Richard Elliott Friedman ( 1997)",
-          "author": "Richard Friedman",
+          "id": "internet-archive-unlockyourbible0000geew",
+          "title": "Unlock your Bible",
+          "author": "Gee, W. Brian, 1935-",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/who-wrote-the-bible-2nd-edition-richard-elliott-friedman-1997",
+            "url": "https://archive.org/details/unlockyourbible0000geew",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/who-wrote-the-bible-2nd-edition-richard-elliott-friedman-1997",
+            "url": "https://archive.org/services/img/unlockyourbible0000geew",
             "mode": "source"
           },
           "rights": {
@@ -792,18 +723,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-samaritanpentate0000ande",
-          "title": "The Samaritan Pentateuch : an introduction to its origin, history, and significance for biblical studies",
-          "author": "Anderson, Robert T., 1928- author",
+          "id": "internet-archive-thebibleanditsle0000unse",
+          "title": "The Bible and its literary associations",
+          "author": "Crook, Margaret Brackenbury, editor",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/samaritanpentate0000ande",
+            "url": "https://archive.org/details/thebibleanditsle0000unse",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/samaritanpentate0000ande",
+            "url": "https://archive.org/services/img/thebibleanditsle0000unse",
             "mode": "source"
           },
           "rights": {
@@ -815,18 +746,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-truetohiswordsto0000lewi",
-          "title": "True to His word : the story of Bible Study Fellowship",
-          "author": "Lewis, Gregg, 1951-",
+          "id": "internet-archive-asimovsguidetobi0002asim",
+          "title": "Asimov's guide to the Bible",
+          "author": "Asimov, Isaac, 1920-1992",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/truetohiswordsto0000lewi",
+            "url": "https://archive.org/details/asimovsguidetobi0002asim",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/truetohiswordsto0000lewi",
+            "url": "https://archive.org/services/img/asimovsguidetobi0002asim",
             "mode": "source"
           },
           "rights": {
@@ -838,18 +769,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-whatmeanthesesto0000unse",
-          "title": "What mean these stones? : the significance of archeology for Biblical studies",
-          "author": "Burrows, Millar, 1889-1980",
+          "id": "internet-archive-bookverse0000unse",
+          "title": "Book and verse : a guide to Middle English biblical literature",
+          "author": "Morey, James H., 1961-",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/whatmeanthesesto0000unse",
+            "url": "https://archive.org/details/bookverse0000unse",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/whatmeanthesesto0000unse",
+            "url": "https://archive.org/services/img/bookverse0000unse",
             "mode": "source"
           },
           "rights": {
@@ -861,18 +792,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-sim_journal-of-biblical-literature_1909_28_contents",
-          "title": "Journal of Biblical Literature 1909: Vol 28 Table of Contents",
+          "id": "internet-archive-studiesinbibleed0000unse",
+          "title": "Studies in the Bible : edited on behalf of the Institute of Jewish Studies in the Faculty of Humanities",
           "author": "",
-          "language": "English",
+          "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/sim_journal-of-biblical-literature_1909_28_contents",
+            "url": "https://archive.org/details/studiesinbibleed0000unse",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/sim_journal-of-biblical-literature_1909_28_contents",
+            "url": "https://archive.org/services/img/studiesinbibleed0000unse",
             "mode": "source"
           },
           "rights": {
@@ -884,18 +815,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-sim_journal-of-biblical-literature_1911_30_2",
-          "title": "Journal of Biblical Literature 1911: Vol 30 Iss 2",
-          "author": "",
-          "language": "English",
+          "id": "internet-archive-loavesfishesfood0000kina_b6c6",
+          "title": "Loaves & fishes : foods from Bible times",
+          "author": "Kinard, Malvina C., author",
+          "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/sim_journal-of-biblical-literature_1911_30_2",
+            "url": "https://archive.org/details/loavesfishesfood0000kina_b6c6",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/sim_journal-of-biblical-literature_1911_30_2",
+            "url": "https://archive.org/services/img/loavesfishesfood0000kina_b6c6",
             "mode": "source"
           },
           "rights": {
@@ -907,18 +838,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-sim_journal-of-biblical-literature_1932-06_51_2",
-          "title": "Journal of Biblical Literature 1932-06: Vol 51 Iss 2",
-          "author": "",
-          "language": "English",
+          "id": "internet-archive-studentbibleguid0000back",
+          "title": "The student Bible guide to Jerusalem",
+          "author": "Backhouse, Robert",
+          "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/sim_journal-of-biblical-literature_1932-06_51_2",
+            "url": "https://archive.org/details/studentbibleguid0000back",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/sim_journal-of-biblical-literature_1932-06_51_2",
+            "url": "https://archive.org/services/img/studentbibleguid0000back",
             "mode": "source"
           },
           "rights": {
@@ -930,18 +861,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-sim_journal-of-biblical-literature_1945-12_64_4",
-          "title": "Journal of Biblical Literature 1945-12: Vol 64 Iss 4",
-          "author": "",
-          "language": "English",
+          "id": "internet-archive-ancestryofoureng0000pric_r1v6",
+          "title": "The ancestry of our English Bible : an account of manuscripts, texts, and versions of the Bible",
+          "author": "Price, Ira Maurice, 1856-1939",
+          "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/sim_journal-of-biblical-literature_1945-12_64_4",
+            "url": "https://archive.org/details/ancestryofoureng0000pric_r1v6",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/sim_journal-of-biblical-literature_1945-12_64_4",
+            "url": "https://archive.org/services/img/ancestryofoureng0000pric_r1v6",
             "mode": "source"
           },
           "rights": {
@@ -953,18 +884,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-sim_journal-of-biblical-literature_1947-03_66_1",
-          "title": "Journal of Biblical Literature 1947-03: Vol 66 Iss 1",
-          "author": "",
-          "language": "English",
+          "id": "internet-archive-biblereasonangli0000reed_a1q0",
+          "title": "The Bible and reason : Anglicans and scripture in late seventeenth-century England",
+          "author": "Reedy, Gerard",
+          "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/sim_journal-of-biblical-literature_1947-03_66_1",
+            "url": "https://archive.org/details/biblereasonangli0000reed_a1q0",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/sim_journal-of-biblical-literature_1947-03_66_1",
+            "url": "https://archive.org/services/img/biblereasonangli0000reed_a1q0",
             "mode": "source"
           },
           "rights": {
@@ -976,18 +907,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-sim_journal-of-biblical-literature_1948_67_contents",
-          "title": "Journal of Biblical Literature 1948: Vol 67 Table of Contents",
-          "author": "",
-          "language": "English",
+          "id": "internet-archive-sacredsitesinlan0000bowe",
+          "title": "Sacred sites in the lands of the Bible",
+          "author": "Bowen, Barbara Macdonald, 1876-",
+          "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/sim_journal-of-biblical-literature_1948_67_contents",
+            "url": "https://archive.org/details/sacredsitesinlan0000bowe",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/sim_journal-of-biblical-literature_1948_67_contents",
+            "url": "https://archive.org/services/img/sacredsitesinlan0000bowe",
             "mode": "source"
           },
           "rights": {
@@ -999,18 +930,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-sim_journal-of-biblical-literature_1951-03_70_1",
-          "title": "Journal of Biblical Literature 1951-03: Vol 70 Iss 1",
-          "author": "",
-          "language": "English",
+          "id": "internet-archive-tragediesofkingd0000draz",
+          "title": "The tragedies of King David : a close examination of the Biblical verses",
+          "author": "Drazin, Israel, 1935- author",
+          "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/sim_journal-of-biblical-literature_1951-03_70_1",
+            "url": "https://archive.org/details/tragediesofkingd0000draz",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/sim_journal-of-biblical-literature_1951-03_70_1",
+            "url": "https://archive.org/services/img/tragediesofkingd0000draz",
             "mode": "source"
           },
           "rights": {
@@ -1022,18 +953,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-sim_journal-of-biblical-literature_1952-09_71_3",
-          "title": "Journal of Biblical Literature 1952-09: Vol 71 Iss 3",
-          "author": "",
-          "language": "English",
+          "id": "internet-archive-biblewordsearche00inco",
+          "title": "Bible word search puzzles",
+          "author": "Reece, Colleen L",
+          "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/sim_journal-of-biblical-literature_1952-09_71_3",
+            "url": "https://archive.org/details/biblewordsearche00inco",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/sim_journal-of-biblical-literature_1952-09_71_3",
+            "url": "https://archive.org/services/img/biblewordsearche00inco",
             "mode": "source"
           },
           "rights": {
@@ -1045,18 +976,87 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-sim_journal-of-biblical-literature_1953-12_72_4",
-          "title": "Journal of Biblical Literature 1953-12: Vol 72 Iss 4",
+          "id": "internet-archive-biblepoliticsdem0000unse",
+          "title": "The Bible, politics, and democracy : essays",
           "author": "",
-          "language": "English",
+          "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/sim_journal-of-biblical-literature_1953-12_72_4",
+            "url": "https://archive.org/details/biblepoliticsdem0000unse",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/sim_journal-of-biblical-literature_1953-12_72_4",
+            "url": "https://archive.org/services/img/biblepoliticsdem0000unse",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-biblicalechoallu0000purd",
+          "title": "Biblical echo and allusion in the poetry of W.B. Yeats : poetics and the art of God",
+          "author": "Purdy, Dwight H. (Dwight Hilliard), 1941-",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/biblicalechoallu0000purd",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/biblicalechoallu0000purd",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-illustratedatlas0000rowl_h5j2",
+          "title": "The illustrated atlas of the Bible lands",
+          "author": "Rowland-Entwistle, Theodore",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/illustratedatlas0000rowl_h5j2",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/illustratedatlas0000rowl_h5j2",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-illustratedguide0000port_g8d4",
+          "title": "The illustrated guide to the Bible",
+          "author": "Porter, J. R. (Joshua Roy), 1921-2006",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/illustratedguide0000port_g8d4",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/illustratedguide0000port_g8d4",
             "mode": "source"
           },
           "rights": {
@@ -1076,41 +1076,18 @@
       "source": "Internet Archive",
       "items": [
         {
-          "id": "internet-archive-bwb_S0-EKJ-822",
-          "title": "A critical analysis of richard hooker's theory of the relation of church and state",
-          "author": "Cletus F. Dirksen",
-          "language": "en",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/bwb_S0-EKJ-822",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/bwb_S0-EKJ-822",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-jesushischurchst0000rnew_q8m2",
-          "title": "Jesus and his church: a study of the idea of the ecclesia in the New Testament",
-          "author": "R. Newton Flew",
+          "id": "internet-archive-bwb_Y0-BCM-857",
+          "title": "The growth of the christian church",
+          "author": "Robert hastings Nichols",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/jesushischurchst0000rnew_q8m2",
+            "url": "https://archive.org/details/bwb_Y0-BCM-857",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/jesushischurchst0000rnew_q8m2",
+            "url": "https://archive.org/services/img/bwb_Y0-BCM-857",
             "mode": "source"
           },
           "rights": {
@@ -1467,29 +1444,6 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-beginningsofchri0000unse_d6j4",
-          "title": "The Beginnings of the Christian Church",
-          "author": "A.R. Stedman M.A.",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/beginningsofchri0000unse_d6j4",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/beginningsofchri0000unse_d6j4",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
           "id": "internet-archive-teachingsofpresi0000unse_c7i0",
           "title": "teachings of presidents of the church",
           "author": "",
@@ -1513,6 +1467,29 @@
           "contentDownloaded": false
         },
         {
+          "id": "internet-archive-beginningsofchri0000unse_d6j4",
+          "title": "The Beginnings of the Christian Church",
+          "author": "A.R. Stedman M.A.",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/beginningsofchri0000unse_d6j4",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/beginningsofchri0000unse_d6j4",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
           "id": "internet-archive-bwb_C0-ATB-321",
           "title": "Young People In Your Church",
           "author": "Herbert Carleton Mayer",
@@ -1525,6 +1502,29 @@
           },
           "cover": {
             "url": "https://archive.org/services/img/bwb_C0-ATB-321",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bwb_KU-995-955",
+          "title": "everyone's book about the english church",
+          "author": "f. c. happold",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bwb_KU-995-955",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bwb_KU-995-955",
             "mode": "source"
           },
           "rights": {
