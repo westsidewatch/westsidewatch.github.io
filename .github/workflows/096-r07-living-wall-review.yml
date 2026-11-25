@@ -1,0 +1,57 @@
+name: 096 R07 Living Wall Review
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'static/experiments/foundation-096-r07/**'
+      - 'dore-design/visual-workchain/runs/foundation-096-r07/**'
+      - 'dore-design/knowledge-lab/storybook/scripts/foundation-096-r07.mjs'
+      - '.github/workflows/096-r07-living-wall-review.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Confirm exact source projection
+        run: cmp dore-design/visual-workchain/runs/foundation-096-r07/index.html static/experiments/foundation-096-r07/index.html
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: '0.167.0'
+          extended: true
+      - name: Build isolated site
+        run: hugo --gc --minify --baseURL "https://westsidewatch-github-io.pages.dev/"
+      - name: Install existing Chromium toolchain
+        working-directory: dore-design/knowledge-lab/storybook
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+      - name: Compare actual layouts at four viewport sizes
+        run: |
+          python3 -m http.server 4173 --directory public >/tmp/096-r07.log 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          node dore-design/knowledge-lab/storybook/scripts/foundation-096-r07.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: foundation-096-r07-browser
+          path: artifacts/foundation-096-r07
+          if-no-files-found: warn
+      - name: Publish isolated review only
+        if: always() && !cancelled()
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          PREVIEW_BRANCH: pr-${{ github.event.pull_request.number || github.run_id }}
+        run: |
+          test -s public/experiments/foundation-096-r07/index.html
+          npx --yes wrangler@4 pages deploy public --project-name=westsidewatch-github-io --branch="$PREVIEW_BRANCH" --commit-hash="$(git rev-parse HEAD)" --commit-message="096 R07 isolated living wall review"
