@@ -5,7 +5,7 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const base=process.env.P2_TEST_ORIGIN||'http://127.0.0.1:4173';
 (async()=>{
- const browser=await chromium.launch({headless:true,args:['--no-sandbox','--disable-webgl']});
+ const browser=await chromium.launch({headless:true,args:['--no-sandbox','--enable-webgl','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
  try{
   fs.mkdirSync('artifacts/p2-sunday-growth',{recursive:true});
   for(const screen of [{name:'desktop',width:1440,height:900},{name:'reference-screenshot',width:1158,height:850},{name:'phone',width:390,height:844}]){
@@ -15,6 +15,7 @@ const base=process.env.P2_TEST_ORIGIN||'http://127.0.0.1:4173';
    page.on('response',r=>{if(r.status()===404)console.log('P2_ASSET_404',screen.name,r.url())});
    page.on('console',msg=>{if(msg.type()==='error')pageErrors.push(msg.text())});
    await page.goto(base+'/p2/living-water.html?churchPreview=1',{waitUntil:'domcontentloaded',timeout:45000});
+   await page.evaluate(()=>window.scrollTo({top:innerHeight*1.2,behavior:'instant'}));
    await page.waitForTimeout(900);
    console.log('PAGE_DEBUG',screen.name,JSON.stringify(await page.evaluate(()=>({
      url:location.href,ready:document.readyState,stage:document.querySelector('.showcase')?.dataset.p2Phase,
@@ -23,6 +24,7 @@ const base=process.env.P2_TEST_ORIGIN||'http://127.0.0.1:4173';
    }))),JSON.stringify(pageErrors));
    await page.waitForFunction(()=>document.querySelector('.showcase')?.classList.contains('p2-church-model-visible'),null,{timeout:12000});
    await page.waitForFunction(()=>!!document.querySelector('.church-editorial__maquette')?.getAttribute('src'),null,{timeout:12000});
+   await page.waitForFunction(()=>document.querySelector('.church-schedule-maquette')?.classList.contains('maquette-geometry-ready'),null,{timeout:60000});
    const result=await page.evaluate(()=>{
     const stage=document.querySelector('.showcase');
     const programme=document.querySelector('.church-schedule-source');

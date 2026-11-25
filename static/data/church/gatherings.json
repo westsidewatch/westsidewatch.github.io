@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "updated": "2026-11-23",
+  "note": "Only weekday/daypart is confirmed for Monday and Friday; ask the church for exact join instructions.",
+  "items": [
+    {
+      "id": "sunday",
+      "name": "主日崇拜",
+      "day": "週日",
+      "time": "10:30–13:30",
+      "timeVerified": false,
+      "mode": "實體聚會",
+      "note": "請於出發前確認本週時間與聚會地址"
+    },
+    {
+      "id": "monday",
+      "name": "週一午間查經",
+      "day": "週一",
+      "time": "中午",
+      "timeVerified": false,
+      "mode": "線上",
+      "note": "確切時間及視訊方式請向教會索取"
+    },
+    {
+      "id": "wednesday",
+      "name": "守望線上禱告會",
+      "day": "週三",
+      "time": "20:00–21:00",
+      "timeVerified": true,
+      "mode": "線上",
+      "note": "請向教會索取當週參加方式"
+    },
+    {
+      "id": "friday",
+      "name": "週五晚間查經",
+      "day": "週五",
+      "time": "晚上",
+      "timeVerified": false,
+      "mode": "線上",
+      "note": "確切時間及視訊方式請向教會索取"
+    }
+  ]
+}

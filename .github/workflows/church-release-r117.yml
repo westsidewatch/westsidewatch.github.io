@@ -1,0 +1,39 @@
+name: Church Complete Release R117
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'static/church/**'
+      - 'static/css/church-*'
+      - 'static/p2/**'
+      - 'static/js/church-*'
+      - 'layouts/partials/watch-home-editorial.html'
+      - 'tests/church-release-*'
+      - '.github/workflows/church-release-r117.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  proof:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: '0.164.0'
+          extended: true
+      - run: python3 scripts/normalize_hugo_frontmatter.py
+      - run: hugo --minify --baseURL / --destination public
+      - run: npm install --no-save --no-package-lock playwright && npx playwright install --with-deps chromium
+      - run: |
+          python3 -m http.server 4173 --directory public >/tmp/church-release-http.log 2>&1 &
+          node tests/church-release-visitor.cjs
+          node tests/church-release-routes.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: church-release-r117
+          path: artifacts/church-release/

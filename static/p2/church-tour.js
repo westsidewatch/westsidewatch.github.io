@@ -18,6 +18,69 @@ import {consolidateIntersectingOpaqueCuboids} from "./church-geometry-union.js";
 const canvas = document.querySelector("#church-canvas");
 const prefersReducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const scene = new Scene();
+// Permanent bilingual CHURCH IDENTITY on the original SOUTH entrance facade.
+// Architecture: entry at x≈9.35/z≈0, cross aperture at x=15; the sign must
+// neither occlude the cross nor alter the approved 251-second camera route.
+const southNameCanvas=document.createElement('canvas');
+southNameCanvas.width=2048;southNameCanvas.height=392;
+const southNameTexture=new CanvasTexture(southNameCanvas);
+const southNameMaterial=new MeshStandardMaterial({
+  map:southNameTexture,transparent:true,opacity:0.96,depthWrite:false,
+  roughness:0.82,metalness:0.04,side:DoubleSide,
+  emissive:0x433819,emissiveIntensity:0.17
+});
+const southWallName=new Mesh(new PlaneGeometry(6.90,1.32),southNameMaterial);
+southWallName.name='Official bilingual church identity on SOUTH entrance facade';
+southWallName.position.set(9.35,5.75,0.16);southWallName.renderOrder=3;
+scene.add(southWallName);
+// Reuse the ORIGINAL approved Chinese church lettering, already published by P2.
+// This PNG is the canonical site export of the Chinese artwork. Do not recreate
+// its strokes with CSS fonts, Canvas fillText, or a different SVG.
+const southNameArtwork = new Image();
+const southNameArtworkUrl='/images/living-water-west-church-name.png';
+let southNameArtworkReady=false;
+function drawSouthWallName(){
+  const g=southNameCanvas.getContext('2d');
+  g.clearRect(0,0,2048,392);
+  if(southNameArtworkReady){
+    const width=1850;
+    const height=width*(southNameArtwork.naturalHeight/southNameArtwork.naturalWidth);
+    const x=(2048-width)/2,y=23;
+    g.drawImage(southNameArtwork,x,y,width,height);
+    // Preserve the silhouette of every approved glyph; only match the
+    // facade's stone-and-water material tint.
+    g.globalCompositeOperation='source-in';
+    g.fillStyle='#4e6162';
+    g.fillRect(x,y,width,height);
+    g.globalCompositeOperation='source-over';
+  }
+  g.textAlign='center';g.textBaseline='middle';
+  g.fillStyle='#a88b47';
+  g.font='400 48px "Bodoni Moda SC",serif';
+  g.fillText('P.A.O.C. Living Water Assembly West',1024,301,1800);
+  g.fillRect(450,354,1148,2);
+  southNameTexture.needsUpdate=true;
+}
+window.__churchSouthNameAudit={
+  physicalMesh:true,wall:'south',x:9.35,y:5.75,z:0.16,
+  originalCrossUnchanged:true,exactChinese:'神召會活水堂西區教會',
+  exactEnglish:'P.A.O.C. Living Water Assembly West',
+  artworkSource:southNameArtworkUrl,artworkLoaded:false
+};
+southNameArtwork.addEventListener('load',()=>{
+  if(!southNameArtwork.naturalWidth||!southNameArtwork.naturalHeight)return;
+  southNameArtworkReady=true;
+  window.__churchSouthNameAudit.artworkLoaded=true;
+  drawSouthWallName();
+});
+southNameArtwork.addEventListener('error',()=>{
+  window.__churchSouthNameAudit.artworkLoaded=false;
+  console.error('Church facade lettering artwork could not load; no substitute font will be rendered');
+});
+southNameArtwork.src=southNameArtworkUrl;
+drawSouthWallName();
+if(document.fonts?.ready)document.fonts.ready.then(drawSouthWallName).catch(()=>{});
+
 const renderer = new WebGLRenderer({
   canvas, antialias: true, powerPreference: "high-performance", alpha: false
 });
