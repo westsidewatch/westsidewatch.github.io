@@ -381,3 +381,36 @@ body[data-intake-type="decision"] .church-form__scripture-pair cite span{
   font-size:var(--ws-type-scale-micro);line-height:1.35;
  }
 }
+
+/* 9.6 / Gospel reading: three successive passages, not equal-sized product cards.
+   The cross and resurrection, already the central passage in the content,
+   occupy the full reading field. Existing glass, text and Scripture are intact. */
+.church-form__gospel-steps{display:grid;grid-template-columns:1fr;gap:clamp(14px,2vw,30px);background:transparent;border:0}
+.church-form__gospel-steps .church-form__gospel-step{min-height:0;min-width:0}
+.church-form__gospel-steps .church-form__gospel-step h3{
+ word-break:normal;line-break:strict;text-wrap:balance;margin:clamp(16px,2vw,32px) 0 clamp(12px,1.6vw,24px)
+}
+.church-form__gospel-steps .church-form__gospel-step blockquote{margin:clamp(15px,2vw,30px) 0 12px}
+@media(min-width:1050px){
+ .church-form__gospel-steps{grid-template-columns:repeat(12,minmax(0,1fr));align-items:start}
+ .church-form__gospel-steps .church-form__gospel-step:first-child{grid-column:1/10;grid-row:1}
+ .church-form__gospel-steps .church-form__gospel-step:nth-child(2){
+  grid-column:1/-1;grid-row:2;display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(12px,2vw,32px);align-items:start;
+  padding:clamp(30px,4vw,64px)
+ }
+ .church-form__gospel-steps .church-form__gospel-step:nth-child(2)>span{grid-column:1/-1;grid-row:1}
+ .church-form__gospel-steps .church-form__gospel-step:nth-child(2)>h3{
+  grid-column:1;grid-row:2;font-size:var(--ws-type-scale-display-md)!important;margin:0
+ }
+ .church-form__gospel-steps .church-form__gospel-step:nth-child(2)>p{grid-column:1;grid-row:3;margin:0}
+ .church-form__gospel-steps .church-form__gospel-step:nth-child(2)>blockquote{
+  grid-column:2;grid-row:2/4;align-self:center;margin:0;
+  border-top:0;border-inline-start:1px solid var(--ws-line);padding:0 0 0 clamp(18px,3vw,48px);
+  font-size:var(--ws-type-scale-reading-lg);line-height:1.85
+ }
+ .church-form__gospel-steps .church-form__gospel-step:nth-child(2)>small{grid-column:2;grid-row:4}
+ .church-form__gospel-steps .church-form__gospel-step:last-child{grid-column:4/-1;grid-row:3}
+ .church-form__gospel-steps .church-form__gospel-step:is(:first-child,:last-child)>p,
+ .church-form__gospel-steps .church-form__gospel-step:is(:first-child,:last-child)>blockquote{max-width:38em}
+}

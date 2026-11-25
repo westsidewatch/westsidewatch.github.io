@@ -581,3 +581,45 @@ body.church-visit{
 .church-visit__scripture-tile--letterpress .church-visit__water-engraving{z-index:1;opacity:var(--ws-engraving-opacity,.09)}
 .church-visit__sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;
  margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+
+/* 9.6 / actual church reading space. The calendar, not a card grid,
+   determines the gathering composition. Preserve the existing glass. */
+.church-visit__gatherings{
+ grid-template-columns:minmax(0,1fr);align-items:stretch;
+}
+.church-visit__gatherings .church-visit__gathering:nth-child(n){
+ grid-column:1/-1;min-height:0;
+}
+.church-visit__gatherings .church-visit__gathering h3{
+ margin-block:clamp(12px,1.4vw,24px) 8px;word-break:normal;line-break:strict;text-wrap:balance;
+}
+.church-visit__gatherings .church-visit__gathering p{margin-block:4px 12px}
+.church-visit__gatherings .church-visit__gathering:first-child h3{
+ font-size:var(--ws-type-scale-title-lg)!important;
+}
+@media(min-width:1121px){
+ .church-visit__gatherings{
+  grid-template-columns:minmax(0,5fr) minmax(0,7fr);
+  grid-template-rows:repeat(3,auto);
+ }
+ .church-visit__gatherings .church-visit__gathering:first-child{
+  grid-column:1;grid-row:1/4;justify-content:center;
+ }
+ .church-visit__gatherings .church-visit__gathering:nth-child(n+2){
+  grid-column:2;display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,.85fr);
+  grid-template-rows:auto auto auto;column-gap:clamp(12px,1.5vw,25px);align-items:start;
+  padding:clamp(16px,1.8vw,29px);
+ }
+ .church-visit__gatherings .church-visit__gathering:nth-child(n+2)>span{grid-column:1/-1}
+ .church-visit__gatherings .church-visit__gathering:nth-child(n+2)>h3{
+  grid-column:1;grid-row:2/4;align-self:center;margin:12px 0 0;
+  font-size:var(--ws-type-scale-title-sm)!important;
+ }
+ .church-visit__gatherings .church-visit__gathering:nth-child(n+2)>p{
+  grid-column:2;grid-row:2;margin:8px 0 4px;overflow-wrap:anywhere;
+ }
+ .church-visit__gatherings .church-visit__gathering:nth-child(n+2)>small{grid-column:2;grid-row:3}
+}
+/* Allow long Chinese paragraphs to occupy their natural reading measure. */
+.church-visit__section-head>p,.church-visit__intro{word-break:normal;line-break:strict;text-wrap:pretty}
