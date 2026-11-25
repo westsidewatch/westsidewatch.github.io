@@ -1,1 +1,17 @@
 const rhythms=[{"id":"church","en":"Living Water","zh":"活水堂","depths":[1,2,1,3,1,2],"width":48,"height":8,"source":"historical","path":"M0 8V1H8V2H16V1H24V3H32V1H40V2H48V8Z"},{"id":"journal","en":"Westside Watch","zh":"西望","depths":[1,1,2,1,3,2],"width":48,"height":8,"source":"new","path":"M0 8V1H8H16V2H24V1H32V3H40V2H48V8Z"},{"id":"emmaus","en":"Emmaus","zh":"以馬忤斯","depths":[1,1,3,1,1],"width":40,"height":8,"source":"new","path":"M0 8V1H8H16V3H24V1H32H40V8Z"},{"id":"olive","en":"Olive Mountain","zh":"橄欖山","depths":[3,2,1,2,3],"width":40,"height":8,"source":"historical","path":"M0 8V3H8V2H16V1H24V2H32V3H40V8Z"},{"id":"library","en":"Dawn Library","zh":"黎明書局","depths":[2,3,3,2,1],"width":40,"height":8,"source":"historical","path":"M0 8V2H8V3H16V3H24V2H32V1H40V8Z"},{"id":"cinema","en":"Paradise Cinema","zh":"天堂電影院","depths":[1,1,2,3,3],"width":40,"height":8,"source":"historical","path":"M0 8V1H8V1H16V2H24V3H32V3H40V8Z"},{"id":"daylight","en":"Daylight Café","zh":"白晝咖啡館","depths":[3,2,2,1,1,2],"width":48,"height":8,"source":"new","path":"M0 8V3H8V2H16H24V1H32H40V2H48V8Z"}];const ns="http://www.w3.org/2000/svg";for(const field of document.querySelectorAll("[data-field]")){const r=rhythms.find(r=>r.id===field.dataset.field);const n=r.depths.length;field.style.setProperty("--bays",n);const svg=field.querySelector(".contour");svg.setAttribute("viewBox",`0 0 ${n*100} 320`);let d=`M0 ${r.depths[0]*100}`;r.depths.forEach((v,i)=>{if(i)d+=`V${v*100}`;d+=`H${(i+1)*100}`});const p=document.createElementNS(ns,"path");p.setAttribute("d",d);p.setAttribute("fill","none");p.setAttribute("stroke","currentColor");p.setAttribute("stroke-width","1.3");p.setAttribute("vector-effect","non-scaling-stroke");svg.append(p);for(const offset of [7,17,30]){const q=p.cloneNode();q.setAttribute("transform",`translate(0,-${offset})`);q.setAttribute("stroke-width",offset===7?".9":".55");q.setAttribute("opacity",".48");svg.append(q)}for(const s of field.querySelectorAll("[data-bay]")){const a=+s.dataset.bay,b=+s.dataset.span; if(a<0||b<1||a+b>n)throw Error("invalid bay");s.style.setProperty("--start",a+1);s.style.setProperty("--span",b);s.style.setProperty("--depth",Math.max(...r.depths.slice(a,a+b)));}field.dataset.rhythm=r.depths.join(",")}for(const b of document.querySelectorAll("[data-mode]"))b.onclick=()=>b.setAttribute("aria-pressed",String(document.body.classList.toggle(b.dataset.mode)));
+/* Two different transformations of the source contour; no new source marks. */
+const churchRhythm=rhythms.find(r=>r.id==="church").depths;
+const journalRhythm=rhythms.find(r=>r.id==="journal").depths;
+function steppedPolygon(values,axis,level){
+ const pts=values.flatMap((v,i)=>{
+   const a=100*i/values.length,b=100*(i+1)/values.length,k=level(v);
+   return axis==="x"?[`${a}% ${k}%`,`${b}% ${k}%`]:[`${k}% ${a}%`,`${k}% ${b}%`]
+ });
+ return axis==="x"?`polygon(${pts.join(",")},100% 100%,0 100%)`:`polygon(0 0,${pts.join(",")},0 100%)`;
+}
+const waterField=document.querySelector(".water-spread");
+waterField.style.setProperty("--water-cut",steppedPolygon(churchRhythm,"x",v=>v*5));
+const printField=document.querySelector(".print-spread");
+printField.style.setProperty("--print-cut",steppedPolygon(journalRhythm,"y",v=>100-v*6));
+printField.style.setProperty("--print-mobile-cut",steppedPolygon(journalRhythm,"x",v=>v*1.8));
+document.querySelectorAll(".journal .movement").forEach((m,i)=>m.style.setProperty("--print-indent",journalRhythm[i]-1));
