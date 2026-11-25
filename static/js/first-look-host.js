@@ -53,7 +53,7 @@
  const preview=nav.querySelector('.ws-nav-hover-preview');
  const previewFrame=preview?.querySelector('iframe');
  const previewCaption=preview?.querySelector('.ws-nav-hover-preview__caption');
- const previewSources={church:'/first-look-editorial/church.html',magazine:'/first-look-editorial/magazine.html',bible:'/first-look-editorial/bible.html',sermon:'/first-look-editorial/sermon.html',book:'/first-look-editorial/book.html',cinema:'/first-look-editorial/cinema.html',life:'/first-look-editorial/life.html'};
+ const previewSources={church:'/p2/living-water.html?churchPreview=1',magazine:'/first-look-editorial/magazine.html',bible:'/first-look-editorial/bible.html',sermon:'/first-look-editorial/sermon.html',book:'/first-look-editorial/book.html',cinema:'/first-look-editorial/cinema.html',life:'/first-look-editorial/life.html'};
  let previewKey='';
  const summary=menu?.querySelector('summary');
  const panel=menu?.querySelector('.sites-home-nav__panel');

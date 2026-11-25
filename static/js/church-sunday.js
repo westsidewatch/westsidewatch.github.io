@@ -40,13 +40,13 @@
     const meta=$('.sunday-schedule__top',folio);
     if(meta){const spans=[...meta.querySelectorAll('span')];if(spans[0])spans[0].textContent='SUNDAY WORSHIP / '+label(data);if(spans[1])spans[1].textContent=data.serviceTime;}
     const heading=folio.querySelector('h3');if(heading){
-      heading.replaceChildren(document.createTextNode('主日崇拜'),make('span','',('Sunday Worship · '+(data.theme||'')).trim()));
+      const en=make('span','','Sunday Worship');en.lang='en';const zh=make('span','church-p2-sunday-zh','主日崇拜 · '+(data.theme||''));zh.lang='zh-Hant';heading.replaceChildren(en,zh);
     }
     const team=$('.worship-ministry',folio);
     if(team){const p=team.querySelector('p');if(p){
       p.replaceChildren();
       ['主任牧師：'+(data.pastor||'待確認'),'司會主席：'+(data.chair||'待確認')+'　敬拜主領：'+(data.worshipLeader||'待確認'),
-        '今日證道：'+(data.speaker||'待確認')].forEach((x,i)=>{if(i)p.append(document.createElement('br'));p.append(document.createTextNode(x));});
+        '證道：'+(data.speaker||'待確認')].forEach((x,i)=>{if(i)p.append(document.createElement('br'));p.append(document.createTextNode(x));});
     }}
     const rows=$('.worship-program',folio);if(rows)rows.replaceChildren(...data.schedule.map((r,i)=>makeRow(r,'p2',i)));
     const next=$('.church-folio__meeting-meta .worship-next',root);
@@ -73,7 +73,7 @@
     status.textContent=statusText(data);
     const head=$('.ws-ministry-story__sunday-head',section);
     if(head){const eyebrow=$('.ws-ministry-story__eyebrow',head);if(eyebrow)eyebrow.textContent='SUNDAY WORSHIP · '+label(data);
-      const h=head.querySelector('h2');if(h)h.replaceChildren(document.createTextNode('主日崇拜'),make('span','',data.theme||'The Lord’s Day'));
+      const h=head.querySelector('h2');if(h){const en=make('span','','Sunday Worship');en.lang='en';h.replaceChildren(document.createTextNode('主日崇拜'),en);}
     }
     const rows=$('.ws-ministry-story__sunday-rows',section);
     if(rows)rows.replaceChildren(...data.schedule.map((r,i)=>makeRow(r,'tour',i)));

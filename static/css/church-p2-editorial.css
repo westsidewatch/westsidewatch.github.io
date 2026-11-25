@@ -1,0 +1,13 @@
+/* Church-only transfer of the R117 hierarchy. No animation timing changes. */
+body[data-ws-scope="p2"] .church-p2-index{display:flex;align-items:end;gap:.5rem;border-bottom:1px solid var(--ws-water);padding-bottom:0;margin-bottom:.4rem}
+body[data-ws-scope="p2"] .church-p2-name-seal{display:block;flex:none;width:clamp(24px,2.6vw,40px);aspect-ratio:1;background:var(--ws-water);position:relative}
+body[data-ws-scope="p2"] .church-p2-name-seal::before{content:"";position:absolute;inset:8%;background:var(--ws-paper);mask:url('/images/section-identity/water-small.svg') center/contain no-repeat}
+body[data-ws-scope="p2"] .church-editorial__copy .sunday-schedule h3{display:flex;flex-direction:column;gap:.25rem;align-items:flex-start;color:var(--ws-ink)}
+body[data-ws-scope="p2"] .church-editorial__copy .sunday-schedule h3>span[lang=en]{font-family:var(--ws-type-display-en-sc);font-weight:400;font-size:clamp(15px,1.55vw,28px);line-height:1.05}
+body[data-ws-scope="p2"] .church-editorial__copy .sunday-schedule h3>span[lang=zh-Hant]{font-family:var(--ws-type-display-zh);font-weight:900;font-size:clamp(11px,.9vw,16px);line-height:1.35}
+body[data-ws-scope="p2"] .church-editorial__copy :is(.worship-row strong,.worship-row p,.worship-ministry p,.worship-ministry>span,.ws-sunday-source-status){font-family:var(--ws-type-display-zh)!important;font-weight:200!important}
+body[data-ws-scope="p2"] .church-editorial__copy .worship-row{border-bottom:1px solid color-mix(in srgb,var(--ws-ink) 20%,transparent)}
+body[data-ws-scope="p2"] .church-editorial__copy .sunday-schedule__place p::before{content:"";display:inline-block;width:30px;height:5px;margin-right:.5em;background:var(--ws-water);mask:url('/images/section-identity/water-crest.svg') center/contain no-repeat}
+body[data-ws-scope="p2"] .church-editorial__copy .church-p2-visit{display:inline-block;font:200 clamp(10px,.85vw,14px)/1.5 var(--ws-type-display-zh);color:var(--ws-ink);text-decoration:underline;text-underline-offset:.2em;pointer-events:auto;margin-top:.25rem}
+body[data-ws-scope="p2"] .church-editorial__copy .church-p2-visit:focus-visible{outline:2px solid var(--ws-ink);outline-offset:3px}
+@media(max-width:680px){body[data-ws-scope="p2"] .church-p2-index{gap:.4rem}body[data-ws-scope="p2"] .church-p2-name-seal{width:24px}}
