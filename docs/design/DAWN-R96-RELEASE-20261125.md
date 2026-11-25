@@ -1,0 +1,2 @@
+# Dawn R96 release
+Source b58bd2fb6f75310a79386581f6ecdd4e28ac56ea; parent 47cc87c178fb77fcd5ece6b771edb3b3813f64f4. Import Dawn P2 05 and native second/third layers; Olive split only for 04→05 handoff. Preserve R117 Church, 01–03 clock and unrelated content. Canonical /dawn-library/ opens the actual second layer; old first-look/product entrances redirect; resource readers and catalogue data remain. P2 home uses the same canonical route in embedded mode. No new parallel reader. Browser and production deployment evidence required before declaring live.

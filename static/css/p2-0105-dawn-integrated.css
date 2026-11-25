@@ -1,0 +1,3328 @@
+/* DAWN LIBRARY / P2 05  — CONSOLIDATED READING LAYERS
+   Source: pre-existing p2-0105-dawn-continuation.css preserved unchanged.
+   Removes superseded R19 portal-list styling, R22/R24 transient palette,
+   and trial engravings from the integrated public rendering.
+   Scope: P2 05 only; original V9 source assets unchanged.
+*/
+/* P2 05 — the same two-plate masthead grammar as 04, and one-quarter book window.
+   All pigments and typefaces resolve from the single Westside Design OS. */
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--ws-papyrus);color:var(--ws-ink)}
+.p205-track{position:relative;height:3330svh}.p205-stage{position:sticky;top:0;isolation:isolate;overflow:hidden;height:100svh}
+#p205-prior{position:absolute;inset:0;width:100%;height:100%;border:0;background:var(--ws-harvest)}
+.p205-controls{position:fixed;z-index:90;top:0;left:0;right:0;display:flex;align-items:center;gap:12px;background:var(--ws-ink);color:var(--ws-paper);border-bottom:1px solid var(--ws-first-light);padding:6px 12px;font:400 11px/1.4 var(--ws-type-display-en);letter-spacing:.07em}
+.p205-controls strong{font-weight:400}.p205-controls button{border:1px solid var(--ws-first-light);background:none;color:inherit;font:inherit;padding:4px 8px;cursor:pointer}.p205-controls label{display:flex;gap:8px;margin-left:auto;align-items:center}.p205-controls input{accent-color:var(--ws-harvest);width:190px}
+.dawn-realm{position:absolute;inset:0;z-index:2;visibility:hidden;overflow:hidden;pointer-events:none;--dawn-ink:var(--ws-harvest)}
+.dawn-realm__half{position:absolute;top:0;width:50%;height:100%;background:var(--ws-papyrus);will-change:clip-path}
+.dawn-realm__half--left{left:0;clip-path:inset(100% 0 0 0)}.dawn-realm__half--right{right:0;clip-path:inset(0 0 100% 0)}
+.dawn-twins{position:absolute;z-index:4;top:clamp(47px,7.8svh,106px);left:50%;transform:translateX(-50%);width:min(91vw,1500px);height:clamp(140px,20svh,202px);display:grid;grid-template-columns:1fr 1fr;margin:0;padding:0;border:1px solid var(--ws-harvest);border-radius:0;overflow:hidden;cursor:pointer;background:transparent;text-align:left;color:var(--ws-ink);font:inherit;visibility:hidden}
+.dawn-twins:focus-visible{outline:3px solid var(--ws-first-light);outline-offset:5px}
+.dawn-twins__square{position:relative;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:6px;padding:20px clamp(16px,3vw,58px);overflow:hidden;background:var(--ws-harvest);color:var(--ws-paper)}
+.dawn-twins__square--verse{border-left:1px solid var(--ws-harvest);background:var(--ws-papyrus);color:var(--ws-ink);align-items:flex-end;text-align:right}
+.dawn-twins__edition{position:absolute;top:10px;left:clamp(16px,3vw,58px);font:400 12px/1 var(--ws-type-display-en);letter-spacing:.12em}
+.dawn-twins__en{font:400 clamp(27px,3.55vw,70px)/.93 var(--ws-type-display-en);letter-spacing:-.045em;white-space:nowrap}
+.dawn-twins__zh{font:200 clamp(18px,1.9vw,32px)/1.4 var(--ws-type-display-zh)}
+.dawn-twins__verse-zh{font:200 clamp(13px,1.12vw,19px)/1.5 var(--ws-type-display-zh);max-width:38ch}
+.dawn-twins__verse-en{font:italic 400 clamp(13px,1.15vw,19px)/1.34 var(--ws-type-display-en);max-width:39ch}
+.dawn-twins__ref{font:400 clamp(10px,.8vw,13px)/1.4 var(--ws-type-display-en);color:var(--ws-harvest);letter-spacing:.05em}
+.dawn-spread{position:absolute;z-index:3;top:clamp(210px,30svh,320px);bottom:clamp(32px,5svh,72px);left:4.5%;right:4.5%;display:grid;grid-template-columns:minmax(0,3fr) minmax(0,1fr);gap:2.2%;overflow:visible;visibility:hidden}
+.dawn-spread__editorial{position:relative;display:flex;flex-direction:column;min-width:0;border-top:1px solid var(--ws-harvest);border-bottom:1px solid var(--ws-harvest);padding:clamp(18px,2vw,34px) 0}
+.dawn-spread__thinrule{position:absolute;left:0;top:-2px;width:13%;height:3px;background:var(--ws-harvest)}
+.dawn-spread__overline{margin:0 0 18px;font:400 clamp(11px,1.1vw,16px)/1.3 var(--ws-type-display-en);letter-spacing:.13em;color:var(--ws-harvest)}
+.dawn-spread__editorial h2{margin:0;max-width:9em;font:400 clamp(68px,8vw,155px)/.84 var(--ws-type-display-en);letter-spacing:-.055em}
+.dawn-spread__editorial h2 em{font-weight:400}
+.dawn-spread__zh{font:200 clamp(24px,2.6vw,43px)/1.4 var(--ws-type-display-zh);letter-spacing:.16em;margin:15px 0}
+.dawn-spread__copy{display:flex;gap:clamp(14px,3vw,64px);margin-top:auto;font:200 clamp(14px,1.3vw,20px)/1.55 var(--ws-type-display-zh)}
+.dawn-spread__copy p{margin:0;max-width:22ch}
+.dawn-spread__bottom{display:flex;justify-content:space-between;gap:12px;margin-top:20px;color:var(--ws-harvest);font:400 12px/1.3 var(--ws-type-display-en);letter-spacing:.1em}
+.dawn-spread__window{position:relative;min-width:0;overflow:visible;border:1px solid var(--ws-harvest);background:var(--ws-paper);perspective:1500px;clip-path:inset(0 100% 0 0);display:grid;place-items:center}
+.dawn-spread__hatch{position:absolute;inset:9%;opacity:.15;background:repeating-linear-gradient(0deg,transparent 0 12px,var(--ws-harvest) 12px 13px,transparent 13px 24px);pointer-events:none}
+.dawn-book{position:relative;width:min(73%,270px);aspect-ratio:5/8;transform-style:preserve-3d;will-change:transform}
+.dawn-book__leaves{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;transform-origin:left center;background:var(--ws-papyrus);border:1px solid var(--ws-harvest);box-shadow:2px 2px 0 var(--ws-harvest);transform:scaleX(1)}
+.dawn-book__left-page,.dawn-book__right-page{padding:13%;display:flex;flex-direction:column;gap:12px;min-width:0;overflow:hidden}
+.dawn-book__left-page{border-right:1px solid var(--ws-harvest);color:var(--ws-harvest)}
+.dawn-book__left-page>span,.dawn-book__left-page i,.dawn-book__right-page small,.dawn-book__right-page i{font:400 clamp(7px,.7vw,12px)/1.2 var(--ws-type-display-en);font-style:normal}
+.dawn-book__left-page b{font:400 clamp(13px,1.25vw,23px)/1.1 var(--ws-type-display-en);margin:auto 0}
+.dawn-book__right-page span{font:italic 400 clamp(11px,1.1vw,18px)/1.4 var(--ws-type-display-en);margin:auto 0}
+.dawn-book__cover{position:absolute;inset:0;background:var(--ws-harvest);color:var(--ws-paper);border:1px solid var(--ws-first-light);padding:10%;display:flex;flex-direction:column;justify-content:space-between;transform-origin:left center;transform-style:preserve-3d;backface-visibility:hidden;will-change:transform}
+.dawn-book__cover>span{font:400 clamp(8px,.9vw,14px)/1.2 var(--ws-type-display-en);letter-spacing:.1em}
+.dawn-book__cover-title{font:400 clamp(26px,2.9vw,49px)/.99 var(--ws-type-display-en);letter-spacing:-.035em}
+.dawn-enter-hint{position:absolute;right:4.5%;bottom:10px;z-index:4;color:var(--ws-harvest);font:200 14px/1.4 var(--ws-type-display-zh);visibility:hidden}
+.dawn-handoff{position:absolute;inset:0;z-index:12;visibility:hidden;pointer-events:none;overflow:hidden}
+.dawn-handoff svg{display:block;width:100%;height:100%;overflow:visible}
+.dawn-second{position:absolute;z-index:10;inset:0;background:var(--ws-papyrus);overflow-y:auto;visibility:hidden;overscroll-behavior:contain;clip-path:inset(0 0 100% 0);scrollbar-color:var(--ws-harvest) var(--ws-papyrus)}
+.dawn-second__return{position:sticky;top:0;z-index:5;display:block;margin:0 0 0 auto;padding:12px 24px;background:var(--ws-ink);color:var(--ws-paper);border:0;border-bottom:1px solid var(--ws-harvest);cursor:pointer;font:200 14px/1.3 var(--ws-type-display-zh)}
+.dawn-second__press{position:relative;min-height:clamp(370px,55svh,640px);padding:clamp(30px,4vw,64px);display:grid;grid-template-columns:1fr 1fr;gap:clamp(18px,4vw,70px);max-width:1700px;margin:auto}
+.dawn-press-plate{position:relative;width:min(100%,530px);min-height:0;aspect-ratio:1/1;justify-self:center;border:1px solid var(--ws-harvest);padding:clamp(20px,3vw,58px);display:flex;flex-direction:column;color:var(--ws-paper);background:var(--ws-harvest);overflow:hidden}
+.dawn-press-plate--horizontal{background:var(--ws-harvest);color:var(--ws-paper);border-color:var(--ws-first-light)}
+.dawn-press-plate__slug{font:400 12px/1.35 var(--ws-type-display-en);letter-spacing:.12em}
+.dawn-press-plate blockquote{margin:auto;font:900 clamp(22px,2.7vw,56px)/1.4 var(--ws-type-display-zh)}
+.dawn-press-plate--vertical blockquote{writing-mode:vertical-rl;text-orientation:upright;letter-spacing:.08em;max-height:290px}
+.dawn-press-plate--horizontal blockquote{font:400 clamp(22px,2.8vw,52px)/1.08 var(--ws-type-display-en);letter-spacing:-.025em;text-align:left}
+.dawn-press-plate cite{align-self:flex-end;font:italic 400 14px/1.3 var(--ws-type-display-en);font-style:italic}
+.dawn-catalogue{background:var(--ws-paper);padding:clamp(35px,5vw,90px) clamp(24px,6vw,115px);border-top:1px solid var(--ws-harvest);min-height:70svh}
+.dawn-catalogue__heading{display:flex;align-items:end;justify-content:space-between;gap:30px;border-bottom:1px solid var(--ws-harvest);padding-bottom:25px}
+.dawn-catalogue__heading span{font:400 12px/1.3 var(--ws-type-display-en);letter-spacing:.12em;color:var(--ws-harvest)}
+.dawn-catalogue__heading h2{font:400 clamp(48px,7vw,122px)/.95 var(--ws-type-display-en);letter-spacing:-.05em;margin:10px 0 18px}
+.dawn-catalogue__heading p{font:200 clamp(17px,2vw,29px)/1.4 var(--ws-type-display-zh);margin:0}
+.dawn-catalogue__total{text-align:right;min-width:100px}.dawn-catalogue__total output{display:block;font:400 clamp(32px,4vw,65px)/1 var(--ws-type-display-en);white-space:nowrap}.dawn-catalogue__total span{display:block;margin-top:10px}
+.dawn-catalogue__nav{display:flex;align-items:center;flex-wrap:wrap;gap:clamp(14px,2.5vw,44px);border-bottom:1px solid var(--ws-harvest);padding:23px 0}
+.dawn-catalogue__nav a{color:var(--ws-ink);font:200 19px/1.4 var(--ws-type-display-zh);text-decoration:none}.dawn-catalogue__nav a:hover{text-decoration:underline;text-decoration-color:var(--ws-harvest)}
+.dawn-catalogue__nav label{margin-left:auto;display:flex;gap:10px;align-items:center;font:200 15px/1.4 var(--ws-type-display-zh)}
+.dawn-catalogue__nav input{border:0;border-bottom:1px solid var(--ws-harvest);background:transparent;color:var(--ws-ink);padding:8px;font:200 15px var(--ws-type-display-zh);width:min(34vw,320px)}
+.dawn-catalogue__works{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 clamp(24px,3vw,62px);list-style:none;margin:0;padding:0}
+.dawn-catalogue__works li{min-width:0;border-bottom:1px solid var(--ws-harvest);padding:25px 0;display:flex;flex-direction:column;gap:13px}
+.dawn-catalogue__works .work-number{font:italic 400 19px/1 var(--ws-type-display-en);color:var(--ws-harvest)}
+.dawn-catalogue__works h3{font:400 clamp(18px,1.85vw,29px)/1.15 var(--ws-type-display-en);letter-spacing:-.018em;margin:0;overflow-wrap:anywhere;max-height:5.8em;overflow:hidden}
+.dawn-catalogue__works .work-creator{font:200 15px/1.5 var(--ws-type-display-zh);color:var(--ws-ink);margin:0;overflow-wrap:anywhere}
+.dawn-catalogue__works .work-date{font:400 12px/1.3 var(--ws-type-display-en);color:var(--ws-harvest);margin-top:auto}
+.dawn-catalogue__more{padding:35px 0;display:flex;align-items:center;gap:24px}.dawn-catalogue__more button{background:var(--ws-harvest);color:var(--ws-paper);border:0;padding:13px 25px;cursor:pointer;font:200 17px/1.3 var(--ws-type-display-zh)}.dawn-catalogue__more button:disabled{opacity:.45;cursor:default}.dawn-catalogue__more output{font:400 13px/1.4 var(--ws-type-display-en)}
+@media(max-width:900px){.dawn-spread__editorial h2{font-size:clamp(52px,8vw,100px)}.dawn-twins__en{font-size:clamp(25px,4vw,42px)}.dawn-spread__copy{display:block}.dawn-catalogue__works{grid-template-columns:repeat(2,minmax(0,1fr))}.dawn-press-plate--horizontal blockquote{font-size:clamp(20px,3vw,34px)}}
+@media(max-width:600px){.p205-controls strong{display:none}.p205-controls label{flex:1}.p205-controls input{width:0;flex:1}.dawn-twins{width:96%;height:clamp(145px,21svh,185px);top:46px}.dawn-twins__square{padding:15px 10px}.dawn-twins__edition{left:10px;top:8px;font-size:9px}.dawn-twins__en{font-size:clamp(19px,5.2vw,28px);white-space:normal;line-height:1}.dawn-twins__zh{font-size:17px}.dawn-twins__verse-zh{font-size:11px;line-height:1.35}.dawn-twins__verse-en{font-size:10px;line-height:1.2}.dawn-twins__ref{font-size:8px}.dawn-spread{top:clamp(200px,29svh,275px);left:2%;right:2%;bottom:30px;grid-template-columns:3fr 1fr;gap:8px}.dawn-spread__editorial{padding:12px 0}.dawn-spread__overline{font-size:9px}.dawn-spread__editorial h2{font-size:clamp(38px,10vw,58px)}.dawn-spread__zh{font-size:20px;margin:8px 0}.dawn-spread__copy{font-size:13px}.dawn-spread__copy p+p{display:none}.dawn-spread__bottom{font-size:9px}.dawn-book{width:94%}.dawn-book__cover{padding:7%}.dawn-book__cover-title{font-size:clamp(13px,4vw,22px)}.dawn-book__cover>span{font-size:7px}.dawn-book__left-page b{font-size:10px}.dawn-book__right-page span{font-size:9px}.dawn-enter-hint{font-size:12px}.dawn-second__press{grid-template-columns:1fr 1fr;padding:48px 10px 16px;gap:8px;min-height:290px}.dawn-press-plate{min-height:0;aspect-ratio:1;padding:12px}.dawn-press-plate__slug{font-size:9px}.dawn-press-plate blockquote{font-size:clamp(15px,4vw,24px);max-height:190px}.dawn-press-plate--horizontal blockquote{font-size:clamp(13px,3.4vw,21px)}.dawn-press-plate cite{font-size:10px}.dawn-catalogue{padding:22px 16px}.dawn-catalogue__heading h2{font-size:36px}.dawn-catalogue__total output{font-size:24px}.dawn-catalogue__nav{gap:16px}.dawn-catalogue__nav label{margin:0;width:100%}.dawn-catalogue__nav input{flex:1;width:0}.dawn-catalogue__works{grid-template-columns:1fr}.dawn-catalogue__works li{padding:20px 0}}
+@media(prefers-reduced-motion:reduce){.dawn-book,.dawn-book__cover,.dawn-spread__window{will-change:auto}}
+
+/* R4 / Match the actual approved Olive R38 vertical two-square masthead.
+   Each independent block remains 1:1; no oversized centred chapter title.
+   The second layer begins directly with typeset scripture and collection. */
+.dawn-realm{
+ --dawn-square:clamp(184px,min(22vw,26svh),238px);
+ --dawn-square-top:clamp(54px,7svh,74px);
+}
+.dawn-twins{
+ top:var(--dawn-square-top);left:clamp(14px,2.6vw,46px);
+ width:var(--dawn-square);height:calc(var(--dawn-square)*2);
+ display:flex;flex-direction:column;gap:0;
+ border:0;overflow:visible;aspect-ratio:auto;
+}
+.dawn-twins__square{
+ width:var(--dawn-square);
+ height:var(--dawn-square);
+ flex:0 0 var(--dawn-square);
+ aspect-ratio:1/1;
+ padding:clamp(14px,1.6svh,21px);
+ gap:clamp(6px,.9svh,10px);
+ border:1px solid var(--ws-morning-gold);
+ justify-content:center;align-items:flex-start;text-align:left;
+}
+.dawn-twins__square--title{background:var(--ws-harvest);color:var(--ws-paper)}
+.dawn-twins__square--verse{border-left:1px solid var(--ws-morning-gold);border-top:0;background:var(--ws-morning-gold);color:var(--ws-ink)}
+.dawn-twins__edition{position:static;font-size:clamp(10px,1.15svh,12px);color:var(--ws-morning-gold)}
+.dawn-twins__en{
+ font-size:clamp(27px,3.25svh,38px);line-height:.98;
+ white-space:normal;
+ letter-spacing:-.045em;max-width:100%;
+}
+.dawn-twins__zh{font-size:clamp(20px,2.4svh,28px)}
+.dawn-twins__verse-zh{font-size:clamp(15px,1.75svh,19px);line-height:1.28}
+.dawn-twins__verse-en{font-size:clamp(13px,1.48svh,17px);line-height:1.22}
+.dawn-twins__ref{font-size:clamp(9px,.99svh,11px);color:var(--ws-ink)}
+.dawn-spread{top:clamp(105px,15svh,150px);left:calc(clamp(14px,2.6vw,46px) + var(--dawn-square) + clamp(24px,4vw,80px));right:4.5%;bottom:clamp(32px,5svh,72px);grid-template-columns:minmax(0,2fr) minmax(180px,1fr)}
+.dawn-spread__editorial h2{font-size:clamp(52px,6.5vw,110px)}
+.dawn-second__press{padding-top:clamp(30px,4vw,64px)}
+@media(max-width:600px){
+ .dawn-realm{--dawn-square:clamp(160px,45vw,198px);--dawn-square-top:44px}
+ .dawn-twins{top:var(--dawn-square-top);left:10px;width:var(--dawn-square);height:calc(var(--dawn-square)*2)}
+ .dawn-twins__square{width:var(--dawn-square);height:var(--dawn-square);padding:10px 12px;gap:5px}
+ .dawn-twins__en{font-size:clamp(23px,6.4vw,29px);line-height:1.02}
+ .dawn-twins__zh{font-size:20px}
+ .dawn-twins__verse-zh{font-size:clamp(12px,3.45vw,15px)}
+ .dawn-twins__verse-en{font-size:clamp(11px,3.05vw,13px)}
+ .dawn-twins__ref{font-size:9px}
+ .dawn-twins__edition{font-size:9px}
+ .dawn-spread{top:calc(var(--dawn-square-top) + var(--dawn-square)*2 + 12px);left:3%;right:3%;bottom:18px;grid-template-columns:minmax(0,2fr) minmax(95px,1fr)}
+ .dawn-spread__editorial h2{font-size:clamp(32px,8vw,52px)}
+ .dawn-spread__copy{display:none}
+}
+
+/* R5 / Nov 14 approved grammar: square vinyl wall, NOT the retired 5:8
+   masonry, wall battlements or a columnar catalogue as L2. */
+.dawn-wall{position:relative;padding:clamp(30px,4vw,68px) clamp(16px,4.5vw,78px) clamp(55px,7vw,100px);background:var(--ws-papyrus);border-top:1px solid var(--ws-harvest)}
+.dawn-wall__folio,.dawn-wall__tail{display:flex;justify-content:space-between;align-items:center;gap:24px;font:400 clamp(11px,.85vw,14px)/1.4 var(--ws-type-display-en);letter-spacing:.09em;color:var(--ws-harvest)}
+.dawn-wall__folio{margin-bottom:20px;border-bottom:1px solid var(--ws-harvest);padding-bottom:14px}
+.dawn-wall__grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));grid-auto-flow:row dense;gap:clamp(6px,.7vw,12px)}
+.dawn-wall__tile{position:relative;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start;min-width:0;aspect-ratio:1;overflow:hidden;border:1px solid var(--ws-harvest);border-radius:0;padding:clamp(9px,1.3vw,25px);background:var(--ws-paper);color:var(--ws-ink);text-align:left;cursor:pointer;font:inherit;transition:background-color .45s ease,color .45s ease,outline-offset .25s ease}
+.dawn-wall__tile:hover,.dawn-wall__tile:focus-visible{background:var(--ws-harvest);color:var(--ws-paper);outline:1px solid var(--ws-morning-gold);outline-offset:-5px}
+.dawn-wall__tile--portal{grid-column:span 2;grid-row:span 2;padding:clamp(18px,2.3vw,45px)}
+.dawn-wall__tile small{font:400 clamp(9px,.85vw,13px)/1.3 var(--ws-type-display-en);letter-spacing:.075em}
+.dawn-wall__tile--portal strong{font:200 clamp(28px,4.15vw,70px)/1.2 var(--ws-type-display-zh);letter-spacing:.08em;margin-top:auto}
+.dawn-wall__tile--portal em{font:italic 400 clamp(11px,1.22vw,20px)/1.3 var(--ws-type-display-en);margin-top:10px}
+.dawn-wall__tile--sunrise{background:var(--ws-harvest);color:var(--ws-paper)}
+.dawn-wall__tile--spectrum{background:var(--ws-harvest);color:var(--ws-paper)}
+.dawn-wall__tile--curation{background:var(--ws-pale-gold);color:var(--ws-ink)}
+.dawn-wall__tile--record{gap:8px}
+.dawn-wall__tile--record strong{display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere;font:400 clamp(13px,1.3vw,23px)/1.13 var(--ws-type-display-en);letter-spacing:-.02em}
+.dawn-wall__tile--record em{display:block;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font:italic 400 clamp(10px,.75vw,13px)/1.3 var(--ws-type-display-en)}
+.dawn-wall__tile--imprint{background:var(--ws-paper);color:var(--ws-harvest);cursor:default;border-color:var(--ws-morning-gold)}
+.dawn-wall__tile--imprint span{font:400 clamp(23px,3vw,53px)/.9 var(--ws-type-display-en);letter-spacing:-.06em}
+.dawn-wall__tile--imprint i{font:italic 400 12px var(--ws-type-display-en)}
+.dawn-wall__tail{padding-top:22px}
+.dawn-wall__tail button,.dawn-catalogue__back{border:1px solid var(--ws-harvest);background:transparent;color:var(--ws-ink);padding:13px 20px;cursor:pointer;font:200 clamp(14px,1.3vw,18px)/1.25 var(--ws-type-display-zh)}
+.dawn-wall__tail button:hover,.dawn-catalogue__back:hover{background:var(--ws-harvest);color:var(--ws-paper)}
+.dawn-wall__tile--record{animation:dawnWallPrint .7s both;animation-delay:calc(var(--tile-index,0)*.035s)}
+@keyframes dawnWallPrint{from{opacity:0;clip-path:inset(0 100% 0 0)}to{opacity:1;clip-path:inset(0)}}
+.dawn-catalogue[hidden]{display:none!important}
+.dawn-catalogue__back{margin-bottom:clamp(20px,2vw,36px)}
+@media(max-width:950px){.dawn-wall__grid{grid-template-columns:repeat(4,minmax(0,1fr))}.dawn-wall__tile--portal strong{font-size:clamp(27px,4.7vw,51px)}}
+@media(max-width:600px){.dawn-wall{padding:24px 10px 50px}.dawn-wall__grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.dawn-wall__folio{font-size:9px;gap:8px}.dawn-wall__tile{padding:12px}.dawn-wall__tile--portal{grid-column:span 2;grid-row:span 2;padding:24px}.dawn-wall__tile--portal strong{font-size:clamp(40px,12vw,70px)}.dawn-wall__tile--record strong{font-size:clamp(14px,4vw,19px)}.dawn-wall__tail{align-items:flex-start;flex-direction:column}.dawn-wall__tile--imprint span{font-size:clamp(26px,8vw,42px)}}
+@media(prefers-reduced-motion:reduce){.dawn-wall__tile{transition:none}.dawn-wall__tile--record{animation:none}}
+
+/* R6 / 2026-11-20: Dawn-specific editorial correction, not Olive 04.
+   Gold, paper, ink; seven-color motion only inside transition SVG. */
+#p205-prior{background:var(--ws-paper)}
+.dawn-realm,.dawn-second{--dawn-metal:var(--ws-harvest);--dawn-paper:var(--ws-paper)}
+.dawn-press-plate--horizontal{background:var(--ws-paper);color:var(--ws-ink);border-color:var(--ws-harvest)}
+.dawn-wall__tile--spectrum{background:var(--ws-paper);color:var(--ws-ink);border-color:var(--ws-harvest)}
+.dawn-wall__tile:hover,.dawn-wall__tile:focus-visible,
+.dawn-wall__tail button:hover,.dawn-catalogue__back:hover{background:var(--ws-harvest);color:var(--ws-paper)}
+.dawn-spread{grid-template-columns:minmax(0,1.25fr) minmax(280px,1fr);gap:clamp(16px,2.6vw,44px);top:clamp(96px,13svh,130px);right:clamp(20px,3vw,52px);bottom:clamp(28px,4svh,56px)}
+.dawn-spread__editorial{padding:clamp(16px,2vw,30px) 0;display:grid;grid-template-rows:auto auto minmax(0,1fr) auto auto;align-content:stretch;gap:clamp(12px,1.5svh,24px)}
+.dawn-spread__overline{margin:0;font-size:clamp(10px,.78vw,13px)}
+.dawn-spread__editorial h2{font-size:clamp(29px,2.8vw,48px);line-height:1.05;letter-spacing:-.025em;max-width:none;white-space:normal}
+.dawn-spread__editorial h2 br{display:none}
+.dawn-spread__register{align-self:stretch;display:grid;grid-template-rows:repeat(3,minmax(0,1fr));border-top:1px solid var(--ws-harvest);min-height:0}
+.dawn-spread__register div{display:grid;grid-template-columns:clamp(30px,3vw,49px) minmax(0,1fr) auto;gap:clamp(8px,1.5vw,28px);align-items:center;border-bottom:1px solid color-mix(in srgb,var(--ws-harvest),transparent 55%);padding:clamp(6px,1svh,14px) 0}
+.dawn-spread__register small{font:400 clamp(11px,.85vw,14px)/1 var(--ws-type-display-en);color:var(--ws-harvest)}
+.dawn-spread__register strong{font:200 clamp(17px,1.5vw,26px)/1.25 var(--ws-type-display-zh)}
+.dawn-spread__register span{font:400 clamp(10px,.75vw,12px)/1.2 var(--ws-type-display-en-sc);letter-spacing:.025em;text-align:right}
+.dawn-spread__copy{margin:0;display:flex;font-size:clamp(12px,1vw,16px);gap:clamp(12px,2vw,40px)}
+.dawn-spread__bottom{margin:0;font-size:11px}
+.dawn-spread__window{height:100%;min-height:0}
+.dawn-book{width:min(78%,360px);max-height:84%;aspect-ratio:5/8}
+.dawn-wall__tile--portal strong{font-size:clamp(25px,2.55vw,43px)}
+.dawn-wall__tile--imprint span{font-size:clamp(19px,2vw,35px)}
+@media(max-width:900px){
+ .dawn-spread{grid-template-columns:minmax(0,1.25fr) minmax(125px,.9fr);gap:12px}
+ .dawn-spread__editorial h2{font-size:clamp(25px,3.5vw,35px)}
+ .dawn-spread__register span{font-size:9px}
+}
+@media(max-width:600px){
+ .dawn-spread{top:calc(var(--dawn-square-top) + var(--dawn-square)*2 + 10px);left:10px;right:10px;bottom:16px;grid-template-columns:minmax(0,1.35fr) minmax(90px,.8fr);gap:9px}
+ .dawn-spread__editorial{padding:9px 0;gap:8px}
+ .dawn-spread__overline{font-size:8px}
+ .dawn-spread__editorial h2{font-size:clamp(19px,4.1vw,26px)}
+ .dawn-spread__register div{grid-template-columns:24px minmax(0,1fr);gap:4px;padding:5px 0}
+ .dawn-spread__register strong{font-size:clamp(12px,3.4vw,17px)}
+ .dawn-spread__register small{font-size:9px}
+ .dawn-spread__register span{display:none}
+ .dawn-spread__bottom{font-size:8px}
+ .dawn-spread__copy{display:none}
+ .dawn-book{width:85%}
+ .dawn-wall__tile--portal strong{font-size:clamp(28px,8vw,47px)}
+}
+
+/* Visitor-facing typography: Chinese reading title follows Design OS, not Latin display face. */
+.dawn-spread__editorial h2{font-family:var(--ws-type-display-zh);font-weight:200;letter-spacing:.025em;line-height:1.32;font-size:clamp(24px,2.25vw,38px)}
+.dawn-enter-hint{font-family:var(--ws-type-display-zh)}
+@media(max-width:600px){.dawn-spread__editorial h2{font-size:clamp(17px,4.3vw,24px)}}
+
+/* R8 · A full editorial folio unfolds into the stage, rather than a card sliding in.
+   The 01–04 iframe stays untouched behind the full-height hinged leaf. */
+.dawn-realm{perspective:1800px;transform-style:preserve-3d}
+.dawn-realm__half{background:var(--ws-papyrus)}
+.dawn-folio{position:absolute;inset:0;z-index:1;transform-origin:0 50%;transform-style:preserve-3d;backface-visibility:hidden;will-change:transform;pointer-events:none}
+.dawn-folio__leaf{position:absolute;inset:0;overflow:hidden;background:var(--ws-paper);box-shadow:20px 0 38px rgba(37,37,37,.13),inset 0 0 0 1px color-mix(in srgb,var(--ws-harvest) 35%,transparent)}
+.dawn-folio__leaf::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(37,37,37,.24),rgba(37,37,37,.025) 3.5%,transparent 13%,transparent 85%,rgba(184,148,74,.09));pointer-events:none}
+.dawn-folio__edge{position:absolute;left:0;top:0;bottom:0;width:clamp(8px,1.3vw,21px);background:linear-gradient(90deg,var(--ws-harvest),var(--ws-papyrus) 45%,var(--ws-paper) 90%);border-right:1px solid var(--ws-harvest)}
+.dawn-folio__grain{position:absolute;inset:4.5% 4.5% 4.5% 5%;border:1px solid color-mix(in srgb,var(--ws-harvest) 48%,transparent);background:repeating-linear-gradient(0deg,transparent 0 34px,color-mix(in srgb,var(--ws-harvest) 12%,transparent) 34px 35px);opacity:.7}
+.dawn-folio__imprint{position:absolute;right:5.5%;bottom:6%;width:min(18vw,230px);height:1px;background:var(--ws-harvest);box-shadow:0 9px 0 color-mix(in srgb,var(--ws-harvest) 35%,transparent),0 18px 0 color-mix(in srgb,var(--ws-harvest) 20%,transparent)}
+.dawn-folio__spine{position:absolute;z-index:2;left:0;top:0;bottom:0;width:clamp(7px,.85vw,15px);background:linear-gradient(90deg,var(--ws-harvest),var(--ws-papyrus));box-shadow:3px 0 11px rgba(37,37,37,.14);opacity:0;pointer-events:none}
+.dawn-realm__half--left,.dawn-realm__half--right{background:var(--ws-papyrus)}
+/* Book window is a quarter-space architectural aperture within the open folio. */
+.dawn-spread__window{border-color:var(--ws-harvest);background:var(--ws-paper);box-shadow:inset 0 0 0 clamp(5px,.55vw,12px) var(--ws-papyrus)}
+.dawn-spread__hatch{inset:6%;opacity:.12}
+.dawn-spread__editorial{border-top-color:var(--ws-harvest);border-bottom-color:var(--ws-harvest)}
+.dawn-twins{z-index:5}.dawn-spread{z-index:4}.dawn-enter-hint{z-index:6}
+@media(max-width:600px){
+ .dawn-folio__grain{inset:3.5% 4%;background-size:auto}
+ .dawn-folio__imprint{width:25vw}
+ .dawn-spread__window{box-shadow:inset 0 0 0 5px var(--ws-papyrus)}
+}
+@media(prefers-reduced-motion:reduce){.dawn-folio{will-change:auto}}
+
+/* R9 / Dawn Library's own P2 identity: TWO adjacent 1:1 squares, horizontal,
+   distinct from Olive Mountain's vertically stacked pair. */
+.dawn-realm{--dawn-square:clamp(152px,min(18vw,25svh),218px);--dawn-square-top:clamp(22px,4svh,45px);--dawn-square-left:clamp(16px,2.6vw,46px)}
+.dawn-twins{
+ left:var(--dawn-square-left);top:var(--dawn-square-top);
+ width:calc(var(--dawn-square)*2);height:var(--dawn-square);
+ display:grid;grid-template-columns:repeat(2,minmax(0,var(--dawn-square)));grid-template-rows:var(--dawn-square);
+ gap:0;transform:none;
+}
+.dawn-twins__square{width:var(--dawn-square);height:var(--dawn-square);min-width:0;min-height:0;padding:clamp(10px,1.35svh,18px)}
+.dawn-twins__square--verse{border-top:1px solid var(--ws-morning-gold);border-left:0}
+.dawn-twins__en{font-size:clamp(23px,2.65svh,32px);line-height:1.02}
+.dawn-twins__zh{font-size:clamp(16px,1.9svh,23px)}
+.dawn-twins__verse-zh{font-size:clamp(12px,1.5svh,17px)}
+.dawn-twins__verse-en{font-size:clamp(11px,1.3svh,15px)}
+.dawn-twins__ref{font-size:clamp(8px,.85svh,10px)}
+.dawn-spread{
+ top:calc(var(--dawn-square-top) + var(--dawn-square) + clamp(12px,2.5svh,24px));
+ left:var(--dawn-square-left);right:var(--dawn-square-left);
+ bottom:clamp(18px,3svh,36px);
+ grid-template-columns:minmax(0,1.5fr) minmax(180px,1fr)
+}
+@media(max-width:600px){
+ .dawn-realm{--dawn-square:clamp(132px,43vw,172px);--dawn-square-top:20px;--dawn-square-left:9px}
+ .dawn-twins{width:calc(var(--dawn-square)*2);height:var(--dawn-square);top:var(--dawn-square-top);left:var(--dawn-square-left);grid-template-columns:repeat(2,var(--dawn-square));grid-template-rows:var(--dawn-square)}
+ .dawn-twins__square{width:var(--dawn-square);height:var(--dawn-square);padding:9px;gap:4px}
+ .dawn-twins__en{font-size:clamp(18px,5.1vw,24px)}
+ .dawn-twins__zh{font-size:clamp(15px,4vw,18px)}
+ .dawn-twins__verse-zh{font-size:clamp(11px,3.05vw,13px)}
+ .dawn-twins__verse-en{font-size:clamp(10px,2.8vw,12px)}
+ .dawn-twins__ref{font-size:8px}
+ .dawn-spread{top:calc(var(--dawn-square-top) + var(--dawn-square) + 12px);left:9px;right:9px;bottom:12px;grid-template-columns:minmax(0,1.4fr) minmax(85px,.85fr);gap:8px}
+}
+
+/* R10 · MERSI-centered first impression: the two horizontal squares share
+   one centered anchor. Scroll moves their GROUP, not the two squares apart. */
+.dawn-twins{
+ left:50%;top:50%;transform:translate(-50%,-50%);
+ grid-template-columns:repeat(2,var(--dawn-square));grid-template-rows:var(--dawn-square);
+}
+.dawn-spread{left:clamp(16px,3vw,52px);right:clamp(16px,3vw,52px)}
+@media(max-width:600px){
+ .dawn-twins{left:50%;top:50%;transform:translate(-50%,-50%)}
+ .dawn-spread{left:9px;right:9px}
+}
+
+/* R11 / Gospel Book stage — REAL linked holdings, two independent page surfaces.
+   The open book is the whole P2 05 scene; not a small ornamental mockup. */
+.dawn-realm{background:var(--ws-paper)}
+.dawn-realm__half,.dawn-folio,.dawn-folio__spine,.dawn-spread,.dawn-enter-hint{display:none!important}
+.dawn-world{position:absolute;z-index:3;inset:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);background:var(--ws-papyrus);overflow:hidden;perspective:1700px}
+.dawn-world__page{position:relative;display:block;height:100%;min-width:0;overflow:hidden;isolation:isolate;background:var(--ws-paper);color:var(--ws-ink);text-decoration:none;transform-style:preserve-3d;outline-offset:-8px;will-change:transform;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ws-harvest) 45%,transparent)}
+.dawn-world__page--left{transform-origin:right center;border-right:1px solid var(--ws-harvest)}
+.dawn-world__page--right{transform-origin:left center;border-left:1px solid var(--ws-harvest)}
+.dawn-world__page::before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;box-shadow:inset 0 0 0 clamp(14px,2.8vw,54px) var(--ws-paper),inset 0 0 0 calc(clamp(14px,2.8vw,54px) + 1px) color-mix(in srgb,var(--ws-harvest) 55%,transparent)}
+.dawn-world__page--left::after,.dawn-world__page--right::after{content:"";position:absolute;z-index:3;inset:0;pointer-events:none}
+.dawn-world__page--left::after{background:linear-gradient(90deg,transparent 50%,rgba(37,37,37,.10) 94%,rgba(37,37,37,.2))}
+.dawn-world__page--right::after{background:linear-gradient(270deg,transparent 50%,rgba(37,37,37,.10) 94%,rgba(37,37,37,.2))}
+.dawn-world__art{position:absolute;inset:clamp(26px,4.6vw,80px) clamp(22px,4.8vw,82px) clamp(144px,21svh,245px);display:grid;place-items:center;overflow:hidden;background:var(--ws-papyrus)}
+.dawn-world__art img{display:block;width:100%;height:100%;object-fit:contain;filter:sepia(.1) contrast(1.04) drop-shadow(10px 16px 16px rgba(37,37,37,.20));transition:transform .65s ease;max-width:none}
+.dawn-world__page:hover img,.dawn-world__page:focus-visible img{transform:scale(1.035)}
+.dawn-world__edition{position:absolute;z-index:4;left:clamp(26px,4.6vw,80px);right:clamp(26px,4.6vw,80px);bottom:clamp(20px,3.6vw,60px);min-height:clamp(105px,16svh,172px);display:flex;flex-direction:column;justify-content:end;gap:8px;padding:clamp(12px,1.5vw,24px) 0 0;border-top:1px solid var(--ws-harvest)}
+.dawn-world__rubric{font:400 clamp(9px,.8vw,13px)/1.3 var(--ws-type-display-en-sc);letter-spacing:.08em;color:var(--ws-harvest)}
+.dawn-world__edition strong{font:400 clamp(18px,2.1vw,34px)/1.12 var(--ws-type-display-en);letter-spacing:-.025em;max-width:25ch;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+.dawn-world__edition span:last-child{font:200 clamp(11px,1vw,15px)/1.35 var(--ws-type-display-zh)}
+.dawn-world__binding{position:absolute;z-index:5;left:50%;top:0;bottom:0;width:clamp(6px,1.2vw,17px);transform:translateX(-50%);background:linear-gradient(90deg,rgba(37,37,37,.28),var(--ws-harvest) 32%,var(--ws-paper) 49%,var(--ws-harvest) 68%,rgba(37,37,37,.21));box-shadow:0 0 16px rgba(37,37,37,.17);pointer-events:none}
+.dawn-world__corner{position:absolute;z-index:5;bottom:clamp(15px,2.7vw,44px);width:clamp(12px,1.5vw,23px);height:clamp(12px,1.5vw,23px);border-bottom:1px solid var(--ws-harvest)}
+.dawn-world__page--left .dawn-world__corner{left:clamp(24px,4.5vw,75px);border-left:1px solid var(--ws-harvest)}
+.dawn-world__page--right .dawn-world__corner{right:clamp(24px,4.5vw,75px);border-right:1px solid var(--ws-harvest)}
+.dawn-twins{z-index:7;left:50%;top:50%;transform:translate(-50%,-50%);box-shadow:0 5px 34px rgba(37,37,37,.12);filter:drop-shadow(0 1px 2px rgba(37,37,37,.13))}
+.dawn-twins__square{border-color:var(--ws-harvest)}
+.dawn-twins__square--title{background:var(--ws-harvest);color:var(--ws-paper)}
+.dawn-twins__square--verse{background:var(--ws-paper);color:var(--ws-ink)}
+.dawn-handoff{z-index:12}
+@media(max-width:600px){
+ .dawn-realm{--dawn-square:clamp(125px,40vw,155px)}
+ .dawn-world__page::before{box-shadow:inset 0 0 0 9px var(--ws-paper),inset 0 0 0 10px color-mix(in srgb,var(--ws-harvest) 45%,transparent)}
+ .dawn-world__art{inset:18px 13px 190px}
+ .dawn-world__edition{left:16px;right:16px;bottom:30px;min-height:145px;gap:4px}
+ .dawn-world__edition strong{font-size:clamp(14px,4vw,19px)}
+ .dawn-world__edition span:last-child{font-size:10px}
+ .dawn-world__rubric{font-size:8px}
+ .dawn-twins{top:55%;box-shadow:0 4px 18px rgba(37,37,37,.15)}
+}
+@media(prefers-reduced-motion:reduce){.dawn-world__page,.dawn-world__art img{transition:none;will-change:auto}}
+
+/* Existing owned Christian imagery enriches the reading field but is not
+   represented as an illustration extracted from the linked Open Library book. */
+.dawn-world__art::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background-image:url('/images/home-opening-engraving.jpg');background-size:cover;background-position:center;opacity:.19;filter:sepia(.65) contrast(1.07)}
+.dawn-world__page--right .dawn-world__art::before{background-image:url('/images/temple-stone-light.png');opacity:.29}
+.dawn-world__art img{position:relative;z-index:1;max-width:82%;max-height:87%;width:auto;height:auto;object-fit:contain;box-shadow:12px 17px 28px rgba(37,37,37,.19)}
+.dawn-world__art::after{content:"";position:absolute;inset:8%;pointer-events:none;border:1px solid color-mix(in srgb,var(--ws-harvest) 45%,transparent)}
+.dawn-world__page[data-world="temple"] .dawn-world__art::before{background-image:url('/images/temple-stone-light.png')}
+.dawn-world__page[data-world="jerusalem"] .dawn-world__art::before{background-image:url('/images/jerusalem-wall.png')}
+.dawn-world__page[data-world="engraving"] .dawn-world__art::before{background-image:url('/images/home-opening-engraving.jpg')}
+.dawn-world__page[data-world="scripture"] .dawn-world__art::before{background-image:url('/images/p2-emmaus-fullfield-engraving-v15.svg')}
+@media(max-width:600px){.dawn-world__art img{max-width:90%;max-height:86%}}
+
+/* R12 · MERSI image world — undo the rejected book mockup completely.
+   Two image fields, independently clipped; no gutter, linework, page border,
+   outlined frames, false shadows, cover cards, page-corner details, or 3D turn. */
+.dawn-realm{perspective:none!important;transform-style:flat!important;background:var(--ws-paper)}
+.dawn-folio,.dawn-folio__spine,.dawn-realm__half,.dawn-spread,.dawn-enter-hint{display:none!important}
+.dawn-world{inset:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;perspective:none!important;background:var(--ws-paper);overflow:hidden}
+.dawn-world__page{position:relative;min-width:0;border:0!important;outline-offset:-4px;background:var(--ws-paper);box-shadow:none!important;transform:none!important;transform-style:flat!important;will-change:auto}
+.dawn-world__page::before,.dawn-world__page::after,
+.dawn-world__corner,.dawn-world__binding{display:none!important;content:none!important}
+.dawn-world__art{position:absolute;inset:0!important;display:block;overflow:hidden;background:var(--ws-papyrus)}
+.dawn-world__art::before,.dawn-world__art::after{display:none!important;content:none!important}
+.dawn-world__art img,.dawn-world__art img.dawn-world__incoming{
+ position:absolute;inset:0;display:block;width:100%;height:100%;
+ max-width:none!important;max-height:none!important;
+ object-fit:cover;object-position:center;
+ box-shadow:none!important;filter:none!important;
+ margin:0;border:0;border-radius:0;transition:none!important;
+ will-change:transform,clip-path;
+}
+.dawn-world__page:hover img,.dawn-world__page:focus-visible img{transform:none}
+.dawn-world__edition{
+ left:0;right:0;bottom:0;min-height:0;gap:5px;
+ padding:clamp(20px,3.6vw,56px) clamp(15px,3vw,48px) clamp(18px,3vw,45px);
+ background:linear-gradient(0deg,rgba(20,19,17,.76),rgba(20,19,17,.49) 57%,transparent);
+ color:var(--ws-paper);border:0!important;pointer-events:none;
+}
+.dawn-world__rubric{font-size:clamp(9px,.8vw,12px);color:var(--ws-paper);opacity:.81;letter-spacing:.13em}
+.dawn-world__edition strong{font-size:clamp(18px,1.9vw,32px);max-width:28ch;color:var(--ws-paper);line-height:1.13;font-weight:400}
+.dawn-world__edition span:last-child{font-size:clamp(11px,1vw,15px);color:var(--ws-paper);opacity:.9}
+.dawn-twins{
+ z-index:9;left:50%;top:50%;transform:translate(-50%,-50%);
+ box-shadow:none!important;filter:none!important;border:0!important;
+}
+.dawn-twins__square{box-shadow:none!important}
+@media(max-width:600px){
+ .dawn-world__art{inset:0!important}
+ .dawn-world__edition{left:0;right:0;bottom:0;padding:60px 9px 14px;min-height:0}
+ .dawn-world__edition strong{font-size:clamp(12px,3.6vw,17px);-webkit-line-clamp:3}
+ .dawn-world__edition span:last-child{font-size:9px}
+ .dawn-world__rubric{font-size:8px}
+ .dawn-twins{left:50%;top:50%}
+}
+@media(prefers-reduced-motion:reduce){.dawn-world__art img,.dawn-world__art img.dawn-world__incoming{will-change:auto}}
+
+/* No decorative strokes anywhere on the public 05 image stage. */
+.dawn-world__page,.dawn-world__art,.dawn-world__edition,.dawn-twins,.dawn-twins__square,.dawn-twins__square--verse{border:0!important;outline-color:var(--ws-harvest)}
+.dawn-twins__square::before,.dawn-twins__square::after{content:none!important;display:none!important}
+
+/* R16: only suppress the unwanted image-bottom caption rectangle; original central two-square masthead intact. */
+.dawn-world__edition{display:none!important}
+
+/* R17 · P2 05 original two-square masthead: restore actual opaque plates, dimensions and central alignment. */
+#dawn-realm #dawn-twins{position:absolute!important;z-index:20!important;left:50%!important;top:50%!important;transform:translate(-50%,-50%)!important;display:grid!important;grid-template-columns:repeat(2,var(--dawn-square))!important;grid-template-rows:var(--dawn-square)!important;width:calc(2 * var(--dawn-square))!important;height:var(--dawn-square)!important;min-width:0!important;min-height:0!important;gap:0!important;padding:0!important;margin:0!important;overflow:visible!important;background:transparent!important;border:0!important;filter:none!important;box-shadow:none!important;isolation:isolate!important;}
+#dawn-realm #dawn-twins>.dawn-twins__square{position:relative!important;display:flex!important;flex-direction:column!important;justify-content:center!important;flex:0 0 var(--dawn-square)!important;width:var(--dawn-square)!important;height:var(--dawn-square)!important;min-width:0!important;min-height:0!important;box-sizing:border-box!important;overflow:hidden!important;opacity:1!important;visibility:visible!important;filter:none!important;backdrop-filter:none!important;box-shadow:none!important;padding:clamp(10px,1.35svh,18px)!important;}
+#dawn-realm #dawn-twins>.dawn-twins__square--title{background-color:var(--ws-harvest,#b8944a)!important;background-image:none!important;color:var(--ws-paper,#faf9f5)!important;}
+#dawn-realm #dawn-twins>.dawn-twins__square--verse{background-color:var(--ws-paper,#faf9f5)!important;background-image:none!important;color:var(--ws-ink,#252525)!important;}
+#dawn-realm #dawn-twins .dawn-twins__en{font-size:clamp(23px,2.65svh,32px)!important;white-space:normal!important;overflow-wrap:normal!important;line-height:1.02!important;}
+#dawn-realm #dawn-twins .dawn-twins__zh{font-size:clamp(16px,1.9svh,23px)!important;}
+#dawn-realm #dawn-twins .dawn-twins__verse-zh{font-size:clamp(12px,1.5svh,17px)!important;}
+#dawn-realm #dawn-twins .dawn-twins__verse-en{font-size:clamp(11px,1.3svh,15px)!important;}
+@media(max-width:600px){#dawn-realm{--dawn-square:clamp(125px,40vw,155px)}#dawn-realm #dawn-twins>.dawn-twins__square{padding:9px!important}}
+
+
+/* R19 · Second-layer editorial reconstruction; no fullscreen color transition.
+   Reuse the approved Scripture Studio 05 motherform without replicating its type. */
+.dawn-handoff{background:transparent!important}
+.dawn-second{background:#f8f7f3!important}
+.dawn-second__press--motherform{
+ position:relative;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+ grid-template-rows:auto;gap:clamp(12px,2vw,30px);
+ width:min(100%,1440px);min-height:0;max-width:1440px;
+ margin:0 auto;padding:clamp(32px,4vw,64px) clamp(16px,3vw,44px);
+ align-items:start;overflow:visible;
+}
+.dawn-second__motherform{
+ grid-area:1/1/2/3;display:block;width:100%;height:auto;
+ aspect-ratio:2.06/1;border:0;background:transparent;z-index:2;
+}
+.dawn-press-landing{grid-row:1;align-self:start;aspect-ratio:1;background:transparent;opacity:0;pointer-events:none;z-index:0}
+.dawn-press-landing--zh{grid-column:1}.dawn-press-landing--en{grid-column:2}
+.dawn-reading-room{background:#f8f7f3!important;color:#292924!important;border-top:1px solid #bcb9ad!important}
+.dawn-reading-room .dawn-wall__folio{display:flex;justify-content:space-between;align-items:center;border:0!important;padding:0 0 20px;margin-bottom:clamp(40px,6vw,90px);color:#77766c!important;letter-spacing:.12em}
+.dawn-reading-room__heading{display:flex;align-items:end;justify-content:space-between;gap:24px;padding-bottom:clamp(22px,3vw,44px);border-bottom:1px solid #bcb9ad}
+.dawn-reading-room__heading h2{font:200 clamp(44px,6vw,110px)/1.05 var(--ws-type-display-zh);margin:8px 0 0}
+.dawn-reading-room__eyebrow{font:400 11px/1.2 var(--ws-type-display-en);letter-spacing:.17em;color:#77766c}
+.dawn-reading-room__heading p{max-width:27ch;margin:0 0 5px;font:200 clamp(13px,1.15vw,18px)/1.6 var(--ws-type-display-zh);color:#747269}
+
+/* R20 · True square cover wall. The square grid is non-negotiable.
+   Real existing book-cover files are the artwork; no synthetic album art. */
+.dawn-reading-room .dawn-wall__grid{display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;grid-auto-flow:row!important;gap:clamp(10px,1.2vw,22px)!important;border:0!important;align-items:start!important}
+.dawn-reading-room .dawn-wall__tile--portal,
+.dawn-reading-room .dawn-wall__tile--record{grid-column:span 1!important;grid-row:auto!important;aspect-ratio:1!important;min-height:0!important;border:0!important;padding:0!important;box-sizing:border-box!important;overflow:hidden!important}
+.dawn-reading-room .dawn-wall__tile--portal{background:#ece9df!important;padding:clamp(12px,1.5vw,25px)!important;border:1px solid #d4d0c5!important}
+.dawn-reading-room .dawn-wall__tile--portal strong{font-size:clamp(16px,1.9vw,34px)!important}
+.dawn-reading-room .dawn-wall__tile--portal em{font-size:clamp(10px,.8vw,14px)!important}
+.dawn-reading-room .dawn-wall__tile--portal .dawn-reading-room__link{margin-top:10px}
+.dawn-reading-room .dawn-wall__tile.dawn-cover{display:block!important;position:relative!important;border:0!important;background:#eeece6!important;aspect-ratio:1!important;overflow:hidden!important;isolation:isolate}
+.dawn-cover__sleeve{position:absolute;inset:0;display:grid;place-items:center;background:#eceae3}
+.dawn-cover__sleeve img{width:100%;height:100%;object-fit:contain;object-position:center;display:block;transition:transform .5s ease}
+.dawn-cover:hover .dawn-cover__sleeve img,.dawn-cover:focus-visible .dawn-cover__sleeve img{transform:scale(1.035)}
+.dawn-reading-room .dawn-cover__meta{position:absolute;inset:auto 0 0;z-index:1;display:flex;flex-direction:column;gap:3px;padding:28px 10px 10px;background:linear-gradient(to top,rgba(25,24,22,.94),rgba(25,24,22,.7) 57%,transparent);color:#fff;opacity:0;transform:translateY(5px);transition:opacity .22s,transform .22s;pointer-events:none}
+.dawn-reading-room .dawn-cover:hover .dawn-cover__meta,.dawn-reading-room .dawn-cover:focus-visible .dawn-cover__meta{opacity:1;transform:none}
+.dawn-reading-room .dawn-cover__meta strong{display:block!important;font:400 clamp(12px,1vw,17px)/1.15 var(--ws-type-display-en)!important;color:#fff!important;overflow:hidden!important;max-height:3.5em}
+.dawn-reading-room .dawn-cover__meta em{font:italic 400 clamp(10px,.75vw,12px)/1.2 var(--ws-type-display-en)!important;color:#e8e3d8!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dawn-reading-room .dawn-cover--missing{display:none!important}
+@media(max-width:1100px){.dawn-reading-room .dawn-wall__grid{grid-template-columns:repeat(4,minmax(0,1fr))!important}}
+@media(max-width:650px){.dawn-reading-room .dawn-wall__grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}.dawn-reading-room .dawn-cover__meta{opacity:1;transform:none;padding:24px 8px 7px}.dawn-reading-room .dawn-wall__tile--portal strong{font-size:clamp(22px,6vw,32px)!important}}
+
+/* P2 05 — Doré study: Rijksmuseum image authority × Pell Mell editorial rhythm.
+   2x2 portal chapters use their existing traced covers; the image field ends
+   before the title strip. No overlapping frames, outline, crimson tint or
+   fake collage effect. Do not change the image wall or scroll controller. */
+.dawn-reading-room .dawn-wall__grid--curated{
+ display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;
+ grid-auto-flow:row dense!important;gap:clamp(8px,1vw,18px)!important;align-items:start!important;
+}
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature{
+ position:relative!important;display:flex!important;flex-direction:column!important;
+ grid-column:span 2!important;grid-row:span 2!important;box-sizing:border-box!important;
+ width:100%!important;height:100%!important;min-height:0!important;aspect-ratio:1!important;
+ border:0!important;outline:0!important;outline-offset:0!important;border-radius:0!important;
+ padding:0!important;margin:0!important;box-shadow:none!important;
+ background:var(--ws-paper)!important;overflow:hidden!important;
+ isolation:isolate;text-align:left;
+}
+.dawn-reading-room .dawn-wall__grid--curated>.dawn-feature:nth-child(1){grid-column:1 / span 2!important;grid-row:1 / span 2!important}
+.dawn-reading-room .dawn-wall__grid--curated>.dawn-feature:nth-child(2){grid-column:4 / span 2!important;grid-row:2 / span 2!important}
+.dawn-reading-room .dawn-wall__grid--curated>.dawn-feature:nth-child(3){grid-column:1 / span 2!important;grid-row:4 / span 2!important}
+#dawn-second .dawn-feature__art{
+ position:relative!important;inset:auto!important;z-index:0!important;
+ display:grid!important;grid-template-columns:1.55fr 1fr!important;grid-template-rows:repeat(2,minmax(0,1fr))!important;
+ width:100%!important;min-height:0!important;flex:1 1 0!important;
+ gap:clamp(3px,.38vw,6px)!important;
+ padding:0!important;border:0!important;background:var(--ws-paper)!important;
+ overflow:hidden!important;filter:none!important;
+}
+#dawn-second .dawn-feature__cover{
+ display:block!important;width:100%!important;height:100%!important;min-width:0!important;min-height:0!important;
+ object-fit:cover!important;object-position:center!important;opacity:1!important;
+ filter:none!important;transform:none!important;
+ transition:transform .65s cubic-bezier(.2,.75,.2,1)!important;
+}
+#dawn-second .dawn-feature__cover--1{grid-column:1!important;grid-row:1 / span 2!important}
+#dawn-second .dawn-feature__cover--2{grid-column:2!important;grid-row:1!important}
+#dawn-second .dawn-feature__cover--3{grid-column:2!important;grid-row:2!important}
+#dawn-second .dawn-feature:hover .dawn-feature__cover,
+#dawn-second .dawn-feature:focus-visible .dawn-feature__cover{
+ transform:scale(1.025)!important;filter:none!important
+}
+#dawn-second .dawn-feature__editorial{
+ position:relative!important;inset:auto!important;z-index:1!important;
+ flex:0 0 auto!important;box-sizing:border-box!important;
+ display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;
+ align-items:end!important;gap:3px clamp(10px,1vw,18px)!important;
+ width:100%!important;min-width:0!important;
+ padding:clamp(13px,1.45vw,25px) clamp(14px,1.5vw,27px)!important;
+ background:var(--ws-paper)!important;color:var(--ws-ink)!important;
+ box-shadow:none!important;border:0!important;pointer-events:none!important;
+}
+#dawn-second .dawn-feature__editorial:before,
+#dawn-second .dawn-feature__editorial:after{content:none!important;display:none!important}
+#dawn-second .dawn-reading-room .dawn-feature__editorial>small{
+ position:static!important;grid-column:1 / -1!important;display:block!important;
+ width:auto!important;margin:0 0 5px!important;padding:0!important;
+ background:transparent!important;border:0!important;
+ color:var(--ws-harvest)!important;
+ font:400 clamp(9px,.72vw,12px)/1.2 var(--ws-type-display-en-sc,var(--ws-type-display-en))!important;
+ letter-spacing:.11em!important;
+}
+#dawn-second .dawn-feature__titles{
+ display:flex!important;flex-direction:column!important;align-items:flex-start!important;
+ gap:clamp(3px,.4vw,8px)!important;
+ min-width:0!important;max-width:none!important;
+ margin:0!important;padding:0!important;
+ background:transparent!important;
+}
+#dawn-second .dawn-reading-room .dawn-feature__titles strong{
+ margin:0!important;color:var(--ws-ink)!important;
+ font:200 clamp(28px,2.6vw,47px)/1.08 var(--ws-type-display-zh)!important;
+ letter-spacing:0!important;
+}
+#dawn-second .dawn-reading-room .dawn-feature__titles em{
+ color:var(--ws-ink)!important;
+ font:400 clamp(10px,.93vw,15px)/1.2 var(--ws-type-display-en-sc,var(--ws-type-display-en))!important;
+ letter-spacing:.015em!important;font-style:normal!important;
+}
+#dawn-second .dawn-feature__open{
+ display:flex!important;align-items:center!important;justify-content:flex-end!important;
+ align-self:end!important;min-width:0!important;max-width:none!important;
+ width:auto!important;margin:0!important;padding:0!important;
+ background:transparent!important;border:0!important;color:var(--ws-ink)!important;
+ font:400 clamp(9px,.8vw,12px)/1.3 var(--ws-type-display-en)!important;
+ white-space:nowrap!important;letter-spacing:.045em!important;
+}
+#dawn-second .dawn-feature:focus-visible{
+ outline:2px solid var(--ws-ink)!important;outline-offset:3px!important;
+}
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-cover{
+ grid-column:span 1!important;grid-row:span 1!important;aspect-ratio:1!important;
+}
+@media(max-width:1100px){
+ .dawn-reading-room .dawn-wall__grid--curated{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+ .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature:nth-child(1){grid-column:1 / span 2!important;grid-row:1 / span 2!important}
+ .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature:nth-child(2){grid-column:3 / span 2!important;grid-row:3 / span 2!important}
+ .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature:nth-child(3){grid-column:1 / span 2!important;grid-row:6 / span 2!important}
+}
+@media(max-width:650px){
+ .dawn-reading-room .dawn-wall__grid--curated{grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-auto-flow:row!important;gap:8px!important}
+ .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature:nth-child(1),
+ .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature:nth-child(2),
+ .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature:nth-child(3){
+  grid-column:1 / span 2!important;grid-row:auto / span 2!important
+ }
+ #dawn-second .dawn-feature__editorial{padding:12px 14px!important}
+ #dawn-second .dawn-reading-room .dawn-feature__titles strong{font-size:clamp(29px,8vw,43px)!important}
+ #dawn-second .dawn-reading-room .dawn-feature__titles em{font-size:clamp(10px,2.8vw,15px)!important}
+}
+@media(prefers-reduced-motion:reduce){#dawn-second .dawn-feature__cover{transition:none!important}}
+/* R23 — Editorial Manual §1 / Design OS: book=harvest role, paper as field.
+   No parallel cross-chapter color system. Only 05 second layer. */
+#dawn-second.dawn-second{--dawn-accent:var(--ws-harvest);--dawn-paper:var(--ws-paper);
+ background:var(--ws-paper)!important;color:var(--ws-ink)!important;
+}
+#dawn-second .dawn-second__press--motherform{
+ display:flex!important;justify-content:center!important;align-items:flex-start!important;
+ min-height:0!important;height:auto!important;
+ background:color-mix(in srgb,var(--ws-harvest) 7%,var(--ws-paper))!important;
+ border-bottom:1px solid color-mix(in srgb,var(--ws-harvest) 40%,transparent)!important;
+ padding:clamp(46px,5svh,68px) clamp(12px,3vw,44px) clamp(12px,2svh,24px)!important;
+}
+#dawn-second .dawn-second__motherform{
+ flex:0 1 900px!important;display:block!important;max-width:900px!important;
+ width:100%!important;height:clamp(185px,25vw,290px)!important;aspect-ratio:auto!important;
+ margin:0 auto!important;
+}
+#dawn-second .dawn-press-landing{visibility:hidden!important;opacity:0!important;pointer-events:none!important}
+#dawn-second .dawn-second__return{
+ color:var(--ws-ink)!important;border-bottom-color:var(--ws-harvest)!important;
+}
+#dawn-second .dawn-second__return-en{color:color-mix(in srgb,var(--ws-harvest) 65%,var(--ws-ink))!important}
+#dawn-second .dawn-second__return:hover{color:var(--ws-harvest)!important}
+#dawn-second .dawn-reading-room{background:var(--ws-paper)!important}
+#dawn-second .dawn-reading-room__heading{border-bottom-color:var(--ws-harvest)!important}
+#dawn-second .dawn-reading-room__heading h2{color:var(--ws-ink)!important}
+#dawn-second .dawn-reading-room__eyebrow,#dawn-second .dawn-wall__folio{color:var(--ws-harvest)!important}
+#dawn-second .dawn-reading-room .dawn-wall__tail{color:var(--ws-harvest)!important}
+#dawn-second .dawn-reading-room .dawn-wall__tail button{border-bottom-color:var(--ws-harvest)!important;color:var(--ws-ink)!important}
+#dawn-second .dawn-feature__open{border-color:var(--ws-paper)!important}
+#dawn-second .dawn-catalogue{background:var(--ws-paper)!important;border-top-color:var(--ws-harvest)!important}
+#dawn-second .dawn-catalogue__back{border-bottom-color:var(--ws-harvest)!important;color:var(--ws-ink)!important}
+#dawn-second .dawn-catalogue__nav{border-color:var(--ws-harvest)!important}
+#dawn-second .dawn-catalogue__nav input{border-bottom-color:var(--ws-harvest)!important}
+#dawn-second .dawn-catalogue__heading{border-bottom-color:var(--ws-harvest)!important}
+#dawn-second .dawn-catalogue__heading span{color:var(--ws-harvest)!important}
+#dawn-second .dawn-catalogue__more button{background:transparent!important;border:0!important;border-bottom:1px solid var(--ws-harvest)!important;color:var(--ws-ink)!important;padding:8px 0!important}
+#dawn-second .dawn-catalogue__more button:hover{color:var(--ws-harvest)!important}
+#dawn-second .dawn-catalogue__works--sleeves{
+ display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;
+ gap:clamp(7px,1vw,18px)!important;list-style:none!important;
+ padding:clamp(18px,2vw,32px) 0!important;margin:0!important;
+}
+#dawn-second .dawn-catalogue__works--sleeves>.dawn-catalogue__sleeve{
+ display:block!important;min-width:0!important;width:100%!important;aspect-ratio:1!important;
+ padding:0!important;margin:0!important;border:0!important;overflow:hidden!important;
+}
+#dawn-second .dawn-catalogue__cover-card{
+ display:flex;position:relative;width:100%;height:100%;aspect-ratio:1;overflow:hidden;
+ text-decoration:none!important;color:var(--ws-ink)!important;
+ background:color-mix(in srgb,var(--ws-harvest) 7%,var(--ws-paper));
+ border:1px solid color-mix(in srgb,var(--ws-harvest) 37%,transparent)!important;
+ box-sizing:border-box;
+}
+#dawn-second .dawn-catalogue__cover-card--image{background:var(--ws-paper)!important}
+#dawn-second .dawn-catalogue__cover-card>img{
+ display:block!important;position:absolute;inset:0;width:100%;height:100%;
+ object-fit:contain!important;object-position:center!important;
+}
+#dawn-second .dawn-catalogue__cover-typography{
+ display:flex;flex-direction:column;justify-content:space-between;gap:5px;
+ width:100%;min-width:0;overflow:hidden;padding:clamp(8px,1.2vw,19px);position:relative;z-index:1;
+}
+#dawn-second .dawn-catalogue__cover-typography>small{
+ font:400 clamp(7px,.61vw,11px)/1.3 var(--ws-type-display-en);
+ letter-spacing:.09em;color:var(--ws-harvest);
+}
+#dawn-second .dawn-catalogue__cover-typography>strong{
+ font:400 clamp(12px,1.08vw,21px)/1.12 var(--ws-type-display-en)!important;
+ letter-spacing:-.025em;overflow:hidden;display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical;
+ overflow-wrap:anywhere;
+}
+#dawn-second .dawn-catalogue__cover-typography>span{
+ display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+ font:200 clamp(10px,.72vw,13px)/1.2 var(--ws-type-display-zh);
+}
+#dawn-second .dawn-catalogue__cover-card--image .dawn-catalogue__cover-typography{
+ opacity:0;background:linear-gradient(0deg,rgba(37,37,37,.88),transparent);
+ color:var(--ws-paper);transition:opacity .24s;
+}
+#dawn-second .dawn-catalogue__cover-card--image:hover .dawn-catalogue__cover-typography,
+#dawn-second .dawn-catalogue__cover-card--image:focus-visible .dawn-catalogue__cover-typography{opacity:1}
+#dawn-second .dawn-catalogue__cover-card--image .dawn-catalogue__cover-typography>*{color:var(--ws-paper)!important}
+@media(max-width:1180px){#dawn-second .dawn-catalogue__works--sleeves{grid-template-columns:repeat(4,minmax(0,1fr))!important}}
+@media(max-width:720px){#dawn-second .dawn-catalogue__works--sleeves{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ #dawn-second .dawn-second__motherform{height:clamp(165px,33vw,240px)!important}
+ #dawn-second .dawn-second__press--motherform{padding-top:50px!important}
+ #dawn-second .dawn-catalogue__cover-typography>strong{font-size:clamp(11px,3vw,19px)!important}
+ #dawn-second .dawn-catalogue__cover-typography>span{font-size:clamp(10px,2.6vw,13px)!important}
+ #dawn-second .dawn-catalogue__cover-typography>small{font-size:9px!important}
+ #dawn-second .dawn-catalogue__cover-card--image .dawn-catalogue__cover-typography{opacity:1}
+}
+
+
+/* R26 · Authentic Dawn Library chromatic field, copied by semantic role from
+   OS .sites-section-dawn-library. This is the bookstore's SURFACE grammar,
+   not the P2 05 scripture stamp palette and not a solid harvest backdrop.
+   Keep the square covers, navigation and original scripture composition. */
+#dawn-second[data-ws-scope="dawn-library"]{
+ --ws-branch:var(--ws-harvest);
+ --ws-branch-surface:color-mix(in oklab,var(--ws-harvest) 13%,var(--ws-paper));
+ --ws-branch-raised:color-mix(in oklab,var(--ws-harvest) 20%,var(--ws-paper));
+ --ws-branch-rule:color-mix(in oklab,var(--ws-harvest) 38%,transparent);
+ --ws-material:color-mix(in oklab,var(--ws-harvest) 9%,var(--ws-paper));
+ --ws-engraving:color-mix(in oklab,var(--ws-harvest) 52%,#4b3822);
+ background:var(--ws-branch-surface)!important;color:var(--ws-ink)!important;
+ scrollbar-color:var(--ws-harvest) var(--ws-branch-surface)!important;
+}
+#dawn-second[data-ws-scope="dawn-library"] .dawn-second__press--motherform{
+ background:var(--ws-branch-surface)!important;
+ border-bottom:1px solid var(--ws-branch-rule)!important;
+}
+#dawn-second[data-ws-scope="dawn-library"] .dawn-reading-room,
+#dawn-second[data-ws-scope="dawn-library"] .dawn-catalogue{
+ background:var(--ws-branch-surface)!important;color:var(--ws-ink)!important;
+}
+#dawn-second[data-ws-scope="dawn-library"] .dawn-reading-room__eyebrow,
+#dawn-second[data-ws-scope="dawn-library"] .dawn-wall__folio,
+#dawn-second[data-ws-scope="dawn-library"] .dawn-catalogue__heading span,
+#dawn-second[data-ws-scope="dawn-library"] .dawn-catalogue__cover-typography>small{
+ color:var(--ws-ink)!important;
+}
+#dawn-second[data-ws-scope="dawn-library"] .dawn-second__return,
+#dawn-second[data-ws-scope="dawn-library"] .dawn-catalogue__back,
+#dawn-second[data-ws-scope="dawn-library"] .dawn-reading-room .dawn-wall__tail button,
+#dawn-second[data-ws-scope="dawn-library"] .dawn-catalogue__more button{
+ color:var(--ws-ink)!important;border-bottom-color:var(--ws-branch-rule)!important;
+ background:transparent!important;
+}
+#dawn-second[data-ws-scope="dawn-library"] .dawn-second__return-en{color:var(--ws-ink)!important}
+#dawn-second[data-ws-scope="dawn-library"] .dawn-second__return:hover,
+#dawn-second[data-ws-scope="dawn-library"] .dawn-catalogue__back:hover{color:var(--ws-harvest)!important}
+#dawn-second[data-ws-scope="dawn-library"] .dawn-reading-room__heading,
+#dawn-second[data-ws-scope="dawn-library"] .dawn-catalogue__heading,
+#dawn-second[data-ws-scope="dawn-library"] .dawn-catalogue__nav,
+#dawn-second[data-ws-scope="dawn-library"] .dawn-catalogue,
+#dawn-second[data-ws-scope="dawn-library"] .dawn-catalogue__nav input{
+ border-color:var(--ws-branch-rule)!important;
+}
+#dawn-second[data-ws-scope="dawn-library"] .dawn-reading-room__heading h2{color:var(--ws-ink)!important}
+
+#dawn-second[data-ws-scope="dawn-library"] .dawn-cover__sleeve,
+#dawn-second[data-ws-scope="dawn-library"] .dawn-wall__tile.dawn-cover,
+#dawn-second[data-ws-scope="dawn-library"] .dawn-catalogue__cover-card--unresolved{
+ background:var(--ws-branch-raised)!important;
+ border-color:var(--ws-branch-rule)!important;
+}
+
+
+@media(max-width:760px){
+ #dawn-second[data-ws-scope="dawn-library"]{
+ --ws-branch-surface:color-mix(in oklab,var(--ws-harvest) 3%,var(--ws-paper));
+ }
+}
+
+
+/* R29 · Third-layer reading continuity: source works remain inside Dawn.
+   The book itself is a page, external sites only optional source citations. */
+#dawn-second .dawn-catalogue__cover-card{appearance:none;cursor:pointer;font:inherit;text-align:left}
+#dawn-second .dawn-catalogue__cover-card:focus-visible{outline:2px solid var(--ws-harvest);outline-offset:3px}
+#dawn-second .dawn-book-detail[hidden]{display:none!important}
+#dawn-second .dawn-book-detail{
+ min-height:100%;padding:clamp(18px,3vw,46px) clamp(18px,5vw,86px) clamp(44px,6vw,100px);
+ background:var(--ws-branch-surface,var(--ws-paper));color:var(--ws-ink);
+}
+#dawn-second .dawn-book-detail__nav{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--ws-branch-rule);padding-bottom:14px;margin-bottom:clamp(25px,4vw,62px);gap:14px}
+#dawn-second .dawn-book-detail__nav span{font:400 11px/1.3 var(--ws-type-display-en-sc,var(--ws-type-display-en));letter-spacing:.1em}
+#dawn-second .dawn-book-detail__back{border:0;border-bottom:1px solid var(--ws-branch-rule);background:none;padding:8px 0;color:var(--ws-ink);cursor:pointer;font:200 15px/1.25 var(--ws-type-display-zh)}
+#dawn-second .dawn-book-detail__body{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,3fr);gap:clamp(24px,5vw,100px);align-items:start}
+#dawn-second .dawn-book-detail__visual{margin:0;aspect-ratio:1;min-width:0;display:grid;place-items:center;position:relative;background:var(--ws-branch-raised);border:1px solid var(--ws-branch-rule);overflow:hidden}
+#dawn-second .dawn-book-detail__visual img{width:100%;height:100%;object-fit:contain;display:block}
+#dawn-second .dawn-book-detail__visual img[hidden]{display:none}
+#dawn-second .dawn-book-detail__visual--text::after{content:"DAWN LIBRARY";font:400 clamp(18px,3vw,45px)/1 var(--ws-type-display-en-sc,var(--ws-type-display-en));letter-spacing:.1em;color:var(--ws-ink);max-width:85%;text-align:center}
+#dawn-second .dawn-book-detail__visual figcaption{position:absolute;bottom:0;left:0;right:0;padding:8px 10px;background:color-mix(in srgb,var(--ws-paper) 92%,transparent);font:200 12px/1.3 var(--ws-type-display-zh)}
+#dawn-second .dawn-book-detail__visual figcaption:empty{display:none}
+#dawn-second .dawn-book-detail__edition{font:400 12px/1.4 var(--ws-type-display-en);letter-spacing:.12em;border-top:1px solid var(--ws-branch-rule);padding-top:10px}
+#dawn-second .dawn-book-detail__reading h2{font:400 clamp(32px,4vw,70px)/1.05 var(--ws-type-display-en);letter-spacing:-.025em;overflow-wrap:anywhere;margin:clamp(20px,2vw,35px) 0}
+#dawn-second .dawn-book-detail__author{font:200 clamp(15px,1.5vw,23px)/1.35 var(--ws-type-display-zh);margin-bottom:clamp(25px,3vw,50px)}
+#dawn-second .dawn-book-detail__text{border-top:1px solid var(--ws-branch-rule);padding-top:clamp(18px,2vw,35px);font:400 clamp(15px,1.1vw,19px)/1.7 var(--ws-type-reading-zh,var(--ws-type-display-zh));max-width:65ch}
+#dawn-second .dawn-book-detail__paragraph{margin-bottom:1.6em}
+#dawn-second .dawn-book-detail__paragraph p{margin:.5em 0}
+#dawn-second .dawn-book-detail__paragraph p[lang="en"]{font-family:var(--ws-type-display-en)}
+#dawn-second .dawn-book-detail__source{display:inline-block;margin-top:25px;color:var(--ws-ink);border-bottom:1px solid var(--ws-harvest);padding:8px 0;text-decoration:none;font:200 15px/1.4 var(--ws-type-display-zh)}
+#dawn-second .dawn-book-detail__source[hidden]{display:none}
+@media(max-width:720px){#dawn-second .dawn-book-detail__body{grid-template-columns:1fr;gap:18px}#dawn-second .dawn-book-detail__visual{max-width:520px}}
+
+/* R31 decorative double borders, inner gold rules, tinted frames and shadow
+   REMOVED. The three feature tiles belong to the same image wall as the works. */
+#dawn-second .dawn-catalogue__topics{
+ display:flex;flex-wrap:wrap;gap:clamp(10px,1.2vw,24px);
+ padding:clamp(14px,2vw,24px) 0;
+ border-bottom:1px solid var(--ws-branch-rule);
+}
+#dawn-second .dawn-catalogue__topics button{
+ appearance:none;border:0;border-bottom:1px solid transparent;
+ background:transparent;color:var(--ws-ink);
+ padding:9px 1px;font:200 clamp(13px,1vw,17px)/1.4 var(--ws-type-display-zh);
+ cursor:pointer;letter-spacing:.015em;
+}
+#dawn-second .dawn-catalogue__topics button[aria-pressed="true"]{border-bottom:2px solid var(--ws-harvest);font-weight:600}
+#dawn-second .dawn-catalogue__topics button:hover{color:var(--ws-engraving)}
+#dawn-second .dawn-catalogue__topics button:focus-visible{outline:2px solid var(--ws-harvest);outline-offset:3px}
+@media(max-width:650px){
+ #dawn-second .dawn-catalogue__topics{gap:7px 14px}
+}
+
+
+/* R32 · Scripture typesetting proof: a two-plate composition, sized for reading.
+   The parent is the print forme's carrier, never an empty 900px billboard. */
+#dawn-second[data-ws-scope="dawn-library"] .dawn-second__press--motherform{
+ box-sizing:border-box!important;display:flex!important;align-items:center!important;
+ justify-content:center!important;min-height:0!important;height:auto!important;
+ max-width:none!important;width:100%!important;margin:0!important;
+ padding:clamp(42px,5vw,72px) clamp(15px,3.5vw,58px) clamp(22px,3.5vw,44px)!important;
+}
+#dawn-second[data-ws-scope="dawn-library"] .dawn-second__motherform{
+ display:block!important;flex:0 1 710px!important;
+ width:min(100%,710px)!important;max-width:710px!important;
+ height:clamp(295px,31vw,355px)!important;min-height:0!important;
+ aspect-ratio:auto!important;margin:0 auto!important;
+ border:0!important;overflow:hidden!important;
+}
+@media(max-width:760px){
+ #dawn-second[data-ws-scope="dawn-library"] .dawn-second__press--motherform{
+  padding:58px 12px 22px!important;
+ }
+ #dawn-second[data-ws-scope="dawn-library"] .dawn-second__motherform{
+  flex-basis:100%!important;width:100%!important;
+  height:clamp(180px,47vw,310px)!important;
+ }
+}
+@media(max-width:440px){
+ #dawn-second[data-ws-scope="dawn-library"] .dawn-second__press--motherform{padding:52px 8px 14px!important}
+ #dawn-second[data-ws-scope="dawn-library"] .dawn-second__motherform{height:clamp(165px,49vw,215px)!important}
+}
+
+/* R33 · Reader continuity: source link is optional, not a page escape. */
+#dawn-second .dawn-book-detail__return-hint{font:200 clamp(12px,.85vw,14px)/1.6 var(--ws-type-display-zh);max-width:42ch;color:var(--ws-ink);opacity:.72;margin:7px 0 0}
+#dawn-second .dawn-book-detail__return-hint[hidden]{display:none}
+#dawn-second .dawn-book-detail__back:focus-visible,#dawn-second .dawn-book-detail__source:focus-visible{outline:2px solid var(--ws-harvest);outline-offset:4px}
+
+/* R35 · Book editorial introduction always precedes any verified sample text. */
+#dawn-second .dawn-book-detail__introduction h3,
+#dawn-second .dawn-book-detail__extract h3{
+ font:200 clamp(18px,1.6vw,26px)/1.35 var(--ws-type-display-zh);
+ color:var(--ws-ink);letter-spacing:.04em;margin:0 0 clamp(14px,1.7vw,24px);
+}
+#dawn-second .dawn-book-detail__introduction p{
+ font:200 clamp(16px,1.22vw,21px)/1.85 var(--ws-type-reading-zh,var(--ws-type-display-zh));
+ max-width:39em;margin:0;
+}
+#dawn-second .dawn-book-detail__extract{
+ margin-top:clamp(32px,4vw,64px);padding-top:clamp(20px,2vw,34px);
+ border-top:1px solid var(--ws-branch-rule);
+}
+
+
+/* R36 · Dawn Library composition. Original engraved book-forme, not a
+   background gradient pretending to be a decorative illustration. */
+
+#dawn-second .dawn-second__global-nav{
+ position:sticky!important;top:0!important;z-index:45!important;
+ display:flex!important;justify-content:space-between;align-items:center;gap:20px;
+ padding:clamp(10px,1.2vw,17px) clamp(16px,4vw,70px)!important;
+ background:color-mix(in oklab,var(--ws-harvest) 9%,var(--ws-paper));
+ border-bottom:1px solid var(--ws-branch-rule);
+ min-height:51px;isolation:isolate;
+}
+#dawn-second .dawn-second__global-nav .dawn-second__return{
+ position:static!important;inset:auto!important;
+ display:inline-flex!important;align-items:center!important;justify-content:flex-start!important;
+ margin:0!important;padding:5px 0!important;
+ border:0!important;border-bottom:1px solid var(--ws-branch-rule)!important;
+ width:auto!important;max-width:none!important;background:none!important;
+ font-size:clamp(12px,.85vw,15px)!important;
+}
+#dawn-second .dawn-second__all-works{
+ appearance:none;display:inline-flex;align-items:center;gap:clamp(10px,2vw,28px);
+ padding:6px 0!important;
+ background:transparent!important;
+ border:0!important;border-bottom:2px solid var(--ws-harvest)!important;
+ color:var(--ws-ink)!important;white-space:nowrap;
+ font:400 clamp(14px,1.1vw,19px)/1.25 var(--ws-type-display-zh)!important;
+ cursor:pointer;
+}
+#dawn-second .dawn-second__all-works:hover,
+#dawn-second .dawn-second__all-works:focus-visible{color:var(--ws-harvest)!important}
+/* Third-layer printing surfaces retain the verified paper and border hierarchy.
+   The automatically generated line-pattern trial is not used as artwork. */
+#dawn-second .dawn-second__press--motherform,
+#dawn-second .dawn-catalogue,
+#dawn-second .dawn-book-detail{position:relative;isolation:isolate}
+#dawn-second .dawn-second__motherform{position:relative!important;z-index:1!important}
+#dawn-second .dawn-reading-room{
+ position:relative;isolation:isolate;
+ background:var(--ws-branch-surface)!important;
+}
+#dawn-second .dawn-reading-room::before{
+ content:"";position:absolute;inset:0;pointer-events:none;z-index:-1;
+ background:repeating-linear-gradient(0deg,transparent 0 35px,
+ color-mix(in oklab,var(--ws-harvest) 4%,transparent) 35px 36px);
+ opacity:.35;
+}
+#dawn-second .dawn-catalogue__introduction{
+ display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(20px,4vw,84px);
+ padding:clamp(20px,3vw,42px) 0 clamp(24px,3vw,46px);
+ border-bottom:1px solid var(--ws-branch-rule);
+}
+#dawn-second .dawn-catalogue__introduction[hidden]{display:none!important}
+#dawn-second .dawn-catalogue__introduction p{
+ margin:0;max-width:43ch;
+ font:200 clamp(15px,1.18vw,21px)/1.85 var(--ws-type-display-zh);
+ color:var(--ws-ink);
+}
+#dawn-second .dawn-book-detail__introduction p+p{margin-top:1.3em}
+#dawn-second .dawn-catalogue__heading h2{
+ font:200 clamp(35px,4.4vw,82px)/1.13 var(--ws-type-display-zh)!important;
+ letter-spacing:0!important;
+}
+#dawn-second .dawn-catalogue__heading{padding-top:clamp(16px,2vw,34px)}
+/* Legitimate content starts immediately, without any empty test headers. */
+#dawn-second .dawn-catalogue__heading p:empty{display:none!important}
+@media(max-width:720px){
+ #dawn-second .dawn-second__global-nav{padding:10px 14px!important;gap:12px}
+ #dawn-second .dawn-second__global-nav .dawn-second__return-en{display:none!important}
+ #dawn-second .dawn-catalogue__introduction{grid-template-columns:1fr;gap:14px}
+ #dawn-second .dawn-second__press--motherform::before{background-size:cover}
+}
+
+
+/* Dawn Library: functional top-level catalogue navigation.
+   A visible Chinese path from the normal "全部館藏" entrance, not a hidden
+   category buried after seven sleeves. No black-gold palette or faux frames. */
+#dawn-second .dawn-catalogue__primary-nav{
+ display:flex;align-items:center;flex-wrap:wrap;gap:clamp(14px,2vw,38px);
+ padding:clamp(17px,2vw,29px) 0;
+ margin-top:clamp(12px,1.5vw,26px);
+ border-bottom:1px solid var(--ws-branch-rule);
+}
+#dawn-second .dawn-catalogue__primary-nav button{
+ appearance:none;display:inline-flex;align-items:baseline;gap:7px;
+ padding:5px 0 9px;border:0;border-bottom:2px solid transparent;
+ background:transparent;color:var(--ws-ink);cursor:pointer;
+ font:400 clamp(18px,1.75vw,31px)/1.2 var(--ws-type-display-zh);
+ white-space:nowrap;text-align:left;
+}
+#dawn-second .dawn-catalogue__primary-nav button span{
+ font:400 clamp(10px,.8vw,14px)/1.2 var(--ws-type-display-en-sc,var(--ws-type-display-en));
+ color:var(--ws-harvest);
+}
+#dawn-second .dawn-catalogue__primary-nav button[aria-current="page"]{
+ border-bottom-color:var(--ws-harvest);
+}
+#dawn-second .dawn-catalogue__primary-nav button:hover{color:var(--ws-harvest)}
+#dawn-second .dawn-catalogue__primary-nav button:focus-visible{outline:2px solid var(--ws-ink);outline-offset:3px}
+@media(max-width:600px){
+ #dawn-second .dawn-catalogue__primary-nav{gap:12px 20px}
+ #dawn-second .dawn-catalogue__primary-nav button{font-size:clamp(16px,4.5vw,22px)}
+}
+
+/* Dawn Library — vinyl jacket grammar extends through the classification path.
+   Single source of category work identity remains classification.json and
+   chinese-collection.json; never synthesize an unverified category membership. */
+#dawn-second .dawn-catalogue__classification{
+ margin:clamp(24px,4vw,65px) 0;
+ border-block:1px solid var(--ws-branch-rule);
+ padding:clamp(24px,3.5vw,58px) 0 clamp(26px,4vw,70px);
+}
+#dawn-second .dawn-catalogue__classification[hidden],
+#dawn-second .dawn-catalogue__classification-tree.dawn-classification__wall[hidden],
+#dawn-second .dawn-classification__results[hidden],
+#dawn-second .dawn-catalogue__facets[hidden]{display:none!important}
+#dawn-second .dawn-catalogue__classification-head{
+ display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+ align-items:end;gap:clamp(20px,4vw,75px);margin-bottom:clamp(22px,3vw,42px)
+}
+#dawn-second .dawn-catalogue__classification-head span{
+ color:var(--ws-harvest);
+ font:400 11px/1.4 var(--ws-type-display-en-sc,var(--ws-type-display-en));letter-spacing:.14em
+}
+#dawn-second .dawn-catalogue__classification-head h3{
+ font:200 clamp(34px,4.3vw,76px)/1.11 var(--ws-type-display-zh);
+ color:var(--ws-ink);margin:7px 0 0
+}
+#dawn-second .dawn-catalogue__classification-head p{
+ font:200 clamp(14px,1.05vw,18px)/1.8 var(--ws-type-display-zh);
+ margin:0;max-width:37ch;color:var(--ws-ink)
+}
+#dawn-second .dawn-classification__breadcrumbs{
+ display:flex;align-items:center;flex-wrap:wrap;gap:clamp(7px,1vw,18px);
+ min-height:41px;margin-bottom:clamp(16px,2vw,31px);
+ border-bottom:1px solid var(--ws-branch-rule);padding-bottom:12px;
+ font:200 clamp(12px,.93vw,17px)/1.5 var(--ws-type-display-zh)
+}
+#dawn-second .dawn-classification__breadcrumbs button{
+ appearance:none;background:none;border:0;border-bottom:1px solid var(--ws-harvest);
+ padding:4px 0;color:var(--ws-ink);cursor:pointer;font:inherit;
+}
+#dawn-second .dawn-classification__breadcrumbs strong{font-weight:200;color:var(--ws-ink)}
+#dawn-second .dawn-catalogue__classification-tree.dawn-classification__wall{
+ display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;
+ gap:clamp(9px,1vw,18px)!important;grid-auto-flow:row!important;
+ align-items:stretch!important;border:0!important;margin:0;
+}
+/* Actual sourced covers, on Dawn paper. No black-gold vinyl discs. */
+#dawn-second .dawn-classification__sleeve{
+ appearance:none;position:relative;isolation:isolate;display:flex;flex-direction:column;
+ align-items:flex-start;text-align:left;box-sizing:border-box;width:100%;
+ min-width:0;min-height:0;aspect-ratio:1!important;padding:clamp(11px,1.3vw,22px);
+ border:1px solid var(--ws-branch-rule)!important;
+ background:var(--ws-paper)!important;color:var(--ws-ink)!important;
+ box-shadow:0 5px 17px rgba(87,71,39,.09);
+ overflow:hidden;cursor:pointer;transition:transform .32s ease,box-shadow .32s ease;
+}
+#dawn-second .dawn-classification__sleeve:hover,
+#dawn-second .dawn-classification__sleeve:focus-visible{
+ transform:translateY(-3px);box-shadow:0 11px 30px rgba(87,71,39,.16)
+}
+#dawn-second .dawn-classification__art{
+ position:absolute;inset:0;z-index:-1;display:grid;place-items:center;
+ background:color-mix(in oklab,var(--ws-harvest) 9%,var(--ws-paper));
+}
+#dawn-second .dawn-classification__art img{
+ display:block;width:100%;height:100%;object-fit:cover;object-position:center;
+ filter:saturate(.84);animation:dawn-cover-reveal .65s ease both;
+}
+@keyframes dawn-cover-reveal{from{opacity:.2;transform:scale(1.045)}to{opacity:1;transform:scale(1)}}
+#dawn-second .dawn-classification__sleeve::before{
+ content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+ background:linear-gradient(180deg,rgba(250,249,245,.70),rgba(250,249,245,.04) 35%,rgba(250,249,245,.95) 100%);
+}
+#dawn-second .dawn-classification__index{
+ display:block;position:relative;z-index:1;
+ font:400 clamp(11px,.78vw,14px)/1.3 var(--ws-type-display-en-sc,var(--ws-type-display-en));
+ color:var(--ws-ink)!important;letter-spacing:.04em;
+}
+#dawn-second .dawn-classification__sleeve strong{
+ display:block;position:relative;z-index:1;max-width:97%;margin:auto 0 8px;
+ overflow-wrap:anywhere;font:200 clamp(17px,2vw,37px)/1.17 var(--ws-type-display-zh);
+ color:var(--ws-ink)!important;text-shadow:none!important;
+}
+#dawn-second .dawn-classification__edge{
+ position:relative;z-index:1;display:block;width:100%;height:1px;
+ background:var(--ws-harvest);opacity:.7;margin-top:4px;
+}
+#dawn-second .dawn-classification__results{
+ border:0;margin:0;padding:0;
+}
+#dawn-second .dawn-classification__result-heading{
+ display:flex;justify-content:space-between;align-items:end;
+ gap:clamp(14px,3vw,58px);margin:15px 0 27px;
+}
+#dawn-second .dawn-classification__result-heading h4{
+ font:200 clamp(25px,3.1vw,54px)/1.15 var(--ws-type-display-zh);
+ margin:0;color:var(--ws-ink);
+}
+#dawn-second .dawn-classification__result-heading p{
+ font:200 clamp(12px,.9vw,15px)/1.6 var(--ws-type-display-zh);
+ max-width:40ch;margin:0;color:var(--ws-ink);
+}
+#dawn-second .dawn-classification__book-wall{
+ display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:clamp(9px,1vw,19px)
+}
+#dawn-second .dawn-classification__book{
+ appearance:none;position:relative;display:block;min-width:0;aspect-ratio:1;
+ width:100%;padding:0;border:1px solid var(--ws-branch-rule);
+ background:var(--ws-paper);text-align:left;color:var(--ws-ink);overflow:hidden;
+ cursor:pointer;box-shadow:0 6px 14px rgba(87,71,39,.11);
+}
+#dawn-second .dawn-classification__book:focus-visible{outline:2px solid var(--ws-harvest);outline-offset:3px}
+#dawn-second .dawn-classification__book-art{
+ position:absolute;inset:0;display:grid;place-items:center;
+ background:color-mix(in oklab,var(--ws-harvest) 8%,var(--ws-paper))
+}
+#dawn-second .dawn-classification__book-art img{
+ width:100%;height:100%;object-fit:contain;display:block;
+}
+#dawn-second .dawn-classification__book-meta{
+ position:absolute;inset:auto 0 0;z-index:2;display:grid;gap:4px;
+ padding:clamp(15px,2vw,29px) 9px 10px;
+ background:linear-gradient(0deg,rgba(250,249,245,.97),rgba(250,249,245,.91) 63%,transparent);
+ color:var(--ws-ink);
+}
+#dawn-second .dawn-classification__book-meta strong{
+ display:-webkit-box;overflow:hidden;-webkit-line-clamp:3;-webkit-box-orient:vertical;
+ font:400 clamp(12px,1vw,19px)/1.2 var(--ws-type-display-zh);
+}
+#dawn-second .dawn-classification__book-meta small{
+ font:200 clamp(10px,.75vw,14px)/1.2 var(--ws-type-display-zh);opacity:.77
+}
+#dawn-second .dawn-classification__actions{
+ display:flex;flex-wrap:wrap;gap:clamp(18px,3vw,45px);
+ margin:clamp(24px,3.4vw,53px) 0 0;
+}
+#dawn-second .dawn-classification__continue{
+ appearance:none;background:none;color:var(--ws-ink);cursor:pointer;
+ border:0;border-bottom:1px solid var(--ws-harvest);padding:10px 0;
+ font:400 clamp(13px,1vw,18px)/1.5 var(--ws-type-display-zh)
+}
+#dawn-second .dawn-classification__empty{
+ font:200 clamp(15px,1.2vw,21px)/1.65 var(--ws-type-display-zh);
+ border-top:1px solid var(--ws-branch-rule);padding:24px 0;
+}
+#dawn-second .dawn-catalogue__facets{
+ padding:clamp(23px,3vw,45px) 0 0;display:flex;flex-direction:column;
+ align-items:flex-start;gap:14px;
+}
+#dawn-second .dawn-classification__facet-label{
+ margin:0;font:400 12px/1.3 var(--ws-type-display-zh)
+}
+#dawn-second .dawn-classification__facet-tags{display:flex;flex-wrap:wrap;gap:8px}
+#dawn-second .dawn-classification__facet-tags span{
+ border:1px solid var(--ws-branch-rule);padding:8px 12px;
+ font:200 clamp(12px,.85vw,16px)/1.4 var(--ws-type-display-zh)
+}
+#dawn-second .dawn-classification__century-label{
+ display:flex;align-items:center;flex-wrap:wrap;gap:13px;
+ font:200 clamp(12px,.95vw,17px)/1.5 var(--ws-type-display-zh)
+}
+#dawn-second .dawn-classification__century-label select{
+ background:transparent;color:var(--ws-ink);border:0;border-bottom:1px solid var(--ws-harvest);
+ font:400 clamp(13px,.95vw,16px)/1.4 var(--ws-type-display-zh);padding:7px 21px 7px 0
+}
+@media(max-width:1040px){
+ #dawn-second .dawn-catalogue__classification-tree.dawn-classification__wall{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+ #dawn-second .dawn-classification__book-wall{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+@media(max-width:680px){
+ #dawn-second .dawn-catalogue__classification-head{grid-template-columns:1fr}
+ #dawn-second .dawn-catalogue__classification-tree.dawn-classification__wall{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+ #dawn-second .dawn-classification__sleeve{padding:12px}
+ #dawn-second .dawn-classification__sleeve strong{font-size:clamp(16px,4.5vw,27px)}
+ #dawn-second .dawn-classification__result-heading{display:block}
+ #dawn-second .dawn-classification__result-heading p{margin-top:12px}
+ #dawn-second .dawn-classification__book-wall{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+}
+
+/* The catalogue landing is the vinyl classification wall. The old 85-page
+   bibliographic catalogue is accessed through its own "全部書目" jacket only. */
+#dawn-second .dawn-catalogue__nav[hidden],
+#dawn-second .dawn-catalogue__works[hidden],
+#dawn-second .dawn-catalogue__more[hidden]{display:none!important}
+
+/* R48 — evidence-driven catalogue correction: the index is the heading.
+   Decorative empty title block and unseen category image layer are removed. */
+#dawn-second #dawn-catalogue[data-view="index"]>.dawn-catalogue__heading{display:none!important}
+#dawn-second #dawn-catalogue[data-view="index"]>.dawn-catalogue__back{
+ margin:0 0 clamp(6px,1vw,14px)!important;padding:4px 0!important;
+ border:0!important;border-bottom:1px solid var(--ws-harvest)!important;
+ background:none!important;box-shadow:none!important;
+}
+#dawn-second #dawn-catalogue[data-view="index"] .dawn-catalogue__primary-nav{
+ margin:0!important;padding:clamp(10px,1.5vw,23px) 0!important;
+}
+#dawn-second #dawn-catalogue[data-view="index"] .dawn-catalogue__classification{
+ margin:clamp(12px,2vw,26px) 0!important;
+ padding:clamp(14px,2vw,30px) 0!important;
+}
+#dawn-second #dawn-catalogue[data-view="index"] .dawn-catalogue__classification-head{
+ margin-bottom:clamp(12px,1.4vw,23px)!important;
+}
+#dawn-second #dawn-catalogue[data-view="index"] .dawn-catalogue__classification-head h3{
+ font-size:clamp(28px,3vw,48px)!important;line-height:1.12!important;
+}
+#dawn-second #dawn-catalogue[data-view="index"] .dawn-classification__breadcrumbs{
+ margin-bottom:clamp(8px,1vw,16px)!important;
+ padding-bottom:8px!important;
+}
+#dawn-second .dawn-classification__sleeve{
+ border:0!important;box-shadow:none!important;
+ background:var(--ws-paper)!important;
+}
+#dawn-second .dawn-classification__art{
+ z-index:0!important;
+ background:color-mix(in srgb,var(--ws-harvest) 6%,var(--ws-paper))!important;
+ overflow:hidden!important;
+}
+#dawn-second .dawn-classification__sleeve::before{
+ z-index:1!important;
+ background:linear-gradient(180deg,rgba(250,249,245,.03) 0%,rgba(250,249,245,.04) 45%,rgba(250,249,245,.92) 100%)!important;
+}
+#dawn-second .dawn-classification__folio{
+ position:absolute;inset:7% 7% 24%;display:flex;flex-direction:column;
+ justify-content:space-around;align-items:flex-start;overflow:hidden;
+ gap:clamp(6px,1.3vw,20px);color:var(--ws-ink);
+ opacity:1;transition:opacity .4s;
+}
+#dawn-second .dawn-classification__folio-line{
+ display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;
+ overflow:hidden;overflow-wrap:anywhere;
+ font:400 clamp(13px,1.35vw,23px)/1.18 var(--ws-type-display-zh);
+ max-width:95%;letter-spacing:.018em;
+}
+#dawn-second .dawn-classification__folio-line--lead{
+ font:200 clamp(18px,2.2vw,36px)/1.13 var(--ws-type-display-zh);
+}
+#dawn-second .dawn-classification__folio-line:nth-child(2){
+ align-self:flex-end;color:var(--ws-harvest);text-align:right;max-width:82%;
+}
+#dawn-second .dawn-classification__sleeve--olive .dawn-classification__art{
+ background:color-mix(in srgb,var(--ws-olive) 10%,var(--ws-paper))!important;
+}
+#dawn-second .dawn-classification__sleeve--chinese .dawn-classification__art{
+ background:color-mix(in srgb,var(--ws-harvest) 10%,var(--ws-paper))!important;
+}
+#dawn-second .dawn-classification__sleeve--pictured .dawn-classification__folio{
+ opacity:0;pointer-events:none;
+}
+#dawn-second .dawn-classification__sleeve .dawn-classification__index,
+#dawn-second .dawn-classification__sleeve strong,
+#dawn-second .dawn-classification__sleeve .dawn-classification__edge{
+ position:relative;z-index:2!important;
+}
+#dawn-second .dawn-classification__sleeve strong{
+ background:color-mix(in srgb,var(--ws-paper) 93%,transparent);
+ padding:5px 8px 5px 0;
+}
+@media(max-width:680px){
+ #dawn-second .dawn-classification__folio{inset:8% 8% 29%}
+ #dawn-second .dawn-classification__folio-line{font-size:clamp(11px,3vw,16px)}
+ #dawn-second .dawn-classification__folio-line--lead{font-size:clamp(16px,4.5vw,24px)}
+}
+
+
+/* P2 05 × established Personal Dawn. No second engine, Work identity or
+   decorative black-gold theme. The reader owns this shared local-first state. */
+#dawn-second .dawn-second__personal{
+ appearance:none;background:transparent;color:var(--ws-ink);
+ border:0;border-bottom:1px solid var(--ws-harvest);padding:7px 0;
+ cursor:pointer;display:inline-flex;align-items:center;gap:10px;
+ font:400 clamp(12px,1vw,17px)/1.3 var(--ws-type-display-zh);
+}
+#dawn-second .dawn-second__personal span{
+ display:inline-grid;place-items:center;min-width:1.7em;height:1.7em;
+ border-radius:50%;background:var(--ws-paper);
+ font:400 11px/1 var(--ws-type-display-en);
+}
+#dawn-second .dawn-book-detail__bookmark{
+ appearance:none;display:inline-flex;width:max-content;max-width:100%;
+ margin:10px 0 16px;border:1px solid var(--ws-harvest);
+ color:var(--ws-ink);background:var(--ws-paper);
+ padding:10px 18px;cursor:pointer;
+ font:400 clamp(13px,1vw,17px)/1.4 var(--ws-type-display-zh);
+}
+#dawn-second .dawn-book-detail__bookmark:disabled{opacity:.5;cursor:not-allowed}
+#dawn-second .dawn-personal{
+ position:fixed!important;inset:0!important;margin:auto!important;
+ width:min(94vw,980px)!important;max-width:980px!important;
+ max-height:min(89dvh,900px)!important;overflow:auto!important;
+ border:1px solid var(--ws-branch-rule)!important;
+ background:var(--ws-paper)!important;color:var(--ws-ink)!important;
+ padding:clamp(21px,3vw,48px)!important;
+ box-shadow:0 18px 60px rgba(36,34,29,.18)!important;
+}
+#dawn-second .dawn-personal::backdrop{background:rgba(32,37,34,.43)}
+#dawn-second .dawn-personal__head{display:flex;align-items:start;justify-content:space-between;gap:15px;margin:0 0 26px}
+#dawn-second .dawn-personal__head h2{
+ font:200 clamp(29px,3.6vw,53px)/1.08 var(--ws-type-display-zh);
+ color:var(--ws-ink);margin:0;
+}
+#dawn-second .dawn-personal__actions{
+ display:flex;gap:10px 19px;flex-wrap:wrap;padding:0 0 17px;
+ border-bottom:1px solid var(--ws-branch-rule);
+}
+#dawn-second .dawn-personal__head button,
+#dawn-second .dawn-personal__actions button,
+#dawn-second .dawn-personal__entry button,
+#dawn-second .dawn-personal__import{
+ appearance:none;background:transparent;color:var(--ws-ink);
+ border:0;border-bottom:1px solid var(--ws-harvest);
+ padding:8px 0;cursor:pointer;
+ font:400 clamp(12px,.95vw,17px)/1.4 var(--ws-type-display-zh);
+}
+#dawn-second .dawn-personal__import{position:relative;overflow:hidden}
+#dawn-second .dawn-personal__import input{position:absolute;inset:0;opacity:0;cursor:pointer}
+#dawn-second #dawn-personal-status{min-height:1.3em;font:200 14px/1.4 var(--ws-type-display-zh)}
+#dawn-second .dawn-personal__group{padding:18px 0 25px;border-bottom:1px solid var(--ws-branch-rule)}
+#dawn-second .dawn-personal__group h3{
+ font:200 clamp(18px,2vw,29px)/1.2 var(--ws-type-display-zh);
+ margin:0 0 16px;
+}
+#dawn-second .dawn-personal__entries{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(10px,1.5vw,20px)}
+#dawn-second .dawn-personal__entry{
+ display:flex;flex-direction:column;align-items:start;gap:7px;
+ border:1px solid var(--ws-branch-rule);background:transparent;padding:15px;
+ min-width:0;
+}
+#dawn-second .dawn-personal__entry strong{
+ font:400 clamp(15px,1.2vw,22px)/1.25 var(--ws-type-display-zh);
+ overflow-wrap:anywhere;
+}
+#dawn-second .dawn-personal__entry small{
+ font:200 11px/1.4 var(--ws-type-display-en);
+ overflow-wrap:anywhere;opacity:.7;
+}
+#dawn-second .dawn-personal button:focus-visible{
+ outline:2px solid var(--ws-ink);outline-offset:3px;
+}
+@media(max-width:760px){
+ #dawn-second .dawn-personal__entries{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #dawn-second .dawn-personal{width:96vw!important;padding:18px!important}
+}
+@media(max-width:480px){
+ #dawn-second .dawn-personal__entries{grid-template-columns:1fr}
+}
+
+
+/* Work-identity-matched editorial picture plates. If the source image is
+   missing, display the real original title—never somebody else's cover. */
+#dawn-second .dawn-feature__art>.dawn-feature__plate{
+ position:relative;display:flex;align-items:flex-end;justify-content:flex-start;
+ min-width:0;min-height:0;overflow:hidden;
+ background:color-mix(in srgb,var(--ws-olive) 11%,var(--ws-paper));
+ padding:clamp(9px,1.1vw,19px);
+}
+#dawn-second .dawn-feature__art>.dawn-feature__plate:nth-child(2){
+ background:color-mix(in srgb,var(--ws-harvest) 12%,var(--ws-paper));
+}
+#dawn-second .dawn-feature__art>.dawn-feature__plate:nth-child(3){
+ background:color-mix(in srgb,var(--ws-olive) 6%,var(--ws-paper));
+}
+#dawn-second .dawn-feature__plate .dawn-feature__cover{
+ position:absolute;inset:0;display:block;width:100%;height:100%;
+ object-fit:cover;object-position:center;transition:transform .65s ease;
+}
+#dawn-second .dawn-feature:hover .dawn-feature__plate .dawn-feature__cover{
+ transform:scale(1.025);
+}
+#dawn-second .dawn-feature__plate-title{
+ position:relative;z-index:1;display:block;max-width:100%;
+ font:400 clamp(11px,1.13vw,20px)/1.25 var(--ws-type-display-en-sc,var(--ws-type-display-en));
+ overflow-wrap:anywhere;color:var(--ws-ink);
+}
+#dawn-second .dawn-feature__plate--loaded .dawn-feature__plate-title{
+ visibility:hidden;
+}
+@media(max-width:680px){
+ #dawn-second .dawn-feature__plate-title{font-size:clamp(11px,3.6vw,18px)}
+}
+@media(prefers-reduced-motion:reduce){
+ #dawn-second .dawn-feature__plate .dawn-feature__cover{transition:none!important}
+}
+
+
+/* P2 05 · Reading-room architecture · built over the ORIGINAL three-channel wall.
+   Editorial OS tokens only. No replacement of the carefully approved card choreography. */
+#dawn-second .dawn-reading-room__masthead{
+ display:grid;grid-template-columns:minmax(0,1fr) minmax(140px,23%);gap:clamp(22px,5vw,100px);
+ align-items:end;max-width:1620px;margin:0 auto clamp(28px,4.5vw,75px);
+ padding:clamp(26px,5vw,80px) 0 clamp(24px,3vw,46px);
+ border-bottom:1px solid var(--ws-harvest);
+}
+#dawn-second .dawn-reading-room__opening{min-width:0}
+#dawn-second .dawn-reading-room__folio{
+ font:400 clamp(10px,.9vw,13px)/1.4 var(--ws-type-display-en);
+ color:var(--ws-harvest);letter-spacing:.15em;margin:0 0 clamp(16px,2vw,36px);
+}
+#dawn-second .dawn-reading-room__masthead h2{
+ display:flex;flex-wrap:wrap;align-items:baseline;gap:.2em .55em;
+ margin:0 0 clamp(16px,2vw,32px);
+ font:200 clamp(42px,6vw,108px)/1.08 var(--ws-type-display-zh);
+ color:var(--ws-ink);
+}
+#dawn-second .dawn-reading-room__masthead h2 span{
+ font:400 clamp(15px,1.6vw,27px)/1.25 var(--ws-type-display-en);
+ letter-spacing:.01em;color:var(--ws-harvest);
+}
+#dawn-second .dawn-reading-room__lead{
+ max-width:33em;margin:0;font:200 clamp(15px,1.4vw,22px)/1.8 var(--ws-type-display-zh);
+ color:var(--ws-ink);overflow-wrap:break-word;
+}
+#dawn-second .dawn-reading-room__identity{
+ display:grid;justify-items:end;gap:8px;align-self:end;padding-bottom:4px;text-align:right;
+ color:var(--ws-harvest);
+}
+#dawn-second .dawn-reading-room__identity>span{
+ font:400 clamp(9px,.9vw,13px)/1.3 var(--ws-type-display-en);letter-spacing:.08em;
+}
+#dawn-second .dawn-reading-room__identity>strong{
+ font:400 clamp(29px,3.1vw,54px)/1 var(--ws-type-display-en);
+ color:var(--ws-ink);font-variant-numeric:tabular-nums;
+}
+#dawn-second .dawn-reading-room__identity>small{
+ font:200 12px/1.5 var(--ws-type-display-zh);
+}
+#dawn-second .dawn-reading-room__departments{
+ max-width:1620px;margin:clamp(36px,5vw,90px) auto 0;
+ border-top:1px solid var(--ws-harvest);border-bottom:1px solid var(--ws-harvest);
+ padding:clamp(24px,3vw,55px) 0 clamp(28px,4vw,70px);
+}
+#dawn-second .dawn-reading-room__departments-intro{
+ display:grid;grid-template-columns:100px minmax(0,1fr);
+ align-items:baseline;gap:8px 24px;margin-bottom:clamp(22px,2.5vw,40px);
+}
+#dawn-second .dawn-reading-room__departments-intro>span{
+ font:400 12px/1.4 var(--ws-type-display-en);letter-spacing:.1em;color:var(--ws-harvest);
+}
+#dawn-second .dawn-reading-room__departments-intro h3{
+ margin:0;font:200 clamp(30px,3vw,55px)/1.2 var(--ws-type-display-zh);color:var(--ws-ink);
+}
+#dawn-second .dawn-reading-room__departments-intro p{
+ margin:0;grid-column:2;font:200 clamp(13px,1vw,17px)/1.6 var(--ws-type-display-zh);
+}
+#dawn-second .dawn-reading-room__department-grid{
+ display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;
+ border-top:1px solid color-mix(in srgb,var(--ws-harvest) 35%,transparent);
+ border-left:1px solid color-mix(in srgb,var(--ws-harvest) 35%,transparent);
+}
+#dawn-second .dawn-reading-room__department{
+ min-width:0;min-height:clamp(132px,12vw,205px);position:relative;
+ display:grid;grid-template-rows:auto 1fr auto;
+ padding:clamp(14px,1.7vw,30px);
+ border:0;border-right:1px solid color-mix(in srgb,var(--ws-harvest) 35%,transparent);
+ border-bottom:1px solid color-mix(in srgb,var(--ws-harvest) 35%,transparent);
+ border-radius:0;background:var(--ws-paper);color:var(--ws-ink);
+ text-align:left;cursor:pointer;transition:background .3s ease,color .3s ease;
+}
+#dawn-second .dawn-reading-room__department:hover,
+#dawn-second .dawn-reading-room__department:focus-visible{
+ background:var(--ws-harvest);color:var(--ws-paper);
+}
+#dawn-second .dawn-reading-room__department:focus-visible{
+ outline:3px solid var(--ws-first-light);outline-offset:-4px;
+}
+#dawn-second .dawn-reading-room__department-number{
+ font:400 12px/1.2 var(--ws-type-display-en);opacity:.6;letter-spacing:.08em;
+}
+#dawn-second .dawn-reading-room__department strong{
+ font:200 clamp(24px,2.6vw,47px)/1.15 var(--ws-type-display-zh);align-self:center;overflow-wrap:break-word;
+}
+#dawn-second .dawn-reading-room__department small{
+ font:200 clamp(11px,1vw,15px)/1.4 var(--ws-type-display-zh);opacity:.82;
+}
+#dawn-second .dawn-reading-room__department-arrow{
+ position:absolute;right:clamp(12px,1.5vw,25px);top:clamp(14px,1.7vw,30px);
+ font:400 clamp(14px,1.5vw,22px)/1 var(--ws-type-display-en);
+}
+#dawn-second .dawn-reading-room__department-loading,
+#dawn-second .dawn-reading-room__department-status{
+ font:200 14px/1.6 var(--ws-type-display-zh);color:var(--ws-harvest);
+}
+#dawn-second .dawn-reading-room__department-status:empty{display:none}
+@media(max-width:950px){
+ #dawn-second .dawn-reading-room__department-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #dawn-second .dawn-reading-room__masthead{grid-template-columns:minmax(0,1fr) minmax(120px,25%)}
+}
+@media(max-width:600px){
+ #dawn-second .dawn-reading-room__masthead{grid-template-columns:1fr;gap:16px}
+ #dawn-second .dawn-reading-room__masthead h2{font-size:clamp(37px,9vw,60px)}
+ #dawn-second .dawn-reading-room__identity{justify-items:start;text-align:left}
+ #dawn-second .dawn-reading-room__identity>strong{font-size:32px}
+ #dawn-second .dawn-reading-room__departments-intro{grid-template-columns:1fr}
+ #dawn-second .dawn-reading-room__departments-intro p{grid-column:auto}
+ #dawn-second .dawn-reading-room__department{min-height:140px}
+ #dawn-second .dawn-reading-room__department strong{font-size:clamp(25px,6vw,39px)}
+}
+@media(prefers-reduced-motion:reduce){
+ #dawn-second .dawn-reading-room__department{transition:none}
+}
+
+
+/* P2 / DAWN · Codrops-inspired inline book preview (not a page navigation).
+   Native layout reflow; does NOT touch the 01–04 / V9 scroll transitions. */
+#dawn-second .dawn-catalogue__works > .dawn-expander,
+#dawn-second .dawn-classification__book-wall > .dawn-expander,
+#dawn-second .dawn-wall__grid > .dawn-expander{
+ grid-column:1 / -1!important;grid-row:auto!important;
+ width:100%!important;max-width:none!important;height:auto!important;min-height:0!important;
+ padding:0!important;margin:0!important;overflow:visible!important;border:0!important;
+ background:transparent!important;list-style:none!important;display:block!important;
+ box-shadow:none!important;aspect-ratio:auto!important;
+}
+#dawn-second .dawn-expander{
+ position:relative;isolation:isolate;
+ border-top:1px solid var(--ws-harvest);
+ border-bottom:1px solid var(--ws-harvest);
+ background:var(--ws-papyrus);color:var(--ws-ink);
+ padding:clamp(28px,4vw,62px);
+}
+#dawn-second .dawn-expander:before{
+ content:'';position:absolute;top:-13px;left:var(--dawn-preview-pointer,50%);
+ width:24px;height:24px;transform:translateX(-50%) rotate(45deg);
+ background:var(--ws-papyrus);border-left:1px solid var(--ws-harvest);
+ border-top:1px solid var(--ws-harvest);
+}
+#dawn-second .dawn-expander__close{
+ position:absolute;z-index:3;top:clamp(10px,1.6vw,24px);right:clamp(14px,2.2vw,34px);
+ border:0;background:transparent;color:var(--ws-harvest);cursor:pointer;
+ padding:8px 10px;font:200 13px/1.4 var(--ws-type-display-zh);
+}
+#dawn-second .dawn-expander__close:hover,
+#dawn-second .dawn-expander__close:focus-visible{color:var(--ws-ink);text-decoration:underline}
+#dawn-second .dawn-expander__content{
+ display:grid;grid-template-columns:minmax(180px,31%) minmax(0,1fr);
+ gap:clamp(26px,5vw,100px);align-items:center;
+ background:var(--ws-papyrus);padding:clamp(20px,3vw,48px);
+ min-height:clamp(320px,42vw,620px);overflow-wrap:anywhere;
+}
+#dawn-second .dawn-expander__book{
+ position:relative;justify-self:center;display:block;width:min(100%,340px);
+ aspect-ratio:5 / 8;padding:0;border:1px solid var(--ws-harvest);
+ border-radius:0;background:var(--ws-paper);color:var(--ws-ink);
+ box-shadow:14px 16px 0 color-mix(in srgb,var(--ws-harvest) 18%,transparent);
+ cursor:pointer;overflow:hidden;
+}
+#dawn-second .dawn-expander__book-image{
+ display:block;width:100%;height:100%;object-fit:contain;
+ background:var(--ws-paper);
+}
+#dawn-second .dawn-expander__book-paper{
+ position:absolute;inset:0;display:none;flex-direction:column;justify-content:space-between;
+ padding:10%;text-align:left;border:clamp(5px,.7vw,10px) double var(--ws-harvest);
+ font:400 clamp(17px,1.5vw,26px)/1.2 var(--ws-type-display-en);
+}
+#dawn-second .dawn-expander__book--paper .dawn-expander__book-paper{display:flex}
+#dawn-second .dawn-expander__book-paper small{
+ font:400 11px/1.4 var(--ws-type-display-en);letter-spacing:.1em;color:var(--ws-harvest);
+}
+#dawn-second .dawn-expander__book-paper strong{
+ font:400 clamp(20px,2vw,37px)/1.22 var(--ws-type-display-en);
+ overflow-wrap:anywhere;
+}
+#dawn-second .dawn-expander__metadata{min-width:0;max-width:750px}
+#dawn-second .dawn-expander__eyebrow{
+ font:400 clamp(10px,.95vw,13px)/1.4 var(--ws-type-display-en);
+ letter-spacing:.12em;color:var(--ws-harvest);margin-bottom:clamp(14px,2vw,34px);
+}
+#dawn-second .dawn-expander__title{
+ margin:0 0 clamp(12px,1.5vw,24px);
+ font:400 clamp(32px,4.5vw,78px)/1.05 var(--ws-type-display-en);
+ letter-spacing:-.035em;overflow-wrap:anywhere;
+}
+#dawn-second .dawn-expander__author{
+ margin:0;font:200 clamp(16px,1.55vw,23px)/1.5 var(--ws-type-display-zh);
+}
+#dawn-second .dawn-expander__edition,
+#dawn-second .dawn-expander__identity{
+ font:400 clamp(11px,1vw,15px)/1.4 var(--ws-type-display-en);
+ color:var(--ws-harvest);margin:14px 0 0;overflow-wrap:anywhere;
+}
+#dawn-second .dawn-expander__description{
+ margin:clamp(20px,3vw,45px) 0;
+ font:200 clamp(14px,1.2vw,19px)/1.8 var(--ws-type-display-zh);
+}
+#dawn-second .dawn-expander__actions{
+ display:flex;flex-wrap:wrap;gap:14px;align-items:center;
+ border-top:1px solid var(--ws-harvest);padding-top:clamp(18px,2.2vw,36px);
+}
+#dawn-second .dawn-expander__read,
+#dawn-second .dawn-expander__source{
+ padding:13px 22px;border:1px solid var(--ws-harvest);border-radius:0;
+ font:200 clamp(13px,1.1vw,17px)/1.4 var(--ws-type-display-zh);
+ text-decoration:none;cursor:pointer;
+}
+#dawn-second .dawn-expander__read{
+ background:var(--ws-harvest);color:var(--ws-paper);
+}
+#dawn-second .dawn-expander__source{
+ background:var(--ws-paper);color:var(--ws-ink);
+}
+#dawn-second .dawn-expander__read:hover,
+#dawn-second .dawn-expander__read:focus-visible{
+ background:var(--ws-ink);color:var(--ws-paper);
+}
+#dawn-second .dawn-book-selected{outline:2px solid var(--ws-harvest)!important;outline-offset:-2px}
+#dawn-second .dawn-book-selected:focus-visible{outline:3px solid var(--ws-first-light)!important}
+@media(max-width:700px){
+ #dawn-second .dawn-expander__content{grid-template-columns:1fr;min-height:0;gap:26px;padding:clamp(18px,5vw,32px)}
+ #dawn-second .dawn-expander__book{width:min(64vw,260px)}
+ #dawn-second .dawn-expander__title{font-size:clamp(30px,8vw,50px)}
+ #dawn-second .dawn-expander__metadata{width:100%}
+ #dawn-second .dawn-expander__actions{align-items:stretch;flex-direction:column}
+ #dawn-second .dawn-expander__read,
+ #dawn-second .dawn-expander__source{width:100%;text-align:center}
+}
+@media(prefers-reduced-motion:reduce){
+ #dawn-second .dawn-expander,#dawn-second .dawn-expander *{animation:none!important;transition:none!important}
+}
+
+
+/* R57 · DAWN LIBRARY editorial recovery, 2026-11-22.
+   OS: Bodoni Moda / genuine Small Caps; Chiron Hei HK WS 200 except Chinese
+   principal identity. English leads; text is editorial, not an app toolbar.
+   Component-scoped correction: no :root, token, V9 or artwork changes. */
+#dawn-second[data-ws-scope="dawn-library"] .dawn-second__global-nav{
+ position:relative!important;top:auto!important;
+ display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;
+ align-items:end!important;gap:clamp(18px,3vw,56px)!important;
+ width:100%;min-height:0!important;
+ padding:clamp(16px,2vw,34px) clamp(18px,4.5vw,78px) clamp(13px,1.8vw,29px)!important;
+ background:transparent!important;
+ border:0!important;border-bottom:1px solid var(--ws-harvest)!important;
+ box-shadow:none!important;
+ isolation:isolate;
+}
+#dawn-second .dawn-second__global-nav:after{
+ content:'';position:absolute;bottom:-1px;left:clamp(18px,4.5vw,78px);
+ width:clamp(75px,14vw,220px);height:2px;background:var(--ws-harvest);
+}
+#dawn-second .dawn-second__global-nav .dawn-second__return,
+#dawn-second .dawn-second__global-nav .dawn-second__all-works,
+#dawn-second .dawn-second__global-nav .dawn-second__personal{
+ position:relative!important;display:flex!important;flex-direction:column!important;
+ align-items:flex-start!important;justify-content:flex-end!important;
+ margin:0!important;padding:0 0 4px!important;
+ min-height:0!important;min-width:0!important;width:auto!important;max-width:none!important;
+ background:none!important;border:0!important;border-bottom:0!important;
+ border-radius:0!important;box-shadow:none!important;gap:7px!important;
+ color:var(--ws-ink)!important;text-align:left!important;white-space:normal!important;
+ cursor:pointer;
+}
+#dawn-second .dawn-second__global-nav .dawn-second__return{
+ align-self:end!important;
+}
+#dawn-second .dawn-second__nav-actions{
+ display:flex;align-items:end;justify-content:flex-end;gap:clamp(28px,5vw,105px);
+}
+#dawn-second .dawn-second__global-nav .dawn-second__nav-en{
+ display:block;
+ font-family:var(--ws-type-display-en-sc,var(--ws-type-display-en))!important;
+ font-size:clamp(21px,2.25vw,39px)!important;line-height:.98!important;
+ font-weight:400!important;letter-spacing:-.025em!important;
+ text-transform:none;font-synthesis:none!important;
+}
+#dawn-second .dawn-second__global-nav .dawn-second__return .dawn-second__nav-en{
+ font-family:var(--ws-type-display-en)!important;
+ font-size:clamp(29px,3.4vw,59px)!important;letter-spacing:-.04em!important;
+}
+#dawn-second .dawn-second__global-nav .dawn-second__nav-zh{
+ display:flex;align-items:baseline;gap:8px;
+ font-family:var(--ws-type-display-zh)!important;
+ font-size:clamp(12px,.91vw,17px)!important;line-height:1.55!important;
+ font-weight:200!important;letter-spacing:0!important;
+ font-synthesis:none!important;color:var(--ws-ink)!important;opacity:.82;
+}
+#dawn-second .dawn-second__global-nav .dawn-second__nav-zh>span{
+ position:static!important;display:inline!important;min-width:0!important;
+ width:auto!important;height:auto!important;padding:0!important;
+ background:transparent!important;border:0!important;border-radius:0!important;
+ color:var(--ws-harvest)!important;
+ font-family:var(--ws-type-display-en)!important;font-weight:400!important;
+ font-size:1em!important;line-height:inherit!important;
+}
+#dawn-second .dawn-second__global-nav .dawn-second__return:hover .dawn-second__nav-en,
+#dawn-second .dawn-second__global-nav .dawn-second__all-works:hover .dawn-second__nav-en,
+#dawn-second .dawn-second__global-nav .dawn-second__personal:hover .dawn-second__nav-en{
+ color:var(--ws-harvest)!important;
+}
+#dawn-second .dawn-second__global-nav button:focus-visible{
+ outline:2px solid var(--ws-harvest)!important;outline-offset:5px!important;
+}
+/* Scripture forme keeps both real plates and source iframe. Trim only the
+   oversized blank carrier margins, never the plate artwork or aspect ratio. */
+#dawn-second[data-ws-scope="dawn-library"] .dawn-second__press--motherform{
+ padding:clamp(16px,2vw,36px) clamp(12px,3vw,44px)
+ clamp(8px,1vw,18px)!important;
+}
+#dawn-second[data-ws-scope="dawn-library"] .dawn-second__motherform{
+ flex-basis:clamp(490px,49vw,755px)!important;
+ max-width:100%!important;
+}
+/* True English-led identity pair. Chinese 900 allowed only here as a brief
+   principal title, never for gallery categories, paragraphs or UI labels. */
+#dawn-second .dawn-reading-room__masthead{
+ grid-template-columns:minmax(0,1fr) minmax(145px,20%)!important;
+ gap:clamp(12px,3vw,55px)!important;
+ align-items:end!important;
+ padding:clamp(13px,2vw,30px) 0 clamp(16px,2.5vw,36px)!important;
+ margin-bottom:clamp(17px,2vw,36px)!important;
+}
+#dawn-second .dawn-reading-room__opening{
+ display:grid;grid-template-columns:minmax(0,1fr);align-content:end;
+}
+#dawn-second .dawn-reading-room__folio{
+ font-family:var(--ws-type-display-en-sc)!important;
+ font-size:var(--ws-type-scale-meta)!important;
+ font-weight:400!important;letter-spacing:.09em!important;
+ margin:0 0 clamp(8px,.9vw,15px)!important;
+}
+#dawn-second .dawn-reading-room__masthead h2{
+ display:flex!important;flex-direction:column!important;align-items:flex-start!important;
+ gap:clamp(3px,.7vw,12px)!important;margin:0 0 clamp(10px,1vw,20px)!important;
+ line-height:1!important;
+}
+#dawn-second .dawn-reading-room__masthead h2>span{
+ display:block!important;
+ font:400 clamp(53px,6.7vw,122px)/.91 var(--ws-type-display-en)!important;
+ color:var(--ws-ink)!important;
+ letter-spacing:-.055em!important;
+ text-transform:none;font-synthesis:none!important;
+}
+#dawn-second .dawn-reading-room__masthead h2>strong{
+ display:block!important;
+ font-family:var(--ws-type-display-zh)!important;
+ font-size:clamp(28px,2.8vw,48px)!important;line-height:1.15!important;
+ font-weight:200!important;letter-spacing:0!important;
+ color:var(--ws-harvest)!important;
+}
+#dawn-second .dawn-reading-room__lead{
+ font:200 var(--ws-type-scale-reading)/1.75 var(--ws-type-display-zh)!important;
+ max-width:45em!important;margin:0!important;
+ color:var(--ws-ink)!important;
+}
+#dawn-second .dawn-reading-room__identity{
+ gap:5px!important;align-self:end!important;padding-bottom:3px!important;
+}
+#dawn-second .dawn-reading-room__identity>span{
+ font:400 var(--ws-type-scale-meta)/1.2 var(--ws-type-display-en-sc)!important;
+ letter-spacing:.03em!important;
+}
+#dawn-second .dawn-reading-room__identity>strong{
+ font:400 clamp(31px,3.2vw,60px)/1 var(--ws-type-display-en)!important;
+ letter-spacing:-.045em!important;
+}
+#dawn-second .dawn-reading-room__identity>small{
+ font:200 var(--ws-type-scale-meta)/1.35 var(--ws-type-display-zh)!important;
+}
+/* The same English-first grammar continues below the visible fold. */
+#dawn-second .dawn-reading-room__departments{
+ margin-top:clamp(26px,3vw,55px)!important;
+ padding:clamp(17px,2vw,32px) 0 clamp(24px,3vw,52px)!important;
+}
+#dawn-second .dawn-reading-room__departments-intro{
+ display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,36%)!important;
+ gap:8px 22px!important;margin-bottom:clamp(16px,2vw,35px)!important;
+}
+#dawn-second .dawn-reading-room__departments-intro>span{
+ grid-column:1 / -1;
+ font:400 var(--ws-type-scale-meta)/1.2 var(--ws-type-display-en-sc)!important;
+ color:var(--ws-harvest)!important;
+}
+#dawn-second .dawn-reading-room__departments-intro h3{
+ grid-column:1;
+ display:flex;flex-wrap:wrap;align-items:baseline;gap:12px 24px;
+ margin:0!important;
+}
+#dawn-second .dawn-reading-room__departments-intro h3>span{
+ font:400 clamp(34px,4.2vw,75px)/.98 var(--ws-type-display-en)!important;
+ color:var(--ws-ink)!important;letter-spacing:-.045em;
+}
+#dawn-second .dawn-reading-room__departments-intro h3>strong{
+ font:200 clamp(19px,1.7vw,32px)/1.25 var(--ws-type-display-zh)!important;
+ color:var(--ws-harvest)!important;
+}
+#dawn-second .dawn-reading-room__departments-intro p{
+ grid-column:2;align-self:end;margin:0!important;
+ font:200 var(--ws-type-scale-reading)/1.7 var(--ws-type-display-zh)!important;
+}
+#dawn-second .dawn-reading-room__department{
+ min-height:clamp(115px,10vw,180px)!important;
+ padding:clamp(12px,1.6vw,27px)!important;
+}
+#dawn-second .dawn-reading-room__department strong{
+ font:200 clamp(22px,2.1vw,42px)/1.2 var(--ws-type-display-zh)!important;
+}
+#dawn-second .dawn-reading-room__department small{
+ font:200 var(--ws-type-scale-meta)/1.4 var(--ws-type-display-zh)!important;
+}
+#dawn-second .dawn-reading-room__department-number{
+ font:400 var(--ws-type-scale-meta)/1.1 var(--ws-type-display-en-sc)!important;
+}
+#dawn-second .dawn-reading-room__department-loading,
+#dawn-second .dawn-reading-room__department-status{
+ font:200 var(--ws-type-scale-reading)/1.6 var(--ws-type-display-zh)!important;
+}
+/* Restore OS reading hierarchy within the catalogue as well.
+   Category label is a section, not another main title. */
+#dawn-second .dawn-catalogue__heading h2,
+#dawn-second .dawn-catalogue__classification-head h3,
+#dawn-second .dawn-catalogue__primary-nav button,
+#dawn-second .dawn-classification__breadcrumbs strong{
+ font-family:var(--ws-type-display-zh)!important;
+ font-weight:200!important;
+}
+#dawn-second .dawn-catalogue__primary-nav button{
+ font-size:var(--ws-type-scale-title-sm)!important;
+}
+#dawn-second .dawn-catalogue__classification-head h3{
+ font-size:var(--ws-type-scale-title-lg)!important;
+}
+#dawn-second .dawn-classification__book-meta strong{
+ font-family:var(--ws-type-display-zh)!important;font-weight:200!important;
+}
+@media(max-width:850px){
+ #dawn-second .dawn-second__global-nav .dawn-second__nav-en{
+  font-size:clamp(16px,2.4vw,23px)!important;
+ }
+ #dawn-second .dawn-second__global-nav .dawn-second__return .dawn-second__nav-en{
+  font-size:clamp(22px,3.7vw,33px)!important;
+ }
+ #dawn-second .dawn-reading-room__masthead h2>span{
+  font-size:clamp(45px,7.2vw,73px)!important;
+ }
+}
+@media(max-width:600px){
+ #dawn-second[data-ws-scope="dawn-library"] .dawn-second__global-nav{
+  grid-template-columns:1fr!important;gap:14px!important;
+  padding:15px 16px 13px!important;
+ }
+ #dawn-second .dawn-second__nav-actions{justify-content:space-between;gap:13px}
+ #dawn-second .dawn-second__global-nav .dawn-second__nav-en{
+  font-size:clamp(17px,5vw,24px)!important;
+ }
+ #dawn-second .dawn-second__global-nav .dawn-second__return .dawn-second__nav-en{
+  font-size:clamp(28px,8vw,39px)!important;
+ }
+ #dawn-second .dawn-second__global-nav .dawn-second__nav-zh{font-size:12px!important}
+ #dawn-second .dawn-reading-room__masthead{grid-template-columns:1fr!important;gap:15px!important}
+ #dawn-second .dawn-reading-room__masthead h2>span{
+  font-size:clamp(41px,10vw,63px)!important;
+ }
+ #dawn-second .dawn-reading-room__masthead h2>strong{font-size:clamp(26px,6.2vw,38px)!important}
+ #dawn-second .dawn-reading-room__identity{justify-items:start!important;text-align:left!important}
+ #dawn-second .dawn-reading-room__departments-intro{grid-template-columns:1fr!important}
+ #dawn-second .dawn-reading-room__departments-intro h3,
+ #dawn-second .dawn-reading-room__departments-intro p{grid-column:1!important}
+}
+
+
+/* R58 / Editorial visual QA: no inverse bilingual hierarchy in the actual
+   editorial portals, and no blank squares when remote cover URLs fail.
+   Preserve original image identity; fallback is only real printed metadata. */
+#dawn-second .dawn-reading-room .dawn-feature__titles{
+ display:flex!important;flex-direction:column!important;align-items:flex-start!important;
+ gap:clamp(6px,.9vw,14px)!important;
+}
+#dawn-second .dawn-reading-room .dawn-feature__titles em{
+ order:0!important;display:block!important;
+ font:400 clamp(23px,2.65vw,44px)/1.04 var(--ws-type-display-en-sc,var(--ws-type-display-en))!important;
+ font-style:normal!important;letter-spacing:-.035em!important;
+ color:var(--ws-ink)!important;overflow-wrap:break-word!important;
+}
+#dawn-second .dawn-reading-room .dawn-feature__titles strong{
+ order:1!important;display:block!important;
+ font:200 clamp(17px,1.45vw,26px)/1.25 var(--ws-type-display-zh)!important;
+ color:var(--ws-harvest)!important;
+ letter-spacing:0!important;
+}
+#dawn-second .dawn-feature__editorial{
+ grid-template-columns:minmax(0,1fr)!important;
+ padding:clamp(12px,1.6vw,26px)!important;
+}
+#dawn-second .dawn-feature__open{
+ grid-column:1!important;justify-self:end!important;
+ margin-top:clamp(8px,.9vw,16px)!important;
+ font:400 clamp(13px,1.1vw,17px)/1.2 var(--ws-type-display-en-sc,var(--ws-type-display-en))!important;
+}
+#dawn-second .dawn-feature__plate-title{
+ font:400 clamp(15px,1.3vw,23px)/1.3 var(--ws-type-display-en-sc,var(--ws-type-display-en))!important;
+ color:var(--ws-ink)!important;
+}
+/* No disappearing records. Pending and missing works are editorial sheets,
+   NOT blank swatches and NOT counterfeit covers. */
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-cover--missing,
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-cover--pending{
+ display:flex!important;flex-direction:column!important;justify-content:flex-end!important;
+ background:var(--ws-paper)!important;
+ border:1px solid var(--ws-branch-rule)!important;
+}
+#dawn-second .dawn-reading-room .dawn-cover--pending .dawn-cover__meta,
+#dawn-second .dawn-reading-room .dawn-cover--missing .dawn-cover__meta{
+ position:absolute!important;inset:0!important;z-index:2!important;
+ display:flex!important;flex-direction:column!important;
+ justify-content:flex-end!important;gap:clamp(8px,.8vw,14px)!important;
+ padding:clamp(12px,1.3vw,24px)!important;
+ opacity:1!important;transform:none!important;
+ color:var(--ws-ink)!important;
+ background:var(--ws-paper)!important;
+}
+#dawn-second .dawn-reading-room .dawn-cover--pending .dawn-cover__meta:before,
+#dawn-second .dawn-reading-room .dawn-cover--missing .dawn-cover__meta:before{
+ content:'DAWN / WORK';position:absolute;top:clamp(12px,1vw,19px);left:clamp(12px,1.3vw,24px);
+ font:400 var(--ws-type-scale-meta)/1.2 var(--ws-type-display-en-sc)!important;
+ color:var(--ws-harvest)!important;
+}
+#dawn-second .dawn-reading-room .dawn-cover--pending .dawn-cover__meta strong,
+#dawn-second .dawn-reading-room .dawn-cover--missing .dawn-cover__meta strong{
+ max-height:none!important;
+ font:400 clamp(19px,1.65vw,29px)/1.12 var(--ws-type-display-en)!important;
+ color:var(--ws-ink)!important;
+ overflow-wrap:anywhere!important;
+}
+#dawn-second .dawn-reading-room .dawn-cover--pending .dawn-cover__meta em,
+#dawn-second .dawn-reading-room .dawn-cover--missing .dawn-cover__meta em{
+ font:italic 400 clamp(12px,.95vw,17px)/1.35 var(--ws-type-display-en)!important;
+ color:var(--ws-harvest)!important;
+ white-space:normal!important;overflow:visible!important;
+}
+#dawn-second .dawn-reading-room .dawn-cover--ready .dawn-cover__meta{
+ /* The original hover image-caption grammar resumes only for real images. */
+ opacity:0;
+}
+#dawn-second .dawn-reading-room .dawn-cover--ready:hover .dawn-cover__meta,
+#dawn-second .dawn-reading-room .dawn-cover--ready:focus-visible .dawn-cover__meta{
+ opacity:1;
+}
+#dawn-second .dawn-classification__result-heading h4{
+ font-family:var(--ws-type-display-zh)!important;
+ font-weight:200!important;
+}
+/* R57 must not distort the original Scripture Studio motherform geometry.
+   Reuse the previously working OS carrier values, not an improvised crop. */
+#dawn-second[data-ws-scope="dawn-library"] .dawn-second__press--motherform{
+ padding:clamp(42px,5vw,72px) clamp(15px,3.5vw,58px)
+ clamp(22px,3.5vw,44px)!important;
+}
+#dawn-second[data-ws-scope="dawn-library"] .dawn-second__motherform{
+ flex:0 1 710px!important;
+}
+@media(max-width:650px){
+ #dawn-second .dawn-reading-room .dawn-feature__titles em{
+  font-size:clamp(27px,6.6vw,42px)!important;
+ }
+ #dawn-second .dawn-reading-room .dawn-feature__titles strong{
+  font-size:clamp(17px,4vw,25px)!important;
+ }
+ #dawn-second .dawn-feature__editorial{padding:16px!important}
+ #dawn-second .dawn-reading-room .dawn-cover--pending .dawn-cover__meta strong,
+ #dawn-second .dawn-reading-room .dawn-cover--missing .dawn-cover__meta strong{
+  font-size:clamp(17px,4.2vw,24px)!important;
+ }
+}
+
+
+/* Undo the old Personal Dawn counter-pill selector leaking into the new
+   two-line navigation label. Only the numeric counter remains a counter. */
+#dawn-second .dawn-second__global-nav .dawn-second__personal>.dawn-second__nav-en,
+#dawn-second .dawn-second__global-nav .dawn-second__personal>.dawn-second__nav-zh{
+ width:auto!important;min-width:0!important;height:auto!important;
+ background:transparent!important;border:0!important;border-radius:0!important;
+ padding:0!important;
+}
+#dawn-second .dawn-second__global-nav .dawn-second__personal>.dawn-second__nav-en{
+ font:400 clamp(21px,2.25vw,39px)/.98 var(--ws-type-display-en-sc)!important;
+ letter-spacing:-.025em!important;
+}
+@media(max-width:850px){
+ #dawn-second .dawn-second__global-nav .dawn-second__personal>.dawn-second__nav-en{
+  font-size:clamp(16px,2.4vw,23px)!important;
+ }
+}
+@media(max-width:600px){
+ #dawn-second .dawn-second__global-nav .dawn-second__personal>.dawn-second__nav-en{
+  font-size:clamp(17px,5vw,24px)!important;
+ }
+}
+
+
+/* R59: source images can be pale or slow. All works must remain identifiable
+   at rest, not only on hover. Never infer an image from a neighbouring work. */
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-cover{
+ position:relative!important;
+ background:var(--ws-paper)!important;
+}
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-cover .dawn-cover__meta{
+ position:absolute!important;inset:auto 0 0!important;z-index:3!important;
+ display:flex!important;flex-direction:column!important;justify-content:flex-end!important;
+ gap:clamp(4px,.45vw,8px)!important;
+ min-height:clamp(65px,6vw,112px)!important;
+ padding:clamp(13px,1.1vw,21px)!important;
+ background:var(--ws-paper)!important;
+ color:var(--ws-ink)!important;
+ opacity:1!important;transform:none!important;pointer-events:none!important;
+ border-top:1px solid var(--ws-branch-rule)!important;
+}
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-cover .dawn-cover__meta strong{
+ display:block!important;max-height:3.6em!important;
+ color:var(--ws-ink)!important;
+ font:400 clamp(14px,1.25vw,23px)/1.13 var(--ws-type-display-en)!important;
+ overflow-wrap:anywhere!important;
+}
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-cover .dawn-cover__meta em{
+ color:var(--ws-harvest)!important;
+ font:italic 400 clamp(11px,.82vw,15px)/1.3 var(--ws-type-display-en)!important;
+ white-space:normal!important;text-overflow:clip!important;overflow:visible!important;
+}
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-cover--pending .dawn-cover__meta,
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-cover--missing .dawn-cover__meta{
+ inset:0!important;min-height:100%!important;
+ padding:clamp(13px,1.5vw,26px)!important;
+ border-top:0!important;
+}
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-cover--pending .dawn-cover__meta strong,
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-cover--missing .dawn-cover__meta strong{
+ max-height:5.4em!important;
+ font-size:clamp(19px,1.65vw,32px)!important;
+ line-height:1.12!important;
+}
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-cover:focus-visible{
+ outline:2px solid var(--ws-harvest)!important;outline-offset:3px!important;
+}
+@media(max-width:650px){
+ #dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-cover .dawn-cover__meta strong{
+  font-size:clamp(16px,4.2vw,23px)!important;
+ }
+ #dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-cover .dawn-cover__meta{
+  min-height:75px!important;padding:10px!important;
+ }
+}
+
+
+/* R61 · Section identity is carried ONLY by the two scripture type formes
+   above this layer. Never resurrect a second DAWN / READING ROOM masthead.
+   Three editorial departments share the actual OS harvest yellow (#b8944a),
+   not three faint unrelated portal backgrounds. */
+#dawn-second[data-ws-scope="dawn-library"] .dawn-reading-room{
+ padding-top:clamp(16px,2.4vw,36px)!important;
+}
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature{
+ background:var(--ws-harvest)!important;
+ border:1px solid var(--ws-harvest)!important;
+ color:var(--ws-ink)!important;
+ padding:clamp(9px,1.1vw,18px)!important;
+ box-shadow:none!important;
+}
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature .dawn-feature__art{
+ background:var(--ws-harvest)!important;
+ gap:clamp(3px,.4vw,7px)!important;
+ flex:1 1 auto!important;
+ min-height:0!important;
+}
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature .dawn-feature__plate{
+ background:var(--ws-paper)!important;
+}
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature .dawn-feature__editorial{
+ background:var(--ws-harvest)!important;
+ color:var(--ws-ink)!important;
+ padding:clamp(14px,1.6vw,28px) clamp(8px,1vw,18px)!important;
+ border:0!important;
+}
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature .dawn-feature__editorial>small{
+ color:var(--ws-ink)!important;
+ opacity:.74!important;
+}
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature .dawn-feature__titles em{
+ font:400 clamp(23px,2.65vw,44px)/1.05 var(--ws-type-display-en-sc,var(--ws-type-display-en))!important;
+ color:var(--ws-ink)!important;
+}
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature .dawn-feature__titles strong{
+ font:200 clamp(17px,1.45vw,26px)/1.25 var(--ws-type-display-zh)!important;
+ color:var(--ws-ink)!important;
+}
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature .dawn-feature__open{
+ color:var(--ws-ink)!important;
+ border-top:1px solid color-mix(in srgb,var(--ws-ink) 48%,transparent)!important;
+ padding-top:clamp(9px,.8vw,14px)!important;
+ width:100%!important;
+ justify-content:flex-end!important;
+}
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature:hover,
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature:focus-visible{
+ outline:2px solid var(--ws-ink)!important;
+ outline-offset:3px!important;
+}
+/* Do not use a giant secondary brand label in navigation either. */
+#dawn-second .dawn-second__global-nav .dawn-second__return .dawn-second__nav-en{
+ font-size:clamp(21px,2.25vw,39px)!important;
+ letter-spacing:-.025em!important;
+}
+@media(max-width:850px){
+ #dawn-second .dawn-second__global-nav .dawn-second__return .dawn-second__nav-en{
+  font-size:clamp(16px,2.4vw,23px)!important;
+ }
+}
+@media(max-width:600px){
+ #dawn-second .dawn-second__global-nav .dawn-second__return .dawn-second__nav-en{
+  font-size:clamp(17px,5vw,24px)!important;
+ }
+}
+
+
+/* R61 editorial architecture: the three harvest departments are one coherent
+   section opening, rather than three scattered unrelated picture squares. */
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated{
+ grid-auto-flow:row!important;
+}
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature:nth-child(1),
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature:nth-child(2),
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature:nth-child(3){
+ grid-row:1 / span 2!important;
+ aspect-ratio:1!important;
+}
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature:nth-child(1){
+ grid-column:1 / span 2!important;
+}
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature:nth-child(2){
+ grid-column:3 / span 2!important;
+}
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature:nth-child(3){
+ grid-column:5 / span 2!important;
+}
+@media(max-width:1100px){
+ #dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature:nth-child(1),
+ #dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature:nth-child(2),
+ #dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature:nth-child(3){
+  grid-column:1 / -1!important;
+  grid-row:auto / span 2!important;
+ }
+}
+@media(min-width:651px) and (max-width:1100px){
+ #dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature:nth-child(1),
+ #dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature:nth-child(2),
+ #dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature:nth-child(3){
+  grid-column:span 2!important;
+  grid-row:auto / span 2!important;
+ }
+}
+
+
+/* R63 · Back is a utility control, NEVER a second section heading. */
+#dawn-second .dawn-second__global-nav .dawn-second__return{
+ display:inline-flex!important;flex-direction:row!important;
+ justify-content:flex-start!important;align-items:center!important;
+ align-self:center!important;gap:9px!important;
+ padding:8px 2px!important;
+ width:max-content!important;min-height:36px!important;
+}
+#dawn-second .dawn-second__global-nav .dawn-second__return-mark{
+ font:400 clamp(16px,1.35vw,20px)/1 var(--ws-type-display-en)!important;
+ color:var(--ws-harvest)!important;
+}
+#dawn-second .dawn-second__global-nav .dawn-second__return .dawn-second__nav-zh{
+ display:inline!important;opacity:.75!important;
+ font:200 clamp(12px,.85vw,14px)/1.5 var(--ws-type-display-zh)!important;
+ color:var(--ws-ink)!important;
+}
+#dawn-second .dawn-second__global-nav .dawn-second__return:hover .dawn-second__nav-zh,
+#dawn-second .dawn-second__global-nav .dawn-second__return:focus-visible .dawn-second__nav-zh{
+ color:var(--ws-harvest)!important;opacity:1!important;
+}
+#dawn-second .dawn-second__global-nav .dawn-second__return:after{content:none!important;}
+
+
+/* R64 / Navigation Chinese: OS UI size, Chiron 200. 'Air' is a weight,
+   not illegible microscopic text. Keep bilingual hierarchy through scale,
+   contrast and placement, never opacity tricks. */
+#dawn-second .dawn-second__global-nav .dawn-second__nav-zh{
+ font-family:var(--ws-type-display-zh)!important;
+ font-size:var(--ws-type-scale-ui)!important;
+ line-height:var(--ws-type-leading-ui)!important;
+ font-weight:200!important;
+ letter-spacing:0!important;
+ color:var(--ws-ink)!important;
+ opacity:1!important;
+ text-wrap:balance;
+}
+#dawn-second .dawn-second__global-nav .dawn-second__return .dawn-second__nav-zh{
+ font-family:var(--ws-type-display-zh)!important;
+ font-size:var(--ws-type-scale-ui)!important;
+ line-height:var(--ws-type-leading-ui)!important;
+ font-weight:200!important;
+ color:var(--ws-ink)!important;
+ opacity:1!important;
+}
+#dawn-second .dawn-second__global-nav .dawn-second__nav-zh > span{
+ color:var(--ws-ink)!important;opacity:.82!important;
+ font-size:inherit!important;
+}
+@media(max-width:600px){
+ #dawn-second .dawn-second__global-nav .dawn-second__nav-zh,
+ #dawn-second .dawn-second__global-nav .dawn-second__return .dawn-second__nav-zh{
+  font-size:var(--ws-type-scale-ui)!important;
+  opacity:1!important;
+ }
+}
+
+
+/* R65 · OS role contract. Never equate 200-weight headings with body prose:
+   - zh display / classifications / metadata: Chiron Hei HK WS 200
+   - zh continuous reading: Noto Serif TC 400, reading scale and leading
+   - scripture square's authorised main title: preserved, not flattened
+   These selectors target actual paragraphs, NOT every Chinese element. */
+#dawn-second .dawn-catalogue__introduction p,
+#dawn-second .dawn-expander__description,
+#dawn-second .dawn-classification__result-heading p,
+#dawn-second .dawn-reading-room__departments-intro p{
+ font-family:var(--ws-type-reading-zh)!important;
+ font-size:var(--ws-type-scale-reading)!important;
+ font-weight:400!important;
+ line-height:var(--ws-type-leading-reading)!important;
+ font-synthesis:none!important;
+}
+#dawn-second .dawn-book-detail__text{
+ font-family:var(--ws-type-reading-zh)!important;
+ font-size:var(--ws-type-scale-reading)!important;
+ font-weight:400!important;
+ line-height:var(--ws-type-leading-reading)!important;
+ font-synthesis:none!important;
+}
+/* Editorial hierarchy stays airy even if a legacy strong or card default
+   would otherwise reintroduce a 700/900 font after page transitions. */
+#dawn-second .dawn-classification__sleeve strong,
+#dawn-second .dawn-classification__folio-line--lead,
+#dawn-second .dawn-catalogue__classification-head h3,
+#dawn-second .dawn-classification__result-heading h4,
+#dawn-second .dawn-personal__head h2,
+#dawn-second .dawn-personal__group h3,
+#dawn-second .dawn-classification__breadcrumbs strong{
+ font-family:var(--ws-type-display-zh)!important;
+ font-weight:200!important;
+ font-synthesis:none!important;
+}
+
+
+/* R69 · verified contemporary Chinese + translated works, distinct from
+   canonical 47 historic Chinese Work IDs. No invented jackets, no black cards.
+   The publisher page is only visited after explicit preview confirmation. */
+#dawn-second .dawn-classification__sleeve--contemporary .dawn-classification__art{
+ background:var(--ws-harvest)!important;color:var(--ws-ink)!important;
+}
+#dawn-second .dawn-classification__sleeve--contemporary .dawn-classification__folio{
+ opacity:1!important;inset:10% 8% 27%!important;justify-content:space-between!important;
+}
+#dawn-second .dawn-classification__sleeve--contemporary .dawn-classification__folio-line{
+ font:400 clamp(18px,1.7vw,30px)/1.05 var(--ws-type-display-en-sc,var(--ws-type-display-en))!important;
+ color:var(--ws-ink)!important;
+}
+#dawn-second .dawn-classification__sleeve--contemporary .dawn-classification__folio-line--lead{
+ font:200 clamp(20px,2vw,36px)/1.2 var(--ws-type-display-zh)!important;
+ color:var(--ws-ink)!important;
+}
+#dawn-second .dawn-contemporary__grid{
+ display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;
+ gap:clamp(10px,1.35vw,23px)!important;padding-bottom:clamp(30px,4vw,66px)!important;
+}
+#dawn-second .dawn-contemporary__book{
+ position:relative!important;display:flex!important;flex-direction:column!important;
+ min-width:0!important;width:100%!important;height:auto!important;
+ border:1px solid var(--ws-harvest)!important;padding:0!important;
+ background:var(--ws-paper)!important;color:var(--ws-ink)!important;
+ border-radius:0!important;overflow:hidden!important;
+ text-align:left!important;cursor:pointer!important;
+ box-shadow:none!important;transition:transform .25s ease,border-color .25s ease;
+}
+#dawn-second .dawn-contemporary__book:hover{transform:translateY(-3px);border-color:var(--ws-ink)!important}
+#dawn-second .dawn-contemporary__book:focus-visible{outline:2px solid var(--ws-harvest)!important;outline-offset:4px!important}
+#dawn-second .dawn-contemporary__art{
+ position:relative;display:flex;align-items:center;justify-content:center;
+ height:clamp(215px,25vw,390px)!important;min-height:0!important;
+ width:100%;background:var(--ws-harvest)!important;overflow:hidden!important;
+}
+#dawn-second .dawn-contemporary__art>img{
+ position:relative;z-index:2;display:block;width:100%!important;height:100%!important;
+ object-fit:contain!important;background:var(--ws-paper)!important;
+}
+#dawn-second .dawn-contemporary__folio{
+ display:flex;flex-direction:column;justify-content:space-between;gap:20px;
+ position:absolute;inset:clamp(16px,2vw,35px);
+ color:var(--ws-ink)!important;
+}
+#dawn-second .dawn-contemporary__folio small{
+ font:400 clamp(10px,.8vw,14px)/1.3 var(--ws-type-display-en-sc,var(--ws-type-display-en));
+ color:var(--ws-ink);letter-spacing:.05em;
+}
+#dawn-second .dawn-contemporary__folio strong{
+ font:200 clamp(22px,2.1vw,38px)/1.24 var(--ws-type-display-zh)!important;
+ color:var(--ws-ink)!important;overflow-wrap:anywhere!important;
+}
+#dawn-second .dawn-contemporary__metadata{
+ display:flex!important;flex-direction:column!important;align-items:flex-start!important;
+ gap:clamp(6px,.7vw,11px)!important;min-height:125px!important;
+ padding:clamp(14px,1.3vw,24px)!important;background:var(--ws-paper)!important;
+ border-top:1px solid var(--ws-harvest)!important;
+}
+#dawn-second .dawn-contemporary__metadata>small{
+ font:400 clamp(10px,.85vw,13px)/1.3 var(--ws-type-display-en-sc,var(--ws-type-display-en))!important;
+ color:var(--ws-harvest)!important;letter-spacing:.02em;
+}
+#dawn-second .dawn-contemporary__metadata>strong{
+ font:200 clamp(18px,1.55vw,26px)/1.25 var(--ws-type-display-zh)!important;
+ color:var(--ws-ink)!important;
+}
+#dawn-second .dawn-contemporary__metadata>span{
+ font:200 clamp(13px,1vw,16px)/1.5 var(--ws-type-display-zh)!important;
+ color:var(--ws-ink)!important;
+}
+#dawn-second .dawn-contemporary__grid>.dawn-expander{
+ grid-column:1/-1!important;display:block!important;width:100%!important;
+ background:var(--ws-papyrus)!important;border-top:1px solid var(--ws-harvest)!important;
+}
+@media(max-width:950px){
+ #dawn-second .dawn-contemporary__grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media(max-width:530px){
+ #dawn-second .dawn-contemporary__grid{gap:8px!important}
+ #dawn-second .dawn-contemporary__art{height:clamp(170px,56vw,270px)!important}
+ #dawn-second .dawn-contemporary__metadata{padding:11px!important}
+ #dawn-second .dawn-contemporary__metadata>strong{font-size:clamp(16px,4vw,23px)!important}
+}
+
+
+/* R70 · Pending external artwork may NEVER render as white blank sheets.
+   Only a fully loaded source-declared picture may conceal the gold title folio. */
+#dawn-second .dawn-contemporary__art>img{
+ opacity:0!important;
+ pointer-events:none!important;
+ transition:opacity .25s ease!important;
+}
+#dawn-second .dawn-contemporary__book--pictured .dawn-contemporary__art>img{
+ opacity:1!important;
+}
+#dawn-second .dawn-contemporary__book:not(.dawn-contemporary__book--pictured) .dawn-contemporary__folio{
+ opacity:1!important;z-index:1!important;
+}
+#dawn-second .dawn-expander__book .dawn-expander__book-image{
+ opacity:0!important;
+}
+#dawn-second .dawn-expander__book--ready .dawn-expander__book-image{
+ opacity:1!important;
+}
+#dawn-second .dawn-expander__book--ready .dawn-expander__book-paper{
+ display:none!important;
+}
+
+
+/* R71 · Source-linked modern Chinese preview: maintain OS's Chiron 200 title
+   rather than an accidental heavy fallback of the English Bodoni heading. */
+#dawn-second .dawn-expander__title--zh{
+ font-family:var(--ws-type-display-zh)!important;
+ font-weight:200!important;
+ line-height:1.18!important;
+ font-synthesis:none!important;
+ letter-spacing:0!important;
+}
+
+
+/* R72 · A contemporary publisher-only record may not have a reusable jacket.
+   Render a full harvest-colored editorial folio, never a white blank page. */
+#dawn-second .dawn-expander__book--discovery.dawn-expander__book--paper{
+ background:var(--ws-harvest)!important;
+ border-color:var(--ws-ink)!important;
+}
+#dawn-second .dawn-expander__book--discovery.dawn-expander__book--paper .dawn-expander__book-paper{
+ display:flex!important;
+ background:var(--ws-harvest)!important;
+ border-color:var(--ws-ink)!important;
+ color:var(--ws-ink)!important;
+}
+#dawn-second .dawn-expander__book--discovery.dawn-expander__book--paper .dawn-expander__book-paper small{
+ color:var(--ws-ink)!important;opacity:.75!important;
+}
+#dawn-second .dawn-expander__book--discovery.dawn-expander__book--paper .dawn-expander__book-paper strong{
+ font-family:var(--ws-type-display-zh)!important;
+ font-weight:200!important;
+ letter-spacing:0!important;
+ line-height:1.18!important;
+}
+
+
+/* R74 · Chinese editorial sequence: contemporary front shelf and
+   historic works only after readers reach the archival chapter. */
+#dawn-second .dawn-contemporary__archive-entry{
+ display:block!important;width:100%!important;margin:clamp(14px,2vw,34px) 0 0!important;
+ padding:clamp(18px,2vw,32px) 0!important;
+ background:none!important;color:var(--ws-ink)!important;
+ border:0!important;border-top:1px solid var(--ws-harvest)!important;
+ border-bottom:1px solid var(--ws-harvest)!important;
+ font:200 clamp(16px,1.5vw,25px)/1.4 var(--ws-type-display-zh)!important;
+ text-align:left!important;cursor:pointer!important;
+}
+#dawn-second .dawn-contemporary__archive-entry:hover,
+#dawn-second .dawn-contemporary__archive-entry:focus-visible{
+ color:var(--ws-harvest)!important;
+}
+#dawn-second .dawn-classification__sleeve--historical-zh{
+ opacity:1!important;
+}
+
+
+/* R75 · Every contemporary book tile is fully composed. A source cover
+   remains legible and uncropped; a no-cover edition is an intentional
+   full-bleed harvest-yellow typographic cover, never a mostly empty slab. */
+#dawn-second .dawn-contemporary__art{
+ isolation:isolate!important;
+ height:auto!important;
+ aspect-ratio:3/4!important;
+ background:var(--ws-harvest)!important;
+}
+#dawn-second .dawn-contemporary__folio{
+ inset:0!important;
+ z-index:2!important;
+ display:grid!important;
+ grid-template-rows:auto minmax(0,1fr) auto!important;
+ align-items:stretch!important;
+ padding:clamp(15px,1.7vw,31px)!important;
+ gap:clamp(10px,1.3vw,20px)!important;
+ background:var(--ws-harvest)!important;
+}
+#dawn-second .dawn-contemporary__folio>small{
+ display:block!important;
+ font:400 clamp(11px,.82vw,14px)/1.35 var(--ws-type-display-en-sc,var(--ws-type-display-en))!important;
+ letter-spacing:.035em!important;
+}
+#dawn-second .dawn-contemporary__folio>strong{
+ display:flex!important;
+ align-items:center!important;
+ justify-content:center!important;
+ width:100%!important;
+ text-align:center!important;
+ font:200 clamp(25px,2.35vw,48px)/1.28 var(--ws-type-display-zh)!important;
+ font-synthesis:none!important;
+ overflow-wrap:anywhere!important;
+}
+#dawn-second .dawn-contemporary__folio-foot{
+ display:flex!important;
+ justify-content:space-between!important;
+ align-items:flex-end!important;
+ gap:12px!important;
+ width:100%!important;
+ padding-top:clamp(9px,1vw,17px)!important;
+ border-top:1px solid var(--ws-ink)!important;
+ font:200 clamp(13px,1vw,18px)/1.42 var(--ws-type-display-zh)!important;
+ color:var(--ws-ink)!important;
+}
+#dawn-second .dawn-contemporary__folio-foot small{
+ font:200 clamp(11px,.85vw,14px)/1.5 var(--ws-type-display-zh)!important;
+ text-align:right!important;
+ color:var(--ws-ink)!important;
+}
+#dawn-second .dawn-contemporary__art>img:not(.dawn-contemporary__cover-backdrop){
+ z-index:4!important;
+ width:100%!important;height:100%!important;
+ object-fit:contain!important;
+ background:transparent!important;
+ filter:drop-shadow(0 5px 9px rgba(35,30,20,.22));
+}
+#dawn-second .dawn-contemporary__art>.dawn-contemporary__cover-backdrop{
+ position:absolute!important;inset:-12%!important;
+ z-index:3!important;
+ width:124%!important;height:124%!important;
+ object-fit:cover!important;
+ filter:blur(20px) saturate(.8)!important;
+ transform:scale(1.03)!important;
+ opacity:0!important;
+ background:var(--ws-harvest)!important;
+ pointer-events:none!important;
+}
+#dawn-second .dawn-contemporary__book--pictured .dawn-contemporary__art>.dawn-contemporary__cover-backdrop{
+ opacity:.45!important;
+}
+#dawn-second .dawn-contemporary__book--pictured .dawn-contemporary__folio{
+ opacity:0!important;
+}
+#dawn-second .dawn-contemporary__metadata{
+ min-height:0!important;
+}
+@media(max-width:950px){
+ #dawn-second .dawn-contemporary__folio>strong{
+  font-size:clamp(24px,4vw,42px)!important;
+ }
+}
+@media(max-width:530px){
+ #dawn-second .dawn-contemporary__art{
+  height:auto!important;
+  aspect-ratio:3/4!important;
+ }
+ #dawn-second .dawn-contemporary__folio{
+  padding:clamp(10px,3.5vw,17px)!important;
+  gap:8px!important;
+ }
+ #dawn-second .dawn-contemporary__folio>strong{
+  font-size:clamp(19px,5.1vw,32px)!important;
+ }
+ #dawn-second .dawn-contemporary__folio-foot{
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  gap:5px!important;
+  font-size:clamp(12px,3.2vw,16px)!important;
+ }
+}
+
+
+/* R76 · Editorial type square first. A physical book appears ONLY after
+   selection opens the original Codrops expanding-preview panel.
+   The actual sourced jacket is rendered by that panel, never by the tile. */
+#dawn-second .dawn-contemporary__book .dawn-contemporary__art{
+ aspect-ratio:1/1!important;
+ height:auto!important;
+ background:var(--ws-harvest)!important;
+}
+#dawn-second .dawn-contemporary__book .dawn-contemporary__folio{
+ display:grid!important;
+ grid-template-rows:auto 1fr auto!important;
+ opacity:1!important;
+ visibility:visible!important;
+ z-index:5!important;
+ background:var(--ws-harvest)!important;
+}
+#dawn-second .dawn-contemporary__book .dawn-contemporary__folio>strong{
+ font:200 clamp(22px,2.25vw,43px)/1.22 var(--ws-type-display-zh)!important;
+ text-align:center!important;
+}
+#dawn-second .dawn-contemporary__book.dawn-book-selected .dawn-contemporary__folio{
+ color:var(--ws-ink)!important;
+}
+/* Selection transfers the reader's attention to an expanding real-book
+   presentation, while the original square remains the navigation anchor. */
+#dawn-second .dawn-contemporary__book.dawn-book-selected{
+ outline:2px solid var(--ws-ink)!important;
+ outline-offset:-2px!important;
+}
+@media(max-width:530px){
+ #dawn-second .dawn-contemporary__book .dawn-contemporary__folio>strong{
+  font-size:clamp(18px,5.1vw,29px)!important;
+ }
+}
+
+
+/* R78: THE ACTUAL PUBLISHER BOOK JACKET MUST FILL THE TILE.
+   The open Codrops preview shows its complete original aspect ratio.
+   No text-only colored book squares when a verified jacket exists. */
+#dawn-second .dawn-contemporary__book .dawn-contemporary__art{
+ position:relative!important;
+ aspect-ratio:1/1!important;
+ overflow:hidden!important;
+ background:var(--ws-harvest)!important;
+}
+#dawn-second .dawn-contemporary__book .dawn-contemporary__art>img.dawn-contemporary__tile-cover{
+ display:block!important;
+ position:absolute!important;
+ inset:0!important;
+ width:100%!important;height:100%!important;
+ object-fit:cover!important;
+ object-position:center center!important;
+ background:transparent!important;
+ z-index:8!important;
+ opacity:1!important;
+ visibility:visible!important;
+ filter:none!important;
+ pointer-events:none!important;
+ transform:none!important;
+}
+#dawn-second .dawn-contemporary__book--pictured .dawn-contemporary__folio{
+ visibility:hidden!important;
+ opacity:0!important;
+}
+#dawn-second .dawn-contemporary__book:not(.dawn-contemporary__book--pictured) .dawn-contemporary__folio{
+ visibility:visible!important;
+ opacity:1!important;
+}
+#dawn-second .dawn-contemporary__book--pictured .dawn-contemporary__tile-cover{
+ filter:none!important;
+}
+#dawn-second .dawn-contemporary__book.dawn-book-selected{
+ outline:2px solid var(--ws-ink)!important;
+ outline-offset:-2px!important;
+}
+
+
+#dawn-second .dawn-catalogue[data-view="editorial"] .dawn-catalogue__reading-index{
+ display:flex;flex-wrap:wrap;gap:0 clamp(16px,2.5vw,40px);
+ border-bottom:1px solid var(--ws-harvest);
+ padding:0 0 clamp(16px,2vw,30px);margin:0 0 clamp(25px,4vw,60px);
+}
+#dawn-second .dawn-catalogue__reading-index button{
+ padding:12px 0;border:0;border-bottom:1px solid transparent;background:transparent;
+ color:var(--ws-olive);font:400 clamp(14px,1.2vw,20px)/1.4 var(--ws-type-display-zh);
+ cursor:pointer;
+}
+#dawn-second .dawn-catalogue__reading-index button[aria-current="true"]{
+ color:var(--ws-ink);border-bottom-color:var(--ws-harvest);
+}
+#dawn-second .dawn-catalogue__reading-index button:focus-visible{
+ outline:2px solid var(--ws-harvest);outline-offset:3px;
+}
+/* Native booklist caption readability and Chinese title retention.
+   The original P2 book sleeves and third-layer reader are reused.
+   Only editorial-list book cards receive these overrides. */
+#dawn-second .dawn-reading-list__sleeve .dawn-catalogue__cover-card{
+ background:color-mix(in srgb,var(--ws-harvest) 8%,var(--ws-paper))!important;
+ border:1px solid color-mix(in srgb,var(--ws-harvest) 38%,transparent)!important;
+}
+#dawn-second .dawn-reading-list__sleeve .dawn-catalogue__cover-typography{
+ opacity:1!important;visibility:visible!important;
+ color:var(--ws-ink)!important;
+ background:transparent;justify-content:space-between;
+}
+#dawn-second .dawn-reading-list__sleeve .dawn-catalogue__cover-typography>strong{
+ display:block!important;
+ font:600 clamp(17px,1.38vw,25px)/1.35 var(--ws-type-display-zh)!important;
+ color:var(--ws-ink)!important;letter-spacing:-.02em;
+ overflow-wrap:break-word;word-break:normal;text-wrap:balance;
+ opacity:1!important;-webkit-line-clamp:unset;
+}
+#dawn-second .dawn-reading-list__sleeve .dawn-catalogue__cover-typography>span{
+ font:400 clamp(11px,.92vw,15px)/1.5 var(--ws-type-display-zh)!important;
+ color:var(--ws-olive)!important;
+}
+#dawn-second .dawn-reading-list__sleeve .dawn-catalogue__cover-typography>small{
+ color:var(--ws-harvest)!important;
+}
+#dawn-second .dawn-reading-list__sleeve .dawn-catalogue__cover-card--image>img{
+ object-fit:contain!important;mix-blend-mode:multiply;
+}
+#dawn-second .dawn-reading-list__sleeve .dawn-catalogue__cover-card--image .dawn-catalogue__cover-typography{
+ background:linear-gradient(to bottom,
+ transparent 0%,transparent 49%,
+ color-mix(in srgb,var(--ws-paper) 86%,transparent) 70%,
+ color-mix(in srgb,var(--ws-paper) 98%,transparent) 100%)!important;
+}
+#dawn-second .dawn-reading-list__sleeve .dawn-catalogue__cover-card--image .dawn-catalogue__cover-typography>*{
+ color:var(--ws-ink)!important;
+}
+#dawn-second .dawn-book-detail[data-reading-list="true"] .dawn-book-detail__reading h2{
+ display:block!important;visibility:visible!important;opacity:1!important;
+ font:600 clamp(30px,4vw,64px)/1.2 var(--ws-type-display-zh)!important;
+ color:var(--ws-ink)!important;letter-spacing:-.035em;
+ text-wrap:balance;overflow-wrap:break-word;word-break:normal;
+}
+#dawn-second .dawn-book-detail[data-reading-list="true"] .dawn-book-detail__visual{
+ background:transparent;border-color:color-mix(in srgb,var(--ws-harvest) 35%,transparent);
+}
+#dawn-second .dawn-book-detail[data-reading-list="true"] .dawn-book-detail__visual img{
+ mix-blend-mode:multiply;object-fit:contain;background:transparent;
+}
+#dawn-second .dawn-book-detail__text,
+#dawn-second .dawn-expander__description{
+ font-family:"Noto Serif TC",serif!important;
+ font-weight:400!important;
+ line-height:1.85!important;
+}
+#dawn-second .dawn-book-detail__introduction p{
+ font-family:"Noto Serif TC",serif!important;
+ font-weight:400!important;line-height:1.88!important;
+}
+@media(max-width:650px){
+ #dawn-second .dawn-reading-list__sleeve .dawn-catalogue__cover-typography>strong{
+  font-size:clamp(15px,4vw,19px)!important;line-height:1.38;
+ }
+ #dawn-second .dawn-book-detail[data-reading-list="true"] .dawn-book-detail__reading h2{
+  font-size:clamp(30px,7.5vw,43px)!important;
+ }
+}
+
+/* In editorial reading lists, works without a confirmed canonical ID cannot
+   be saved yet; do not show internal identity-audit text to the reader. */
+#dawn-second .dawn-book-detail[data-reading-list="true"] .dawn-book-detail__bookmark:disabled{
+ display:none!important;
+}
+
+
+/* Edition photographs stay unobscured: the caption is a separate paper zone
+   inside the native square jacket, never an overlay on top of the book title. */
+#dawn-second .dawn-reading-list__sleeve .dawn-catalogue__cover-card--image>img{
+ position:absolute!important;top:0!important;left:0!important;
+ right:0!important;bottom:auto!important;
+ width:100%!important;height:57%!important;
+ padding:5px 6px 0;object-fit:contain!important;object-position:center!important;
+ mix-blend-mode:multiply;
+}
+#dawn-second .dawn-reading-list__sleeve .dawn-catalogue__cover-card--image .dawn-catalogue__cover-typography{
+ position:absolute!important;top:57%!important;bottom:0!important;
+ left:0!important;right:0!important;height:43%!important;
+ padding:7px 10px!important;
+ display:flex!important;justify-content:center!important;
+ flex-direction:column!important;gap:3px!important;
+ background:var(--ws-paper)!important;opacity:1!important;
+ border-top:1px solid color-mix(in srgb,var(--ws-harvest) 27%,transparent);
+}
+#dawn-second .dawn-reading-list__sleeve .dawn-catalogue__cover-card--image .dawn-catalogue__cover-typography>strong{
+ font-size:clamp(13px,1.05vw,19px)!important;line-height:1.25!important;
+}
+#dawn-second .dawn-reading-list__sleeve .dawn-catalogue__cover-card--image .dawn-catalogue__cover-typography>span{
+ font-size:clamp(10px,.72vw,13px)!important;line-height:1.3!important;
+}
+#dawn-second .dawn-reading-list__sleeve .dawn-catalogue__cover-card--image .dawn-catalogue__cover-typography>small{
+ font-size:9px!important;line-height:1!important;
+}
+@media(max-width:650px){
+ #dawn-second .dawn-reading-list__sleeve .dawn-catalogue__cover-card--image>img{height:52%!important}
+ #dawn-second .dawn-reading-list__sleeve .dawn-catalogue__cover-card--image .dawn-catalogue__cover-typography{
+  top:52%!important;height:48%!important;padding:5px 7px!important;gap:2px!important;
+ }
+ #dawn-second .dawn-reading-list__sleeve .dawn-catalogue__cover-card--image .dawn-catalogue__cover-typography>strong{
+  font-size:clamp(12px,3.35vw,16px)!important;line-height:1.25!important;
+ }
+}
+
+
+/* A guided list is an editorial reading sequence, not the classification
+   index. The four original classification actions remain for other routes. */
+#dawn-second #dawn-catalogue[data-reading-list="true"] .dawn-catalogue__primary-nav{
+ display:none!important;
+}
+
+
+/* R80: one vinyl wall language. The former 37/63 reading-list masthead
+   is removed from HTML; these small sleeves occupy the SAME six-column
+   matrix and use the same OS ink, paper, harvest and editorial typography.
+   The original 2x2 Three Morning Stars / Exhibitions / Spectrum are untouched. */
+/* R81 — one unmistakable reading-list chapter, not three book-like orphan
+   tiles. This is a full-width section *inside* the existing vinyl matrix;
+   actual 1×1 records are appended after it, never beside the last list. */
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-reading-list__series{
+ grid-column:1 / -1!important;grid-row:auto!important;
+ display:block!important;min-width:0!important;width:100%!important;
+ margin:clamp(38px,5.2vw,86px) 0 clamp(40px,5.5vw,92px)!important;
+ padding:clamp(18px,2.2vw,32px) 0 clamp(18px,2.2vw,32px)!important;
+ border-top:1px solid var(--ws-branch-rule)!important;
+ border-bottom:1px solid var(--ws-branch-rule)!important;
+ background:transparent!important;
+}
+#dawn-second .dawn-reading-list__series-grid{
+ display:grid!important;
+ grid-template-columns:repeat(6,minmax(0,1fr))!important;
+ grid-auto-flow:row!important;gap:clamp(8px,1vw,18px)!important;
+ width:100%;align-items:stretch;
+}
+#dawn-second .dawn-reading-list__marker{
+ grid-column:span 1;grid-row:span 1;aspect-ratio:1;
+ min-height:0;min-width:0;position:relative;box-sizing:border-box;
+ display:flex;flex-direction:column;align-items:flex-start;
+ padding:clamp(11px,1.2vw,20px);overflow:hidden;
+ background:var(--ws-harvest)!important;color:var(--ws-ink)!important;
+ border:1px solid var(--ws-harvest)!important;
+}
+#dawn-second .dawn-reading-list__marker-kicker{
+ font:400 clamp(8px,.65vw,11px)/1.28 var(--ws-type-display-en-sc,var(--ws-type-display-en));
+ letter-spacing:.085em;white-space:nowrap;
+}
+#dawn-second .dawn-reading-list__marker h2{
+ margin:auto 0 clamp(6px,.6vw,10px)!important;
+ font:600 clamp(32px,3.1vw,56px)/1.1 var(--ws-type-display-zh)!important;
+ letter-spacing:-.04em;color:var(--ws-ink)!important;
+}
+#dawn-second .dawn-reading-list__marker p{
+ margin:0!important;
+ font:200 clamp(11px,.9vw,15px)/1.35 var(--ws-type-display-zh)!important;
+ color:var(--ws-ink)!important;word-break:keep-all;
+}
+#dawn-second .dawn-reading-list__marker-count{
+ display:block;margin-top:clamp(9px,1.1vw,18px);
+ padding-top:clamp(7px,.65vw,11px);width:100%;
+ border-top:1px solid color-mix(in srgb,var(--ws-ink) 35%,transparent);
+ font:400 clamp(8px,.67vw,11px)/1.2 var(--ws-type-display-en-sc,var(--ws-type-display-en));
+ letter-spacing:.07em;white-space:nowrap;
+}
+@media(max-width:1100px){
+ #dawn-second .dawn-reading-list__series-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+}
+@media(max-width:650px){
+ #dawn-second .dawn-reading-list__series-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+ #dawn-second .dawn-reading-list__marker{padding:10px!important}
+ #dawn-second .dawn-reading-list__marker h2{font-size:clamp(31px,9vw,42px)!important}
+ #dawn-second .dawn-reading-list__marker p{font-size:clamp(10px,3vw,13px)!important}
+ #dawn-second .dawn-reading-list__marker-kicker{font-size:8px!important}
+ #dawn-second .dawn-reading-list__marker-count{font-size:8px!important}
+}
+#dawn-second .dawn-reading-list__series-grid>.dawn-reading-list__tile{
+ position:relative!important;display:flex!important;flex-direction:column!important;
+ grid-column:span 1!important;grid-row:span 1!important;
+ box-sizing:border-box!important;width:100%!important;min-width:0!important;
+ height:auto!important;aspect-ratio:1!important;min-height:0!important;
+ margin:0!important;padding:clamp(9px,1vw,16px)!important;
+ border:1px solid var(--ws-harvest)!important;border-radius:0!important;
+ background:var(--ws-paper)!important;box-shadow:none!important;
+ color:var(--ws-ink)!important;overflow:hidden!important;
+ text-align:left!important;cursor:pointer;isolation:isolate;
+ transition:background-color .2s ease;
+}
+#dawn-second .dawn-reading-list__tile .dawn-reading-list__serial{
+ position:relative;z-index:1;display:block;flex:none;
+ font:200 clamp(10px,.78vw,13px)/1.3 var(--ws-type-display-zh);
+ color:var(--ws-ink);letter-spacing:.02em;
+}
+#dawn-second .dawn-reading-list__serial [lang="en"]{
+ font:400 clamp(9px,.68vw,11px)/1.2 var(--ws-type-display-en-sc,var(--ws-type-display-en));
+}
+#dawn-second .dawn-reading-list__tile .dawn-reading-list__face{
+ position:relative;flex:1 1 auto;display:flex;align-items:center;
+ justify-content:flex-start;min-height:0;width:100%;
+ padding:clamp(4px,.7vw,13px) 0;
+ border-bottom:1px solid color-mix(in srgb,var(--ws-harvest) 55%,transparent);
+}
+#dawn-second .dawn-reading-list__face>span{
+ display:block;font:200 clamp(17px,1.58vw,30px)/1.14 var(--ws-type-display-zh);
+ letter-spacing:-.025em;word-break:keep-all;overflow-wrap:normal;
+}
+#dawn-second .dawn-reading-list__face>i{
+ position:absolute;right:0;bottom:clamp(4px,.65vw,10px);
+ font:italic 400 clamp(8px,.72vw,12px)/1 var(--ws-type-display-en);
+ color:var(--ws-olive);opacity:.76;
+}
+#dawn-second .dawn-reading-list__caption{
+ position:relative;z-index:1;display:flex;flex-direction:column;
+ justify-content:flex-end;align-items:flex-start;gap:clamp(3px,.36vw,7px);
+ flex:none;min-width:0;padding-top:clamp(6px,.7vw,12px);
+}
+#dawn-second .dawn-reading-list__caption>strong{
+ display:block;font:600 clamp(14px,1.35vw,23px)/1.18 var(--ws-type-display-zh);
+ text-wrap:balance;word-break:keep-all;letter-spacing:-.02em;
+}
+#dawn-second .dawn-reading-list__caption>small{
+ display:flex;justify-content:space-between;gap:4px;width:100%;
+ font:200 clamp(10px,.75vw,13px)/1.3 var(--ws-type-display-zh);color:var(--ws-olive);
+}
+#dawn-second .dawn-reading-list__tile--gospel{background:var(--ws-papyrus)!important}
+#dawn-second .dawn-reading-list__tile--life{border-top-width:3px!important}
+#dawn-second .dawn-reading-list__tile--history{background:color-mix(in srgb,var(--ws-harvest) 12%,var(--ws-paper))!important}
+#dawn-second .dawn-reading-list__tile:hover,
+#dawn-second .dawn-reading-list__tile:focus-visible{
+ background:color-mix(in srgb,var(--ws-harvest) 21%,var(--ws-paper))!important;
+ outline:2px solid var(--ws-ink)!important;outline-offset:2px!important;
+}
+#dawn-second .dawn-catalogue[data-reading-list="true"] .dawn-catalogue__heading{
+ align-items:center!important;padding-bottom:clamp(8px,1vw,16px)!important;
+}
+#dawn-second .dawn-catalogue[data-reading-list="true"] .dawn-catalogue__heading h2{
+ font:200 clamp(18px,2.1vw,34px)/1.2 var(--ws-type-display-zh)!important;
+ letter-spacing:-.02em!important;margin:0!important;
+}
+#dawn-second .dawn-catalogue[data-reading-list="true"] .dawn-catalogue__heading>div>span,
+#dawn-second .dawn-catalogue[data-reading-list="true"] .dawn-catalogue__heading>div>p,
+#dawn-second .dawn-catalogue[data-reading-list="true"] .dawn-catalogue__total,
+#dawn-second .dawn-catalogue[data-reading-list="true"] .dawn-catalogue__introduction{
+ display:none!important;
+}
+#dawn-second .dawn-catalogue[data-reading-list="true"] .dawn-catalogue__reading-index{
+ padding:clamp(6px,.8vw,14px) 0!important;
+ margin:0!important;border-bottom:0!important;gap:clamp(12px,2.2vw,28px)!important;
+}
+#dawn-second .dawn-catalogue[data-reading-list="true"] .dawn-catalogue__reading-index button{
+ font:200 clamp(11px,.9vw,15px)/1.4 var(--ws-type-display-zh)!important;
+}
+#dawn-second .dawn-catalogue__works--sleeves>.dawn-reading-list__guide{
+ grid-column:span 2!important;grid-row:span 2!important;
+ display:flex!important;flex-direction:column!important;gap:0!important;
+ box-sizing:border-box!important;min-width:0!important;width:100%!important;
+ height:auto!important;aspect-ratio:1!important;overflow:hidden!important;
+ margin:0!important;padding:clamp(14px,2vw,36px)!important;
+ border:1px solid var(--ws-harvest)!important;
+ background:var(--ws-harvest)!important;color:var(--ws-ink)!important;
+}
+#dawn-second .dawn-reading-list__guide>small{
+ font:400 clamp(10px,.75vw,13px)/1.4 var(--ws-type-display-en-sc,var(--ws-type-display-en));
+ letter-spacing:.12em;color:var(--ws-ink);opacity:.82;
+}
+#dawn-second .dawn-reading-list__guide h3{
+ margin:clamp(9px,.9vw,16px) 0!important;
+ font:600 clamp(23px,2.35vw,43px)/1.1 var(--ws-type-display-zh)!important;
+ color:var(--ws-ink)!important;letter-spacing:-.025em;
+}
+#dawn-second .dawn-reading-list__guide .dawn-reading-list__question{
+ font:200 clamp(13px,1.15vw,21px)/1.5 var(--ws-type-display-zh);
+ letter-spacing:-.015em;text-wrap:pretty;
+}
+#dawn-second .dawn-reading-list__guide .dawn-reading-list__essay{
+ margin:clamp(7px,.9vw,16px) 0 0;
+ font:400 clamp(11px,.81vw,15px)/1.65 var(--ws-type-reading-zh);
+ color:var(--ws-ink);
+}
+#dawn-second .dawn-reading-list__guide .dawn-reading-list__sequence{
+ margin:auto 0 0;padding-top:clamp(8px,.85vw,14px);
+ border-top:1px solid color-mix(in srgb,var(--ws-ink) 35%,transparent);
+ font:200 clamp(11px,.8vw,15px)/1.5 var(--ws-type-display-zh);
+}
+@media(max-width:650px){
+ #dawn-second .dawn-reading-list__tile{padding:10px!important}
+ #dawn-second .dawn-reading-list__face>span{font-size:clamp(16px,4.6vw,23px)!important}
+ #dawn-second .dawn-reading-list__caption>strong{font-size:clamp(15px,4vw,19px)!important}
+ #dawn-second .dawn-reading-list__caption>small{font-size:10px!important}
+ #dawn-second .dawn-catalogue__works--sleeves>.dawn-reading-list__guide{padding:clamp(12px,4vw,19px)!important}
+ #dawn-second .dawn-reading-list__guide h3{font-size:clamp(21px,7vw,29px)!important;margin:7px 0!important}
+ #dawn-second .dawn-reading-list__guide .dawn-reading-list__question{font-size:clamp(12px,3.6vw,15px)}
+ #dawn-second .dawn-reading-list__guide .dawn-reading-list__essay{font-size:clamp(10px,2.85vw,12px);line-height:1.53}
+ #dawn-second .dawn-reading-list__guide .dawn-reading-list__sequence{font-size:clamp(10px,2.7vw,12px)}
+}
+@media(prefers-reduced-motion:reduce){
+ #dawn-second .dawn-reading-list__tile{transition:none!important}
+}
+
+/* Subject choices remain complete in the native collection, not thirteen
+   equally weighted second-layer wall entrances. */
+#dawn-second .dawn-reading-room__departments[hidden]{display:none!important}
+
+
+/* R82 — visual hierarchy, not border weight:
+   an editorial 2×2 question/series identity followed by three 1×1
+   multi-work selections, within the already-approved original vinyl wall.
+   Its underlying four-column subgrid preserves 1×1 / 2×2 modules; the
+   actual historical book-jacket wall begins only after a separate imprint. */
+#dawn-second .dawn-reading-list__series-grid{
+ grid-template-columns:repeat(4,minmax(0,1fr))!important;
+ max-width:1080px!important;margin:0!important;
+ align-items:stretch!important;grid-auto-flow:row!important;
+}
+#dawn-second .dawn-reading-list__series-grid>.dawn-reading-list__marker{
+ grid-column:1 / span 2!important;grid-row:1 / span 2!important;
+ aspect-ratio:1!important;width:100%!important;height:100%!important;
+ padding:clamp(22px,2.8vw,52px)!important;
+ border:0!important;background:var(--ws-harvest)!important;
+}
+#dawn-second .dawn-reading-list__marker .dawn-reading-list__marker-kicker{
+ font:400 clamp(10px,1vw,14px)/1.35 var(--ws-type-display-en-sc,var(--ws-type-display-en))!important;
+ letter-spacing:.12em!important;
+}
+#dawn-second .dawn-reading-list__series-grid>.dawn-reading-list__marker h2{
+ margin:auto 0 clamp(16px,2vw,30px)!important;
+ font:900 clamp(70px,8vw,122px)/.94 var(--ws-type-display-zh)!important;
+ letter-spacing:-.06em!important;white-space:nowrap;
+}
+#dawn-second .dawn-reading-list__marker p{
+ max-width:16em;font:200 clamp(17px,1.6vw,25px)/1.55 var(--ws-type-display-zh)!important;
+ word-break:normal!important;text-wrap:pretty;
+}
+#dawn-second .dawn-reading-list__marker .dawn-reading-list__marker-count{
+ display:flex!important;flex-wrap:wrap;align-items:baseline;gap:clamp(5px,.7vw,12px);
+ margin-top:auto!important;padding-top:clamp(15px,2vw,25px)!important;
+ border-color:color-mix(in srgb,var(--ws-ink) 55%,transparent);
+ font:200 clamp(12px,1vw,17px)/1.25 var(--ws-type-display-zh)!important;
+}
+#dawn-second .dawn-reading-list__marker-count strong{
+ font:400 clamp(25px,2.5vw,38px)/1 var(--ws-type-display-en-sc,var(--ws-type-display-en));
+}
+#dawn-second .dawn-reading-list__series-grid>.dawn-reading-list__tile{
+ grid-column:span 1!important;grid-row:span 1!important;
+ border:0!important;padding:clamp(13px,1.35vw,23px)!important;
+ background:var(--ws-paper)!important;
+}
+#dawn-second .dawn-reading-list__tile--gospel{background:var(--ws-papyrus)!important}
+#dawn-second .dawn-reading-list__tile--history{
+ background:color-mix(in srgb,var(--ws-harvest) 12%,var(--ws-paper))!important
+}
+#dawn-second .dawn-reading-list__tile--life{border-top:0!important}
+#dawn-second .dawn-reading-list__tile .dawn-reading-list__serial{
+ font:200 clamp(12px,.92vw,15px)/1.25 var(--ws-type-display-zh)!important;
+ color:var(--ws-ink)!important;
+}
+#dawn-second .dawn-reading-list__tile .dawn-reading-list__face{
+ align-items:flex-start!important;justify-content:center!important;
+ flex-direction:column!important;gap:clamp(3px,.4vw,8px);
+ padding:clamp(3px,.5vw,8px) 0!important;
+}
+#dawn-second .dawn-reading-list__tile .dawn-reading-list__face>.dawn-reading-list__quantity{
+ display:block!important;font:400 clamp(52px,4.4vw,78px)/.91 var(--ws-type-display-en-sc,var(--ws-type-display-en))!important;
+ letter-spacing:-.055em;overflow:visible!important;
+}
+#dawn-second .dawn-reading-list__tile .dawn-reading-list__face>i{
+ position:static!important;display:block!important;
+ font:400 clamp(9px,.7vw,12px)/1.2 var(--ws-type-display-en-sc,var(--ws-type-display-en));
+ opacity:.76;letter-spacing:.09em;
+}
+#dawn-second .dawn-reading-list__tile .dawn-reading-list__caption>strong{
+ font:600 clamp(19px,1.58vw,26px)/1.22 var(--ws-type-display-zh)!important;
+ letter-spacing:-.025em;
+}
+#dawn-second .dawn-reading-list__tile .dawn-reading-list__caption>small{
+ font:200 clamp(11px,.86vw,14px)/1.35 var(--ws-type-display-zh)!important;
+}
+#dawn-second .dawn-wall__grid--curated>.dawn-wall__collection-divider{
+ display:flex!important;grid-column:1/-1!important;grid-row:auto!important;
+ align-items:baseline;justify-content:space-between;gap:12px;
+ padding:0 0 clamp(9px,.9vw,14px)!important;
+ margin:clamp(12px,1.5vw,26px) 0 0!important;
+ border-bottom:1px solid var(--ws-branch-rule);color:var(--ws-olive)!important;
+}
+#dawn-second .dawn-wall__collection-divider>strong{
+ font:200 clamp(17px,1.4vw,24px)/1.25 var(--ws-type-display-zh);
+}
+#dawn-second .dawn-wall__collection-divider>span{
+ font:400 clamp(9px,.8vw,12px)/1.2 var(--ws-type-display-en-sc,var(--ws-type-display-en));
+ letter-spacing:.1em;
+}
+@media(max-width:650px){
+ #dawn-second .dawn-reading-list__series-grid{
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:8px!important;
+ }
+ #dawn-second .dawn-reading-list__series-grid>.dawn-reading-list__marker{
+  grid-column:1 / -1!important;grid-row:auto / span 2!important;
+  padding:clamp(22px,6vw,32px)!important;
+ }
+ #dawn-second .dawn-reading-list__series-grid>.dawn-reading-list__marker h2{
+  font-size:clamp(70px,18vw,100px)!important;
+ }
+ #dawn-second .dawn-reading-list__marker p{font-size:clamp(17px,4.7vw,22px)!important}
+ #dawn-second .dawn-reading-list__marker-count strong{font-size:clamp(28px,8vw,36px)}
+ #dawn-second .dawn-reading-list__series-grid>.dawn-reading-list__tile{padding:11px!important}
+ #dawn-second .dawn-reading-list__tile .dawn-reading-list__face>.dawn-reading-list__quantity{
+  font-size:clamp(48px,13vw,72px)!important;
+ }
+ #dawn-second .dawn-reading-list__tile .dawn-reading-list__caption>strong{font-size:clamp(17px,4.8vw,21px)!important}
+ #dawn-second .dawn-reading-list__tile .dawn-reading-list__caption>small{font-size:clamp(10px,2.6vw,12px)!important}
+}
+
+
+/* R83 — right-hand sourced book covers. The empty portion of the original
+   vinyl wall becomes an actual, source-grounded four-cover editorial shelf.
+   This changes neither the primary P2 portals nor the 2x2/1x1 booklist
+   grammar; it uses the *same* six-column mother grid on desktop. */
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-reading-list__series{
+ display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;
+ column-gap:clamp(8px,1vw,18px)!important;row-gap:0!important;
+ align-items:stretch!important;
+}
+#dawn-second .dawn-reading-list__series>.dawn-reading-list__series-grid{
+ grid-column:1 / span 4!important;grid-row:1!important;
+ max-width:none!important;width:100%!important;
+ min-width:0!important;margin:0!important;align-self:start!important;
+}
+#dawn-second .dawn-reading-list__series-grid>.dawn-reading-list__featured-caption{
+ grid-column:4!important;grid-row:2!important;
+ display:flex;flex-direction:column;justify-content:flex-end;
+ align-items:flex-start;gap:clamp(4px,.5vw,9px);
+ box-sizing:border-box;width:100%;min-width:0;aspect-ratio:1;
+ padding:clamp(13px,1.35vw,23px);
+ background:color-mix(in srgb,var(--ws-harvest) 8%,var(--ws-paper));
+ border:1px solid color-mix(in srgb,var(--ws-harvest) 30%,transparent);
+ color:var(--ws-olive);
+}
+#dawn-second .dawn-reading-list__featured-caption>span{
+ font:400 clamp(9px,.68vw,11px)/1.3 var(--ws-type-display-en-sc,var(--ws-type-display-en));
+ letter-spacing:.1em;
+}
+#dawn-second .dawn-reading-list__featured-caption>strong{
+ font:200 clamp(17px,1.46vw,24px)/1.25 var(--ws-type-display-zh);
+ color:var(--ws-ink);word-break:keep-all;
+}
+#dawn-second .dawn-reading-list__featured-caption>small{
+ font:200 clamp(10px,.8vw,13px)/1.35 var(--ws-type-display-zh);
+}
+#dawn-second .dawn-reading-list__series>.dawn-reading-list__featured{
+ grid-column:5 / span 2!important;grid-row:1!important;
+ box-sizing:border-box;min-width:0;width:100%;aspect-ratio:1;
+ display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+ grid-template-rows:repeat(2,minmax(0,1fr));
+ gap:clamp(8px,1vw,18px)!important;
+ align-self:start!important;
+}
+#dawn-second .dawn-reading-list__featured-placeholder{
+ display:flex;grid-column:1 / -1;align-items:center;justify-content:center;
+ background:var(--ws-paper);color:var(--ws-olive);
+ font:200 clamp(13px,1.2vw,18px)/1.5 var(--ws-type-display-zh);
+}
+#dawn-second .dawn-reading-list__featured-book{
+ display:flex;flex-direction:column;position:relative;min-width:0;min-height:0;
+ width:100%;height:100%;aspect-ratio:1;box-sizing:border-box;overflow:hidden;
+ padding:0;margin:0;border:1px solid var(--ws-branch-rule);
+ background:var(--ws-paper);color:var(--ws-ink);cursor:pointer;
+ text-align:left;box-shadow:none;border-radius:0;
+ transition:filter .2s ease;
+}
+#dawn-second .dawn-reading-list__featured-book:hover{filter:brightness(.96)}
+#dawn-second .dawn-reading-list__featured-book:focus-visible{
+ outline:2px solid var(--ws-ink);outline-offset:2px;
+}
+#dawn-second .dawn-reading-list__featured-image{
+ display:flex;align-items:center;justify-content:center;
+ flex:1 1 73%;min-height:0;width:100%;padding:clamp(3px,.45vw,8px);
+ box-sizing:border-box;overflow:hidden;
+ background:color-mix(in srgb,var(--ws-harvest) 5%,var(--ws-paper));
+}
+#dawn-second .dawn-reading-list__featured-image img{
+ display:none;width:100%;height:100%;object-fit:contain;object-position:center;
+ mix-blend-mode:multiply;
+}
+#dawn-second .dawn-reading-list__featured-book--image-ready .dawn-reading-list__featured-image img{
+ display:block;
+}
+#dawn-second .dawn-reading-list__featured-image .dawn-reading-list__featured-fallback{
+ font:600 clamp(13px,1.05vw,19px)/1.35 var(--ws-type-display-zh);
+ color:var(--ws-ink);padding:5px;overflow-wrap:break-word;text-wrap:balance;
+}
+#dawn-second .dawn-reading-list__featured-book--image-ready .dawn-reading-list__featured-fallback{
+ display:none;
+}
+#dawn-second .dawn-reading-list__featured-book-label{
+ display:flex;flex-direction:column;justify-content:center;
+ flex:0 0 27%;min-height:0;min-width:0;
+ padding:clamp(5px,.55vw,10px);box-sizing:border-box;
+ border-top:1px solid color-mix(in srgb,var(--ws-harvest) 30%,transparent);
+ background:var(--ws-paper);gap:clamp(2px,.2vw,4px);
+}
+#dawn-second .dawn-reading-list__featured-book-label>strong{
+ font:600 clamp(10px,.8vw,14px)/1.2 var(--ws-type-display-zh);
+ color:var(--ws-ink);white-space:normal;
+ display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+ overflow-wrap:break-word;word-break:normal;
+}
+#dawn-second .dawn-reading-list__featured-book-label>small{
+ font:200 clamp(8px,.63vw,11px)/1.2 var(--ws-type-display-zh);
+ color:var(--ws-olive);
+}
+@media(min-width:651px) and (max-width:1100px){
+ #dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-reading-list__series{
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  row-gap:clamp(8px,1vw,18px)!important;
+ }
+ #dawn-second .dawn-reading-list__series>.dawn-reading-list__series-grid{
+  grid-column:1 / -1!important;grid-row:auto!important;
+ }
+ #dawn-second .dawn-reading-list__series>.dawn-reading-list__featured{
+  grid-column:1 / -1!important;grid-row:auto!important;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  grid-template-rows:minmax(0,1fr);
+  aspect-ratio:4 / 1;
+ }
+}
+@media(max-width:650px){
+ #dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-reading-list__series{
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  row-gap:clamp(8px,2.5vw,14px)!important;
+ }
+ #dawn-second .dawn-reading-list__series>.dawn-reading-list__series-grid{
+  grid-column:1 / -1!important;grid-row:auto!important;
+ }
+ #dawn-second .dawn-reading-list__series-grid>.dawn-reading-list__featured-caption{
+  grid-column:auto!important;grid-row:auto!important;padding:10px;
+ }
+ #dawn-second .dawn-reading-list__featured-caption>strong{font-size:clamp(17px,4.8vw,21px)}
+ #dawn-second .dawn-reading-list__series>.dawn-reading-list__featured{
+  grid-column:1 / -1!important;grid-row:auto!important;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  grid-template-rows:repeat(2,minmax(0,1fr));
+ }
+ #dawn-second .dawn-reading-list__featured-book-label{padding:5px 7px;}
+ #dawn-second .dawn-reading-list__featured-book-label>strong{font-size:clamp(11px,3vw,13px)}
+ #dawn-second .dawn-reading-list__featured-book-label>small{font-size:9px}
+ #dawn-second .dawn-reading-list__featured-image .dawn-reading-list__featured-fallback{font-size:clamp(13px,3.4vw,17px)}
+}
+@media(prefers-reduced-motion:reduce){
+ #dawn-second .dawn-reading-list__featured-book{transition:none}
+}
+
+
+/* R84 / The visual square IS the image. These are not bookshop cards.
+   A sourced plate may replace the verified same-edition cover once admitted.
+   Retain the original vinyl grid, accessible book labels, and reading route. */
+#dawn-second .dawn-reading-list__featured-book{
+ position:relative!important;display:block!important;
+ aspect-ratio:1!important;height:100%!important;width:100%!important;
+ overflow:hidden!important;padding:0!important;border:0!important;
+ isolation:isolate!important;
+ background:var(--ws-paper)!important;
+}
+#dawn-second .dawn-reading-list__featured-image{
+ position:absolute!important;inset:0!important;
+ display:block!important;flex:none!important;width:100%!important;height:100%!important;
+ overflow:hidden!important;padding:0!important;
+ background:color-mix(in srgb,var(--ws-harvest) 10%,var(--ws-paper))!important;
+}
+#dawn-second .dawn-reading-list__featured-image img{
+ position:absolute!important;inset:0!important;display:none!important;
+ width:100%!important;height:100%!important;
+ object-fit:cover!important;object-position:center!important;
+ mix-blend-mode:normal!important;
+ filter:contrast(1.02) saturate(.95);
+}
+#dawn-second .dawn-reading-list__featured-book--image-ready .dawn-reading-list__featured-image img{
+ display:block!important;
+}
+#dawn-second .dawn-reading-list__featured-image .dawn-reading-list__featured-fallback{
+ position:absolute!important;inset:0!important;
+ display:flex!important;align-items:center;justify-content:center;
+ padding:clamp(7px,1vw,16px)!important;
+ font:600 clamp(12px,1vw,18px)/1.3 var(--ws-type-display-zh)!important;
+ text-align:center;color:var(--ws-ink);
+}
+#dawn-second .dawn-reading-list__featured-book--image-ready .dawn-reading-list__featured-fallback{
+ display:none!important;
+}
+#dawn-second .dawn-reading-list__featured-book-label{display:none!important}
+#dawn-second .dawn-reading-list__featured-overlay{
+ position:absolute!important;z-index:2;pointer-events:none;
+ inset:auto 0 0!important;display:flex!important;flex-direction:column;
+ gap:clamp(2px,.23vw,4px)!important;
+ padding:clamp(8px,.85vw,15px)!important;
+ background:linear-gradient(to top,rgba(23,27,23,.85),rgba(23,27,23,.46) 60%,transparent)!important;
+ color:var(--ws-paper)!important;
+}
+#dawn-second .dawn-reading-list__featured-kicker{
+ display:block;color:var(--ws-paper)!important;opacity:.91;
+ font:200 clamp(8px,.66vw,11px)/1.3 var(--ws-type-display-zh);
+ letter-spacing:.02em;
+}
+#dawn-second .dawn-reading-list__featured-title{
+ color:var(--ws-paper)!important;
+ font:600 clamp(11px,.9vw,16px)/1.25 var(--ws-type-display-zh);
+ letter-spacing:-.015em;overflow-wrap:break-word;word-break:normal;
+ display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+ text-shadow:0 1px 4px rgba(0,0,0,.32);
+}
+#dawn-second .dawn-reading-list__featured-book:focus-visible{
+ outline:2px solid var(--ws-ink)!important;outline-offset:3px!important;
+}
+@media(max-width:650px){
+ #dawn-second .dawn-reading-list__featured-overlay{padding:8px!important}
+ #dawn-second .dawn-reading-list__featured-title{font-size:clamp(11px,3vw,14px)!important}
+ #dawn-second .dawn-reading-list__featured-kicker{font-size:9px!important}
+}
+@media(prefers-reduced-motion:reduce){
+ #dawn-second .dawn-reading-list__featured-book{transition:none!important}
+}
+
+
+/* R85 — No giant navigation billboard on P2 second layer.
+   This tiny BACK utility overlays the reading surface without creating a
+   cream-coloured header band; Collection / My Library are already available
+   as functional actions within the original bookwall. */
+#dawn-second[data-ws-scope="dawn-library"] .dawn-second__global-nav{
+ position:absolute!important;
+ z-index:35!important;
+ top:clamp(8px,1.1vw,18px)!important;
+ left:clamp(12px,3.1vw,54px)!important;
+ right:auto!important;
+ display:block!important;
+ width:max-content!important;
+ max-width:calc(100% - 24px)!important;
+ margin:0!important;
+ padding:0!important;
+ height:auto!important;
+ min-height:0!important;
+ background:transparent!important;
+ border:0!important;
+ box-shadow:none!important;
+ isolation:auto!important;
+}
+#dawn-second .dawn-second__global-nav:after{display:none!important;content:none!important}
+#dawn-second .dawn-second__global-nav .dawn-second__return{
+ position:relative!important;
+ display:inline-flex!important;flex-direction:row!important;
+ align-items:center!important;justify-content:flex-start!important;
+ gap:clamp(5px,.5vw,9px)!important;
+ padding:6px 4px!important;
+ min-height:32px!important;
+ width:max-content!important;
+ background:transparent!important;border:0!important;
+ box-shadow:none!important;color:var(--ws-ink)!important;
+ cursor:pointer!important;
+}
+#dawn-second .dawn-second__global-nav .dawn-second__return-mark{
+ font:400 clamp(14px,1vw,19px)/1 var(--ws-type-display-en)!important;
+ color:var(--ws-harvest)!important;
+}
+#dawn-second .dawn-second__global-nav .dawn-second__return .dawn-second__nav-zh{
+ display:inline!important;
+ font:200 clamp(14px,.95vw,16px)/1.35 var(--ws-type-display-zh)!important;
+ color:var(--ws-ink)!important;opacity:1!important;
+}
+#dawn-second .dawn-second__global-nav .dawn-second__return:focus-visible{
+ outline:2px solid var(--ws-harvest)!important;outline-offset:2px!important;
+}
+#dawn-second .dawn-wall__tail{
+ display:flex!important;justify-content:space-between!important;
+ flex-direction:row!important;flex-wrap:wrap!important;
+ align-items:center!important;gap:clamp(12px,2vw,32px)!important;
+}
+#dawn-second .dawn-wall__tail .dawn-wall__personal{
+ display:inline-flex;align-items:baseline;gap:clamp(8px,1vw,14px);
+ font:200 clamp(14px,1.3vw,18px)/1.25 var(--ws-type-display-zh)!important;
+ border:1px solid var(--ws-harvest)!important;
+ background:transparent!important;
+ padding:13px 20px!important;color:var(--ws-ink)!important;
+ cursor:pointer;white-space:nowrap;
+}
+#dawn-second .dawn-wall__tail .dawn-wall__personal:hover{
+ background:var(--ws-harvest)!important;color:var(--ws-paper)!important;
+}
+#dawn-second .dawn-wall__personal [id="dawn-personal-count"]{
+ font:400 clamp(12px,1vw,15px)/1.2 var(--ws-type-display-en-sc,var(--ws-type-display-en));
+}
+@media(max-width:650px){
+ #dawn-second[data-ws-scope="dawn-library"] .dawn-second__global-nav{
+  top:8px!important;left:12px!important;
+ }
+ #dawn-second .dawn-wall__tail .dawn-wall__personal{
+  font-size:14px!important;padding:11px 14px!important;
+ }
+}
+
+
+/* R86 — restore MERSI transition geometry at the PROTECTED 04→05 boundary.
+   Both halves of the actual image exhibition slide in with opposed
+   scroll-owned masks. Their original 04 visual stays below until the
+   correct half has physically arrived. A background on either wrapper
+   would turn the motion into the rejected full-screen beige crossfade. */
+#dawn-realm.dawn-realm{
+ background:transparent!important;
+}
+#dawn-realm .dawn-world{
+ background:transparent!important;
+}
+#dawn-realm .dawn-world__page{
+ will-change:clip-path!important;
+}
+#dawn-realm .dawn-world__art img,
+#dawn-realm .dawn-world__art img.dawn-world__incoming{
+ will-change:clip-path,transform!important;
+}
+@media(prefers-reduced-motion:reduce){
+ #dawn-realm .dawn-world__page,
+ #dawn-realm .dawn-world__art img{will-change:auto!important}
+}
+
+
+/* R90 / REGISTERED HISTORICAL UNDERPRINT: exact first left and right works,
+   impressed through Olivet's own 04 topographic and botanical plates.
+   The outgoing 04 iframe never scales: its twelve portraits remain on one
+   uninterrupted field until their ink releases as a single composition.
+   04 images, faces, typography and animation are never modified here. */
+#p205-stage{background:var(--ws-olive)!important}
+#p205-prior{
+ z-index:2!important;
+ transform:none!important;
+ will-change:opacity;
+}
+#p205-engraving-bridge{
+ --p205-ink-transfer:0;
+ position:absolute;inset:0;z-index:1;
+ display:block;overflow:hidden;pointer-events:none;
+ background:var(--ws-olive);visibility:hidden;isolation:isolate;
+}
+#p205-engraving-bridge .p205-engraving-bridge__paper{
+ position:absolute;inset:0;z-index:0;
+ background:var(--ws-papyrus);
+ opacity:var(--p205-ink-transfer);
+}
+#p205-engraving-bridge .p205-engraving-bridge__history-pair{
+ position:absolute;inset:0;z-index:1;
+ display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+ overflow:hidden;pointer-events:none;
+ opacity:var(--p205-ink-transfer);
+ filter:grayscale(1) sepia(.55) contrast(1.16) brightness(1.04);
+ mix-blend-mode:multiply;
+}
+#p205-engraving-bridge .p205-engraving-bridge__history{
+ width:100%;height:100%;min-width:0;
+ display:block;object-fit:cover;object-position:center;
+ pointer-events:none;
+}
+#p205-engraving-bridge[data-history-ready="false"] .p205-engraving-bridge__history-pair{
+ display:none;
+}
+#p205-engraving-bridge .p205-engraving-bridge__terrain,
+#p205-engraving-bridge .p205-engraving-bridge__botanical{
+ position:absolute;z-index:2;pointer-events:none;
+ background:var(--ws-morning-gold);
+ -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+ -webkit-mask-size:contain;mask-size:contain;
+ mix-blend-mode:multiply;
+}
+#p205-engraving-bridge .p205-engraving-bridge__terrain{
+ width:min(85vw,1150px);height:140%;right:-8%;top:-21%;
+ opacity:.27;
+ transform:translate3d(var(--p205-engraving-shift,0%),0,0);
+ -webkit-mask-image:url('/images/p2-realms/v15/04-olive-mount-terrain-contours-v1.svg');
+ mask-image:url('/images/p2-realms/v15/04-olive-mount-terrain-contours-v1.svg');
+ -webkit-mask-position:center center;mask-position:center center;
+}
+#p205-engraving-bridge .p205-engraving-bridge__botanical{
+ width:min(48vw,680px);height:122%;left:-13%;top:-8%;opacity:.13;
+ -webkit-mask-image:url('/images/p2-realms/v15/v79-botanical-field/04-olive-field-v79-1.svg');
+ mask-image:url('/images/p2-realms/v15/v79-botanical-field/04-olive-field-v79-1.svg');
+ -webkit-mask-position:center center;mask-position:center center;
+}
+#p205-engraving-bridge .p205-engraving-bridge__register{display:none!important}
+#dawn-realm.dawn-realm{z-index:3!important;background:transparent!important}
+@media(max-width:650px){
+ #p205-engraving-bridge .p205-engraving-bridge__history{object-position:center center}
+ #p205-engraving-bridge .p205-engraving-bridge__terrain{
+  width:120%;height:95%;right:-48%;top:0;opacity:.26;
+ }
+ #p205-engraving-bridge .p205-engraving-bridge__botanical{
+  width:85%;height:105%;left:-45%;top:-4%;opacity:.12;
+ }
+}
+@media(prefers-reduced-motion:reduce){
+ #p205-prior{will-change:auto}
+}
+
+/* Crop the archival print border inside the fixed, full-bleed wipe geometry. */
+#dawn-realm .dawn-world__art img{scale:1.08}
