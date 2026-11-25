@@ -376,3 +376,25 @@ html.ws-dawn-active body.home .ws-dawn-scripture,
 html.ws-dawn-active body.home .ws-dawn-scripture :is(.sites-home-slogan-zh,.sites-home-scripture,.ws-scripture-reference){
  color:#fff!important;
 }
+
+/* Original Brand Standards print-mark, not a substitute arrow. */
+.ww-print-mark{display:inline-block!important;width:2.5em!important;height:auto!important;aspect-ratio:6/1;vertical-align:middle;flex:none;color:currentColor;}
+
+/* Watch Ornament R01: original seven-width rhythm, continuous shared baseline. */
+.ww-wall-nav .ww-wall-mark{display:block;width:100%;height:auto;flex:none;overflow:visible;color:color-mix(in srgb,currentColor 30%,transparent);}
+.ww-wall-nav [data-watch-realm]{min-width:0;display:flex!important;flex-direction:column;justify-content:flex-start;align-items:center!important;gap:.35em;white-space:nowrap;}
+.ww-wall-nav [data-watch-realm="church"]{flex:48 1 0;--ww-realm-ink:var(--ws-water);}
+.ww-wall-nav [data-watch-realm="journal"]{flex:80 1 0;--ww-realm-ink:var(--ws-first-light);}
+.ww-wall-nav [data-watch-realm="one"]{flex:48 1 0;--ww-realm-ink:var(--ws-pale-gold);}
+.ww-wall-nav [data-watch-realm="olive"]{flex:40 1 0;--ww-realm-ink:var(--ws-olive);}
+.ww-wall-nav [data-watch-realm="dawn-library"]{flex:40 1 0;--ww-realm-ink:var(--ws-harvest);}
+.ww-wall-nav [data-watch-realm="cinema"]{flex:40 1 0;--ww-realm-ink:var(--ws-crimson);}
+.ww-wall-nav [data-watch-realm="daylight-cafe"]{flex:32 1 0;--ww-realm-ink:var(--ws-daylight-mauve);}
+.ww-wall-nav [data-watch-realm]:is([aria-current="page"],:hover,:focus-visible) .ww-wall-mark{color:var(--ww-realm-ink);}
+.ww-wall-nav [data-watch-realm][aria-current="page"]{font-weight:600;}
+
+/* Only the opened Contents panel; keep the hero and P2 untouched. */
+body.home .sites-home-nav--floating .sites-home-nav__panel-links.ww-wall-nav{display:flex!important;flex-wrap:wrap!important;align-items:flex-start!important;gap:0!important;width:88vw!important;max-height:none!important;}
+body.home .sites-home-nav--floating .sites-home-nav__panel-links.ww-wall-nav>a[data-watch-realm]{margin:0!important;min-width:0;white-space:normal;line-height:1.2!important;font-size:clamp(10px,1.1vw,17px)!important;text-align:center;}
+body.home .sites-home-nav--floating .sites-home-nav__panel-links.ww-wall-nav>a:not([data-watch-realm]){flex:0 0 100%;margin-top:12px!important;}
+@media(max-width:700px){body.home .sites-home-nav--floating .sites-home-nav__panel-links.ww-wall-nav>a[data-watch-realm]{font-size:9px!important;}}

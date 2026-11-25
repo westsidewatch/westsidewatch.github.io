@@ -528,3 +528,9 @@ body[data-church-entry="p2"] #church-canvas{touch-action:none}
  display:block;text-align:center;margin-top:8px;
  font:400 clamp(11px,.9vw,14px)/1.35 var(--ws-type-display-en-sc,serif);
 }
+
+/* Original Brand Standards print-mark, not a substitute arrow. */
+.ww-print-mark{display:inline-block!important;width:2.5em!important;height:auto!important;aspect-ratio:6/1;vertical-align:middle;flex:none;color:currentColor;}
+
+.ws-ministry-story__final-identity{pointer-events:auto;text-decoration:none;color:inherit;}
+.ws-ministry-story__final-identity:focus-visible{outline:2px solid var(--ws-first-light);outline-offset:5px;}

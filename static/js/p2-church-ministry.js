@@ -104,13 +104,14 @@
       <div class="ws-ministry-story__rail-footer">
         <button type="button" class="ws-ministry-story__control" data-action="play">暫停導覽</button>
         <button type="button" class="ws-ministry-story__control" data-action="hide">收起介紹</button>
+        <a class="ws-ministry-story__back" href="/church/visit/" aria-label="認識教會及聚會時間">認識教會 <svg class="ww-print-mark" viewBox="0 0 48 8" aria-hidden="true" focusable="false"><use href="/images/watch-rhythm-original.svg#church"/></svg></a>
         <a class="ws-ministry-story__back" href="/" aria-label="返回 Westside Watch 主站">返回</a>
       </div>
     </div>
-    <div class="ws-ministry-story__final-identity" aria-label="教會正式名稱">
+    <a class="ws-ministry-story__final-identity" href="/church/visit/" aria-label="進入教會靜態頁">
       <span class="ws-ministry-story__final-artwork" role="img" aria-label="神召會活水堂西區教會"></span>
       <span lang="en">P.A.O.C. Living Water Assembly West</span>
-    </div>
+    </a>
     <div class="ws-ministry-story__final-stack">
     <section class="ws-ministry-story__panel" aria-live="polite" aria-atomic="true" aria-label="當前事工介紹">
       <div class="ws-ministry-story__meta"><span data-story-en>WELCOME</span>
@@ -148,7 +149,7 @@
       </div>
       <footer>205 Wilmington Ave. · North York, ON</footer>
     </section>
-    <button class="ws-ministry-story__return-to-scene" type="button" data-action="return-scene">返回教會全景 ↑</button>
+    <button class="ws-ministry-story__return-to-scene" type="button" data-action="return-scene">返回教會全景</button>
     </div>
     <button class="ws-ministry-story__scroll-invitation" type="button" data-action="read-finale"
       aria-label="向下滑動閱讀主日程序與你們是世上的光完整經文">
