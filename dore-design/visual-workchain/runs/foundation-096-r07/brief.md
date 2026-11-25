@@ -1,0 +1,11 @@
+# 096 R07 — Living Wall / 守望口
+Candidate implementation of the editorial manual §9.6 anchor. R06 was acknowledged as visible progress, not approved final art. Base 331ba2b5ff9cfab0970c86b78dac7bd7357dcc85; P2 integration #1419 stays separate. No production routes, tokens, existing animations or assets edited.
+
+## Common grammar
+1. Content first: subject, native proportion, reading priority; artwork never stretched. One dominant field and one secondary reading field. Fixed identity coordinate; paired openings preserve their relationship; 5:8 is an available book/architecture proportion, not forced on all content.
+2. Historical path is the source: derive stepped depths and natural widths from static/images/watch-rhythm-original.svg. Micro: existing four named navigation symbols; meso: seven realm index with actual symbols only where confirmed; macro: church terrain and architectural openings, Olive depth-derived offsets, Dawn reading leaf. The distinct journal ending is not a realm navigation mark. Three unconfirmed realm profiles remain absent, not invented. Meso index is not yet a finished continuous seven-form wall; do not claim approved.
+3. Content variants: home editorial sequence, church architecture, journal four movements, Emmaus paired scripture and 5:8 engraved plate, Olive twelve original speaker posters with paired scripture, Dawn landscape/portrait. Home includes Cinema and Daylight destinations but not newly designed internal pages.
+4. Shared OS fonts, paper and identity tokens. No new global :root, no decorative arrows, no duplicated website or production JS. Existing R06 local type treatments remain candidates, not normative tokens.
+5. Compare identical content in flat and markless modes. Four viewport checks per view; art quality requires human evaluation. Homepage film is existing source iframe, not new playback implementation. P2 motion, second/third-layer integration, and seven-form optical proof remain separate future gates.
+
+Source provenance: original SVG; R06 source; layouts/partials/watch-home-editorial.html; static/experiments/p2-0103-release.html; static/js/p2-0104-olive-continuation.js. Dawn uses the two previously verified Met image records; no additional accession asserted. Original posters are preserved, not re-generated.
