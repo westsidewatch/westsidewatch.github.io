@@ -1,0 +1,106 @@
+{
+  "events": [
+    {
+      "stage": "authority",
+      "status": "pass",
+      "authority": {
+        "docs/MASTER_SITE_ARCHITECTURE.md": "dee0d4867ce0bd3b0a9206077d500fec9de10a41",
+        "docs/design/WESTSIDE-EDITORIAL-MANUAL.md": "afecd8f1604e0c4bc1267f5ce87acec5c76f9fa3",
+        "docs/design/WESTSIDE-DESIGN-OS.md": "fcc2ac6ebf30c65feb148ca6705d6e41a69f553e",
+        "design-system/tokens/westside.tokens.json": "500530ccd7562f4691da5479ad4456db752b0cee",
+        "design-system/scopes.json": "b5cab370fd3a40e3bb91e6643f0d049dd692dda5",
+        "static/css/westside-design-os.css": "da40cc88bf6e872c777e554719133fc8934cef73",
+        "dore-design/knowledge-lab/skills/new-westside-editorial-web/SKILL.md": "6577df71d20a25efd5e5e90e2c20b3033016dcea",
+        "docs/dore/italian-editorial-executable-grammar.v1.md": "8ebc070447103efbfb9ba8225d3b137e0303df72"
+      }
+    },
+    {
+      "stage": "exploration",
+      "status": "pass",
+      "references": [
+        {
+          "name": "Whitney",
+          "url": "https://experimentaljetset.nl/archive/whitney-museum-identity",
+          "mechanism": "Artwork proportions determine remaining space; institution follows art.",
+          "application": "Dawn actual wide/portrait images produce different area proportions; fixed caption/identity rail.",
+          "license_or_rights": "Design method only; no reference graphics copied.",
+          "decision": "Do not import W shape"
+        },
+        {
+          "name": "Philbrook",
+          "url": "https://www.pentagram.com/work/philbrook-museum-of-art/story",
+          "mechanism": "Identity aperture reveals collection; modular organization supports browsing.",
+          "application": "Dawn full-image reading aperture; real image stays intact and selector changes actual object.",
+          "license_or_rights": "Design method only; no reference graphics copied.",
+          "decision": "Use museum source data, not their P"
+        },
+        {
+          "name": "Hood",
+          "url": "https://www.pentagram.com/work/hood-museum-of-art/story",
+          "mechanism": "Brick geometry unifies building, publication and web; letters embedded in facade.",
+          "application": "Exact V04 B copy: shared engraving field extends behind scripture and actual model, original six-bay recess at the transition to worship information.",
+          "license_or_rights": "Design method only; no reference graphics copied.",
+          "decision": "Do not copy brick-like logo"
+        },
+        {
+          "name": "Serpentine",
+          "url": "https://www.pentagram.com/work/serpentine-galleries/story",
+          "mechanism": "Opening and connecting space are one relationship.",
+          "application": "Church retains scripture and architecture as two openings in one field; P2 fixed square anchors remain unedited.",
+          "license_or_rights": "Design method only; no reference graphics copied.",
+          "decision": "No imported logo or P2 motion edits"
+        },
+        {
+          "name": "MIT Media Lab",
+          "url": "https://www.pentagram.com/work/mit-media-lab/story",
+          "mechanism": "Shared geometric system yields distinct group marks.",
+          "application": "Wall shows four confirmed original rhythms and three explicitly provisional mappings; continuous natural widths, monochrome, micro and reverse comparisons.",
+          "license_or_rights": "Design method only; no reference graphics copied.",
+          "decision": "No false historical attribution or approval"
+        },
+        {
+          "name": "Poster House",
+          "url": "https://www.pentagram.com/work/poster-house/story",
+          "mechanism": "Identity recedes to a movable edge.",
+          "application": "Journal original end mark as page-edge imprint and column closure; not a giant arrow replacement.",
+          "license_or_rights": "Design method only; no reference graphics copied.",
+          "decision": "No imported poster graphics"
+        },
+        {
+          "name": "Cooper Hewitt",
+          "url": "https://www.pentagram.com/news/cooper-hewitt-a-democratic-design-identity",
+          "mechanism": "Flexible editorial operations vary by content.",
+          "application": "Journal actual four movements/twelve columns, distinct editorial structure; compare Dawn work-specific reading field.",
+          "license_or_rights": "Design method only; no reference graphics copied.",
+          "decision": "No copied six-column template"
+        },
+        {
+          "name": "MoMA",
+          "url": "https://www.pentagram.com/work/moma/story",
+          "mechanism": "One artwork dominates; identity placement stays stable.",
+          "application": "Journal actual original poster and issue text; Dawn full photo with secondary reading information.",
+          "license_or_rights": "Design method only; no reference graphics copied.",
+          "decision": "No crop that hides subject"
+        }
+      ]
+    },
+    {
+      "stage": "composition",
+      "status": "pass",
+      "candidates": [
+        {
+          "html": "dore-design/visual-workchain/runs/foundation-096-r05/church.html",
+          "principle": "V04 B continuation: continuous engraved field, negative space around scripture and building"
+        },
+        {
+          "html": "dore-design/visual-workchain/runs/foundation-096-r05/journal.html",
+          "principle": "Publication spread and residual reading space; original editorial movement order"
+        },
+        {
+          "html": "dore-design/visual-workchain/runs/foundation-096-r05/dawn.html",
+          "principle": "Artwork-native orientation governs adjacent reading leaf"
+        }
+      ]
+    }
+  ]
+}
