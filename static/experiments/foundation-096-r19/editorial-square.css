@@ -1,0 +1,77 @@
+
+/* R19: keep R18 architecture/cover exactly. Later five roles are extensions,
+ not identical boxes. Comparison switches remove the new roles. */
+.role-new,.role-art{display:none}
+.chapter-locator,.archive-image{display:contents}
+body:not(.r18):not(.r17):not(.prior):not(.flat) .role-new{display:block}
+body:not(.r18):not(.r17):not(.prior):not(.flat) .role-art{display:block;position:absolute;pointer-events:none;z-index:-1;color:var(--tone);overflow:visible}
+body:not(.r18):not(.r17):not(.prior):not(.flat) :is(.emmaus,.olive,.library,.cinema,.daylight) .window-art{display:none}
+/* 03 · chapter and verse locators. Square type replaces floating numbers.
+   Long Chinese/KJV quotations remain normal reading flow below. */
+body:not(.r18):not(.r17):not(.prior):not(.flat) .emmaus .rhythm-field{grid-template-rows:auto;min-height:0;padding:clamp(18px,3vw,45px) 0}
+body:not(.r18):not(.r17):not(.prior):not(.flat) .emmaus .reading{background:transparent;min-height:0;padding:clamp(14px,2vw,30px)}
+body:not(.r18):not(.r17):not(.prior):not(.flat) .emmaus .zh-leaf{margin-top:0}
+body:not(.r18):not(.r17):not(.prior):not(.flat) .emmaus .en-leaf{margin-top:clamp(52px,8vw,120px)}
+body:not(.r18):not(.r17):not(.prior):not(.flat) .chapter-locator{display:flex;flex-direction:column;justify-content:space-between;aspect-ratio:1;width:min(100%,clamp(112px,15vw,235px));padding:clamp(10px,1.4vw,20px);background:var(--ws-ink);color:var(--ws-paper)}
+body:not(.r18):not(.r17):not(.prior):not(.flat) .verse-locator{background:var(--ws-paper);color:var(--ws-ink)}
+body:not(.r18):not(.r17):not(.prior):not(.flat) .chapter-locator .chapter{font-size:clamp(56px,9vw,128px);line-height:.85}
+body:not(.r18):not(.r17):not(.prior):not(.flat) .emmaus-fold-art{width:58%;height:auto;aspect-ratio:1;left:21%;top:0;opacity:.55}
+/* 04 · square scripture is already a genuine editorial masthead. Preserve its
+   exact existing two-plate embed. Portraits have original ratios. */
+body:not(.r18):not(.r17):not(.prior):not(.flat) .olive .rhythm-field{grid-template-rows:auto auto;gap:clamp(8px,1.2vw,18px);padding:0 0 2rem}
+body:not(.r18):not(.r17):not(.prior):not(.flat) .olive-scripture-mast{grid-row:1;grid-column:2/5;position:relative;z-index:1;background:var(--ws-paper)}
+body:not(.r18):not(.r17):not(.prior):not(.flat) .olive-scripture-mast iframe{display:block;width:100%;height:auto;aspect-ratio:2.08/1;border:0}
+body:not(.r18):not(.r17):not(.prior):not(.flat) .olive .portrait{grid-row:2;align-self:start;background:var(--ws-paper);padding:0;margin-top:calc(var(--depth)*var(--step)*.55)}
+body:not(.r18):not(.r17):not(.prior):not(.flat) .olive .primary{margin-top:0}
+body:not(.r18):not(.r17):not(.prior):not(.flat) .mountain-art{width:100%;height:auto;aspect-ratio:1;left:0;top:3%;opacity:.38}
+body:not(.r18):not(.r17):not(.prior):not(.flat) .olive .quiet{padding-top:1.5rem}
+/* 05 · one reading image, complete proportions. Its square field is a paper
+   reveal around the photograph, not a book card, nor a duplicate crop. */
+body:not(.r18):not(.r17):not(.prior):not(.flat) .library .rhythm-field{padding-top:clamp(20px,3vw,48px);padding-bottom:clamp(24px,3vw,48px);align-items:center}
+body:not(.r18):not(.r17):not(.prior):not(.flat) .library .plate{background:transparent;margin-top:0}
+body:not(.r18):not(.r17):not(.prior):not(.flat) .archive-image{display:grid;aspect-ratio:1;place-items:center;background:var(--ws-paper);padding:clamp(14px,3vw,44px);position:relative}
+body:not(.r18):not(.r17):not(.prior):not(.flat) .library .archive-image img{width:100%;height:auto;max-height:100%;aspect-ratio:auto;object-fit:contain;background:none}
+body:not(.r18):not(.r17):not(.prior):not(.flat) .library .leaf{background:transparent;align-self:center;padding:clamp(20px,3vw,48px);margin-top:0}
+body:not(.r18):not(.r17):not(.prior):not(.flat) .library-leaf-art{inset:0 auto auto 0;width:100%;height:100%;aspect-ratio:auto;opacity:.36}
+body:not(.r18):not(.r17):not(.prior):not(.flat) .library .plate figcaption{background:var(--ws-paper);padding:.5rem 0}
+body:not(.r18):not(.r17):not(.prior):not(.flat) .library .leaf h3,body:not(.r18):not(.r17):not(.prior):not(.flat) .library .leaf p{background:var(--ws-paper)}
+/* 06 · actual film aspect ratio is independent of the square typographic
+   folio. R11 matte is outside the film, no masks cut the image. */
+body:not(.r18):not(.r17):not(.prior):not(.flat) .cinema .rhythm-field{grid-template-columns:repeat(5,minmax(0,1fr));padding:clamp(18px,4vw,60px) clamp(12px,2vw,30px);gap:clamp(10px,2vw,30px);align-items:end}
+body:not(.r18):not(.r17):not(.prior):not(.flat) .cinema .screen{grid-column:1/5;display:block;aspect-ratio:auto;padding:0;box-shadow:none;text-align:left;margin-top:0;background:var(--ws-night)}
+body:not(.r18):not(.r17):not(.prior):not(.flat) .cinema .film-still{display:block;width:100%;aspect-ratio:16/9;background:var(--ws-ink)}
+body:not(.r18):not(.r17):not(.prior):not(.flat) .film-still img{width:100%;height:100%;object-fit:contain}
+body:not(.r18):not(.r17):not(.prior):not(.flat) .cinema .screen>.en{font-size:var(--ws-type-scale-title-lg);margin-top:.8rem}
+body:not(.r18):not(.r17):not(.prior):not(.flat) .cinema .screen-side{grid-column:5/6;margin:0;padding:0;align-self:end}
+body:not(.r18):not(.r17):not(.prior):not(.flat) .film-folio{display:flex;flex-direction:column;justify-content:space-between;aspect-ratio:1;padding:clamp(8px,1.2vw,18px);background:var(--ws-crimson);color:var(--ws-paper);margin-bottom:1rem;min-width:0}
+body:not(.r18):not(.r17):not(.prior):not(.flat) .film-folio strong{font:400 clamp(22px,3vw,44px)/1 var(--ws-type-display-en-sc);letter-spacing:-.03em}
+body:not(.r18):not(.r17):not(.prior):not(.flat) .film-folio small{font-size:var(--ws-type-scale-meta)}
+body:not(.r18):not(.r17):not(.prior):not(.flat) .cinema-matte-art{inset:0 0 auto auto;width:90%;height:100%;color:var(--ws-crimson);opacity:.52}
+/* 07 · date square is a typographic day marker. Scripture and four topics
+   are adjacent ordinary editorial text, not tiles. */
+body:not(.r18):not(.r17):not(.prior):not(.flat) .daylight .rhythm-field{grid-template-rows:auto auto auto;min-height:0;gap:clamp(12px,2vw,28px)}
+body:not(.r18):not(.r17):not(.prior):not(.flat) .daily-folio{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2.5fr);align-items:center;gap:clamp(16px,3vw,48px);grid-row:1;grid-column:1/7;padding:clamp(10px,2vw,30px) 0}
+body:not(.r18):not(.r17):not(.prior):not(.flat) .day-date{aspect-ratio:1;display:flex;flex-direction:column;justify-content:space-between;background:var(--ws-daylight-mauve);color:var(--ws-ink);padding:clamp(12px,2vw,28px);width:100%;max-width:260px}
+body:not(.r18):not(.r17):not(.prior):not(.flat) .day-number{font:400 clamp(56px,9vw,128px)/.9 var(--ws-type-display-en-sc)}
+body:not(.r18):not(.r17):not(.prior):not(.flat) .day-month{font:400 var(--ws-type-scale-title-sm)/1.1 var(--ws-type-display-en-sc)}
+body:not(.r18):not(.r17):not(.prior):not(.flat) .day-verse{background:var(--ws-paper);padding:clamp(12px,2vw,28px);font-size:var(--ws-type-scale-reading-lg)}
+body:not(.r18):not(.r17):not(.prior):not(.flat) .day-verse p[lang=en]{font:400 var(--ws-type-scale-title-md)/1.3 var(--ws-type-display-en);margin-top:.5rem}
+body:not(.r18):not(.r17):not(.prior):not(.flat) .daylight-edge-art{width:62%;height:100%;inset:0 0 0 auto;opacity:.35}
+body:not(.r18):not(.r17):not(.prior):not(.flat) .daylight .life-topic{margin-top:0;grid-row:2;background:transparent;border-top:1px solid var(--tone);padding:clamp(10px,2vw,24px) 0}
+body:not(.r18):not(.r17):not(.prior):not(.flat) .daylight .life-topic[data-bay="3"],body:not(.r18):not(.r17):not(.prior):not(.flat) .daylight .life-topic[data-bay="5"]{grid-row:3}
+@media(max-width:760px){
+ body:not(.r18):not(.r17):not(.prior):not(.flat) .emmaus .reading{width:85%;padding:1rem!important}
+ body:not(.r18):not(.r17):not(.prior):not(.flat) .emmaus .chapter-locator{width:clamp(110px,32vw,170px)}
+ body:not(.r18):not(.r17):not(.prior):not(.flat) .olive-scripture-mast{width:100%}
+ body:not(.r18):not(.r17):not(.prior):not(.flat) .olive .portrait{max-width:85%;margin:0!important}
+ body:not(.r18):not(.r17):not(.prior):not(.flat) .library .leaf{padding:1rem 0!important}
+ body:not(.r18):not(.r17):not(.prior):not(.flat) .cinema .screen-side{padding:0!important;width:100%}
+ body:not(.r18):not(.r17):not(.prior):not(.flat) .film-folio{width:min(40%,150px);float:left;margin:0 1rem 0 0}
+ body:not(.r18):not(.r17):not(.prior):not(.flat) .cinema .screen-side::after{content:"";display:block;clear:both}
+ body:not(.r18):not(.r17):not(.prior):not(.flat) .daily-folio{grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:10px}
+ body:not(.r18):not(.r17):not(.prior):not(.flat) .day-number{font-size:clamp(40px,12vw,76px)}
+ body:not(.r18):not(.r17):not(.prior):not(.flat) .day-month{font-size:var(--ws-type-scale-meta)}
+ body:not(.r18):not(.r17):not(.prior):not(.flat) .day-verse{padding:0}
+ body:not(.r18):not(.r17):not(.prior):not(.flat) .day-verse p[lang=en]{font-size:var(--ws-type-scale-reading)}
+ body:not(.r18):not(.r17):not(.prior):not(.flat) .daylight .life-topic{width:85%}
+}
