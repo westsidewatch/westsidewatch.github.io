@@ -1,0 +1,55 @@
+name: 096 R12 vector asset review
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'dore-design/visual-workchain/runs/foundation-096-r12/**'
+      - '.github/workflows/096-r12-art-review.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  vector:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install shapely==2.1.2
+      - name: Reproduce vectors and compare measured geometry
+        run: |
+          python dore-design/visual-workchain/runs/foundation-096-r12/generate.py
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('dore-design/visual-workchain/runs/foundation-096-r12')
+          expected=json.loads((p/'local-report.json').read_text())
+          actual=json.loads((p/'report.json').read_text())
+          assert expected == actual, (expected,actual)
+          PY
+      - uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: '0.167.0'
+          extended: true
+      - name: Assemble isolated art plate
+        run: |
+          hugo --gc --minify --baseURL "https://westsidewatch-github-io.pages.dev/"
+          mkdir -p public/experiments/foundation-096-r12
+          cp dore-design/visual-workchain/runs/foundation-096-r12/index.html dore-design/visual-workchain/runs/foundation-096-r12/watch-rhythm-assets.svg public/experiments/foundation-096-r12/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: 096-r12-vector-proof
+          path: |
+            public/experiments/foundation-096-r12
+            dore-design/visual-workchain/runs/foundation-096-r12/report.json
+      - name: Deploy isolated review
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          PREVIEW_BRANCH: pr-${{ github.event.pull_request.number || github.run_id }}
+        run: |
+          npx --yes wrangler@4 pages deploy public --project-name=westsidewatch-github-io --branch="$PREVIEW_BRANCH" --commit-hash="$(git rev-parse HEAD)" --commit-message="096 R12 isolated vector review"
