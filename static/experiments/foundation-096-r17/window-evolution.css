@@ -1,0 +1,75 @@
+
+/* R17: original R14 layout/runtime retained; R11 source artwork now forms material
+   planes with square counterforms. Source artwork paths remain in the SVG masks. */
+.rhythm-field{--window-unit:calc(100% / var(--bays));--window-paper:var(--ws-paper)}
+.window-art{position:absolute;pointer-events:none;z-index:-1;background:var(--tone);mask-repeat:no-repeat;mask-position:center;mask-size:100% 100%;width:100%;height:100%;inset:0}
+.window-water{mask-image:url("art/water.svg")}
+.window-journal{mask-image:url("art/journal.svg")}
+.window-emmaus{mask-image:url("art/emmaus.svg")}
+.window-olive{mask-image:url("art/olive.svg")}
+.window-library{mask-image:url("art/library.svg")}
+.window-cinema{mask-image:url("art/cinema.svg")}
+.window-daylight{mask-image:url("art/daylight.svg")}
+.prior .window-art,.flat .window-art{display:none}
+body:not(.prior):not(.flat) .church .water-spread{isolation:isolate;overflow:visible}
+body:not(.prior):not(.flat) .church .water-material{opacity:.26;mask-image:linear-gradient(#fff,#fff),linear-gradient(#fff,#fff);mask-size:100% 100%,25% 100%;mask-position:0 0,75% 0;mask-repeat:no-repeat;mask-composite:exclude}
+body:not(.prior):not(.flat) .church .window-water{inset:0 auto auto 0;width:66.6667%;height:auto;aspect-ratio:1;background:var(--ws-water);opacity:.76;z-index:-1}
+body:not(.prior):not(.flat) .church .water-verse{background:var(--ws-paper);margin-top:calc(var(--depth)*var(--step) + 1.8rem)}
+body:not(.prior):not(.flat) .church .model{background:var(--ws-paper)}
+/* The printed page already carries a square original cover. The R11 stair and
+   printed rules travel along the print edge, not behind the church-like field. */
+body:not(.prior):not(.flat) .journal .print-stock{width:56%}
+body:not(.prior):not(.flat) .journal .window-journal{inset:0 0 0 auto;width:48%;height:100%;mask-size:100% auto;mask-position:top right;background:var(--ws-first-light);opacity:.6;z-index:-1}
+body:not(.prior):not(.flat) .journal .journal-intro{background:var(--ws-paper);margin-top:clamp(36px,7vw,110px);margin-bottom:clamp(26px,5vw,70px);padding-top:clamp(20px,3vw,42px);padding-bottom:clamp(20px,3vw,42px)}
+body:not(.prior):not(.flat) .journal .movement:nth-of-type(3){padding-top:clamp(35px,7vw,105px);padding-bottom:clamp(35px,7vw,105px)}
+/* Two offset leaves follow the existing paired R11 reading form. The central
+   bay is deliberately unoccupied; the square is the paper, not a control. */
+body:not(.prior):not(.flat) .emmaus .rhythm-field{padding-top:clamp(16px,3vw,45px);padding-bottom:clamp(20px,4vw,60px);background:var(--ws-papyrus);min-height:clamp(400px,47vw,700px)}
+body:not(.prior):not(.flat) .emmaus .contour{visibility:hidden}
+body:not(.prior):not(.flat) .emmaus .window-emmaus{inset:0 auto auto 22%;width:56%;height:auto;aspect-ratio:1;opacity:.8}
+body:not(.prior):not(.flat) .emmaus .reading{border:0;background:var(--ws-paper);padding:clamp(16px,2.2vw,35px);min-height:0;align-self:start}
+body:not(.prior):not(.flat) .emmaus .en-leaf{margin-top:calc(var(--depth)*var(--step) + clamp(55px,8vw,120px))}
+body:not(.prior):not(.flat) .emmaus .zh-leaf{margin-top:calc(var(--depth)*var(--step))}
+/* Mountain contour frames the existing portraits without masks on faces. */
+body:not(.prior):not(.flat) .olive .rhythm-field{padding-top:clamp(30px,5vw,80px);padding-bottom:clamp(20px,3vw,45px)}
+body:not(.prior):not(.flat) .olive .contour{visibility:hidden}
+body:not(.prior):not(.flat) .olive .window-olive{inset:0 auto auto 10%;width:80%;height:auto;aspect-ratio:1;opacity:.62}
+body:not(.prior):not(.flat) .olive .portrait{padding:0 clamp(8px,1vw,15px);background:var(--ws-paper)}
+body:not(.prior):not(.flat) .olive .portrait img{width:100%;aspect-ratio:1;object-fit:contain;max-height:none}
+body:not(.prior):not(.flat) .olive .quiet{background:var(--ws-paper);position:relative;margin-top:0}
+/* R11 book-leaf frames and square plate opening coexist. The original historical
+   image is always contained, never reinterpreted as a fake book cover. */
+body:not(.prior):not(.flat) .library .rhythm-field{padding-top:clamp(20px,3vw,45px);padding-bottom:clamp(24px,3vw,45px)}
+body:not(.prior):not(.flat) .library .contour{visibility:hidden}
+body:not(.prior):not(.flat) .library .window-library{inset:0 0 auto auto;width:70%;height:auto;aspect-ratio:1;opacity:.52}
+body:not(.prior):not(.flat) .library .plate{padding:0;background:var(--ws-paper)}
+body:not(.prior):not(.flat) .library .plate img{aspect-ratio:1;object-fit:contain;background:var(--ws-paper)}
+body:not(.prior):not(.flat) .library .leaf{border:0;background:var(--ws-paper);padding:clamp(18px,3vw,45px)}
+/* Cinema retains its 16:9 aperture; square negative cuts are in the exterior
+   R11 stepped matte, not within the film. */
+body:not(.prior):not(.flat) .cinema .rhythm-field{padding-top:clamp(32px,5vw,72px);padding-bottom:clamp(30px,5vw,72px)}
+body:not(.prior):not(.flat) .cinema .contour{visibility:hidden}
+body:not(.prior):not(.flat) .cinema .window-cinema{inset:0 0 auto auto;width:75%;height:auto;aspect-ratio:1;background:var(--ws-crimson);opacity:.8}
+body:not(.prior):not(.flat) .cinema .screen{border:0;position:relative;background:var(--ws-night);box-shadow:0 0 0 1px var(--ws-crimson);align-self:start}
+body:not(.prior):not(.flat) .cinema .screen-side{background:var(--ws-night);padding:1rem;align-self:end}
+/* Daylight reserves two quiet square areas at opposite ends. Four original
+   articles are editorial text in two unequal rows, not four matching cards. */
+body:not(.prior):not(.flat) .daylight .rhythm-field{grid-template-rows:auto auto;min-height:clamp(400px,48vw,670px);align-items:start}
+body:not(.prior):not(.flat) .daylight .contour{visibility:hidden}
+body:not(.prior):not(.flat) .daylight .window-daylight{inset:0 0 auto auto;width:66.6667%;height:auto;aspect-ratio:1;opacity:.8}
+body:not(.prior):not(.flat) .daylight .life-topic{border:0;padding:clamp(12px,2vw,30px);background:var(--ws-paper)}
+body:not(.prior):not(.flat) .daylight .life-topic[data-bay="0"]{grid-column:1/3;grid-row:1}
+body:not(.prior):not(.flat) .daylight .life-topic[data-bay="1"]{grid-column:4/6;grid-row:1}
+body:not(.prior):not(.flat) .daylight .life-topic[data-bay="3"]{grid-column:2/4;grid-row:2}
+body:not(.prior):not(.flat) .daylight .life-topic[data-bay="5"]{grid-column:5/7;grid-row:2}
+@media(max-width:760px){
+body:not(.prior):not(.flat) .rhythm-field{overflow:hidden;min-height:0!important}
+body:not(.prior):not(.flat) .window-art{width:100%;height:auto;aspect-ratio:1;inset:0 auto auto 0;opacity:.5}
+body:not(.prior):not(.flat) .church .water-material{mask:none}
+body:not(.prior):not(.flat) .journal .journal-intro{margin:0!important;padding:1rem 0!important}
+body:not(.prior):not(.flat) .emmaus .reading{width:85%;margin:0!important}
+body:not(.prior):not(.flat) .emmaus .en-leaf{align-self:end}
+body:not(.prior):not(.flat) .daylight .life-topic{width:75%;align-self:start}
+body:not(.prior):not(.flat) .daylight .life-topic[data-bay="1"],body:not(.prior):not(.flat) .daylight .life-topic[data-bay="5"]{align-self:end}
+body:not(.prior):not(.flat) .cinema .screen-side{padding:.75rem!important}
+}
