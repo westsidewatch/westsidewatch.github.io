@@ -1,6 +1,7 @@
 {{ define "main" }}
   {{/* First-level routes are atlas surfaces: the cover establishes a world,
        the index provides the usable route map. */}}
+  {{ if eq .Section "cinema" }}<link rel="stylesheet" href="/css/watch-window-r15.css">{{ end }}
   <article class="section-atlas sites-surface" data-surface="{{ .Section }}">
     <header class="section-atlas__cover" data-ws-first-look="shared" data-ws-first-look-mode="atlas" data-ws-first-look-stage>
       <div class="section-atlas__folio"><span>WESTSIDE WATCH / {{ upper .Section }}</span><span>{{ now.Format "2006" }}</span></div>
@@ -10,7 +11,7 @@
         {{ with .Params.subtitle }}<p class="section-atlas__zh">{{ . }}</p>{{ end }}
       </div>
       <div class="section-atlas__intro">{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify }}{{ end }}</div>
-      <div class="section-atlas__orbit" aria-hidden="true"><i></i><i></i><i></i></div>
+      {{ if eq .Section "cinema" }}<div class="ww-cinema-program" id="cinema-program"><div class="ww-wall ww-cinema ww-paired"><a class="ww-window ww-window--film" href="https://www.jesusfilm.org/watch/jesus.html" aria-label="JESUS · Jesus Film Project 原始來源" target="_blank" rel="noopener noreferrer"><img src="https://image.mux.com/Dl8dRUL01MKAdzv7XtfvvUj1jVYq029z2TS9TGeH8Xj00o/thumbnail.webp?time=2&amp;width=1280" width="1280" height="720" alt="JESUS · Jesus Film Project 官方劇照" loading="lazy"></a><a class="ww-window ww-window--copy" href="/cinema/#cinema-program"><strong lang="en">JESUS.</strong><small lang="zh-Hant">耶穌傳 · Jesus Film Project</small></a></div></div>{{ else }}<div class="section-atlas__orbit" aria-hidden="true"><i></i><i></i><i></i></div>{{ end }}
     </header>
     {{ with .Content }}<div class="sites-atlas-prologue">{{ . }}</div>{{ end }}
     {{ if .Pages }}

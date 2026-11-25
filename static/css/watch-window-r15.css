@@ -1,0 +1,114 @@
+
+/* 9.6 · Watch Window. Scoped to existing consumers, never the home/P2 motion engine.
+   The wall has two genuine negative openings; the content occupies the openings. */
+.ww-wall{position:relative;isolation:isolate;--ww-ink:var(--ws-ink);--ww-field:var(--ws-paper);min-width:0}
+.ww-wall::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--ww-ink);mask:var(--ww-mask) center/100% 100% no-repeat;pointer-events:none}
+.ww-church{--ww-mask:url("/images/watch-windows-r15/church.svg");--ww-ink:var(--ws-water)}
+.ww-emmaus{--ww-mask:url("/images/watch-windows-r15/emmaus.svg");--ww-ink:var(--ws-pale-gold)}
+.ww-olive{--ww-mask:url("/images/watch-windows-r15/olive.svg");--ww-ink:var(--ws-olive)}
+.ww-library{--ww-mask:url("/images/watch-windows-r15/library.svg");--ww-ink:var(--ws-harvest)}
+.ww-cinema{--ww-mask:url("/images/watch-windows-r15/cinema.svg");--ww-ink:var(--ws-night)}
+.ww-daylight{--ww-mask:url("/images/watch-windows-r15/daylight.svg");--ww-ink:var(--ws-daylight-mauve)}
+.ww-paired{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20%;padding:8.333% 6.667%;align-items:center}
+.ww-window{min-width:0;aspect-ratio:1;display:flex;flex-direction:column;justify-content:space-between;overflow-wrap:anywhere;text-decoration:none;color:inherit;padding:clamp(8px,1.5vw,24px);background:var(--ww-field);border-radius:0}
+.ww-window strong,.ww-window [lang=en]{font-family:var(--ws-type-display-en-sc);font-weight:400;font-size:var(--ws-type-scale-title-md);line-height:1.06;letter-spacing:-.025em}
+.ww-window small,.ww-window [lang=zh-Hant]{font-family:var(--ws-type-display-zh);font-weight:200;font-size:var(--ws-type-scale-ui);line-height:1.5}
+.ww-window:focus-visible,.ww-paired a:focus-visible{outline:2px solid var(--ws-first-light);outline-offset:4px}
+/* Church / static visitor: existing vertical letterpress and glass untouched.
+   Two real destinations occupy the opening in a continuous water field. */
+.church-visit .church-visit__hero-links.ww-paired{display:grid!important;width:min(100%,350px);margin-top:clamp(14px,2vw,28px);gap:20%;padding:8.333% 6.667%;background:transparent}
+.church-visit .church-visit__hero-links.ww-paired::before{background:var(--ws-water) url("/experiments/assets/living-water-contour-engraving-v10.svg") center/cover;opacity:.86}
+.church-visit .church-visit__hero-links .ww-window{padding:clamp(8px,1.25vw,16px)!important;border:0!important;background:var(--ws-paper)!important;display:flex!important;align-items:flex-start!important;justify-content:space-between!important;gap:5px!important;color:var(--ws-ink)!important;box-shadow:none!important}
+.church-visit .church-visit__hero-links .ww-window strong{font-size:var(--ws-type-scale-title-sm)}
+.church-visit .church-visit__hero-links .ww-window small{font-size:var(--ws-type-scale-meta)}
+.church-visit .church-visit__hero-links .ww-window:nth-child(2){background:color-mix(in srgb,var(--ws-water) 13%,var(--ws-paper))!important}
+.church-visit .church-visit__hero-bottom a,.church-visit .church-visit__tour{text-decoration:none}
+/* Church / native tour: existing glass is itself a viewing opening.
+   Only the already allocated rail and glass inscription change; no canvas or camera changes. */
+.ws-ministry-story__chapter-mark{width:12px!important;height:6px!important;background:transparent!important;position:relative;opacity:.42!important}
+.ws-ministry-story__chapter-mark::before,.ws-ministry-story__chapter-mark::after{content:"";position:absolute;top:0;width:5px;height:5px;border:1px solid currentColor;box-sizing:border-box}
+.ws-ministry-story__chapter-mark::before{left:0}.ws-ministry-story__chapter-mark::after{right:0}
+.ws-ministry-story__chapter[aria-current="step"] .ws-ministry-story__chapter-mark{opacity:1!important}
+.ws-ministry-story__chapter[aria-current="step"] .ws-ministry-story__chapter-mark::before{background:currentColor}
+.ws-ministry-story__panel .ws-ministry-story__scripture{background:linear-gradient(90deg,transparent 0 97%,color-mix(in srgb,var(--ws-water) 16%,transparent) 97% 100%);padding-right:12px}
+.ws-ministry-story__panel .ws-ministry-story__meta [data-story-index]{border-bottom:1px solid currentColor}
+body[data-intake-type="decision"] .church-form__scripture-pair{isolation:isolate;position:relative}
+body[data-intake-type="decision"] .church-form__scripture-pair::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--ws-water);mask:url("/images/watch-windows-r15/church.svg") center/100% 100% no-repeat;opacity:.14;pointer-events:none}
+/* Emmaus / actual ONE chapter frontispiece: paired book and chapter, not duplicate scripture. */
+#view-chapter .book-frontispiece .head.ww-chapter-head{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:auto auto;gap:clamp(8px,1.5vw,22px);align-items:stretch;position:relative;padding:clamp(12px,2.4vw,36px);background:var(--ws-papyrus)}
+#view-chapter .ww-chapter-head::before{opacity:.50}
+#view-chapter .ww-chapter-head>.kicker{grid-column:1/-1;grid-row:1;margin:0}
+#view-chapter .ww-chapter-head #frontispiece-title,#view-chapter .ww-chapter-head #frontispiece-chapter{grid-row:2;grid-column:auto;display:flex;flex-direction:column;justify-content:center;align-self:stretch;min-width:0;max-width:none!important;min-height:clamp(112px,15vw,220px);padding:clamp(12px,2.6vw,35px);margin:0;background:var(--ws-paper);color:var(--ws-ink);text-align:left;overflow-wrap:anywhere;line-height:1.2}
+#view-chapter .ww-chapter-head #frontispiece-title{font-size:var(--ws-type-scale-display-md)!important;font-weight:900}
+#view-chapter .ww-chapter-head #frontispiece-chapter{font-size:var(--ws-type-scale-title-md)!important;font-weight:200}
+#view-chapter .ww-chapter-head #frontispiece-chapter{background:color-mix(in srgb,var(--ws-pale-gold) 18%,var(--ws-paper))}
+#view-chapter .book-frontispiece__ornament{display:none}
+/* Olive / retain the exact two scripture formes, 12 authentic square posters,
+   the original index geometry, inline speaker detail and player. Gutter = wall. */
+#olive-second-layer .olive-second-layer__index{isolation:isolate;background:transparent}
+#olive-second-layer .olive-second-layer__person{background:transparent!important;box-shadow:none!important;border:0!important;padding:0!important}
+#olive-second-layer .olive-second-layer__person img{aspect-ratio:1!important}
+#olive-second-layer .olive-second-layer__person span{display:block;background:transparent!important;color:var(--ws-paper)!important;border-top:0!important;padding-top:.65em;padding-bottom:.65em;text-align:left}
+#olive-second-layer .olive-second-layer__person[aria-expanded="true"] span{background:var(--ws-paper)!important;color:var(--ws-ink)!important}
+#olive-second-layer .olive-second-layer__person:focus-visible{outline:2px solid var(--ws-morning-gold);outline-offset:4px}
+#olive-second-layer .olive-second-layer__speaker-portrait{object-fit:contain!important}
+#olive-second-layer .olive-second-layer__speaker-scripture{background:color-mix(in srgb,var(--ws-paper) 7%,transparent);padding:clamp(12px,2vw,28px)}
+/* Dawn / keep vinyl grid, order, spans, all actual art and same-page expander. 
+   The three editorial gates are the positive harvest squares; the work art is a negative opening. */
+#dawn-second .dawn-reading-room .dawn-wall__grid--curated>.dawn-feature{background-color:var(--ws-harvest)!important;border-color:transparent!important;box-shadow:none!important}
+#dawn-second .dawn-feature__editorial{background-color:var(--ws-harvest)!important;color:var(--ws-ink)!important}
+#dawn-second .dawn-feature__editorial :is(small,strong,em,.dawn-feature__open){color:var(--ws-ink)!important}
+#dawn-second .dawn-feature__art{border-radius:0!important}
+#dawn-second .dawn-expander__book,#dawn-second .dawn-book-detail__visual{border:0!important;background-color:color-mix(in srgb,var(--ws-harvest) 12%,var(--ws-paper))!important}
+#dawn-second .dawn-book-detail__visual img,#dawn-second .dawn-expander__book .dawn-expander__book-image{object-fit:contain!important}
+#dawn-second .dawn-book-detail__reading,#dawn-second .dawn-expander__metadata{border-left:1px solid var(--ws-harvest);padding-left:clamp(12px,2vw,28px);min-width:0}
+#dawn-second .dawn-book-detail__back{text-decoration:none}
+/* Cinema P2 / first-look: actual canonical provider image within the 16:9 film aperture,
+   a separate title window; no distortion, no playback claim. */
+.editorial--cinema .editorial__art.ww-film-stage,.editorial--life .editorial__art.ww-life-stage{isolation:isolate;background:transparent!important;overflow:visible!important}
+.editorial--cinema .editorial__art.ww-film-stage::before,.editorial--cinema .editorial__art.ww-film-stage::after,.editorial--life .editorial__art.ww-life-stage::before,.editorial--life .editorial__art.ww-life-stage::after{content:none!important}
+.ww-film-stage .ww-paired,.ww-cinema-program .ww-paired{width:100%;height:auto;aspect-ratio:2;background:var(--ws-crimson);color:var(--ws-paper)}
+.ww-film-stage .ww-wall::before,.ww-cinema-program .ww-wall::before{background:var(--ws-night)}
+.ww-film-stage .ww-window,.ww-cinema-program .ww-window{background:var(--ws-night);color:var(--ws-paper);padding:clamp(8px,1.1vw,20px)}
+.ww-film-stage .ww-window--film,.ww-cinema-program .ww-window--film{padding:0;justify-content:center;background:var(--ws-ink)}
+.ww-film-stage img,.ww-cinema-program img{width:100%;height:auto;aspect-ratio:16/9;object-fit:contain;display:block}
+.ww-film-stage .ww-window--copy,.ww-cinema-program .ww-window--copy{background:var(--ws-paper);color:var(--ws-ink)}
+.ww-window--copy strong{font-size:var(--ws-type-scale-title-lg);text-wrap:balance}
+.ww-window--copy small{display:block}
+.editorial--cinema .editorial__art.ww-film-stage{aspect-ratio:auto!important;min-height:0!important;align-self:center}
+.editorial--cinema .editorial__action,.editorial--life .editorial__action{text-decoration:none}
+[data-surface="cinema"] .ww-cinema-program{grid-column:1/-1;width:min(100%,820px);max-width:100%;margin:clamp(16px,3vw,40px) auto;align-self:center}
+[data-surface="cinema"] .section-atlas__cover .ww-cinema-program{position:relative;inset:auto;z-index:1}
+[data-surface="cinema"] .section-atlas__cover{overflow:visible}
+[data-surface="cinema"] .ww-cinema-program .ww-window--copy{justify-content:center}
+[data-surface="cinema"] .atlas-entry b{display:none}
+/* Daylight P2: a lighter asymmetric window, scripture and ordinary life instead of film matte. */
+.editorial--life .editorial__art.ww-life-stage{min-height:0;aspect-ratio:1!important;display:grid;align-content:center}
+.ww-life-stage .ww-paired{width:100%;background:var(--ws-paper);color:var(--ws-ink)}
+.ww-life-stage .ww-wall::before{background:color-mix(in srgb,var(--ws-daylight-mauve) 45%,var(--ws-paper))}
+.ww-life-stage .ww-window{background:var(--ws-paper);justify-content:center}
+.ww-life-stage .ww-window:nth-child(2){transform:translateY(10%);background:color-mix(in srgb,var(--ws-daylight-mauve) 10%,var(--ws-paper))}
+.ww-life-stage .ww-window strong{font-size:var(--ws-type-scale-title-sm)}
+/* Daylight second layer: same real date and verse nodes, no new calendar or functionality. */
+.fl-daily-home .ww-daylight-daily{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(12px,3vw,46px);max-width:100%;padding:clamp(14px,3vw,46px);background:var(--ws-paper);position:relative;isolation:isolate}
+.fl-daily-home .ww-daylight-daily::before{opacity:.25}
+.fl-daily-home .ww-daylight-daily>div{min-width:0;background:var(--ws-paper);padding:clamp(12px,2vw,30px);min-height:clamp(150px,20vw,260px)}
+.fl-daily-home .ww-daylight-daily blockquote{margin:0 0 1rem;max-width:none;font-size:var(--ws-type-scale-title-md)}
+.fl-daily-home .ww-daylight-daily .fl-day-controls{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.fl-daily-home .ww-daylight-daily .fl-day-controls label{min-width:0;max-width:100%}
+.fl-daily-home .ww-daylight-daily input{max-width:100%}
+.fl-daily-home .fl-tool-entries article{border-radius:0!important}
+@media(max-width:760px){
+#view-chapter .book-frontispiece .head.ww-chapter-head{gap:8px;padding:12px}
+#view-chapter .ww-chapter-head #frontispiece-title,#view-chapter .ww-chapter-head #frontispiece-chapter{font-size:var(--ws-type-scale-title-sm)!important;min-height:120px;padding:10px}
+#dawn-second .dawn-book-detail__reading,#dawn-second .dawn-expander__metadata{border-left:0;padding-left:0}
+.editorial--life .editorial__art.ww-life-stage{aspect-ratio:auto!important}
+.ww-film-stage .ww-paired,.ww-cinema-program .ww-paired,.ww-life-stage .ww-paired{aspect-ratio:auto;min-height:0}
+.ww-film-stage .ww-window,.ww-cinema-program .ww-window,.ww-life-stage .ww-window{padding:8px}
+.ww-film-stage .ww-window--film,.ww-cinema-program .ww-window--film{padding:0}
+.ww-window--copy strong,.ww-life-stage .ww-window strong{font-size:var(--ws-type-scale-title-sm)}
+.ww-window--copy small,.ww-life-stage .ww-window small{font-size:var(--ws-type-scale-meta)}
+.fl-daily-home .ww-daylight-daily{grid-template-columns:1fr;gap:12px;padding:12px}
+.fl-daily-home .ww-daylight-daily>div{min-height:0}
+}
+@media(prefers-reduced-motion:reduce){.ww-wall,.ww-window{transition:none!important}}

@@ -234,7 +234,7 @@
    const flipSource=instant?null:window.Flip?.getState(img);
    secondButtons.forEach(b=>{const on=b===button;b.setAttribute('aria-pressed',String(on));b.setAttribute('aria-expanded',String(on))});
    const back=document.createElement('button');back.type='button';
-   back.className='olive-second-layer__back';back.textContent='← 十二位講員 / THE TWELVE';
+   back.className='olive-second-layer__back';back.textContent='十二位講員 / THE TWELVE';
    back.addEventListener('click',()=>{
     second.dataset.view='index';detail.hidden=true;
     secondButtons.forEach(b=>{b.setAttribute('aria-pressed','false');b.setAttribute('aria-expanded','false')});
