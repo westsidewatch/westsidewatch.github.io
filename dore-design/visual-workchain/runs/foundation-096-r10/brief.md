@@ -1,0 +1,10 @@
+# 096 R10 · Graphic syntax
+Base R09 fb0ce298741688b0acf9166b21bb30163d3593fe. R10 rejects the repetitive square-hole array as a default design template. Foundation artwork only. No changes to actual homepage full-bleed video, navigation, P2 structure, approved motion, reading layers, global OS or production routes.
+
+Sources reread: https://www.pentagram.com/news/philbrook-museum-of-art ; https://www.pentagram.com/work/mit-media-lab ; https://www.webbyawards.com/crafted-with-code/emergence-magazine/ ; https://september.digital/ons-werk/emergence-magazine-case/ ; https://www.pentagram.com/work/the-paris-review?page=1&rel=search . Source-derived mechanism, not copied art.
+
+Philbrook: convert motif to spatial relations, not repeated holes. Four composition studies: real continuous water engraving and model with 5:8 scripture; Olive one dominant original portrait, two supporting portraits and paired scripture; Dawn actual native-proportion photography and residual reading leaf; journal original artwork, editorial hierarchy and all 12 real issue entries. MIT: original SVG contour depths extracted from source, used as coordinate offsets and a thin edge specimen. Four known named forms only, separate historic endmark; no invented realm assignments. Current proposed offsets and layout choices are artistic hypotheses, not brand source specifications. Cinema only in optical strip; no new film art.
+
+Emergence: a deliberate quiet scripture interval between large art fields, density and scale changes in reading sequence. Static rhythm specimen only, not actual homepage/P2 motion measurement or alteration. Paris Review: real Vol.00 cover and four movements, differentiated editorial typography/reading density, no imitation of proprietary fonts. Full article-level typographic audit still open.
+
+Verification: exact preview projection, four-width renders, flat geometry contrast, markless invariance, monochrome proof, complete art image decode, 12 items and 4 movements, paired verse and model, portrait switch. Art review is not a CI assertion. No merge.
