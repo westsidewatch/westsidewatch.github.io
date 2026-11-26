@@ -4,7 +4,7 @@ cd "$(dirname "$0")" || exit 1
 if ! command -v python3 >/dev/null 2>&1; then
   echo "需要 Python 3.8 或以上。"; read -r -p "按 Enter 離開"; exit 1
 fi
-args=()
+args=(--home "$HOME/Library/Application Support/Dore Offline")
 if [ -d portable-data ]; then args=(--home "$PWD/portable-data"); fi
 while true; do
   printf '\nDoré Offline · Westside Watch\n\n1  離線展示\n2  下載／更新主站\n3  完整性檢查\n4  版本管理\n5  外部資源檢查\n6  匯出便攜展示目錄\n0  離開\n\n'
