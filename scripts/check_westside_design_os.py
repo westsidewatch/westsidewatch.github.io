@@ -6,6 +6,7 @@ root=Path(__file__).resolve().parents[1]
 required=[
  root/"design-system/tokens/westside.tokens.json",
  root/"design-system/scopes.json",
+ root/"design-system/realm-visual-materials.json",
  root/"static/css/westside-design-os.css",
  root/"static/css/westside-design-tokens.css",
 ]
@@ -16,6 +17,22 @@ if missing:
 scopes=json.loads((root/"design-system/scopes.json").read_text())["scopes"]
 if "global" not in scopes or "tool" not in scopes:
  print("Design OS guard failed: global/tool scopes missing");sys.exit(1)
+
+# The seven-realm material inventory is an OS workchain contract, not a CSS source.
+registry=json.loads((root/"design-system/realm-visual-materials.json").read_text())
+realms=registry["realms"]
+expected=["church","journal","one","olive","dawn-library","cinema","daylight-cafe"]
+if [r["scope"] for r in realms]!=expected or [r["id"] for r in realms]!=[f"{n:02}" for n in range(1,8)]:
+ print("Design OS guard failed: seven-realm material registry mismatch");sys.exit(1)
+for r in realms:
+ if r["scope"] not in scopes or r["scripture"]["section"]!=r["id"] or not r["identity"]["sourceRef"] or not r["identity"]["geometry"] or not r["texture"]["territory"]:
+  print("Design OS guard failed: incomplete realm material contract",r["scope"]);sys.exit(1)
+ if r["texture"]["selectedNewAsset"] is not None and not any(c.get("state")=="verified" and c.get("sha256") and c.get("license") and c.get("nativeSvg") and c.get("assetPath")==r["texture"]["selectedNewAsset"] for c in r["texture"]["candidates"]):
+  print("Design OS guard failed: selected material lacks verified provenance",r["scope"]);sys.exit(1)
+ if any(c.get("state")=="verified" and not (c.get("sha256") and c.get("license") and c.get("nativeSvg")) for c in r["texture"]["candidates"]):
+  print("Design OS guard failed: material falsely verified",r["scope"]);sys.exit(1)
+if not (root/registry["scriptureStudio"]["path"]).is_file() or not (root/registry["scriptureStudio"]["model"]).is_file():
+ print("Design OS guard failed: Scripture Studio source missing");sys.exit(1)
 
 base=(root/"layouts/_default/baseof.html").read_text()
 if 'css/westside-design-os.css' not in base or 'data-ws-scope=' not in base:
