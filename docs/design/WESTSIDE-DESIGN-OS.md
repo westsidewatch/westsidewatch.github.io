@@ -119,3 +119,6 @@ See Editorial Manual §9.8. Every realm small seal must support an independently
 
 
 R133 authority correction: journal is the exact R128 bold silhouette, not R129. Do not modify its path in the core or either impression. Water is the family reference for stepped incision, rhythm and negative space, not a universal shape template. Olive remains protected. See Editorial Manual §9.8 and its R133 correction.
+
+
+R134: Water and Olive are the paired, immutable family references. R126 fine/small/crest originals and R132 yin/yang plates are byte-locked. The bold journal R133 remains a separate locked exception. Only Emmaus, Library, Cinema and Daylight are open for seal redesign. See Editorial Manual §9.8 correction.
