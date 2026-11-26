@@ -1,0 +1,41 @@
+name: R123 source atlas
+on:
+  push:
+    branches: [research/material-atlas-r123-20261126]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  atlas:
+    if: github.ref == 'refs/heads/research/material-atlas-r123-20261126'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Acquire inspected native originals
+        run: python3 scripts/acquire_r123_materials.py
+      - name: Preserve originals and report on isolated branch
+        run: |
+          git config user.name "westsidewatch research"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add static/experiments/material-atlas-r123/assets
+          if ! git diff --cached --quiet; then
+            git commit -m "R123: archive inspected source SVGs and report"
+            git push origin HEAD:refs/heads/research/material-atlas-r123-20261126
+          fi
+      - name: Chromium
+        run: |
+          npm install --no-save --package-lock=false playwright
+          npx playwright install --with-deps chromium
+      - name: Render source comparisons
+        run: |
+          python3 -m http.server 4173 --directory static >/tmp/r123-server.log 2>&1 &
+          node tests/material-atlas-r123.cjs
+      - name: Archive evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: material-atlas-r123
+          path: |
+            static/experiments/material-atlas-r123/assets/
+            artifacts/r123/
