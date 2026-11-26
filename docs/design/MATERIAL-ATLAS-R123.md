@@ -1,0 +1,2 @@
+# R123 — original material comparison
+R122 rejected 03/05/07 selection; cinema direction only retained. 26 source leads, no new drawing, no automatic ranking, no assignment of remaining assets. The atlas displays only successfully inspected original files, in original, grayscale fill and enlarged crop; baseline V10. Individual license and art acceptance remain pending. No public runtime or registry changes. Temporary isolated workflow; originals preserved before browser test. No merge. Excluded R122 IDs: 324943, 327719, 316567, 257239, 272226, 311749, 276378.
