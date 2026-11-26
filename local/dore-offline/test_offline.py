@@ -28,6 +28,12 @@ class OfflineTest(unittest.TestCase):
             offline.atomic_json(snap / "manifest.json", {"commit": commit, "files": offline.manifest(site)})
             offline.activate(root, commit)
             self.assertEqual(offline.active(root), snap)
+            portable = root / "Portable"
+            offline.export_portable(root, portable)
+            self.assertEqual(offline.verify(offline.active(portable / "portable-data"))["commit"], commit)
+            self.assertTrue((portable / "Launch.command").stat().st_mode & 0o100)
+            with self.assertRaises(ValueError):
+                offline.export_portable(root, portable)
             handler = functools.partial(offline.Handler, directory=str(site))
             with http.server.ThreadingHTTPServer(("127.0.0.1", 0), handler) as server:
                 thread = threading.Thread(target=server.serve_forever, daemon=True)

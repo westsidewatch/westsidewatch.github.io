@@ -8,7 +8,7 @@ Copy this directory to your Mac. Python 3.8+, Git and Hugo Extended 0.167.0 are 
 
 Open Launch.command (or run bash Launch.command in Terminal), choose 2 while online, then choose 1 to present. Use the browser's native full-screen mode. The service binds only to 127.0.0.1:8765. Keep Terminal open; Ctrl-C stops serving. Disconnect Wi-Fi and repeat the presentation.
 
-Cache and versions live in ~/Library/Application Support/Dore Offline. Git fetch transfers changed Git objects after initial clone; each built snapshot is separate, not a delta-compressed asset store. No background updates. A failed build before activation leaves the previous active version intact. Select an older verified snapshot from the menu. Automatic portable export is not implemented yet.
+Cache and versions live in ~/Library/Application Support/Dore Offline. Git fetch transfers changed Git objects after initial clone; each built snapshot is separate, not a delta-compressed asset store. No background updates. A failed build before activation leaves the previous active version intact. Select an older verified snapshot from the menu. Choose 6 to export a self-contained folder to a new destination. Copy the exported folder to the Intel Mac or USB drive and open its Launch.command; no Git, Hugo, network or AI runtime is needed on the presentation machine (Python 3.8+ is still required).
 
 ## Scope
 
@@ -21,7 +21,7 @@ This is a first local-build implementation, not a byte-for-byte copy of Cloudfla
 - Confirm P2 five entries, seven-layer transitions, Merci, white model, church 3D tour, static pages, ONE, Olive, Dawn second/third layers.
 - Run with Wi-Fi disconnected; check console and network for missing local resources, external requests, WebGL errors.
 - Target 60 FPS for 2D and stable >=30 FPS in 3D; run for 60 minutes. Test built-in display and projector. Record actual CPU/GPU/memory, browser and FPS; do not infer them from CI.
-- Native browser only; no Electron and no AI model. Rendering presets, GPU-specific controls, external dependency capture, production artifact parity and one-click export remain follow-up work. Do not silently degrade artwork.
+- Native browser only; no Electron and no AI model. Rendering presets, GPU-specific controls, external dependency capture, production artifact parity remain follow-up work. Do not silently degrade artwork.
 
 ## Tests
 

@@ -256,6 +256,29 @@ def serve(home):
         except KeyboardInterrupt:
             pass
 
+def export_portable(home, destination):
+    """Create a self-contained directory on demand; never overwrite existing data."""
+    destination = destination.expanduser().resolve()
+    if destination.exists():
+        raise ValueError("Export destination already exists")
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    with update_lock(home):
+        snap = active(home)
+        verify(snap)
+        with tempfile.TemporaryDirectory(prefix=".dore-export-", dir=destination.parent) as d:
+            out = Path(d) / "Doré Offline"
+            out.mkdir()
+            tool = Path(__file__).resolve().parent
+            for name in ("offline.py", "Launch.command", "README.md"):
+                shutil.copy2(tool / name, out / name)
+            (out / "Launch.command").chmod(0o755)
+            store = out / "portable-data"
+            (store / "versions").mkdir(parents=True)
+            shutil.copytree(snap, store / "versions" / snap.name)
+            activate(store, snap.name)
+            out.rename(destination)
+    print("Portable presentation:", destination)
+
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--home", type=Path, default=HOME)
@@ -264,6 +287,8 @@ def main():
     u.add_argument("ref", nargs="?", default="main")
     for name in ("serve", "verify", "versions", "audit"):
         sub.add_parser(name)
+    e = sub.add_parser("export")
+    e.add_argument("destination", type=Path)
     a = sub.add_parser("select")
     a.add_argument("commit")
     args = p.parse_args()
@@ -277,6 +302,8 @@ def main():
         print("Verified:", meta["commit"], len(meta["files"]), "files")
     elif args.cmd == "audit":
         print((active(home) / "audit.json").read_text(encoding="utf-8"))
+    elif args.cmd == "export":
+        export_portable(home, args.destination)
     elif args.cmd == "select":
         with update_lock(home):
             activate(home, args.commit)
