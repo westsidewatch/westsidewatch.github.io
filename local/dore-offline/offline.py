@@ -62,6 +62,30 @@ def check_routes(root):
     if len(json.loads((root / ROUTES[-1]).read_text(encoding="utf-8"))["records"]) != 12:
         raise ValueError("Olive composition count must be 12")
 
+def configure_church_quality(root):
+    """Adjust only known renderer knobs in the generated offline copy."""
+    path = root / "p2/church-tour.js"
+    if not path.is_file():
+        return {"status": "missing_church_route"}
+    source = path.read_text(encoding="utf-8")
+    markers = (
+        ("renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 1.5));",
+         "const doreQuality = new URLSearchParams(location.search).get('quality');\n"
+         "const doreClassic = doreQuality === 'classic' || (doreQuality !== 'standard' && "
+         "(navigator.hardwareConcurrency || 8) <= 4);\n"
+         "renderer.setPixelRatio(Math.min(devicePixelRatio || 1, doreClassic ? 1 : 1.5));"),
+        ("sun.shadow.mapSize.set(2048, 2048);",
+         "sun.shadow.mapSize.set(doreClassic ? 1024 : 2048, doreClassic ? 1024 : 2048);"),
+    )
+    if any(source.count(old) != 1 for old, _ in markers):
+        return {"status": "renderer_contract_changed", "note": "No visual modifications applied"}
+    for old, new in markers:
+        source = source.replace(old, new)
+    path.write_text(source, encoding="utf-8")
+    return {"status": "configured", "classic": {"pixel_ratio_cap": 1, "shadow_map": 1024},
+            "standard": {"pixel_ratio_cap": 1.5, "shadow_map": 2048},
+            "selection": "hardwareConcurrency <= 4, or ?quality=classic; ?quality=standard overrides"}
+
 def localize_and_audit(root):
     external = {}
     changed = 0
@@ -175,7 +199,10 @@ def update(home, ref):
                                 "--destination", str(target)], cwd=source, env=env, check=True)
                 stage(source, target)
                 check_routes(target)
-                atomic_json(out / "audit.json", localize_and_audit(target))
+                quality = configure_church_quality(target)
+                audit = localize_and_audit(target)
+                audit["church_quality"] = quality
+                atomic_json(out / "audit.json", audit)
                 atomic_json(out / "manifest.json", {"commit": commit, "ref": ref,
                             "hugo": version.strip(), "files": manifest(target)})
                 verify(out)

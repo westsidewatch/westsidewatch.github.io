@@ -21,7 +21,7 @@ This is a first local-build implementation, not a byte-for-byte copy of Cloudfla
 - Confirm P2 five entries, seven-layer transitions, Merci, white model, church 3D tour, static pages, ONE, Olive, Dawn second/third layers.
 - Run with Wi-Fi disconnected; check console and network for missing local resources, external requests, WebGL errors.
 - Target 60 FPS for 2D and stable >=30 FPS in 3D; run for 60 minutes. Test built-in display and projector. Record actual CPU/GPU/memory, browser and FPS; do not infer them from CI.
-- Native browser only; no Electron and no AI model. Rendering presets, GPU-specific controls, external dependency capture, production artifact parity remain follow-up work. Do not silently degrade artwork.
+- Native browser only; no Electron and no AI model. Virtual church Classic mode caps 3D pixel ratio at 1 and shadow map at 1024 on machines with <=4 reported logical cores; Standard preserves 1.5 and 2048. Add ?quality=classic or ?quality=standard to the church tour URL to override. Only the generated offline copy is modified. Renderer marker mismatch is reported without changing artwork. Additional P2 and GPU-specific controls, external dependency capture and production artifact parity remain follow-up work. Do not silently degrade artwork.
 
 ## Tests
 

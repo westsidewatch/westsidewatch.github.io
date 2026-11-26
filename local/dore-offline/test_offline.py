@@ -10,6 +10,21 @@ import urllib.request
 import offline
 
 class OfflineTest(unittest.TestCase):
+    def test_church_quality_is_limited_to_known_knobs(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            path = root / 'p2/church-tour.js'
+            path.parent.mkdir()
+            source = 'renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 1.5));\nsun.shadow.mapSize.set(2048, 2048);\nconst camera = unchanged;'
+            path.write_text(source)
+            self.assertEqual(offline.configure_church_quality(root)['status'], 'configured')
+            changed = path.read_text()
+            self.assertIn('doreClassic ? 1 : 1.5', changed)
+            self.assertIn('doreClassic ? 1024 : 2048', changed)
+            self.assertIn('const camera = unchanged;', changed)
+            self.assertEqual(offline.configure_church_quality(root)['status'], 'renderer_contract_changed')
+            self.assertEqual(path.read_text(), changed)
+
     def test_snapshot_and_local_server(self):
         with tempfile.TemporaryDirectory() as d:
             root = Path(d)

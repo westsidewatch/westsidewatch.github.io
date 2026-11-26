@@ -29,3 +29,42 @@ jobs:
             GOOS=darwin GOARCH=$arch CGO_ENABLED=0 go build -trimpath -o "/tmp/dore-offline-$arch" local/dore-offline/native/main.go
             file "/tmp/dore-offline-$arch"
           done
+  site-snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: '0.167.0'
+          extended: true
+      - name: Build a real snapshot from this checkout
+        shell: bash
+        run: |
+          set -euo pipefail
+          home="$RUNNER_TEMP/dore-snapshot"
+          mkdir -p "$home"
+          git clone --no-checkout --local "$GITHUB_WORKSPACE" "$home/source"
+          python3 local/dore-offline/offline.py --home "$home" update "$GITHUB_SHA"
+          python3 local/dore-offline/offline.py --home "$home" verify
+          site="$home/versions/$GITHUB_SHA/site"
+          test -s "$site/p2/church-tour.html"
+          test -s "$site/p2/church-tour.js"
+          test -s "$site/p2/living-water.html"
+          test -s "$site/dawn-library/canonical-index.json"
+          python3 - "$home/versions/$GITHUB_SHA/audit.json" <<'PY'
+          import json,sys
+          from pathlib import Path
+          d=json.loads(Path(sys.argv[1]).read_text())
+          assert d['church_quality']['status']=='configured', d['church_quality']
+          print('Real snapshot validated; external URL hosts:',len(d['external_url_mentions']))
+          PY
+      - name: Preserve audit only (not a site ZIP)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dore-offline-real-snapshot-audit
+          path: ${{ runner.temp }}/dore-snapshot/versions/*/audit.json
+          if-no-files-found: warn
