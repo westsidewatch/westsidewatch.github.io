@@ -1,0 +1,42 @@
+name: R122 material master proofs
+on:
+  push:
+    branches: [research/realm-material-masters-r122-20261126]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  acquire-proof:
+    if: github.ref == 'refs/heads/research/realm-material-masters-r122-20261126'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Acquire and inspect native SVG sources
+        run: python3 scripts/acquire_r122_materials.py
+      - name: Install Chromium
+        run: |
+          npm install --no-save --package-lock=false playwright
+          npx playwright install --with-deps chromium
+      - name: Render desktop and mobile comparison
+        run: |
+          python3 -m http.server 4173 --directory static >/tmp/r122-server.log 2>&1 &
+          node tests/realm-material-r122.cjs
+      - name: Preserve evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: realm-material-r122
+          path: |
+            static/experiments/realm-material-r122/assets/
+            artifacts/r122/
+      - name: Save verified original files to isolation branch
+        if: success()
+        run: |
+          git config user.name "westsidewatch research"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add static/experiments/realm-material-r122/assets
+          if ! git diff --cached --quiet; then
+            git commit -m "R122: preserve inspected SVG originals and acquisition report"
+            git push origin HEAD:refs/heads/research/realm-material-masters-r122-20261126
+          fi
