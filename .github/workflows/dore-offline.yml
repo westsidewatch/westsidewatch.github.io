@@ -1,0 +1,19 @@
+name: Dore Offline unit checks
+on:
+  pull_request:
+    paths:
+      - 'local/dore-offline/**'
+      - '.github/workflows/dore-offline.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  unit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.8'
+      - run: python -m unittest discover -s local/dore-offline -p 'test_*.py' -v
+      - run: bash -n local/dore-offline/Launch.command
