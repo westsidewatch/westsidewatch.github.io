@@ -74,6 +74,24 @@
         "reuse_fixed_master"
       ],
       "changeControl": "A fixed master may be superseded only by explicit user decision after comparison; keep original SVG, derivative, license, digest, version and acceptance evidence. Routine placement/crop/scale/opacity and semantic OS color treatment within accepted bounds do not reopen selection."
+    },
+    "smallSealImpressions": {
+      "authority": "docs/design/WESTSIDE-EDITORIAL-MANUAL.md §9.8",
+      "yang": "ink-positive form, complete four-sided border",
+      "yin": "ink field with transparent cut-out form",
+      "scales": [
+        64,
+        48,
+        32,
+        24
+      ],
+      "lockedCores": [
+        "water",
+        "journal:R129",
+        "olive"
+      ],
+      "status": "confirmed rule; R132 isolated candidate plates not accepted masters",
+      "proof": "static/experiments/seven-realm-r124/#seal-impressions"
     }
   },
   "realms": [

@@ -1,0 +1,67 @@
+{
+  "revision": "R132",
+  "baseline": "03f051aaa6925038e1d3b8abfb3a85d1b14e1b3e",
+  "rule": "陽文墨色凸形、四周完整邊框；陰文墨底留白刻形",
+  "locked": [
+    "water",
+    "journal:R129",
+    "olive"
+  ],
+  "coreChanges": [
+    "emmaus",
+    "library",
+    "cinema",
+    "daylight"
+  ],
+  "scales": [
+    64,
+    48,
+    32,
+    24
+  ],
+  "plates": {
+    "water": {
+      "yangInset": 20,
+      "yinInset": 14,
+      "yangFrame": 10,
+      "yinCutStrokeCompensation": 2
+    },
+    "journal": {
+      "yangInset": 18,
+      "yinInset": 15,
+      "yangFrame": 10,
+      "yinCutStrokeCompensation": 1
+    },
+    "emmaus": {
+      "yangInset": 19,
+      "yinInset": 13,
+      "yangFrame": 9,
+      "yinCutStrokeCompensation": 1.5
+    },
+    "olive": {
+      "yangInset": 20,
+      "yinInset": 14,
+      "yangFrame": 10,
+      "yinCutStrokeCompensation": 2
+    },
+    "library": {
+      "yangInset": 19,
+      "yinInset": 14,
+      "yangFrame": 9,
+      "yinCutStrokeCompensation": 1.5
+    },
+    "cinema": {
+      "yangInset": 18,
+      "yinInset": 13,
+      "yangFrame": 9,
+      "yinCutStrokeCompensation": 1
+    },
+    "daylight": {
+      "yangInset": 20,
+      "yinInset": 14,
+      "yangFrame": 9,
+      "yinCutStrokeCompensation": 1.5
+    }
+  },
+  "status": "candidate pending actual visual review; no accepted master promotion"
+}
