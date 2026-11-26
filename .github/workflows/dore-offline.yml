@@ -17,3 +17,15 @@ jobs:
           python-version: '3.8'
       - run: python -m unittest discover -s local/dore-offline -p 'test_*.py' -v
       - run: bash -n local/dore-offline/Launch.command
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.26.x'
+          cache: false
+      - run: go test local/dore-offline/native/main.go local/dore-offline/native/main_test.go
+      - run: bash -n local/dore-offline/Present.command
+      - name: Cross-build both Mac architectures
+        run: |
+          for arch in amd64 arm64; do
+            GOOS=darwin GOARCH=$arch CGO_ENABLED=0 go build -trimpath -o "/tmp/dore-offline-$arch" local/dore-offline/native/main.go
+            file "/tmp/dore-offline-$arch"
+          done

@@ -5,6 +5,7 @@ from pathlib import Path
 import tempfile
 import threading
 import unittest
+from unittest.mock import patch
 import urllib.request
 import offline
 
@@ -29,7 +30,9 @@ class OfflineTest(unittest.TestCase):
             offline.activate(root, commit)
             self.assertEqual(offline.active(root), snap)
             portable = root / "Portable"
-            offline.export_portable(root, portable)
+            with patch.object(offline, 'build_portable_runtime') as build:
+                offline.export_portable(root, portable)
+                build.assert_called_once()
             self.assertEqual(offline.verify(offline.active(portable / "portable-data"))["commit"], commit)
             self.assertTrue((portable / "Launch.command").stat().st_mode & 0o100)
             with self.assertRaises(ValueError):

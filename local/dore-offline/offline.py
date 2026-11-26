@@ -256,6 +256,20 @@ def serve(home):
         except KeyboardInterrupt:
             pass
 
+def build_portable_runtime(tool, out):
+    if not shutil.which("go"):
+        raise RuntimeError("Install Go 1.26 on the preparation Mac, not the presentation Mac.")
+    version = run("go", "version", capture=True)
+    if not re.search(r"\bgo1\.26(?:\.\d+)?\b", version):
+        raise RuntimeError("Use Go 1.26 to support macOS Monterey and newer.")
+    runtime = out / "runtime"
+    runtime.mkdir()
+    for arch in ("amd64", "arm64"):
+        env = dict(os.environ, GOOS="darwin", GOARCH=arch, CGO_ENABLED="0", GOTOOLCHAIN="local")
+        subprocess.run(["go", "build", "-trimpath", "-ldflags=-s -w", "-o",
+                        str(runtime / ("dore-offline-" + arch)), str(tool / "native" / "main.go")],
+                       env=env, check=True)
+
 def export_portable(home, destination):
     """Create a self-contained directory on demand; never overwrite existing data."""
     destination = destination.expanduser().resolve()
@@ -269,9 +283,10 @@ def export_portable(home, destination):
             out = Path(d) / "Doré Offline"
             out.mkdir()
             tool = Path(__file__).resolve().parent
-            for name in ("offline.py", "Launch.command", "README.md"):
-                shutil.copy2(tool / name, out / name)
+            shutil.copy2(tool / "README.md", out / "README.md")
+            shutil.copy2(tool / "Present.command", out / "Launch.command")
             (out / "Launch.command").chmod(0o755)
+            build_portable_runtime(tool, out)
             store = out / "portable-data"
             (store / "versions").mkdir(parents=True)
             shutil.copytree(snap, store / "versions" / snap.name)

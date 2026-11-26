@@ -4,11 +4,11 @@ Independent on-demand presentation tool for Intel and Apple Silicon Macs. No cha
 
 ## Usage
 
-Copy this directory to your Mac. Python 3.8+, Git and Hugo Extended 0.167.0 are required for building a snapshot. Only Python is needed to launch a prepared snapshot. Obtain Hugo from its official release, choosing the Intel macOS build for a 2017 MacBook Pro. No automatic installation or administrator access is attempted.
+Copy this directory to your Mac. Python 3.8+, Git and Hugo Extended 0.167.0 are required for building a snapshot. Go 1.26 is additionally required on the preparation Mac for portable export. No Python, Go, Git or Hugo is needed on the presentation Mac (macOS 12 Monterey or newer). Obtain Hugo from its official release, choosing the Intel macOS build for a 2017 MacBook Pro. No automatic installation or administrator access is attempted.
 
 Open Launch.command (or run bash Launch.command in Terminal), choose 2 while online, then choose 1 to present. Use the browser's native full-screen mode. The service binds only to 127.0.0.1:8765. Keep Terminal open; Ctrl-C stops serving. Disconnect Wi-Fi and repeat the presentation.
 
-Cache and versions live in ~/Library/Application Support/Dore Offline. Git fetch transfers changed Git objects after initial clone; each built snapshot is separate, not a delta-compressed asset store. No background updates. A failed build before activation leaves the previous active version intact. Select an older verified snapshot from the menu. Choose 6 to export a self-contained folder to a new destination. Copy the exported folder to the Intel Mac or USB drive and open its Launch.command; no Git, Hugo, network or AI runtime is needed on the presentation machine (Python 3.8+ is still required).
+Cache and versions live in ~/Library/Application Support/Dore Offline. Git fetch transfers changed Git objects after initial clone; each built snapshot is separate, not a delta-compressed asset store. No background updates. A failed build before activation leaves the previous active version intact. Select an older verified snapshot from the menu. Choose 6 to export a self-contained folder to a new destination. Copy the exported folder to the Intel Mac or USB drive and open its Launch.command; no Python, Git, Hugo, Go, network or AI runtime is needed on the presentation machine. Export builds both Intel and Apple Silicon native runtimes. Use an executable-capable USB filesystem (APFS recommended for Mac-only use). Local binaries are not Developer ID notarized; macOS security policy may require explicit first-launch approval. Catalina is not supported by this Go 1.26 build. Never disable system security. Eject the drive only after stopping the local server.
 
 ## Scope
 
@@ -27,4 +27,4 @@ This is a first local-build implementation, not a byte-for-byte copy of Cloudfla
 
 python3 -m unittest discover -s local/dore-offline -p 'test_*.py' -v
 
-Synthetic tests cover local references, checksums, loopback HTTP range, CSP and route checks. Full main-site build and physical Intel Mac acceptance are separate gates.
+Native server tests and cross-builds cover Intel/ARM packaging, loopback access, byte ranges and path isolation. Synthetic Python tests cover local references, checksums, loopback HTTP range, CSP and route checks. Full main-site build and physical Intel Mac acceptance are separate gates.
