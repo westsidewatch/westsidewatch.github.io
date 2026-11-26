@@ -16,6 +16,9 @@ jobs:
       - run: |
           python3 -m http.server 4173 --directory static >/tmp/r124-server.log 2>&1 &
           node tests/seven-realm-r124.cjs
+      - name: R125 source acquisition and provenance
+        if: always()
+        run: python3 scripts/r125-material-research.py
       - if: always()
         uses: actions/upload-artifact@v4
         with:
