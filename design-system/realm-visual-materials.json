@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "authority": "docs/design/WESTSIDE-DESIGN-OS.md",
   "manual": "docs/design/WESTSIDE-EDITORIAL-MANUAL.md#97",
   "scopeRegistry": "design-system/scopes.json",
@@ -27,14 +27,15 @@
     "micro": "small seal or crest, selective destination only",
     "meso": "wall continuity and optical rhythm; only current realm lit",
     "macro": "large seal geometry generates positive/negative content openings; never enlarge icon",
-    "material": "existing finished SVG first, native vector paths, own territory, no self-generated paths at exploration stage",
+    "material": "Resolve fixed accepted realm artwork first; reuse unchanged for ordinary design work. Completed native SVG discovery is conditional, never a mandatory repeat step.",
     "promotion": "source/license/sha256/real native-vector inspection + original versus candidate + real screen and unbranded review + user approval",
     "assetStates": [
       "protected",
       "existing_preserve",
       "replace_candidate",
       "supplement_candidate",
-      "missing_mature_svg"
+      "missing_mature_svg",
+      "accepted_fixed"
     ],
     "publicRuntime": "unchanged; this registry is workchain input only",
     "excluded": [
@@ -44,7 +45,36 @@
       "V06 equal-width invented crests",
       "decorative navigation arrows",
       "ChatGPT Sites"
-    ]
+    ],
+    "materialLifecycle": {
+      "default": "reuse",
+      "preflight": "Resolve owning scope, current accepted master, large/small/crest, scripture motherform, allowed placement and color; do not search for replacement in routine design",
+      "discoveryTriggers": [
+        "missing_mature_svg",
+        "replace_candidate",
+        "supplement_candidate",
+        "explicit_user_revision",
+        "confirmed_material_defect_requiring_replacement"
+      ],
+      "protectedBehavior": "protected or existing_preserve: reuse existing protected material in its established role; do not infer unapproved files are accepted for new roles",
+      "workflow": [
+        "resolve_registered_assets",
+        "reuse_fixed_master",
+        "compose_real_content",
+        "browser_visual_review",
+        "implement_approved_composition"
+      ],
+      "initialSelectionWorkflow": [
+        "dore_exploration",
+        "verify_original_source_license_vector",
+        "local_art_direction_refinement",
+        "compare_with_protected_baseline",
+        "user_art_acceptance",
+        "freeze_local_master_and_register",
+        "reuse_fixed_master"
+      ],
+      "changeControl": "A fixed master may be superseded only by explicit user decision after comparison; keep original SVG, derivative, license, digest, version and acceptance evidence. Routine placement/crop/scale/opacity and semantic OS color treatment within accepted bounds do not reopen selection."
+    }
   },
   "realms": [
     {
@@ -76,7 +106,11 @@
         ],
         "comment": "V75 live water/door geometry protected; V10 file exists, not interchangeable with live geometry",
         "selectedNewAsset": null,
-        "candidates": []
+        "candidates": [],
+        "selectionRequired": false,
+        "workchainMode": "reuse_existing",
+        "fixedMaster": null,
+        "selectionNote": "Preserve established artwork; no new material exploration for ordinary layout. Existing file list is inventory, not authority to interchange assets."
       }
     },
     {
@@ -110,7 +144,11 @@
         ],
         "comment": "Existing assets; no magazine redesign or replacement until requested",
         "selectedNewAsset": null,
-        "candidates": []
+        "candidates": [],
+        "selectionRequired": false,
+        "workchainMode": "reuse_existing",
+        "fixedMaster": null,
+        "selectionNote": "Preserve established artwork; no new material exploration for ordinary layout."
       }
     },
     {
@@ -337,7 +375,11 @@
             "license": null,
             "sha256": null
           }
-        ]
+        ],
+        "selectionRequired": true,
+        "workchainMode": "establish_master",
+        "fixedMaster": null,
+        "selectionNote": "Current master-selection project only; after acceptance switch to accepted_fixed/reuse_fixed. Do not reopen on every page."
       }
     },
     {
@@ -371,7 +413,11 @@
         ],
         "comment": "Existing 6 botanical + 6 terrain families; preserve P2 composition, not assertion of all pages accepted",
         "selectedNewAsset": null,
-        "candidates": []
+        "candidates": [],
+        "selectionRequired": false,
+        "workchainMode": "reuse_existing",
+        "fixedMaster": null,
+        "selectionNote": "Preserve established artwork; no new material exploration for ordinary layout. Existing file list is inventory, not authority to interchange assets."
       }
     },
     {
@@ -411,7 +457,11 @@
             "license": null,
             "sha256": null
           }
-        ]
+        ],
+        "selectionRequired": true,
+        "workchainMode": "establish_master",
+        "fixedMaster": null,
+        "selectionNote": "Current master-selection project only; after acceptance switch to accepted_fixed/reuse_fixed. Do not reopen on every page."
       }
     },
     {
@@ -465,7 +515,11 @@
             "license": null,
             "sha256": null
           }
-        ]
+        ],
+        "selectionRequired": true,
+        "workchainMode": "establish_master",
+        "fixedMaster": null,
+        "selectionNote": "Current master-selection project only; after acceptance switch to accepted_fixed/reuse_fixed. Do not reopen on every page."
       }
     },
     {
@@ -511,7 +565,11 @@
             "license": null,
             "sha256": null
           }
-        ]
+        ],
+        "selectionRequired": true,
+        "workchainMode": "establish_master",
+        "fixedMaster": null,
+        "selectionNote": "Current master-selection project only; after acceptance switch to accepted_fixed/reuse_fixed. Do not reopen on every page."
       }
     }
   ]

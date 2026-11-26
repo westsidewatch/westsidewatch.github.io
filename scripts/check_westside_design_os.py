@@ -25,6 +25,21 @@ expected=["church","journal","one","olive","dawn-library","cinema","daylight-caf
 if [r["scope"] for r in realms]!=expected or [r["id"] for r in realms]!=[f"{n:02}" for n in range(1,8)]:
  print("Design OS guard failed: seven-realm material registry mismatch");sys.exit(1)
 for r in realms:
+ t=r["texture"]
+ status=t["status"]
+ needs_selection=status in ("replace_candidate","supplement_candidate","missing_mature_svg")
+ mode="establish_master" if needs_selection else "reuse_fixed" if status=="accepted_fixed" else "reuse_existing"
+ if t["selectionRequired"]!=needs_selection or t["workchainMode"]!=mode:
+  print("Design OS guard failed: material selection/reuse state mismatch",r["scope"]);sys.exit(1)
+ if status=="accepted_fixed":
+  master=t.get("fixedMaster") or {}
+  if not all(master.get(k) for k in ("path","version","source","license","originalSha256","masterSha256","acceptanceEvidence")) or not (root/master.get("path","")).is_file():
+   print("Design OS guard failed: fixed master missing asset or provenance",r["scope"]);sys.exit(1)
+  import hashlib
+  if hashlib.sha256((root/master["path"]).read_bytes()).hexdigest()!=master["masterSha256"]:
+   print("Design OS guard failed: fixed master digest changed",r["scope"]);sys.exit(1)
+ elif t.get("fixedMaster") is not None:
+  print("Design OS guard failed: unaccepted fixed master",r["scope"]);sys.exit(1)
  if r["scope"] not in scopes or r["scripture"]["section"]!=r["id"] or not r["identity"]["sourceRef"] or not r["identity"]["geometry"] or not r["texture"]["territory"]:
   print("Design OS guard failed: incomplete realm material contract",r["scope"]);sys.exit(1)
  if r["texture"]["selectedNewAsset"] is not None and not any(c.get("state")=="verified" and c.get("sha256") and c.get("license") and c.get("nativeSvg") and c.get("assetPath")==r["texture"]["selectedNewAsset"] for c in r["texture"]["candidates"]):
