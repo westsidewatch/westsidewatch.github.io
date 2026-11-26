@@ -16,6 +16,7 @@ import subprocess
 import tempfile
 import urllib.parse
 import webbrowser
+import vendor_dependencies
 
 REPO = "https://github.com/westsidewatch/westsidewatch.github.io.git"
 ORIGIN = "http://127.0.0.1:8765"
@@ -200,7 +201,9 @@ def update(home, ref):
                 stage(source, target)
                 check_routes(target)
                 quality = configure_church_quality(target)
+                vendors = vendor_dependencies.localize(target)
                 audit = localize_and_audit(target)
+                audit['localized_dependencies'] = vendors
                 audit["church_quality"] = quality
                 atomic_json(out / "audit.json", audit)
                 atomic_json(out / "manifest.json", {"commit": commit, "ref": ref,

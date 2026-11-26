@@ -61,10 +61,36 @@ jobs:
           assert d['church_quality']['status']=='configured', d['church_quality']
           print('Real snapshot validated; external URL hosts:',len(d['external_url_mentions']))
           PY
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.26.x'
+          cache: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Real portable export and native offline browser gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          home="$RUNNER_TEMP/dore-snapshot"
+          python3 local/dore-offline/offline.py --home "$home" export "$RUNNER_TEMP/USB Presentation"
+          test -s "$RUNNER_TEMP/USB Presentation/runtime/dore-offline-amd64"
+          test -s "$RUNNER_TEMP/USB Presentation/runtime/dore-offline-arm64"
+          go build -o "$RUNNER_TEMP/dore-native" local/dore-offline/native/main.go
+          "$RUNNER_TEMP/dore-native" -no-open -home "$RUNNER_TEMP/USB Presentation/portable-data" > "$RUNNER_TEMP/dore-http.log" 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          for i in $(seq 1 20); do curl -fsS http://127.0.0.1:8765/ -o /dev/null && break; sleep 1; done
+          npm install --no-save --no-package-lock playwright
+          npx playwright install chromium
+          DORE_BROWSER_REPORT="$RUNNER_TEMP/dore-browser.json" node local/dore-offline/browser_gate.cjs
       - name: Preserve audit only (not a site ZIP)
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: dore-offline-real-snapshot-audit
-          path: ${{ runner.temp }}/dore-snapshot/versions/*/audit.json
+          path: |
+            ${{ runner.temp }}/dore-snapshot/versions/*/audit.json
+            ${{ runner.temp }}/dore-browser.json
+            ${{ runner.temp }}/dore-http.log
           if-no-files-found: warn

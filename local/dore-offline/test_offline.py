@@ -8,8 +8,22 @@ import unittest
 from unittest.mock import patch
 import urllib.request
 import offline
+import vendor_dependencies as vendor
 
 class OfflineTest(unittest.TestCase):
+    def test_vendor_localizes_css_and_nested_fonts(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            font = "https://fonts.gstatic.com/test/example.woff2"
+            (root / "index.html").write_text('<script src="' + vendor.GSAP + '"></script><link href="' + vendor.GOOGLE.replace('&','&amp;') + '">')
+            payloads = {vendor.GSAP: b"/* gsap */", vendor.GOOGLE: ('@font-face{src:url(' + font + ')}').encode(), font:b"font"}
+            result = vendor.localize(root, get=payloads.__getitem__)
+            self.assertEqual(set(result), set(payloads))
+            self.assertNotIn("https://", (root/"index.html").read_text())
+            css = (root / result[vendor.GOOGLE]["path"].lstrip("/")).read_text()
+            self.assertIn(result[font]["path"], css)
+            self.assertFalse(vendor.allowed("https://example.com/a.woff2"))
+
     def test_church_quality_is_limited_to_known_knobs(self):
         with tempfile.TemporaryDirectory() as d:
             root = Path(d)

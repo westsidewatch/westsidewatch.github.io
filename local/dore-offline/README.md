@@ -28,3 +28,7 @@ This is a first local-build implementation, not a byte-for-byte copy of Cloudfla
 python3 -m unittest discover -s local/dore-offline -p 'test_*.py' -v
 
 Native server tests and cross-builds cover Intel/ARM packaging, loopback access, byte ranges and path isolation. Synthetic Python tests cover local references, checksums, loopback HTTP range, CSP and route checks. Full main-site build and physical Intel Mac acceptance are separate gates.
+
+## Network isolation gate
+
+The builder localizes the known GSAP 3.14.2 and OS font CSS references, including approved nested font assets. URLs and SHA-256 values are recorded in audit.json; no unrelated websites, editorial links or videos are crawled. A browser gate starts the real native HTTP server from the exported directory, blocks all non-loopback browser requests, and records route errors and missing scripts/styles/fonts. This is still not full interaction or physical Mac acceptance.
