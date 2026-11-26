@@ -6,6 +6,8 @@ on:
 jobs:
   proof:
     if: github.ref == 'refs/heads/research/seven-realm-visual-system-r124-20261126'
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     timeout-minutes: 18
     steps:
@@ -13,12 +15,23 @@ jobs:
       - run: |
           npm install --no-save --package-lock=false playwright
           npx playwright install --with-deps chromium
+      - name: Acquire new native source candidates
+        run: |
+          python3 scripts/r127-material-research.py
+          python3 scripts/r127-stage-materials.py
       - run: |
           python3 -m http.server 4173 --directory static >/tmp/r124-server.log 2>&1 &
           node tests/seven-realm-r124.cjs
-      - name: R125 source acquisition and provenance
-        if: always()
-        run: python3 scripts/r125-material-research.py
+      - name: Preserve validated research originals on this isolated branch only
+        if: success() && github.ref == 'refs/heads/research/seven-realm-visual-system-r124-20261126'
+        run: |
+          git config user.name 'Westside visual research'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add static/experiments/seven-realm-r124/materials/r127/
+          if ! git diff --cached --quiet; then
+            git commit -m 'R127: preserve verified native candidate originals and provenance'
+            git push origin HEAD:refs/heads/research/seven-realm-visual-system-r124-20261126
+          fi
       - if: always()
         uses: actions/upload-artifact@v4
         with:
