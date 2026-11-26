@@ -34,3 +34,6 @@
 
 /* R133: seven equal optical columns, single unchanged references beside comparative studies. */
 .seal-revision-grid{grid-template-columns:repeat(7,minmax(0,1fr))}@media(max-width:1100px){.seal-revision-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}@media(max-width:540px){.seal-revision-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* R135: scroll cross-sections compared as finished paired impressions. */
+.scroll-studies{margin:2.5rem 0 0;border-top:1px solid currentColor;padding-top:1rem}.scroll-studies h3{font:600 clamp(24px,3vw,44px)/1 var(--ws-type-display-en-sc)}.scroll-studies h3 small{font:900 13px var(--ws-type-display-zh);margin-left:1em}.scroll-study-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem}.scroll-study-grid article{background:var(--ws-paper);padding:12px;min-width:0}.scroll-study-grid h4{font:900 14px var(--ws-type-display-zh);margin:0 0 12px}.scroll-plates{display:grid;grid-template-columns:1fr 1fr;gap:12px}.scroll-plates>div{display:grid;justify-items:center;align-content:start;gap:10px;min-width:0}.scroll-plates img{display:block;max-width:100%;height:auto}.scroll-plates>div>div{display:flex;align-items:center;gap:8px}.scroll-plates span{font-size:12px}@media(max-width:540px){.scroll-study-grid{grid-template-columns:1fr}.scroll-study-grid article{padding:8px}}
