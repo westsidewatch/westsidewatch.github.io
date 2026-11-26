@@ -5,3 +5,12 @@
 .library-leaf .lead,.library-leaf .identity{background:color-mix(in srgb,var(--ws-paper) 89%,transparent);padding:.6rem}
 .texture-daylight{opacity:.37;background-size:180% auto;background-position:0 100%;clip-path:polygon(0 0,32% 0,32% 35%,18% 35%,18% 54%,0 54%,0 100%,100% 100%,100% 82%,72% 82%,72% 77%,0 77%)}
 @media(max-width:540px){.texture-emmaus{background-size:auto 62%}.texture-library{clip-path:polygon(0 0,100% 0,100% 52%,0 52%)}.texture-daylight{background-size:auto 78%}}
+
+/* R126: negative-space composition, no unreviewed material defaults. */
+.emmaus-chapter{display:flex;align-items:baseline;flex-wrap:wrap;gap:12px;font:400 28px var(--ws-type-display-en-sc)}.emmaus-chapter strong{font:700 clamp(70px,10vw,140px)/.8 var(--ws-type-display-en-sc)}.emmaus-chapter span:last-child{font:900 16px var(--ws-type-display-zh)}
+.emmaus::before{content:"";position:absolute;inset:0;z-index:0;background:var(--ws-paper);clip-path:polygon(50% 0,100% 0,100% 100%,42% 100%,42% 64%,50% 64%)}
+.emmaus-word{grid-column:2/6;grid-row:2/6}.emmaus-press{grid-column:2/6;grid-row:7/10}.emmaus-reading{grid-column:7/12;grid-row:3/11;align-self:center;padding:0;border:0}.emmaus-reading .scripture-copy,.emmaus-reading .english{max-width:34em}.emmaus-reading .english{font-size:clamp(16px,1.5vw,24px)}
+.texture-library{--material:url('/images/p2-dawn-letterpress-engraving-v1.svg');opacity:.56;clip-path:polygon(0 0,16.666% 0,16.666% 25%,8.333% 25%,8.333% 75%,41.666% 75%,41.666% 100%,0 100%);background-position:left center}.library-leaf .lead,.library-leaf .identity{background:none;padding:0}.library-leaf{grid-column:3/7}.library-spine{background:transparent;border-left:1px solid color-mix(in srgb,var(--ws-ink) 28%,transparent)}
+.daylight-window{grid-column:1/5;grid-row:1/8;background:color-mix(in srgb,var(--ws-daylight-mauve) 14%,var(--ws-paper));clip-path:polygon(0 0,100% 0,100% 28%,76% 28%,76% 43%,56% 43%,56% 100%,0 100%)}
+@media(max-width:850px){.emmaus-word{grid-column:2/7}.emmaus-press{grid-column:2/7}.emmaus-reading{grid-column:7/12}.library-leaf{grid-column:2/7}}
+@media(max-width:540px){.emmaus::before{clip-path:polygon(0 51%,100% 51%,100% 100%,0 100%)}.emmaus-reading{align-self:stretch;padding:16px 0 0;border-top:1px solid currentColor}.emmaus-chapter strong{font-size:75px}.texture-library{clip-path:polygon(0 0,12% 0,12% 48%,0 48%)}.daylight-window{width:38%;height:24%;opacity:.8}.daylight-name{padding-top:65px}}
