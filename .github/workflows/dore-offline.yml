@@ -5,6 +5,11 @@ on:
       - 'local/dore-offline/**'
       - '.github/workflows/dore-offline.yml'
   workflow_dispatch:
+    inputs:
+      export_usb:
+        description: 'Export a portable USB archive only after the browser gate passes'
+        type: boolean
+        default: false
 permissions:
   contents: read
 jobs:
@@ -84,6 +89,16 @@ jobs:
           npm install --no-save --no-package-lock playwright
           npx playwright install chromium
           DORE_BROWSER_REPORT="$RUNNER_TEMP/dore-browser.json" node local/dore-offline/browser_gate.cjs
+      - name: Package only on explicit request
+        if: github.event_name == 'workflow_dispatch' && inputs.export_usb == true
+        run: tar -czf "$RUNNER_TEMP/Dore-Offline-USB.tar.gz" -C "$RUNNER_TEMP" 'USB Presentation'
+      - name: Publish requested portable package
+        if: github.event_name == 'workflow_dispatch' && inputs.export_usb == true
+        uses: actions/upload-artifact@v4
+        with:
+          name: Dore-Offline-USB
+          path: ${{ runner.temp }}/Dore-Offline-USB.tar.gz
+          retention-days: 7
       - name: Preserve audit only (not a site ZIP)
         if: always()
         uses: actions/upload-artifact@v4
@@ -94,3 +109,32 @@ jobs:
             ${{ runner.temp }}/dore-browser.json
             ${{ runner.temp }}/dore-http.log
           if-no-files-found: warn
+  intel-macos-runtime:
+    runs-on: macos-15-intel
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.26.x'
+          cache: false
+      - name: Run native Intel Mac executable from a simulated USB folder
+        shell: bash
+        run: |
+          set -euo pipefail
+          usb="$RUNNER_TEMP/USB Presentation"
+          sha=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+          site="$usb/portable-data/versions/$sha/site"
+          mkdir -p "$site/one" "$site/olive" "$usb/runtime"
+          printf '%s\n' "$sha" > "$usb/portable-data/current"
+          printf '<h1>Westside Watch</h1>' > "$site/index.html"
+          cp "$site/index.html" "$site/one/index.html"
+          cp "$site/index.html" "$site/olive/index.html"
+          CGO_ENABLED=0 go build -trimpath -o "$usb/runtime/dore-offline-amd64" local/dore-offline/native/main.go
+          file "$usb/runtime/dore-offline-amd64"
+          "$usb/runtime/dore-offline-amd64" -no-open -home "$usb/portable-data" &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          for i in $(seq 1 15); do curl -fsS http://127.0.0.1:8765/ -o "$RUNNER_TEMP/native.html" && break; sleep 1; done
+          grep -q 'Westside Watch' "$RUNNER_TEMP/native.html"
+          curl -fsS http://127.0.0.1:8765/one/ | grep -q 'Westside Watch'

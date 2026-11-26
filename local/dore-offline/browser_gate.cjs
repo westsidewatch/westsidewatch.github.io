@@ -8,7 +8,7 @@ const routes = ['/', '/one/', '/olive/', '/dawn-library/', '/church/visit/', '/p
   try {
     for (const path of routes) {
       const context = await browser.newContext({viewport:{width:1280,height:800},serviceWorkers:'block'});
-      const rec = {path, external:[], failed:[], errors:[], status:0};
+      const rec = {path, external:[], failed:[], errors:[], csp:[], status:0};
       await context.route('**/*', async route => {
         const req=route.request();
         const url=req.url();
@@ -18,13 +18,14 @@ const routes = ['/', '/one/', '/olive/', '/dawn-library/', '/church/visit/', '/p
       });
       const page=await context.newPage();
       page.on('pageerror', e=>rec.errors.push(String(e)));
+      page.on('console', msg=>{if(msg.type()==='error' && /content security policy|violates the following/i.test(msg.text()))rec.csp.push(msg.text());});
       page.on('requestfailed', req=>{if(req.url().startsWith(origin+'/'))rec.failed.push({url:req.url(),type:req.resourceType(),error:req.failure()?.errorText})});
       page.on('response', res=>{if(res.status()>=400 && res.url().startsWith(origin+'/'))rec.failed.push({url:res.url(),type:res.request().resourceType(),status:res.status()})});
       try {
         const res=await page.goto(origin+path,{waitUntil:'domcontentloaded',timeout:25000});
         rec.status=res?.status()||0;
         await page.waitForTimeout(path.includes('church-tour')?5000:2500);
-        rec.dom=await page.evaluate(()=>({title:document.title,fonts:document.fonts.status,canvas:document.querySelectorAll('canvas').length,bodyClass:document.body.className,gsap:typeof window.gsap}));
+        rec.dom=await page.evaluate(()=>({title:document.title,fonts:document.fonts.status,loadedFonts:[...document.fonts].filter(f=>f.status==='loaded').map(f=>f.family),canvas:document.querySelectorAll('canvas').length,bodyClass:document.body.className,gsap:typeof window.gsap}));
         if(path==='/') {
           await page.locator('#sites-first-layer').first().scrollIntoViewIfNeeded({timeout:5000}).catch(()=>{});
           await page.waitForTimeout(1500);
@@ -36,6 +37,6 @@ const routes = ['/', '/one/', '/olive/', '/dawn-library/', '/church/visit/', '/p
   }finally{await browser.close()}
   fs.writeFileSync(process.env.DORE_BROWSER_REPORT,JSON.stringify(result,null,2));
   for(const r of result)console.log(JSON.stringify(r));
-  const hard=result.filter(r=>r.status!==200||r.errors.length||r.failed.some(x=>['script','stylesheet','font'].includes(x.type))||r.external.some(x=>['script','stylesheet','font'].includes(x.type)));
+  const hard=result.filter(r=>r.status!==200||r.errors.length||r.csp.some(x=>/script-src|style-src|font-src/.test(x))||r.failed.some(x=>['script','stylesheet','font'].includes(x.type))||r.external.some(x=>['script','stylesheet','font'].includes(x.type)));
   if(hard.length) {console.error('Offline route/runtime failures:',hard.map(x=>x.path));process.exitCode=1;}
 })().catch(e=>{console.error(e);process.exitCode=1});

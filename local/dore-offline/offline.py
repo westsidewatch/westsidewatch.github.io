@@ -204,6 +204,8 @@ def update(home, ref):
                 vendors = vendor_dependencies.localize(target)
                 audit = localize_and_audit(target)
                 audit['localized_dependencies'] = vendors
+                if vendors:
+                    shutil.copytree(Path(__file__).resolve().parent / "licenses", target / "offline-vendor" / "licenses", dirs_exist_ok=True)
                 audit["church_quality"] = quality
                 atomic_json(out / "audit.json", audit)
                 atomic_json(out / "manifest.json", {"commit": commit, "ref": ref,

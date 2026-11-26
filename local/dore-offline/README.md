@@ -32,3 +32,5 @@ Native server tests and cross-builds cover Intel/ARM packaging, loopback access,
 ## Network isolation gate
 
 The builder localizes the known GSAP 3.14.2 and OS font CSS references, including approved nested font assets. URLs and SHA-256 values are recorded in audit.json; no unrelated websites, editorial links or videos are crawled. A browser gate starts the real native HTTP server from the exported directory, blocks all non-loopback browser requests, and records route errors and missing scripts/styles/fonts. This is still not full interaction or physical Mac acceptance.
+
+Font license notices are included under offline-vendor/licenses. The manual GitHub workflow has an opt-in export_usb flag; only explicit dispatch with a passing browser gate creates an archive for download. Normal commits produce verification evidence only. Intel hosted Mac runtime smoke tests do not certify 2017 GPU performance or physical USB execution.
