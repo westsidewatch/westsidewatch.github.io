@@ -1,0 +1,106 @@
+{
+  "revision": "R128",
+  "baseline": "4a6f34361fe05cf6ca3e958814c91aee8390a86b",
+  "visualEvidence": {
+    "run": 45803122678,
+    "artifact": 15108826260,
+    "desktopComparisons": 13
+  },
+  "materialReview": {
+    "emmaus": {
+      "retain": "320541",
+      "refine": "324943 crop/opacity",
+      "reject": "316567 dense, noisy scribble behind text"
+    },
+    "library": {
+      "retain": "321577, reduce ink and narrow crop; old letterpress as control",
+      "reject": "letterpress-wide barely visible; redundant"
+    },
+    "cinema": {
+      "retain": "169019 reduced grain; 116845-fine comparison only",
+      "reject": "324077 and 326840 oversized spot fields overwhelm the screen"
+    },
+    "daylight": {
+      "retain": "320541-soft, best current restraint but weak identity",
+      "refine": "256145 substantially reduce opacity and crop for fair second chance",
+      "reject": "229466 repeated leaf silhouettes and grey slabs"
+    }
+  },
+  "seals": {
+    "water": "retain original, benchmark; fine strokes can merge at 24px",
+    "journal": "too much solid mass; faith association retained, need calibrated negative space",
+    "emmaus": "two independent windows, too little convergence; avoid line crossings",
+    "olive": "retain original benchmark; nested steps can merge at 24px",
+    "library": "book pictogram, need stronger negative spine and asymmetric crenellation",
+    "cinema": "screen proportion strong, outer stair profile too weak at small sizes",
+    "daylight": "window and sill are detached, need shared spatial alignment"
+  },
+  "newSources": [
+    {
+      "realm": "emmaus",
+      "id": "325786",
+      "slug": "wavy-stripes-abstract-design",
+      "author": "liftarn",
+      "intent": "continuous curve field, inspect for distinct path and optical hierarchy",
+      "source": "https://openclipart.org/detail/325786/wavy-stripes-abstract-design",
+      "license": "https://openclipart.org/faq",
+      "state": "discovery_unverified"
+    },
+    {
+      "realm": "emmaus",
+      "id": "49615",
+      "slug": "crosshatching",
+      "author": "rejon",
+      "intent": "hand-drawn engraved mark, crop a single light/dark region",
+      "source": "https://openclipart.org/detail/49615/crosshatching",
+      "license": "https://openclipart.org/faq",
+      "state": "discovery_unverified"
+    },
+    {
+      "realm": "library",
+      "id": "321576",
+      "slug": "grunge-line-pattern-1",
+      "author": null,
+      "intent": "compare against 321577 paper grain with narrower margin and controlled contrast",
+      "source": "https://openclipart.org/detail/321576/grunge-line-pattern-1",
+      "license": "https://openclipart.org/faq",
+      "state": "discovery_unverified"
+    },
+    {
+      "realm": "library",
+      "id": "49633",
+      "slug": "hatching-patterns",
+      "author": "rejon",
+      "intent": "hand-cut press line samples, reject recognizable doodles",
+      "source": "https://openclipart.org/detail/49633/hatching-patterns",
+      "license": "https://openclipart.org/faq",
+      "state": "discovery_unverified"
+    },
+    {
+      "realm": "cinema",
+      "id": "215716",
+      "slug": "linear-halftone-pattern",
+      "author": "Lazur",
+      "intent": "line-based tonal transition rather than dot sheet; source is construction illustration, reject if labels or diagram dominate",
+      "source": "https://openclipart.org/detail/215716/linear-halftone-pattern",
+      "license": "https://openclipart.org/faq",
+      "state": "discovery_unverified"
+    },
+    {
+      "realm": "daylight",
+      "id": "225157",
+      "slug": "parallel-lines",
+      "author": "Lazur",
+      "intent": "inspect fine directional line field, crop only if window-light quality, no mechanical clutter",
+      "source": "https://openclipart.org/detail/225157/parallel-lines",
+      "license": "https://openclipart.org/faq",
+      "state": "discovery_unverified"
+    }
+  ],
+  "acceptance": "pending; no master promoted",
+  "protected": [
+    "water",
+    "journal texture",
+    "olive"
+  ]
+}
