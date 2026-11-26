@@ -116,3 +116,6 @@ User decision (2026-11-26): material exploration is a one-time establishment or 
 
 ### Small-seal impression rule (user decision, 2026-11-26)
 See Editorial Manual §9.8. Every realm small seal must support an independently usable yang impression (raised ink geometry with a complete four-sided border) and yin impression (paper-cut geometry in an ink field). Optical compensation and proof at 64/48/32/24px are required; preserve locked core artwork and do not promote provisional artwork or alter runtime tokens. The R132 isolated proof is an experiment, not a production release.
+
+
+R133 authority correction: journal is the exact R128 bold silhouette, not R129. Do not modify its path in the core or either impression. Water is the family reference for stepped incision, rhythm and negative space, not a universal shape template. Olive remains protected. See Editorial Manual §9.8 and its R133 correction.
