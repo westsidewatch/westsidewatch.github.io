@@ -392,7 +392,7 @@ It covers Journal, Mount of Olives, Church, About, global functions such as 多�
 
 ### 多雷探索 — 七版塊底紋前置工作（2026-11-26）
 
-收到版塊藝術設計任務，先解析 [Design OS 七版塊視覺材質登錄表](../design-system/realm-visual-materials.json) 與 [編輯手冊 §9.7](design/WESTSIDE-EDITORIAL-MANUAL.md)：大章小章、城垛、鉛字方塊及底紋是同一身份系統。底紋以世界已有完成 SVG 多輪選材優先，逐輪去重、權利及原生向量核查、真實頁面對照，再決定最小改造；不以自研生成器代替選材。此制度不授權改變主站結構、部署頁面或推翻已驗收原稿。新底紋仍須用戶藝術驗收。GitHub + Cloudflare Pages，禁用 Sites。
+收到版塊藝術設計任務，先解析 [Design OS 七版塊視覺材質登錄表](../design-system/realm-visual-materials.json) 與 [編輯手冊 §9.7](design/WESTSIDE-EDITORIAL-MANUAL.md)：大章小章、城垛、鉛字方塊及底紋是同一身份系統。僅在建立、補全或獲准更新底紋母本時，優先多輪選取已有完成 SVG，逐輪去重、權利及原生向量核查、真實頁面對照，再決定最小改造；不以自研生成器代替選材。選定並本地深化、驗收後固定登錄母本；日常設計直接調用已定稿資產，不重啟多雷探索。只有缺少、否決、補全、使用者明確要求更新或已確認須更換的材質缺陷才進入選材。此制度不授權改變主站結構、部署頁面或推翻已驗收原稿。新底紋仍須用戶藝術驗收。GitHub + Cloudflare Pages，禁用 Sites。
 
 ## 10. External design reference — Shipper `epstein.md` (2026-10-16)
 
