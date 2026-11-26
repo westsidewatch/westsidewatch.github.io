@@ -389,6 +389,11 @@ It covers Journal, Mount of Olives, Church, About, global functions such as 多�
 
 因此，「多雷探索」是 Doré 面对工程、知识、工具或系统问题时的**全面外部学习／方案发现程序**。它本身不改变主站结构；任何涉及主站结构的修改仍必须由用户决定。
 
+
+### 多雷探索 — 七版塊底紋前置工作（2026-11-26）
+
+收到版塊藝術設計任務，先解析 [Design OS 七版塊視覺材質登錄表](../design-system/realm-visual-materials.json) 與 [編輯手冊 §9.7](design/WESTSIDE-EDITORIAL-MANUAL.md)：大章小章、城垛、鉛字方塊及底紋是同一身份系統。底紋以世界已有完成 SVG 多輪選材優先，逐輪去重、權利及原生向量核查、真實頁面對照，再決定最小改造；不以自研生成器代替選材。此制度不授權改變主站結構、部署頁面或推翻已驗收原稿。新底紋仍須用戶藝術驗收。GitHub + Cloudflare Pages，禁用 Sites。
+
 ## 10. External design reference — Shipper `epstein.md` (2026-10-16)
 
 - Source attribution: Shipper (@shipper_now), X announcement titled “Introducing epstein.md”. User-supplied screenshot cites a Markdown design-guidance file of approximately 927,400 characters, intended to discourage generic “AI slop” UI patterns.

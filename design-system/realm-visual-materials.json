@@ -1,0 +1,518 @@
+{
+  "version": 1,
+  "authority": "docs/design/WESTSIDE-DESIGN-OS.md",
+  "manual": "docs/design/WESTSIDE-EDITORIAL-MANUAL.md#97",
+  "scopeRegistry": "design-system/scopes.json",
+  "status": "confirmed_working_grammar_not_artwork_release",
+  "reviewDate": "2026-11-26",
+  "sourceMain": "9a967294ac26517a9af1cb989cb97b1353af42a3",
+  "identityResearch": {
+    "ref": "04e5d32243b080a9b11606eb79d007ea70b64642",
+    "records": [
+      "dore-design/visual-workchain/research/114-seven-spatial-characters/README.md",
+      "dore-design/visual-workchain/research/115-faith-and-daylight/README.md",
+      "dore-design/visual-workchain/research/116-section-identity-integration/README.md",
+      "dore-design/visual-workchain/research/117-editorial-detail/README.md"
+    ],
+    "warning": "Historical R114/R115 files are pinned research provenance, not blanket artwork approval. R115 supersedes R114 only for journal/daylight. Only water identity currently found in main asset directory. No copy or promotion of other six seals authorized by this registry."
+  },
+  "scriptureStudio": {
+    "path": "static/experiments/scripture-studio-motherform-live.html",
+    "model": "static/experiments/scripture-studio-passage-model.js",
+    "ref": "9a967294ac26517a9af1cb989cb97b1353af42a3",
+    "query": "?section={number}&embed=1",
+    "note": "Reuse existing geometry and text; original section 02 is Isaiah baseline; generated impressions may be provisional; verify exact text, typography, square geometry and actual render before integration. Existing palette literals must be checked against scoped OS; no new local colors."
+  },
+  "rules": {
+    "micro": "small seal or crest, selective destination only",
+    "meso": "wall continuity and optical rhythm; only current realm lit",
+    "macro": "large seal geometry generates positive/negative content openings; never enlarge icon",
+    "material": "existing finished SVG first, native vector paths, own territory, no self-generated paths at exploration stage",
+    "promotion": "source/license/sha256/real native-vector inspection + original versus candidate + real screen and unbranded review + user approval",
+    "assetStates": [
+      "protected",
+      "existing_preserve",
+      "replace_candidate",
+      "supplement_candidate",
+      "missing_mature_svg"
+    ],
+    "publicRuntime": "unchanged; this registry is workchain input only",
+    "excluded": [
+      "R119",
+      "R120",
+      "R121 Emmaus composition and rejected background",
+      "V06 equal-width invented crests",
+      "decorative navigation arrows",
+      "ChatGPT Sites"
+    ]
+  },
+  "realms": [
+    {
+      "id": "01",
+      "scope": "church",
+      "seal": "water",
+      "zh": "活水堂西區",
+      "grammar": "分流",
+      "identityToken": "--ws-water",
+      "scripture": {
+        "reference": "John 7:38",
+        "referenceZh": "約翰福音 7:38",
+        "section": "01"
+      },
+      "identity": {
+        "large": "static/images/section-identity/water-fine.svg",
+        "small": "static/images/section-identity/water-small.svg",
+        "crest": "static/images/section-identity/water-crest.svg",
+        "sourceRef": "04e5d32243b080a9b11606eb79d007ea70b64642",
+        "geometry": "六齒、上下相向水道，三至四刀界定中央留白；原 R113/R114 鎖定",
+        "status": "existing_main_asset_preserve"
+      },
+      "texture": {
+        "territory": "長線流動、活水、聖所、分紅海；原流場與動效不變",
+        "status": "protected",
+        "existingAssets": [
+          "static/experiments/assets/living-water-contour-engraving-v10.svg",
+          "static/js/p2-water-surface.js"
+        ],
+        "comment": "V75 live water/door geometry protected; V10 file exists, not interchangeable with live geometry",
+        "selectedNewAsset": null,
+        "candidates": []
+      }
+    },
+    {
+      "id": "02",
+      "scope": "journal",
+      "seal": "journal",
+      "zh": "西望",
+      "grammar": "錯落",
+      "identityToken": "--ws-first-light",
+      "scripture": {
+        "reference": "Isaiah 62:6",
+        "referenceZh": "以賽亞書 62:6",
+        "section": "02"
+      },
+      "identity": {
+        "large": "static/images/section-identity/journal-fine.svg",
+        "small": "static/images/section-identity/journal-small.svg",
+        "crest": "static/images/section-identity/journal-crest.svg",
+        "sourceRef": "04e5d32243b080a9b11606eb79d007ea70b64642",
+        "geometry": "R115 左實柱、右下口形、階梯橫線自然聯想「信」；不直接寫字",
+        "status": "research_source_review_before_promotion"
+      },
+      "texture": {
+        "territory": "晨星、天光、夜與紙、星野疏密及編輯折線；不把底紋改作普通波線",
+        "status": "existing_preserve",
+        "existingAssets": [
+          "static/experiments/assets/magazine-starfield-engraving-night-desktop-v2.svg",
+          "static/experiments/assets/magazine-starfield-engraving-night-mobile-v2.svg",
+          "static/experiments/assets/magazine-starfield-engraving-paper-desktop-v2.svg",
+          "static/experiments/assets/magazine-starfield-engraving-paper-mobile-v2.svg"
+        ],
+        "comment": "Existing assets; no magazine redesign or replacement until requested",
+        "selectedNewAsset": null,
+        "candidates": []
+      }
+    },
+    {
+      "id": "03",
+      "scope": "one",
+      "seal": "emmaus",
+      "zh": "以馬忤斯",
+      "grammar": "交會",
+      "identityToken": "--ws-pale-gold",
+      "scripture": {
+        "reference": "Luke 24:27",
+        "referenceZh": "路加福音 24:27",
+        "section": "03"
+      },
+      "identity": {
+        "large": "static/images/section-identity/emmaus-fine.svg",
+        "small": "static/images/section-identity/emmaus-small.svg",
+        "crest": "static/images/section-identity/emmaus-crest.svg",
+        "sourceRef": "04e5d32243b080a9b11606eb79d007ea70b64642",
+        "geometry": "原雙方窗、外輪廓、對角比例固定；左上密集閱讀刻線、右下疏朗單線",
+        "status": "research_source_review_before_promotion"
+      },
+      "texture": {
+        "territory": "經卷展開、交會道路、光照與啟示、紙莎草／淡金；優先曲面、機刻、雕版疏密，避免橄欖山等高線作主語",
+        "status": "replace_candidate",
+        "existingAssets": [
+          "static/images/p2-emmaus-scroll-micro-engraving-v5.svg",
+          "static/images/p2-emmaus-chronology-engraving-v16.svg",
+          "static/images/p2-realms/v15/03-emmaus-engraving-p2-runtime.svg",
+          "static/images/p2-emmaus-binding-cloth-v1.svg"
+        ],
+        "comment": "R121 texture rejected by user; existing P2 approved 5:8 cloth is separate protected material; no P2 change",
+        "selectedNewAsset": null,
+        "candidates": [
+          {
+            "title": "Guilloche lines abstract design",
+            "url": "https://openclipart.org/detail/324943/guilloche-lines-abstract-design",
+            "state": "discovery_unverified",
+            "nativeSvg": null,
+            "license": null,
+            "sha256": null
+          },
+          {
+            "title": "Intersecting waving lines",
+            "url": "https://openclipart.org/detail/329776/intersecting-waving-lines",
+            "state": "discovery_unverified",
+            "nativeSvg": null,
+            "license": null,
+            "sha256": null
+          },
+          {
+            "title": "Gray neural network line pattern",
+            "url": "https://freesvg.org/gray-neural-network-line-pattern",
+            "state": "discovery_unverified",
+            "nativeSvg": null,
+            "license": null,
+            "sha256": null
+          },
+          {
+            "title": "Background pattern 216",
+            "url": "https://openclipart.org/detail/285770/background-pattern-216",
+            "state": "discovery_unverified",
+            "nativeSvg": null,
+            "license": null,
+            "sha256": null
+          },
+          {
+            "title": "Guilloche rosette",
+            "url": "https://openclipart.org/detail/354121/guilloche-rosette",
+            "state": "discovery_unverified",
+            "nativeSvg": null,
+            "license": null,
+            "sha256": null
+          },
+          {
+            "title": "Intersecting curved lines",
+            "url": "https://openclipart.org/detail/327719/intersecting-curved-lines",
+            "state": "discovery_unverified",
+            "nativeSvg": null,
+            "license": null,
+            "sha256": null
+          },
+          {
+            "title": "Grid lines pattern",
+            "url": "https://freesvg.org/grid-lines-pattern",
+            "state": "discovery_unverified",
+            "nativeSvg": null,
+            "license": null,
+            "sha256": null
+          },
+          {
+            "title": "Tilable sinuous",
+            "url": "https://freesvg.org/tilable-sinuous",
+            "state": "discovery_unverified",
+            "nativeSvg": null,
+            "license": null,
+            "sha256": null
+          },
+          {
+            "title": "Wavy stripes abstract design",
+            "url": "https://freesvg.org/wavy-stripes-abstract-design",
+            "state": "discovery_unverified",
+            "nativeSvg": null,
+            "license": null,
+            "sha256": null
+          },
+          {
+            "title": "BackgroundPattern210",
+            "url": "https://freesvg.org/backgroundpattern210",
+            "state": "discovery_unverified",
+            "nativeSvg": null,
+            "license": null,
+            "sha256": null
+          },
+          {
+            "title": "Curved lines on white background",
+            "url": "https://freesvg.org/curved-lines-on-white-background",
+            "state": "discovery_unverified",
+            "nativeSvg": null,
+            "license": null,
+            "sha256": null
+          },
+          {
+            "title": "Abstract curved lines white background",
+            "url": "https://freesvg.org/abstract-curved-lines-white-background",
+            "state": "discovery_unverified",
+            "nativeSvg": null,
+            "license": null,
+            "sha256": null
+          },
+          {
+            "title": "Wave pattern",
+            "url": "https://freesvg.org/wave-pattern",
+            "state": "discovery_unverified",
+            "nativeSvg": null,
+            "license": null,
+            "sha256": null
+          },
+          {
+            "title": "Grey background with flowing lines",
+            "url": "https://openclipart.org/detail/320541/grey-background-with-flowing-lines",
+            "state": "discovery_unverified",
+            "nativeSvg": null,
+            "license": null,
+            "sha256": null
+          },
+          {
+            "title": "White parametric spiral lines",
+            "url": "https://freesvg.org/white-parametric-spiral-lines-on-black",
+            "state": "discovery_unverified",
+            "nativeSvg": null,
+            "license": null,
+            "sha256": null
+          },
+          {
+            "title": "Logarithmische Spiralen",
+            "url": "https://openclipart.org/detail/290706/logarithmische-spiralen",
+            "state": "discovery_unverified",
+            "nativeSvg": null,
+            "license": null,
+            "sha256": null
+          },
+          {
+            "title": "Waves 2",
+            "url": "https://freesvg.org/waves-2",
+            "state": "discovery_unverified",
+            "nativeSvg": null,
+            "license": null,
+            "sha256": null
+          },
+          {
+            "title": "Tones 7",
+            "url": "https://openclipart.org/detail/247539/tones-7",
+            "state": "discovery_unverified",
+            "nativeSvg": null,
+            "license": null,
+            "sha256": null
+          },
+          {
+            "title": "Black rectangular guilloche pattern",
+            "url": "https://openclipart.org/detail/218367/black-rectangular-guilloche-pattern",
+            "state": "discovery_unverified",
+            "nativeSvg": null,
+            "license": null,
+            "sha256": null
+          },
+          {
+            "title": "Black and white pattern pack",
+            "url": "https://openclipart.org/detail/268832/black-and-white-pattern-pack",
+            "state": "discovery_unverified",
+            "nativeSvg": null,
+            "license": null,
+            "sha256": null
+          },
+          {
+            "title": "Guilloche wings",
+            "url": "https://freesvg.org/guilloche-wings-pattern-in-grey-lines",
+            "state": "discovery_unverified",
+            "nativeSvg": null,
+            "license": null,
+            "sha256": null
+          },
+          {
+            "title": "Topographic geographic pattern",
+            "url": "https://openclipart.org/detail/317482/topographic-geographic-pattern",
+            "state": "discovery_unverified",
+            "nativeSvg": null,
+            "license": null,
+            "sha256": null
+          },
+          {
+            "title": "Wave-dot pattern",
+            "url": "https://openclipart.org/detail/290495/wavedot-pattern",
+            "state": "discovery_unverified",
+            "nativeSvg": null,
+            "license": null,
+            "sha256": null
+          },
+          {
+            "title": "Curly labyrinth pattern",
+            "url": "https://openclipart.org/detail/316653/curly-labyrinth-pattern",
+            "state": "discovery_unverified",
+            "nativeSvg": null,
+            "license": null,
+            "sha256": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "04",
+      "scope": "olive",
+      "seal": "olive",
+      "zh": "橄欖山",
+      "grammar": "山勢",
+      "identityToken": "--ws-olive",
+      "scripture": {
+        "reference": "Romans 10:17",
+        "referenceZh": "羅馬書 10:17",
+        "section": "04"
+      },
+      "identity": {
+        "large": "static/images/section-identity/olive-fine.svg",
+        "small": "static/images/section-identity/olive-small.svg",
+        "crest": "static/images/section-identity/olive-crest.svg",
+        "sourceRef": "04e5d32243b080a9b11606eb79d007ea70b64642",
+        "geometry": "R113/R114 原山峰節奏與對稱留白鎖定，避免層線黏連",
+        "status": "research_source_review_before_promotion"
+      },
+      "texture": {
+        "territory": "山勢、植物雕版、連續地形；卡背和背景連續生長、保留人物安全區",
+        "status": "protected",
+        "existingAssets": [
+          "static/images/p2-realms/v15/04-olive-historic-engraving-v13.svg",
+          "static/images/p2-realms/v15/04-olive-terrain-continuous-mother-v76.svg",
+          "static/images/p2-realms/v15/04-olive-full-verso-v74-botanical-1.svg",
+          "static/images/p2-realms/v15/v77-exhibition/04-olive-terrain-v77-1.svg"
+        ],
+        "comment": "Existing 6 botanical + 6 terrain families; preserve P2 composition, not assertion of all pages accepted",
+        "selectedNewAsset": null,
+        "candidates": []
+      }
+    },
+    {
+      "id": "05",
+      "scope": "dawn-library",
+      "seal": "library",
+      "zh": "黎明書局",
+      "grammar": "展卷",
+      "identityToken": "--ws-harvest",
+      "scripture": {
+        "reference": "Psalms 119:18",
+        "referenceZh": "詩篇 119:18",
+        "section": "05"
+      },
+      "identity": {
+        "large": "static/images/section-identity/library-fine.svg",
+        "small": "static/images/section-identity/library-small.svg",
+        "crest": "static/images/section-identity/library-crest.svg",
+        "sourceRef": "04e5d32243b080a9b11606eb79d007ea70b64642",
+        "geometry": "五段城垛雙葉，左實右虛、窄負形書脊，右葉仍有刻線",
+        "status": "research_source_review_before_promotion"
+      },
+      "texture": {
+        "territory": "歷史書籍裝幀、紙襯、版芯、書頁纖維及鉛印；不壓書封或圖版",
+        "status": "supplement_candidate",
+        "existingAssets": [
+          "static/images/p2-dawn-letterpress-engraving-v1.svg"
+        ],
+        "comment": "Existing V1; supplement with mature book arts; preserve native reading layers",
+        "selectedNewAsset": null,
+        "candidates": [
+          {
+            "title": "Seamless floral design",
+            "url": "https://openclipart.org/detail/239858/seamless-floral-design-extrapolation-pattern",
+            "state": "discovery_unverified",
+            "nativeSvg": null,
+            "license": null,
+            "sha256": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "06",
+      "scope": "cinema",
+      "seal": "cinema",
+      "zh": "天堂電影院",
+      "grammar": "圍合",
+      "identityToken": "--ws-crimson",
+      "scripture": {
+        "reference": "1 Corinthians 13:12",
+        "referenceZh": "哥林多前書 13:12",
+        "section": "06"
+      },
+      "identity": {
+        "large": "static/images/section-identity/cinema-fine.svg",
+        "small": "static/images/section-identity/cinema-small.svg",
+        "crest": "static/images/section-identity/cinema-crest.svg",
+        "sourceRef": "04e5d32243b080a9b11606eb79d007ea70b64642",
+        "geometry": "五段 1,1,2,3,3 遮幅，真正透明 16:9 銀幕為唯一主重心，大尺寸才留細刻線",
+        "status": "research_source_review_before_promotion"
+      },
+      "texture": {
+        "territory": "黑白電影投射光、幕布、半色調／顆粒與明暗；不使用膠片圖標當底紋，不遮字幕或播放控件",
+        "status": "missing_mature_svg",
+        "existingAssets": [],
+        "comment": "Generic CSS curtain/projection exists; not a dedicated mature SVG found in current inventory",
+        "selectedNewAsset": null,
+        "candidates": [
+          {
+            "title": "Square gradient halftone",
+            "url": "https://openclipart.org/detail/116845",
+            "state": "discovery_unverified",
+            "nativeSvg": null,
+            "license": null,
+            "sha256": null
+          },
+          {
+            "title": "Dirt on film simplified",
+            "url": "https://openclipart.org/detail/169019",
+            "state": "discovery_unverified",
+            "nativeSvg": null,
+            "license": null,
+            "sha256": null
+          },
+          {
+            "title": "Kabuki theatre curtain",
+            "url": "https://openclipart.org/detail/342768",
+            "state": "discovery_unverified",
+            "nativeSvg": null,
+            "license": null,
+            "sha256": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "07",
+      "scope": "daylight-cafe",
+      "seal": "daylight",
+      "zh": "白晝咖啡館",
+      "grammar": "疏放",
+      "identityToken": "--ws-daylight-mauve",
+      "scripture": {
+        "reference": "Deuteronomy 8:8",
+        "referenceZh": "申命記 8:8",
+        "section": "07"
+      },
+      "identity": {
+        "large": "static/images/section-identity/daylight-fine.svg",
+        "small": "static/images/section-identity/daylight-small.svg",
+        "crest": "static/images/section-identity/daylight-crest.svg",
+        "sourceRef": "04e5d32243b080a9b11606eb79d007ea70b64642",
+        "geometry": "R115 左上單一敞開方窗、低矮六段 3,2,2,1,1,2 窗台，中央右上留日光；兩角相向方案淘汰",
+        "status": "research_source_review_before_promotion"
+      },
+      "texture": {
+        "territory": "日光窗格、織物、生活器物，低重心、不對稱、大留白；植物只能是生活尺度，不重複橄欖山",
+        "status": "missing_mature_svg",
+        "existingAssets": [],
+        "comment": "Generic CSS table rings exists; no dedicated mature SVG found in current inventory",
+        "selectedNewAsset": null,
+        "candidates": [
+          {
+            "title": "Ginkgo leaf pattern",
+            "url": "https://openclipart.org/detail/229466",
+            "state": "discovery_unverified",
+            "nativeSvg": null,
+            "license": null,
+            "sha256": null
+          },
+          {
+            "title": "Nine-square cucoloris",
+            "url": "https://openclipart.org/detail/311749",
+            "state": "discovery_unverified",
+            "nativeSvg": null,
+            "license": null,
+            "sha256": null
+          }
+        ]
+      }
+    }
+  ]
+}

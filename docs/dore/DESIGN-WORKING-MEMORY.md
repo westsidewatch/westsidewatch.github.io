@@ -123,3 +123,8 @@ Priority order:
 5. Search-to-Penpot acceptance
 
 Knowledge Graph and automatic GitHub Journal remain valuable, but they do not block the Penpot design gate unless a dependency is discovered during implementation.
+
+
+## Westside seven-realm visual brief resolution (2026-11-26)
+
+For Westside Watch public surfaces, resolve `design-system/realm-visual-materials.json` under the existing Design OS, then Editorial Manual §9.7 and the pinned R114/R115 sources before constructing the current brief. The user-confirmed working grammar is a decision; the listed art sources and SVG discovery leads remain references/candidates until individual acceptance. R119/R120/R121 Emmaus compositions and R121 texture are rejected, not a foundation. Preserve P2, approved material, and original motherform; select existing completed SVG before drawing. Do not confuse an existing file with verified deployment. This is the reference resolution rule for GitHub/Cloudflare web work, not an authorization to create in Sites or introduce a new design system. For website execution use the user's GitHub version-control and Cloudflare preview workflow rather than the historical Penpot example above.
