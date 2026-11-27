@@ -74,6 +74,327 @@
         "reuse_fixed_master"
       ],
       "changeControl": "A fixed master may be superseded only by explicit user decision after comparison; keep original SVG, derivative, license, digest, version and acceptance evidence. Routine placement/crop/scale/opacity and semantic OS color treatment within accepted bounds do not reopen selection."
+    },
+    "smallSealImpressions": {
+      "authority": "docs/design/WESTSIDE-EDITORIAL-MANUAL.md §9.8",
+      "yang": "ink-positive form, complete four-sided border",
+      "yin": "ink field with transparent cut-out form",
+      "scales": [
+        64,
+        48,
+        32,
+        24
+      ],
+      "lockedCores": [
+        "water",
+        "journal:R128-bold",
+        "olive"
+      ],
+      "status": "confirmed rule; R132 isolated candidate plates not accepted masters",
+      "proof": "static/experiments/seven-realm-r124/#seal-impressions",
+      "familyReference": "Water + Olive immutable paired references; bold journal exception",
+      "lockedReferenceBlobs": {
+        "water-small.svg": "ca9f28c871757cc91e3ccbd1c95de3fd48dc4d02",
+        "water-fine.svg": "0a35edb9cfd0d53e609b135d9a5540cd8e9ac60b",
+        "water-crest.svg": "ccf3f98bd9a1e80a9176ff279aa6b395b2e7b7ea",
+        "olive-small.svg": "faaa2b5dc8200e2a6a0ed67d4c55d5b25e76f2c5",
+        "olive-fine.svg": "c5fc83554e160422bc0bbe7091098fc899702424",
+        "olive-crest.svg": "fdc2bc9cc2330ad174b6f776df24593cc3e30962",
+        "impressions/water-yang.svg": "028aedfda4ed4fdfa8ed7fde718e21ef84feb915",
+        "impressions/olive-yang.svg": "67ca29a258fe608da3e9d96d56a8270e949004dd",
+        "impressions/water-yin.svg": "4ba516008eae8407b87b20a09942d32471ba45cc",
+        "impressions/olive-yin.svg": "2dfd7939a04a57b14d9da9a03c7cdf0629cecfe0",
+        "journal-small.svg": "0d334ad80bfdbe7cc32579eb50f043a67d97d32b",
+        "impressions/journal-yang.svg": "8a8762096890faeab21eeb593b369511fb1bd696",
+        "impressions/journal-yin.svg": "3868c045123f5154e1ff437360212fff8e20a231",
+        "r140-archive/library-small.svg": "0d8f647d6a80ddc154e2bd138723ec1703a4c02b",
+        "r140-archive/library-yang.svg": "fdf4da634ce4c47d91fff8ffe3a6c9cc52b2bf40",
+        "r140-archive/library-yin.svg": "9b1ad71d61eac9ad66a54b55c597a6b3cef6cc34"
+      },
+      "openSealStudies": [
+        "emmaus",
+        "library",
+        "cinema",
+        "daylight"
+      ],
+      "directionAccepted": {
+        "emmaus": "R145 snake rejected; R146 perpendicular warp/weft, four alternating crossings, no winding animal contour",
+        "library": "controlled square winding; approved method, R142 A remains reference",
+        "daylight": "R145 B+C promising but needs refinement; preserved current, compare field and controlled alternate",
+        "cinema": "R145 not satisfactory; R146 paired curtain negative aperture and native halftone field"
+      },
+      "primaryMethodReference": {
+        "name": "MIT Media Lab / Pentagram",
+        "url": "https://www.pentagram.com/work/mit-media-lab",
+        "purpose": "shared geometric grammar, distinct independent realm identities"
+      },
+      "independentIdentity": {
+        "authority": "docs/design/WESTSIDE-EDITORIAL-MANUAL.md §9.9",
+        "appliesTo": [
+          "water",
+          "journal",
+          "emmaus",
+          "olive",
+          "library",
+          "cinema",
+          "daylight"
+        ],
+        "proofs": [
+          "unlabelled same-ink family comparison",
+          "standalone contextual use",
+          "yin and framed yang 24/32/48/64",
+          "actual page hierarchy",
+          "first impression vs learned recognition"
+        ],
+        "physicalContexts": "proposed validation scenarios, not installations",
+        "status": "user-confirmed criterion; recognition tests pending",
+        "accessibility": "retain accessible names and functional text"
+      },
+      "geometryAuthority": {
+        "authority": "docs/design/WESTSIDE-EDITORIAL-MANUAL.md §9.10",
+        "ordinary": [
+          "square-derived geometry",
+          "contrasting thick/thin lines"
+        ],
+        "exception": "journal:R128-bold",
+        "library": "R135 square-core reference preserved; candidate redesign explicitly reopened"
+      }
+    },
+    "sealMaterialKinship": {
+      "authority": "docs/design/WESTSIDE-EDITORIAL-MANUAL.md §9.11",
+      "exception": "journal/Faith: no mandatory texture; former starfield retired",
+      "protected": [
+        "water",
+        "olive"
+      ],
+      "principle": "same geometric behaviour at micro/meso/macro; no repeated enlarged logo; existing native artwork crop/scale/density only pending approval",
+      "studies": [
+        {
+          "seal": "water",
+          "verb": "分流",
+          "source": "/experiments/assets/living-water-contour-engraving-v10.svg",
+          "status": "protected reference"
+        },
+        {
+          "seal": "emmaus",
+          "verb": "交織",
+          "source": "materials/r127/324943.svg",
+          "status": "candidate crop; visual and rights acceptance pending"
+        },
+        {
+          "seal": "olive",
+          "verb": "山勢",
+          "source": "/images/p2-realms/v15/04-olive-terrain-continuous-mother-v76.svg",
+          "status": "protected reference"
+        },
+        {
+          "seal": "library",
+          "verb": "卷入",
+          "source": "/images/p2-dawn-letterpress-engraving-v1.svg",
+          "status": "candidate crop; visual and rights acceptance pending"
+        },
+        {
+          "seal": "cinema",
+          "verb": "開啟",
+          "source": "materials/116845.svg",
+          "status": "candidate crop; visual and rights acceptance pending"
+        },
+        {
+          "seal": "daylight",
+          "verb": "光熱",
+          "source": "materials/r135/190229.svg",
+          "status": "candidate crop; visual and rights acceptance pending"
+        }
+      ],
+      "proof": "static/experiments/seven-realm-r124/#material-kinship"
+    },
+    "dualSquareOrigin": {
+      "authority": "docs/design/WESTSIDE-EDITORIAL-MANUAL.md §9.12",
+      "status": "user-confirmed design origin",
+      "architecturalMotherform": "overhead nested squares: outer church volume and central courtyard",
+      "relations": [
+        "nested",
+        "horizontal paired squares",
+        "vertical paired squares"
+      ],
+      "applications": [
+        "church architecture and white model",
+        "existing horizontal/vertical scripture compositions",
+        "realm seal/material/composition studies"
+      ],
+      "constraints": [
+        "preserve protected artwork and P2",
+        "reuse existing scripture motherform",
+        "do not treat two squares as generic cards",
+        "no automatic artwork acceptance"
+      ],
+      "realmStudies": {
+        "water": "nested/divided",
+        "journal": "bold Faith exception",
+        "emmaus": "interwoven",
+        "olive": "layered",
+        "library": "wound/nested",
+        "cinema": "separated/open",
+        "daylight": "density/release"
+      },
+      "theologicalFoundation": {
+        "authority": "docs/design/WESTSIDE-EDITORIAL-MANUAL.md §9.13",
+        "status": "user-confirmed theological design rationale",
+        "inauguralJournalSpecial": "守望城",
+        "city": "耶和華親自守望的堅固城；新天新地、新耶路撒冷",
+        "squarePair": [
+          "新天",
+          "新地"
+        ],
+        "architecturalSymbol": "新耶路撒冷",
+        "scripture": [
+          "Psalm 127:1",
+          "Isaiah 26:1",
+          "Isaiah 62:6",
+          "Revelation 21:1–3",
+          "Revelation 21:16"
+        ],
+        "interpretiveBoundary": "paired-square symbolism is project art direction, not scriptural statement of the shapes of New Heaven and New Earth",
+        "positionAndColorMapping": "not specified; do not invent",
+        "preserveExisting": true
+      },
+      "spatialExploration": {
+        "authority": "docs/design/WESTSIDE-EDITORIAL-MANUAL.md §9.14",
+        "status": "user-directed study, not approved artwork",
+        "relations": [
+          "horizontal",
+          "vertical",
+          "concentric nesting",
+          "partial overlap",
+          "interlocking",
+          "cube projection"
+        ],
+        "reference": "Mastercard: relational geometry of two overlapping basic shapes; no copied identity",
+        "scripture": "Revelation 21:16",
+        "constraints": [
+          "distinguish partial overlap from nesting",
+          "preserve recognition of two squares",
+          "no fixed positional or color mapping",
+          "preserve all existing accepted identities and motion",
+          "compare in isolated preview before promotion"
+        ]
+      },
+      "lightProjection": {
+        "authority": "docs/design/WESTSIDE-EDITORIAL-MANUAL.md §9.15",
+        "status": "user-confirmed artistic meaning, artwork pending",
+        "userPrinciple": "有投影就說明有光明到來了",
+        "scripture": [
+          "Romans 13:12",
+          "Revelation 21:23"
+        ],
+        "distinction": [
+          "geometric projection",
+          "directional light and cast shadow"
+        ],
+        "constraints": [
+          "retain paired-square identity",
+          "no decorative universal shadows",
+          "no invented mandatory light direction or colors",
+          "preserve accepted artwork"
+        ]
+      },
+      "sevenStageNarrative": {
+        "authority": "docs/design/WESTSIDE-EDITORIAL-MANUAL.md §9.16, §9.18–9.19",
+        "status": "user-confirmed sequence; preview implementation, not production rollout",
+        "stages": [
+          {
+            "order": 1,
+            "seal": "water",
+            "zh": "活水堂西區",
+            "stage": "套嵌",
+            "en": "Nested",
+            "dimension": "planar"
+          },
+          {
+            "order": 2,
+            "seal": "journal",
+            "zh": "西望",
+            "stage": "平面橫向",
+            "en": "Horizontal",
+            "dimension": "planar"
+          },
+          {
+            "order": 3,
+            "seal": "emmaus",
+            "zh": "以馬忤斯",
+            "stage": "交織",
+            "en": "Interweave",
+            "dimension": "planar",
+            "designResult": "candidate from two equal square perimeters on diagonal intermediate centres, alternating interruptions, central shared square negative space; not independent warp/weft lines",
+            "figure": "negative",
+            "artStatus": "R153 rejected; R154 candidate pending review"
+          },
+          {
+            "order": 4,
+            "seal": "olive",
+            "zh": "橄欖山",
+            "stage": "平面縱向",
+            "en": "Vertical",
+            "dimension": "planar",
+            "figure": "positive"
+          },
+          {
+            "order": 5,
+            "seal": "library",
+            "zh": "黎明書局",
+            "stage": "立體",
+            "en": "Volume",
+            "dimension": "volume"
+          },
+          {
+            "order": 6,
+            "seal": "daylight",
+            "zh": "白晝咖啡館",
+            "stage": "受光",
+            "en": "Illumination",
+            "dimension": "planar",
+            "designResult": "planar light fields with shared central square genuinely uninked",
+            "figure": "negative"
+          },
+          {
+            "order": 7,
+            "seal": "cinema",
+            "zh": "天堂電影院",
+            "stage": "投影",
+            "en": "Projection",
+            "dimension": "planar",
+            "designResult": "planar projected field with square as negative space; no filled square or cube",
+            "figure": "negative"
+          }
+        ],
+        "scriptureBinding": "Preserve existing scripture.section keys, not display ordinals",
+        "proof": "static/experiments/seven-realm-r124/#seven-stages",
+        "narrative": "light falling on the church; nested → horizontal → interweave → vertical → volume → illumination → projection"
+      },
+      "unifiedIdentity": {
+        "authority": "docs/design/WESTSIDE-EDITORIAL-MANUAL.md §9.17",
+        "status": "user-confirmed common rationale; artwork remains under review",
+        "applications": [
+          "small seals",
+          "material fields (Journal exception)",
+          "main-site masthead",
+          "favicon"
+        ],
+        "faviconAuthority": "docs/design/WESTSIDE-W-ICON-AUTHORITY.md; preserve static/favicon.svg R1",
+        "proof": "static/experiments/seven-realm-r124/#origin-applications",
+        "principle": "derive independent visual results at each scale; no mandatory logo repetition"
+      }
+    },
+    "userDirectedArtChangeControl": {
+      "authority": "docs/design/WESTSIDE-EDITORIAL-MANUAL.md §9.20",
+      "mandatory": true,
+      "rule": "User-directed mandatory change control (2026-11-27): read existing project records, Design OS, Editorial Manual and visual workchain before any design change. Preserve user-confirmed artwork and current comparison baselines; new geometric rationale does not authorize replacement. Develop alternatives separately, compare original and candidate in full editorial context, and require explicit user art approval before replacing existing seals, textures, layout, masthead or icon. Technical tests do not constitute art approval. Daylight and Cinema remain at R154; do not redesign without explicit user direction. No unilateral substitution or removal of existing material.",
+      "lockedRealms": [
+        "daylight",
+        "cinema"
+      ],
+      "baseline": "8065be972b772a96696b63e73d21087ab49e2d43",
+      "promotionRequiresExplicitUserApproval": true
     }
   },
   "realms": [
@@ -111,7 +432,8 @@
         "workchainMode": "reuse_existing",
         "fixedMaster": null,
         "selectionNote": "Preserve established artwork; no new material exploration for ordinary layout. Existing file list is inventory, not authority to interchange assets."
-      }
+      },
+      "displayOrder": 1
     },
     {
       "id": "02",
@@ -134,22 +456,24 @@
         "status": "research_source_review_before_promotion"
       },
       "texture": {
-        "territory": "晨星、天光、夜與紙、星野疏密及編輯折線；不把底紋改作普通波線",
-        "status": "existing_preserve",
-        "existingAssets": [
+        "territory": "西望為多頁編輯刊物，以內容、刊頭、版式與字體構成身份；星光底紋作廢，不設全刊固定大面積底紋",
+        "status": "retired_by_user",
+        "existingAssets": [],
+        "comment": "User explicitly retired starfield; historical files retained, not active material.",
+        "selectedNewAsset": null,
+        "candidates": [],
+        "selectionRequired": false,
+        "workchainMode": "editorial_content_first",
+        "fixedMaster": null,
+        "selectionNote": "Do not introduce a mandatory replacement texture.",
+        "archivedAssets": [
           "static/experiments/assets/magazine-starfield-engraving-night-desktop-v2.svg",
           "static/experiments/assets/magazine-starfield-engraving-night-mobile-v2.svg",
           "static/experiments/assets/magazine-starfield-engraving-paper-desktop-v2.svg",
           "static/experiments/assets/magazine-starfield-engraving-paper-mobile-v2.svg"
-        ],
-        "comment": "Existing assets; no magazine redesign or replacement until requested",
-        "selectedNewAsset": null,
-        "candidates": [],
-        "selectionRequired": false,
-        "workchainMode": "reuse_existing",
-        "fixedMaster": null,
-        "selectionNote": "Preserve established artwork; no new material exploration for ordinary layout."
-      }
+        ]
+      },
+      "displayOrder": 2
     },
     {
       "id": "03",
@@ -380,7 +704,8 @@
         "workchainMode": "establish_master",
         "fixedMaster": null,
         "selectionNote": "Current master-selection project only; after acceptance switch to accepted_fixed/reuse_fixed. Do not reopen on every page."
-      }
+      },
+      "displayOrder": 3
     },
     {
       "id": "04",
@@ -418,7 +743,8 @@
         "workchainMode": "reuse_existing",
         "fixedMaster": null,
         "selectionNote": "Preserve established artwork; no new material exploration for ordinary layout. Existing file list is inventory, not authority to interchange assets."
-      }
+      },
+      "displayOrder": 4
     },
     {
       "id": "05",
@@ -462,7 +788,59 @@
         "workchainMode": "establish_master",
         "fixedMaster": null,
         "selectionNote": "Current master-selection project only; after acceptance switch to accepted_fixed/reuse_fixed. Do not reopen on every page."
-      }
+      },
+      "displayOrder": 5
+    },
+    {
+      "id": "07",
+      "scope": "daylight-cafe",
+      "seal": "daylight",
+      "zh": "白晝咖啡館",
+      "grammar": "疏放",
+      "identityToken": "--ws-daylight-mauve",
+      "scripture": {
+        "reference": "Deuteronomy 8:8",
+        "referenceZh": "申命記 8:8",
+        "section": "07"
+      },
+      "identity": {
+        "large": "static/images/section-identity/daylight-fine.svg",
+        "small": "static/images/section-identity/daylight-small.svg",
+        "crest": "static/images/section-identity/daylight-crest.svg",
+        "sourceRef": "04e5d32243b080a9b11606eb79d007ea70b64642",
+        "geometry": "R115 左上單一敞開方窗、低矮六段 3,2,2,1,1,2 窗台，中央右上留日光；兩角相向方案淘汰",
+        "status": "research_source_review_before_promotion"
+      },
+      "texture": {
+        "territory": "日光窗格、織物、生活器物，低重心、不對稱、大留白；植物只能是生活尺度，不重複橄欖山",
+        "status": "missing_mature_svg",
+        "existingAssets": [],
+        "comment": "Generic CSS table rings exists; no dedicated mature SVG found in current inventory",
+        "selectedNewAsset": null,
+        "candidates": [
+          {
+            "title": "Ginkgo leaf pattern",
+            "url": "https://openclipart.org/detail/229466",
+            "state": "discovery_unverified",
+            "nativeSvg": null,
+            "license": null,
+            "sha256": null
+          },
+          {
+            "title": "Nine-square cucoloris",
+            "url": "https://openclipart.org/detail/311749",
+            "state": "discovery_unverified",
+            "nativeSvg": null,
+            "license": null,
+            "sha256": null
+          }
+        ],
+        "selectionRequired": true,
+        "workchainMode": "establish_master",
+        "fixedMaster": null,
+        "selectionNote": "Current master-selection project only; after acceptance switch to accepted_fixed/reuse_fixed. Do not reopen on every page."
+      },
+      "displayOrder": 6
     },
     {
       "id": "06",
@@ -520,57 +898,8 @@
         "workchainMode": "establish_master",
         "fixedMaster": null,
         "selectionNote": "Current master-selection project only; after acceptance switch to accepted_fixed/reuse_fixed. Do not reopen on every page."
-      }
-    },
-    {
-      "id": "07",
-      "scope": "daylight-cafe",
-      "seal": "daylight",
-      "zh": "白晝咖啡館",
-      "grammar": "疏放",
-      "identityToken": "--ws-daylight-mauve",
-      "scripture": {
-        "reference": "Deuteronomy 8:8",
-        "referenceZh": "申命記 8:8",
-        "section": "07"
       },
-      "identity": {
-        "large": "static/images/section-identity/daylight-fine.svg",
-        "small": "static/images/section-identity/daylight-small.svg",
-        "crest": "static/images/section-identity/daylight-crest.svg",
-        "sourceRef": "04e5d32243b080a9b11606eb79d007ea70b64642",
-        "geometry": "R115 左上單一敞開方窗、低矮六段 3,2,2,1,1,2 窗台，中央右上留日光；兩角相向方案淘汰",
-        "status": "research_source_review_before_promotion"
-      },
-      "texture": {
-        "territory": "日光窗格、織物、生活器物，低重心、不對稱、大留白；植物只能是生活尺度，不重複橄欖山",
-        "status": "missing_mature_svg",
-        "existingAssets": [],
-        "comment": "Generic CSS table rings exists; no dedicated mature SVG found in current inventory",
-        "selectedNewAsset": null,
-        "candidates": [
-          {
-            "title": "Ginkgo leaf pattern",
-            "url": "https://openclipart.org/detail/229466",
-            "state": "discovery_unverified",
-            "nativeSvg": null,
-            "license": null,
-            "sha256": null
-          },
-          {
-            "title": "Nine-square cucoloris",
-            "url": "https://openclipart.org/detail/311749",
-            "state": "discovery_unverified",
-            "nativeSvg": null,
-            "license": null,
-            "sha256": null
-          }
-        ],
-        "selectionRequired": true,
-        "workchainMode": "establish_master",
-        "fixedMaster": null,
-        "selectionNote": "Current master-selection project only; after acceptance switch to accepted_fixed/reuse_fixed. Do not reopen on every page."
-      }
+      "displayOrder": 7
     }
   ]
 }

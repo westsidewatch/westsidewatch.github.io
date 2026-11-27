@@ -112,3 +112,50 @@ The confirmed working grammar and research inventory are resolved through [`desi
 ### Fixed material lifecycle — 底紋定稿後直接調用
 
 User decision (2026-11-26): material exploration is a one-time establishment or expressly reopened selection phase, not a required step on each design task. After the existing SVG is selected, locally refined, verified and accepted, freeze the resulting realm master as a versioned local asset; record source, rights, original and derivative digests, acceptance evidence and permitted placement. The routine design chain resolves and uses the fixed master along with large/small seal, crest, Scripture Studio impression, typography and semantic color; then composes actual content and verifies the rendered page. No replacement search or re-generation. Existing Living Water protected field is the precedent. Only missing, rejected, actively supplemented or explicitly reopened material, or a confirmed defect requiring replacement, enters selection. Ordinary responsive crops and layout-specific treatment within accepted constraints do not reopen selection. A replacement must be separately accepted; retain the previous fixed master. No automatic runtime change.
+
+
+### Small-seal impression rule (user decision, 2026-11-26)
+See Editorial Manual §9.8. Every realm small seal must support an independently usable yang impression (raised ink geometry with a complete four-sided border) and yin impression (paper-cut geometry in an ink field). Optical compensation and proof at 64/48/32/24px are required; preserve locked core artwork and do not promote provisional artwork or alter runtime tokens. The R132 isolated proof is an experiment, not a production release.
+
+
+R133 authority correction: journal is the exact R128 bold silhouette, not R129. Do not modify its path in the core or either impression. Water is the family reference for stepped incision, rhythm and negative space, not a universal shape template. Olive remains protected. See Editorial Manual §9.8 and its R133 correction.
+
+
+R134: Water and Olive are the paired, immutable family references. R126 fine/small/crest originals and R132 yin/yang plates are byte-locked. The bold journal R133 remains a separate locked exception. Only Emmaus, Library, Cinema and Daylight are open for seal redesign. See Editorial Manual §9.8 correction.
+
+
+### Independent small-seal identity
+Editorial Manual §9.9: MIT Media Lab is the primary methodological reference for small-seal family identity. All seven marks must support unlabelled monochrome identification in realistic digital and proposed physical contexts. Test first-impression associations separately from learned recognition; preserve accessible names. Existing locked marks remain protected. Other §9.6 references chiefly inform editorial composition. No new runtime tokens or geometry changes.
+
+
+Editorial Manual §9.10: square-derived geometry and contrasting thick/thin lines are mandatory for the six ordinary small seals. Bold Faith is the only exception. Library square-core is reopened for study at user direction; preserve exact R135 reference in the archive. Water, Olive and Faith remain locked. No production adoption until review.
+
+
+Editorial Manual §9.11: the six ordinary marks and material fields share geometric behaviour at different scales; do not enlarge/repeat a mark as a background. Journal/Faith is an editorial exception; its former starfield texture is retired at user direction. Preserve historical originals, protected Water and Olive and P2. Compare actual field, crop, small seal and content before promotion.
+
+
+Editorial Manual §9.12 — Architectural origin of the two-square language (user-confirmed): the church's overhead nested-square form, outer building and central courtyard, grounds the site's paired squares, including horizontal and vertical scripture compositions. Treat nested and horizontal/vertical relationships as a common spatial grammar, not generic cards. Preserve existing church architecture, Water/Olive/Faith marks, protected fields, scripture motherforms and P2 motion. No new runtime tokens, no geometry replacement authorized by this clarification.
+
+
+Editorial Manual §9.13 — Theological foundation (user-confirmed): the inaugural Westside Journal special issue is 《守望城》. The city guarded by the LORD and the New Jerusalem are the theological horizon (Psalm 127:1; Isaiah 26:1, 62:6; Revelation 21:1–3,16). The two squares symbolize New Heaven and New Earth; the church's nested square plan symbolizes the New Jerusalem. These are the project's artistic interpretations, not a biblical prescription that heaven and earth are squares. Do not invent a fixed positional/color mapping or alter accepted artwork, scripture or architecture.
+
+
+Editorial Manual §9.14 — Paired-square planar/spatial exploration: explore partial overlap as distinct from concentric nesting, preserving recognition of both squares; also explore projection and connection into a cube, in dialogue with Revelation 21:16. Mastercard is a reference for relational geometry, not a source for copied artwork or colors. Horizontal/vertical arrangements remain. No existing logo, protected marks, Scripture forms, architecture or motion replacement without acceptance.
+
+
+Editorial Manual §9.15 — Light arriving: user affirms spatial projection and its symbolism of arriving light. Relate geometric projection and directional cast shadow without conflating them; light, lit/unlit planes and shadow are meaningful spatial expressions of Watch for the Dawn (Romans 13:12; Revelation 21:23). Explore continuity with paired squares, marks, fields and architecture. No mandatory shadow effect, new palette, fixed light direction or replacement of accepted artwork.
+
+
+Editorial Manual §9.16 — User-confirmed seven-stage narrative: nested (Water), horizontal (Journal), vertical (Emmaus), overlap (Olive), volume (Library), illumination (Daylight Café), projection (Cinema). Daylight sixth and Cinema seventh. Presentation order changes, stable realm IDs, scripture section bindings, scope names and URLs do not. Preview the ordered geometric sequence without replacing accepted artwork. Main-site rollout requires integration and acceptance.
+
+
+Editorial Manual §9.17 — One origin: seven stages are the process of light falling on the church. 01–04 planar relations, 05 volume, 06 illumination and 07 projection are planar graphic results of volume and light, not additional cube illustrations. This is the shared rationale for seals, fields (Journal exception), main masthead and favicon. Keep existing W R1 authority, masthead, protected art and scripture unchanged pending specific visual approval. No new palette or fixed lighting direction.
+
+
+Editorial Manual §9.18 supersedes the third/fourth geometry assignments in §9.16: nested, horizontal, interweave, vertical, volume, illumination, projection. Realm order remains Water, Journal, Emmaus, Olive, Library, Daylight, Cinema. The horizontal-to-vertical transition passes through interweaving. Interweave and projection express the square through actual negative space, not filled squares or white overlays. Preserve existing realm IDs, routes, Scripture, accepted artwork and motion until explicit review.
+
+
+Editorial Manual §9.19: R153 interweave geometry rejected; derive stage 03 from the two squares transitioning horizontal to vertical, not an independent line grid. Stage 06 also has a truly uninked central square. Stages 03,06,07 share negative-square principle but differ in origin. R154 study only; preserve approved artwork and realm order.
+
+
+Editorial Manual §9.20 — User-directed mandatory change control (2026-11-27): read existing project records, Design OS, Editorial Manual and visual workchain before any design change. Preserve user-confirmed artwork and current comparison baselines; new geometric rationale does not authorize replacement. Develop alternatives separately, compare original and candidate in full editorial context, and require explicit user art approval before replacing existing seals, textures, layout, masthead or icon. Technical tests do not constitute art approval. Daylight and Cinema remain at R154; do not redesign without explicit user direction. No unilateral substitution or removal of existing material.

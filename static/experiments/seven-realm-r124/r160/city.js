@@ -1,0 +1,1 @@
+(()=>{const observer=new IntersectionObserver(es=>{for(const e of es)if(e.isIntersecting)document.querySelectorAll('.city-wall a').forEach(a=>a.toggleAttribute('aria-current',a.hash==='#'+e.target.id))},{rootMargin:'-20% 0px -55% 0px'});document.querySelectorAll('.city-spread,.realm').forEach(x=>observer.observe(x))})();

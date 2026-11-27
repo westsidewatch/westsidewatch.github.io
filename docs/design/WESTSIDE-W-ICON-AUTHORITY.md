@@ -22,3 +22,6 @@ The private icon design iterations and R1 Type Foundry were never wired to the m
 ## Open refinement items
 
 R1 is usable but not the final proprietary church typeface. Planned R2 work: edit the true glyph outline at Bézier/anchor level, calibrate top terminals and diagonal stroke joins, test antialiasing at 16/32/64 px, export dedicated raster icons, and revisit accessibility at low-density displays. Preserve R1 as a historical release.
+
+## Shared identity origin (2026-11-27)
+The owner establishes the paired-square / New Heaven and New Earth / light falling on the church narrative as the common design rationale for all identity scales, explicitly including the favicon (Editorial Manual §9.17). This opens future comparative research, not a release authorization. The R1 canonical W asset, byte lock and root template remain unchanged. Any replacement requires specific artwork approval, a new release ID and updated lock.
