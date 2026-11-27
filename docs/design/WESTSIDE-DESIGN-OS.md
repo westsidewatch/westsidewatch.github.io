@@ -138,3 +138,6 @@ Editorial Manual §9.12 — Architectural origin of the two-square language (use
 
 
 Editorial Manual §9.13 — Theological foundation (user-confirmed): the inaugural Westside Journal special issue is 《守望城》. The city guarded by the LORD and the New Jerusalem are the theological horizon (Psalm 127:1; Isaiah 26:1, 62:6; Revelation 21:1–3,16). The two squares symbolize New Heaven and New Earth; the church's nested square plan symbolizes the New Jerusalem. These are the project's artistic interpretations, not a biblical prescription that heaven and earth are squares. Do not invent a fixed positional/color mapping or alter accepted artwork, scripture or architecture.
+
+
+Editorial Manual §9.14 — Paired-square planar/spatial exploration: explore partial overlap as distinct from concentric nesting, preserving recognition of both squares; also explore projection and connection into a cube, in dialogue with Revelation 21:16. Mastercard is a reference for relational geometry, not a source for copied artwork or colors. Horizontal/vertical arrangements remain. No existing logo, protected marks, Scripture forms, architecture or motion replacement without acceptance.

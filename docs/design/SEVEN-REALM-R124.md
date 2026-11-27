@@ -73,3 +73,6 @@ User clarifies that the church viewed from above forms two nested squares and th
 
 ## R148 — theological origin of the Watch City and two squares
 User identifies inaugural journal special 《守望城》, the fortified city guarded by the LORD, New Heaven and New Earth, New Jerusalem; the church's square form symbolizes the Holy City, and the two squares symbolize New Heaven and New Earth respectively. Record design authority and relevant scriptural passages in Manual §9.13, OS and registry. Distinguish Scripture from symbolic interpretation; no fixed square position/color assignment, no visual or production changes.
+
+## R149 — relational and spatial paired-square grammar
+User proposes two overlapping squares analogous to the relational construction of Mastercard's two circles, and a transformation from paired squares into a cube. Record §9.14 and OS/registry authority, differentiating overlap, nesting, interlocking and spatial projection. Existing artwork untouched; no logo redesign authorized or claimed. Further visual studies require isolated comparison.
