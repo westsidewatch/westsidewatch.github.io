@@ -1,0 +1,4849 @@
+{
+  "version": "R163",
+  "status": "research_not_approved",
+  "origin": "R161 3c7b3a1aefc23db19041e0adc26aa7261c2c6d9a; R162 rejected",
+  "rules": [
+    "seven-stage narrative unchanged",
+    "preserve locked art, P2, W, masthead and scripture motherform",
+    "geometry IDs do not assign realm identities",
+    "projection faces are not square reading windows; use anchor positions without distorting scripture",
+    "F/G negative spaces are graphical studies, not new 06/07 designs"
+  ],
+  "families": [
+    {
+      "id": "A",
+      "name": "雙方的平面關係"
+    },
+    {
+      "id": "B",
+      "name": "正負形與集合運算"
+    },
+    {
+      "id": "C",
+      "name": "交織、粗細與遮讓"
+    },
+    {
+      "id": "D",
+      "name": "立方體的可見面及邊"
+    },
+    {
+      "id": "E",
+      "name": "共邊折疊與展開"
+    },
+    {
+      "id": "F",
+      "name": "光照與平面光域"
+    },
+    {
+      "id": "G",
+      "name": "承影與投影"
+    },
+    {
+      "id": "H",
+      "name": "正方形保形的立體斜投影"
+    }
+  ],
+  "count": 57,
+  "items": [
+    {
+      "id": "A01",
+      "name": "橫向並置",
+      "why": "等大雙方、水平共軸",
+      "shapes": [
+        {
+          "kind": "rect",
+          "x": 14,
+          "y": 34,
+          "w": 44,
+          "h": 44,
+          "ink": 1
+        },
+        {
+          "kind": "rect",
+          "x": 62,
+          "y": 34,
+          "w": 44,
+          "h": 44,
+          "ink": 1
+        }
+      ],
+      "anchors": [
+        [
+          14,
+          34,
+          44
+        ],
+        [
+          62,
+          34,
+          44
+        ]
+      ],
+      "uses": "雙頁經文、橫向刊頭",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"橫向並置\" role=\"img\"><rect x=\"14\" y=\"34\" width=\"44\" height=\"44\" fill=\"currentColor\" opacity=\"1\"/><rect x=\"62\" y=\"34\" width=\"44\" height=\"44\" fill=\"currentColor\" opacity=\"1\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"橫向並置\" role=\"img\"><rect x=\"14\" y=\"34\" width=\"44\" height=\"44\" fill=\"currentColor\" opacity=\"1\"/><rect x=\"62\" y=\"34\" width=\"44\" height=\"44\" fill=\"currentColor\" opacity=\"1\"/><rect x=\"14\" y=\"34\" width=\"44\" height=\"44\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/><rect x=\"62\" y=\"34\" width=\"44\" height=\"44\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "A02",
+      "name": "縱向並置",
+      "why": "等大雙方、垂直共軸",
+      "shapes": [
+        {
+          "kind": "rect",
+          "x": 38,
+          "y": 8,
+          "w": 44,
+          "h": 44,
+          "ink": 1
+        },
+        {
+          "kind": "rect",
+          "x": 38,
+          "y": 56,
+          "w": 44,
+          "h": 44,
+          "ink": 1
+        }
+      ],
+      "anchors": [
+        [
+          38,
+          8,
+          44
+        ],
+        [
+          38,
+          56,
+          44
+        ]
+      ],
+      "uses": "縱向經文、上下閱讀",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"縱向並置\" role=\"img\"><rect x=\"38\" y=\"8\" width=\"44\" height=\"44\" fill=\"currentColor\" opacity=\"1\"/><rect x=\"38\" y=\"56\" width=\"44\" height=\"44\" fill=\"currentColor\" opacity=\"1\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"縱向並置\" role=\"img\"><rect x=\"38\" y=\"8\" width=\"44\" height=\"44\" fill=\"currentColor\" opacity=\"1\"/><rect x=\"38\" y=\"56\" width=\"44\" height=\"44\" fill=\"currentColor\" opacity=\"1\"/><rect x=\"38\" y=\"8\" width=\"44\" height=\"44\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/><rect x=\"38\" y=\"56\" width=\"44\" height=\"44\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "A03",
+      "name": "階梯錯位",
+      "why": "雙方沿對角偏移，邊緣相接",
+      "shapes": [
+        {
+          "kind": "rect",
+          "x": 12,
+          "y": 12,
+          "w": 48,
+          "h": 48,
+          "ink": 1
+        },
+        {
+          "kind": "rect",
+          "x": 60,
+          "y": 60,
+          "w": 48,
+          "h": 48,
+          "ink": 1
+        }
+      ],
+      "anchors": [
+        [
+          12,
+          12,
+          48
+        ],
+        [
+          60,
+          60,
+          48
+        ]
+      ],
+      "uses": "圖文錯落、角點交接",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"階梯錯位\" role=\"img\"><rect x=\"12\" y=\"12\" width=\"48\" height=\"48\" fill=\"currentColor\" opacity=\"1\"/><rect x=\"60\" y=\"60\" width=\"48\" height=\"48\" fill=\"currentColor\" opacity=\"1\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"階梯錯位\" role=\"img\"><rect x=\"12\" y=\"12\" width=\"48\" height=\"48\" fill=\"currentColor\" opacity=\"1\"/><rect x=\"60\" y=\"60\" width=\"48\" height=\"48\" fill=\"currentColor\" opacity=\"1\"/><rect x=\"12\" y=\"12\" width=\"48\" height=\"48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/><rect x=\"60\" y=\"60\" width=\"48\" height=\"48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "A04",
+      "name": "共邊並合",
+      "why": "等大雙方共享一條邊",
+      "shapes": [
+        {
+          "kind": "rect",
+          "x": 12,
+          "y": 36,
+          "w": 48,
+          "h": 48,
+          "ink": 1
+        },
+        {
+          "kind": "rect",
+          "x": 60,
+          "y": 36,
+          "w": 48,
+          "h": 48,
+          "ink": 0.48
+        }
+      ],
+      "anchors": [
+        [
+          12,
+          36,
+          48
+        ],
+        [
+          60,
+          36,
+          48
+        ]
+      ],
+      "uses": "雙頁中縫、無縫轉場",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"共邊並合\" role=\"img\"><rect x=\"12\" y=\"36\" width=\"48\" height=\"48\" fill=\"currentColor\" opacity=\"1\"/><rect x=\"60\" y=\"36\" width=\"48\" height=\"48\" fill=\"currentColor\" opacity=\"0.48\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"共邊並合\" role=\"img\"><rect x=\"12\" y=\"36\" width=\"48\" height=\"48\" fill=\"currentColor\" opacity=\"1\"/><rect x=\"60\" y=\"36\" width=\"48\" height=\"48\" fill=\"currentColor\" opacity=\"0.48\"/><rect x=\"12\" y=\"36\" width=\"48\" height=\"48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/><rect x=\"60\" y=\"36\" width=\"48\" height=\"48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "A05",
+      "name": "不等尺度",
+      "why": "大小兩方共享底部錨點",
+      "shapes": [
+        {
+          "kind": "rect",
+          "x": 9,
+          "y": 18,
+          "w": 72,
+          "h": 72,
+          "ink": 1
+        },
+        {
+          "kind": "rect",
+          "x": 85,
+          "y": 54,
+          "w": 36,
+          "h": 36,
+          "ink": 1
+        }
+      ],
+      "anchors": [
+        [
+          9,
+          18,
+          72
+        ],
+        [
+          85,
+          54,
+          36
+        ]
+      ],
+      "uses": "主文與引文、主次比例",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"不等尺度\" role=\"img\"><rect x=\"9\" y=\"18\" width=\"72\" height=\"72\" fill=\"currentColor\" opacity=\"1\"/><rect x=\"85\" y=\"54\" width=\"36\" height=\"36\" fill=\"currentColor\" opacity=\"1\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"不等尺度\" role=\"img\"><rect x=\"9\" y=\"18\" width=\"72\" height=\"72\" fill=\"currentColor\" opacity=\"1\"/><rect x=\"85\" y=\"54\" width=\"36\" height=\"36\" fill=\"currentColor\" opacity=\"1\"/><rect x=\"9\" y=\"18\" width=\"72\" height=\"72\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/><rect x=\"85\" y=\"54\" width=\"36\" height=\"36\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "A06",
+      "name": "同心套嵌",
+      "why": "外方減內方，中央真留白",
+      "shapes": [
+        {
+          "kind": "ring",
+          "x": 14,
+          "y": 14,
+          "w": 92,
+          "t": 23
+        }
+      ],
+      "anchors": [
+        [
+          14,
+          14,
+          92
+        ],
+        [
+          37,
+          37,
+          46
+        ]
+      ],
+      "uses": "天井、建築母形",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"同心套嵌\" role=\"img\"><path d=\"M14 14h92v92h-92Z M37 37h46v46h-46Z\" fill-rule=\"evenodd\" fill=\"currentColor\" opacity=\"1\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"同心套嵌\" role=\"img\"><path d=\"M14 14h92v92h-92Z M37 37h46v46h-46Z\" fill-rule=\"evenodd\" fill=\"currentColor\" opacity=\"1\"/><rect x=\"14\" y=\"14\" width=\"92\" height=\"92\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/><rect x=\"37\" y=\"37\" width=\"46\" height=\"46\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "A07",
+      "name": "偏心套嵌",
+      "why": "內方偏移，四側墨量不等",
+      "shapes": [
+        {
+          "kind": "cut",
+          "outer": [
+            10,
+            10,
+            100,
+            100
+          ],
+          "inner": [
+            50,
+            24,
+            44,
+            44
+          ]
+        }
+      ],
+      "anchors": [
+        [
+          10,
+          10,
+          100
+        ],
+        [
+          50,
+          24,
+          44
+        ]
+      ],
+      "uses": "非對稱守望口",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"偏心套嵌\" role=\"img\"><path d=\"M10 10h100v100h-100Z M50 24h44v44h-44Z\" fill-rule=\"evenodd\" fill=\"currentColor\" opacity=\"1\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"偏心套嵌\" role=\"img\"><path d=\"M10 10h100v100h-100Z M50 24h44v44h-44Z\" fill-rule=\"evenodd\" fill=\"currentColor\" opacity=\"1\"/><rect x=\"10\" y=\"10\" width=\"100\" height=\"100\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/><rect x=\"50\" y=\"24\" width=\"44\" height=\"44\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "A08",
+      "name": "角落開口",
+      "why": "內方與外方兩邊相通",
+      "shapes": [
+        {
+          "kind": "poly",
+          "p": [
+            [
+              10,
+              10
+            ],
+            [
+              110,
+              10
+            ],
+            [
+              110,
+              60
+            ],
+            [
+              60,
+              60
+            ],
+            [
+              60,
+              110
+            ],
+            [
+              10,
+              110
+            ]
+          ],
+          "ink": 1
+        }
+      ],
+      "anchors": [
+        [
+          10,
+          10,
+          100
+        ],
+        [
+          60,
+          60,
+          50
+        ]
+      ],
+      "uses": "版角裁切、章緣",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"角落開口\" role=\"img\"><polygon points=\"10,10 110,10 110,60 60,60 60,110 10,110\" fill=\"currentColor\" opacity=\"1\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"角落開口\" role=\"img\"><polygon points=\"10,10 110,10 110,60 60,60 60,110 10,110\" fill=\"currentColor\" opacity=\"1\"/><rect x=\"10\" y=\"10\" width=\"100\" height=\"100\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/><rect x=\"60\" y=\"60\" width=\"50\" height=\"50\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "B01",
+      "name": "聯集",
+      "why": "兩方相交，合成階梯外輪廓",
+      "shapes": [
+        {
+          "kind": "rect",
+          "x": 18,
+          "y": 18,
+          "w": 60,
+          "h": 60,
+          "ink": 1
+        },
+        {
+          "kind": "rect",
+          "x": 48,
+          "y": 48,
+          "w": 60,
+          "h": 60,
+          "ink": 1
+        }
+      ],
+      "anchors": [
+        [
+          18,
+          18,
+          60
+        ],
+        [
+          48,
+          48,
+          60
+        ]
+      ],
+      "uses": "大面裁切、版緣",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"聯集\" role=\"img\"><rect x=\"18\" y=\"18\" width=\"60\" height=\"60\" fill=\"currentColor\" opacity=\"1\"/><rect x=\"48\" y=\"48\" width=\"60\" height=\"60\" fill=\"currentColor\" opacity=\"1\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"聯集\" role=\"img\"><rect x=\"18\" y=\"18\" width=\"60\" height=\"60\" fill=\"currentColor\" opacity=\"1\"/><rect x=\"48\" y=\"48\" width=\"60\" height=\"60\" fill=\"currentColor\" opacity=\"1\"/><rect x=\"18\" y=\"18\" width=\"60\" height=\"60\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/><rect x=\"48\" y=\"48\" width=\"60\" height=\"60\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "B02",
+      "name": "交集",
+      "why": "只取兩方相遇的共同方形",
+      "shapes": [
+        {
+          "kind": "rect",
+          "x": 48,
+          "y": 48,
+          "w": 30,
+          "h": 30,
+          "ink": 1
+        }
+      ],
+      "anchors": [
+        [
+          18,
+          18,
+          60
+        ],
+        [
+          48,
+          48,
+          60
+        ]
+      ],
+      "uses": "共同錨點、中央重心",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"交集\" role=\"img\"><rect x=\"48\" y=\"48\" width=\"30\" height=\"30\" fill=\"currentColor\" opacity=\"1\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"交集\" role=\"img\"><rect x=\"48\" y=\"48\" width=\"30\" height=\"30\" fill=\"currentColor\" opacity=\"1\"/><rect x=\"18\" y=\"18\" width=\"60\" height=\"60\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/><rect x=\"48\" y=\"48\" width=\"60\" height=\"60\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "B03",
+      "name": "單向差集",
+      "why": "A 減 B，得到開口方角",
+      "shapes": [
+        {
+          "kind": "poly",
+          "p": [
+            [
+              18,
+              18
+            ],
+            [
+              78,
+              18
+            ],
+            [
+              78,
+              48
+            ],
+            [
+              48,
+              48
+            ],
+            [
+              48,
+              78
+            ],
+            [
+              18,
+              78
+            ]
+          ],
+          "ink": 1
+        }
+      ],
+      "anchors": [
+        [
+          18,
+          18,
+          60
+        ],
+        [
+          48,
+          48,
+          60
+        ]
+      ],
+      "uses": "版角、引導符",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"單向差集\" role=\"img\"><polygon points=\"18,18 78,18 78,48 48,48 48,78 18,78\" fill=\"currentColor\" opacity=\"1\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"單向差集\" role=\"img\"><polygon points=\"18,18 78,18 78,48 48,48 48,78 18,78\" fill=\"currentColor\" opacity=\"1\"/><rect x=\"18\" y=\"18\" width=\"60\" height=\"60\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/><rect x=\"48\" y=\"48\" width=\"60\" height=\"60\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "B04",
+      "name": "雙向差集",
+      "why": "各自減掉交集，中央不著墨",
+      "shapes": [
+        {
+          "kind": "poly",
+          "p": [
+            [
+              18,
+              18
+            ],
+            [
+              78,
+              18
+            ],
+            [
+              78,
+              48
+            ],
+            [
+              48,
+              48
+            ],
+            [
+              48,
+              78
+            ],
+            [
+              18,
+              78
+            ]
+          ],
+          "ink": 1
+        },
+        {
+          "kind": "poly",
+          "p": [
+            [
+              78,
+              48
+            ],
+            [
+              108,
+              48
+            ],
+            [
+              108,
+              108
+            ],
+            [
+              48,
+              108
+            ],
+            [
+              48,
+              78
+            ],
+            [
+              78,
+              78
+            ]
+          ],
+          "ink": 1
+        }
+      ],
+      "anchors": [
+        [
+          18,
+          18,
+          60
+        ],
+        [
+          48,
+          48,
+          60
+        ]
+      ],
+      "uses": "共同留白、對向構圖",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"雙向差集\" role=\"img\"><polygon points=\"18,18 78,18 78,48 48,48 48,78 18,78\" fill=\"currentColor\" opacity=\"1\"/><polygon points=\"78,48 108,48 108,108 48,108 48,78 78,78\" fill=\"currentColor\" opacity=\"1\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"雙向差集\" role=\"img\"><polygon points=\"18,18 78,18 78,48 48,48 48,78 18,78\" fill=\"currentColor\" opacity=\"1\"/><polygon points=\"78,48 108,48 108,108 48,108 48,78 78,78\" fill=\"currentColor\" opacity=\"1\"/><rect x=\"18\" y=\"18\" width=\"60\" height=\"60\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/><rect x=\"48\" y=\"48\" width=\"60\" height=\"60\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "B05",
+      "name": "四分角",
+      "why": "取外方與內方之間四個角區，中央十字連通",
+      "shapes": [
+        {
+          "kind": "rect",
+          "x": 12,
+          "y": 12,
+          "w": 32,
+          "h": 32,
+          "ink": 1
+        },
+        {
+          "kind": "rect",
+          "x": 76,
+          "y": 12,
+          "w": 32,
+          "h": 32,
+          "ink": 1
+        },
+        {
+          "kind": "rect",
+          "x": 12,
+          "y": 76,
+          "w": 32,
+          "h": 32,
+          "ink": 1
+        },
+        {
+          "kind": "rect",
+          "x": 76,
+          "y": 76,
+          "w": 32,
+          "h": 32,
+          "ink": 1
+        }
+      ],
+      "anchors": [
+        [
+          12,
+          12,
+          96
+        ],
+        [
+          44,
+          44,
+          32
+        ]
+      ],
+      "uses": "非封閉圍合、四角定版",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"四分角\" role=\"img\"><rect x=\"12\" y=\"12\" width=\"32\" height=\"32\" fill=\"currentColor\" opacity=\"1\"/><rect x=\"76\" y=\"12\" width=\"32\" height=\"32\" fill=\"currentColor\" opacity=\"1\"/><rect x=\"12\" y=\"76\" width=\"32\" height=\"32\" fill=\"currentColor\" opacity=\"1\"/><rect x=\"76\" y=\"76\" width=\"32\" height=\"32\" fill=\"currentColor\" opacity=\"1\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"四分角\" role=\"img\"><rect x=\"12\" y=\"12\" width=\"32\" height=\"32\" fill=\"currentColor\" opacity=\"1\"/><rect x=\"76\" y=\"12\" width=\"32\" height=\"32\" fill=\"currentColor\" opacity=\"1\"/><rect x=\"12\" y=\"76\" width=\"32\" height=\"32\" fill=\"currentColor\" opacity=\"1\"/><rect x=\"76\" y=\"76\" width=\"32\" height=\"32\" fill=\"currentColor\" opacity=\"1\"/><rect x=\"12\" y=\"12\" width=\"96\" height=\"96\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/><rect x=\"44\" y=\"44\" width=\"32\" height=\"32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "B06",
+      "name": "對角旋轉",
+      "why": "相同中心、方形旋轉 45°；取交會輪廓",
+      "shapes": [
+        {
+          "kind": "rect",
+          "x": 29,
+          "y": 29,
+          "w": 62,
+          "h": 62,
+          "ink": 1
+        },
+        {
+          "kind": "poly",
+          "p": [
+            [
+              60,
+              16.16
+            ],
+            [
+              103.84,
+              60
+            ],
+            [
+              60,
+              103.84
+            ],
+            [
+              16.16,
+              60
+            ]
+          ],
+          "ink": 0.42
+        }
+      ],
+      "anchors": [
+        [
+          29,
+          29,
+          62
+        ],
+        {
+          "points": [
+            [
+              60,
+              16.16
+            ],
+            [
+              103.84,
+              60
+            ],
+            [
+              60,
+              103.84
+            ],
+            [
+              16.16,
+              60
+            ]
+          ]
+        }
+      ],
+      "uses": "斜向動態參照；不強制旋轉經文",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"對角旋轉\" role=\"img\"><rect x=\"29\" y=\"29\" width=\"62\" height=\"62\" fill=\"currentColor\" opacity=\"1\"/><polygon points=\"60,16.16 103.84,60 60,103.84 16.16,60\" fill=\"currentColor\" opacity=\"0.42\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"對角旋轉\" role=\"img\"><rect x=\"29\" y=\"29\" width=\"62\" height=\"62\" fill=\"currentColor\" opacity=\"1\"/><polygon points=\"60,16.16 103.84,60 60,103.84 16.16,60\" fill=\"currentColor\" opacity=\"0.42\"/><rect x=\"29\" y=\"29\" width=\"62\" height=\"62\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/><polygon points=\"60,16.16 103.84,60 60,103.84 16.16,60\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "C01",
+      "name": "等重交織",
+      "why": "兩個交點交替遮讓",
+      "shapes": [
+        {
+          "kind": "line",
+          "p": [
+            [
+              15,
+              15
+            ],
+            [
+              85,
+              15
+            ],
+            [
+              85,
+              85
+            ],
+            [
+              50.5,
+              85
+            ]
+          ],
+          "w": 5,
+          "ink": 1
+        },
+        {
+          "kind": "line",
+          "p": [
+            [
+              39.5,
+              85
+            ],
+            [
+              15,
+              85
+            ],
+            [
+              15,
+              15
+            ]
+          ],
+          "w": 5,
+          "ink": 1
+        },
+        {
+          "kind": "line",
+          "p": [
+            [
+              45,
+              45
+            ],
+            [
+              79.5,
+              45
+            ]
+          ],
+          "w": 5,
+          "ink": 1
+        },
+        {
+          "kind": "line",
+          "p": [
+            [
+              90.5,
+              45
+            ],
+            [
+              115,
+              45
+            ],
+            [
+              115,
+              115
+            ],
+            [
+              45,
+              115
+            ],
+            [
+              45,
+              45
+            ]
+          ],
+          "w": 5,
+          "ink": 1
+        }
+      ],
+      "anchors": [
+        [
+          15,
+          15,
+          70
+        ],
+        [
+          45,
+          45,
+          70
+        ]
+      ],
+      "uses": "交織小章、負形窗口；需縮尺校正",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"等重交織\" role=\"img\"><polyline points=\"15,15 85,15 85,85 50.5,85\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"5\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/><polyline points=\"39.5,85 15,85 15,15\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"5\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/><polyline points=\"45,45 79.5,45\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"5\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/><polyline points=\"90.5,45 115,45 115,115 45,115 45,45\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"5\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"等重交織\" role=\"img\"><polyline points=\"15,15 85,15 85,85 50.5,85\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"5\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/><polyline points=\"39.5,85 15,85 15,15\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"5\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/><polyline points=\"45,45 79.5,45\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"5\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/><polyline points=\"90.5,45 115,45 115,115 45,115 45,45\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"5\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/><rect x=\"15\" y=\"15\" width=\"70\" height=\"70\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/><rect x=\"45\" y=\"45\" width=\"70\" height=\"70\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "C02",
+      "name": "粗細交織",
+      "why": "同樣交點拓撲，兩種線重",
+      "shapes": [
+        {
+          "kind": "line",
+          "p": [
+            [
+              15,
+              15
+            ],
+            [
+              85,
+              15
+            ],
+            [
+              85,
+              85
+            ],
+            [
+              50,
+              85
+            ]
+          ],
+          "w": 9,
+          "ink": 1
+        },
+        {
+          "kind": "line",
+          "p": [
+            [
+              40,
+              85
+            ],
+            [
+              15,
+              85
+            ],
+            [
+              15,
+              15
+            ]
+          ],
+          "w": 9,
+          "ink": 1
+        },
+        {
+          "kind": "line",
+          "p": [
+            [
+              45,
+              45
+            ],
+            [
+              77.5,
+              45
+            ]
+          ],
+          "w": 4,
+          "ink": 1
+        },
+        {
+          "kind": "line",
+          "p": [
+            [
+              92.5,
+              45
+            ],
+            [
+              115,
+              45
+            ],
+            [
+              115,
+              115
+            ],
+            [
+              45,
+              115
+            ],
+            [
+              45,
+              45
+            ]
+          ],
+          "w": 4,
+          "ink": 1
+        }
+      ],
+      "anchors": [
+        [
+          15,
+          15,
+          70
+        ],
+        [
+          45,
+          45,
+          70
+        ]
+      ],
+      "uses": "交織小章、負形窗口；需縮尺校正",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"粗細交織\" role=\"img\"><polyline points=\"15,15 85,15 85,85 50,85\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"9\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/><polyline points=\"40,85 15,85 15,15\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"9\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/><polyline points=\"45,45 77.5,45\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"4\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/><polyline points=\"92.5,45 115,45 115,115 45,115 45,45\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"4\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"粗細交織\" role=\"img\"><polyline points=\"15,15 85,15 85,85 50,85\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"9\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/><polyline points=\"40,85 15,85 15,15\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"9\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/><polyline points=\"45,45 77.5,45\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"4\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/><polyline points=\"92.5,45 115,45 115,115 45,115 45,45\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"4\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/><rect x=\"15\" y=\"15\" width=\"70\" height=\"70\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/><rect x=\"45\" y=\"45\" width=\"70\" height=\"70\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "C03",
+      "name": "交織反向",
+      "why": "保持雙方比例，前後遮讓互換",
+      "shapes": [
+        {
+          "kind": "line",
+          "p": [
+            [
+              15,
+              15
+            ],
+            [
+              85,
+              15
+            ],
+            [
+              85,
+              40
+            ]
+          ],
+          "w": 9,
+          "ink": 1
+        },
+        {
+          "kind": "line",
+          "p": [
+            [
+              85,
+              50
+            ],
+            [
+              85,
+              85
+            ],
+            [
+              15,
+              85
+            ],
+            [
+              15,
+              15
+            ]
+          ],
+          "w": 9,
+          "ink": 1
+        },
+        {
+          "kind": "line",
+          "p": [
+            [
+              45,
+              45
+            ],
+            [
+              45,
+              77.5
+            ]
+          ],
+          "w": 4,
+          "ink": 1
+        },
+        {
+          "kind": "line",
+          "p": [
+            [
+              45,
+              92.5
+            ],
+            [
+              45,
+              115
+            ],
+            [
+              115,
+              115
+            ],
+            [
+              115,
+              45
+            ],
+            [
+              45,
+              45
+            ]
+          ],
+          "w": 4,
+          "ink": 1
+        }
+      ],
+      "anchors": [
+        [
+          15,
+          15,
+          70
+        ],
+        [
+          45,
+          45,
+          70
+        ]
+      ],
+      "uses": "交織小章、負形窗口；需縮尺校正",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"交織反向\" role=\"img\"><polyline points=\"15,15 85,15 85,40\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"9\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/><polyline points=\"85,50 85,85 15,85 15,15\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"9\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/><polyline points=\"45,45 45,77.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"4\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/><polyline points=\"45,92.5 45,115 115,115 115,45 45,45\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"4\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"交織反向\" role=\"img\"><polyline points=\"15,15 85,15 85,40\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"9\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/><polyline points=\"85,50 85,85 15,85 15,15\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"9\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/><polyline points=\"45,45 45,77.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"4\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/><polyline points=\"45,92.5 45,115 115,115 115,45 45,45\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"4\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/><rect x=\"15\" y=\"15\" width=\"70\" height=\"70\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/><rect x=\"45\" y=\"45\" width=\"70\" height=\"70\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "C04",
+      "name": "寬窗交織",
+      "why": "縮小偏移，增加共同方形面積",
+      "shapes": [
+        {
+          "kind": "line",
+          "p": [
+            [
+              15,
+              15
+            ],
+            [
+              85,
+              15
+            ],
+            [
+              85,
+              85
+            ],
+            [
+              40,
+              85
+            ]
+          ],
+          "w": 7,
+          "ink": 1
+        },
+        {
+          "kind": "line",
+          "p": [
+            [
+              30,
+              85
+            ],
+            [
+              15,
+              85
+            ],
+            [
+              15,
+              15
+            ]
+          ],
+          "w": 7,
+          "ink": 1
+        },
+        {
+          "kind": "line",
+          "p": [
+            [
+              35,
+              35
+            ],
+            [
+              78.5,
+              35
+            ]
+          ],
+          "w": 4,
+          "ink": 1
+        },
+        {
+          "kind": "line",
+          "p": [
+            [
+              91.5,
+              35
+            ],
+            [
+              105,
+              35
+            ],
+            [
+              105,
+              105
+            ],
+            [
+              35,
+              105
+            ],
+            [
+              35,
+              35
+            ]
+          ],
+          "w": 4,
+          "ink": 1
+        }
+      ],
+      "anchors": [
+        [
+          15,
+          15,
+          70
+        ],
+        [
+          35,
+          35,
+          70
+        ]
+      ],
+      "uses": "交織小章、負形窗口；需縮尺校正",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"寬窗交織\" role=\"img\"><polyline points=\"15,15 85,15 85,85 40,85\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"7\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/><polyline points=\"30,85 15,85 15,15\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"7\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/><polyline points=\"35,35 78.5,35\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"4\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/><polyline points=\"91.5,35 105,35 105,105 35,105 35,35\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"4\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"寬窗交織\" role=\"img\"><polyline points=\"15,15 85,15 85,85 40,85\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"7\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/><polyline points=\"30,85 15,85 15,15\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"7\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/><polyline points=\"35,35 78.5,35\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"4\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/><polyline points=\"91.5,35 105,35 105,105 35,105 35,35\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"4\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/><rect x=\"15\" y=\"15\" width=\"70\" height=\"70\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/><rect x=\"35\" y=\"35\" width=\"70\" height=\"70\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "C05",
+      "name": "窄窗交織",
+      "why": "擴大偏移，縮小共同方形",
+      "shapes": [
+        {
+          "kind": "line",
+          "p": [
+            [
+              15,
+              15
+            ],
+            [
+              85,
+              15
+            ],
+            [
+              85,
+              85
+            ],
+            [
+              56,
+              85
+            ]
+          ],
+          "w": 7,
+          "ink": 1
+        },
+        {
+          "kind": "line",
+          "p": [
+            [
+              46,
+              85
+            ],
+            [
+              15,
+              85
+            ],
+            [
+              15,
+              15
+            ]
+          ],
+          "w": 7,
+          "ink": 1
+        },
+        {
+          "kind": "line",
+          "p": [
+            [
+              51,
+              51
+            ],
+            [
+              78.5,
+              51
+            ]
+          ],
+          "w": 4,
+          "ink": 1
+        },
+        {
+          "kind": "line",
+          "p": [
+            [
+              91.5,
+              51
+            ],
+            [
+              121,
+              51
+            ],
+            [
+              121,
+              121
+            ],
+            [
+              51,
+              121
+            ],
+            [
+              51,
+              51
+            ]
+          ],
+          "w": 4,
+          "ink": 1
+        }
+      ],
+      "anchors": [
+        [
+          15,
+          15,
+          70
+        ],
+        [
+          51,
+          51,
+          70
+        ]
+      ],
+      "uses": "交織小章、負形窗口；需縮尺校正",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"窄窗交織\" role=\"img\"><polyline points=\"15,15 85,15 85,85 56,85\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"7\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/><polyline points=\"46,85 15,85 15,15\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"7\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/><polyline points=\"51,51 78.5,51\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"4\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/><polyline points=\"91.5,51 121,51 121,121 51,121 51,51\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"4\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"窄窗交織\" role=\"img\"><polyline points=\"15,15 85,15 85,85 56,85\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"7\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/><polyline points=\"46,85 15,85 15,15\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"7\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/><polyline points=\"51,51 78.5,51\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"4\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/><polyline points=\"91.5,51 121,51 121,121 51,121 51,51\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"4\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/><rect x=\"15\" y=\"15\" width=\"70\" height=\"70\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/><rect x=\"51\" y=\"51\" width=\"70\" height=\"70\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "C06",
+      "name": "R161 保留原稿",
+      "why": "使用已認可方向的原候選；不以後續研究覆蓋",
+      "shapes": [
+        {
+          "kind": "path",
+          "d": "M8 8H72V36H64V16H16V64H64V48H72V72H8Z M40 40H104V104H40V76H44V100H100V44H44V60H40Z"
+        }
+      ],
+      "anchors": [
+        [
+          8,
+          8,
+          64
+        ],
+        [
+          40,
+          40,
+          64
+        ]
+      ],
+      "uses": "歷史對照，不宣稱定稿",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"R161 保留原稿\" role=\"img\"><path d=\"M8 8H72V36H64V16H16V64H64V48H72V72H8Z M40 40H104V104H40V76H44V100H100V44H44V60H40Z\" fill=\"currentColor\" opacity=\"1\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"R161 保留原稿\" role=\"img\"><path d=\"M8 8H72V36H64V16H16V64H64V48H72V72H8Z M40 40H104V104H40V76H44V100H100V44H44V60H40Z\" fill=\"currentColor\" opacity=\"1\"/><rect x=\"8\" y=\"8\" width=\"64\" height=\"64\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/><rect x=\"40\" y=\"40\" width=\"64\" height=\"64\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/></svg>",
+      "status": "direction_reference_not_final"
+    },
+    {
+      "id": "D01",
+      "name": "上面",
+      "why": "同一立方體、同一平行投影；取可見面的子集",
+      "shapes": [
+        {
+          "kind": "poly",
+          "p": [
+            [
+              60,
+              38
+            ],
+            [
+              92,
+              54
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              28,
+              54
+            ]
+          ],
+          "ink": 1
+        }
+      ],
+      "anchors": [
+        {
+          "points": [
+            [
+              60,
+              38
+            ],
+            [
+              92,
+              54
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              28,
+              54
+            ]
+          ]
+        }
+      ],
+      "uses": "折面定位、書頁層次、版角輪廓；投影面不是等大平面正方形",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"上面\" role=\"img\"><polygon points=\"60,38 92,54 60,70 28,54\" fill=\"currentColor\" opacity=\"1\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"上面\" role=\"img\"><polygon points=\"60,38 92,54 60,70 28,54\" fill=\"currentColor\" opacity=\"1\"/><polygon points=\"60,38 92,54 60,70 28,54\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "D02",
+      "name": "左立面",
+      "why": "同一立方體、同一平行投影；取可見面的子集",
+      "shapes": [
+        {
+          "kind": "poly",
+          "p": [
+            [
+              28,
+              86
+            ],
+            [
+              60,
+              102
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              28,
+              54
+            ]
+          ],
+          "ink": 1
+        }
+      ],
+      "anchors": [
+        {
+          "points": [
+            [
+              28,
+              86
+            ],
+            [
+              60,
+              102
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              28,
+              54
+            ]
+          ]
+        }
+      ],
+      "uses": "折面定位、書頁層次、版角輪廓；投影面不是等大平面正方形",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"左立面\" role=\"img\"><polygon points=\"28,86 60,102 60,70 28,54\" fill=\"currentColor\" opacity=\"1\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"左立面\" role=\"img\"><polygon points=\"28,86 60,102 60,70 28,54\" fill=\"currentColor\" opacity=\"1\"/><polygon points=\"28,86 60,102 60,70 28,54\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "D03",
+      "name": "右立面",
+      "why": "同一立方體、同一平行投影；取可見面的子集",
+      "shapes": [
+        {
+          "kind": "poly",
+          "p": [
+            [
+              92,
+              86
+            ],
+            [
+              60,
+              102
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              92,
+              54
+            ]
+          ],
+          "ink": 1
+        }
+      ],
+      "anchors": [
+        {
+          "points": [
+            [
+              92,
+              86
+            ],
+            [
+              60,
+              102
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              92,
+              54
+            ]
+          ]
+        }
+      ],
+      "uses": "折面定位、書頁層次、版角輪廓；投影面不是等大平面正方形",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"右立面\" role=\"img\"><polygon points=\"92,86 60,102 60,70 92,54\" fill=\"currentColor\" opacity=\"1\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"右立面\" role=\"img\"><polygon points=\"92,86 60,102 60,70 92,54\" fill=\"currentColor\" opacity=\"1\"/><polygon points=\"92,86 60,102 60,70 92,54\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "D04",
+      "name": "上＋左",
+      "why": "同一立方體、同一平行投影；取可見面的子集",
+      "shapes": [
+        {
+          "kind": "poly",
+          "p": [
+            [
+              60,
+              38
+            ],
+            [
+              92,
+              54
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              28,
+              54
+            ]
+          ],
+          "ink": 1
+        },
+        {
+          "kind": "poly",
+          "p": [
+            [
+              28,
+              86
+            ],
+            [
+              60,
+              102
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              28,
+              54
+            ]
+          ],
+          "ink": 1
+        }
+      ],
+      "anchors": [
+        {
+          "points": [
+            [
+              60,
+              38
+            ],
+            [
+              92,
+              54
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              28,
+              54
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              28,
+              86
+            ],
+            [
+              60,
+              102
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              28,
+              54
+            ]
+          ]
+        }
+      ],
+      "uses": "折面定位、書頁層次、版角輪廓；投影面不是等大平面正方形",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"上＋左\" role=\"img\"><polygon points=\"60,38 92,54 60,70 28,54\" fill=\"currentColor\" opacity=\"1\"/><polygon points=\"28,86 60,102 60,70 28,54\" fill=\"currentColor\" opacity=\"1\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"上＋左\" role=\"img\"><polygon points=\"60,38 92,54 60,70 28,54\" fill=\"currentColor\" opacity=\"1\"/><polygon points=\"28,86 60,102 60,70 28,54\" fill=\"currentColor\" opacity=\"1\"/><polygon points=\"60,38 92,54 60,70 28,54\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/><polygon points=\"28,86 60,102 60,70 28,54\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "D05",
+      "name": "上＋右",
+      "why": "同一立方體、同一平行投影；取可見面的子集",
+      "shapes": [
+        {
+          "kind": "poly",
+          "p": [
+            [
+              60,
+              38
+            ],
+            [
+              92,
+              54
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              28,
+              54
+            ]
+          ],
+          "ink": 1
+        },
+        {
+          "kind": "poly",
+          "p": [
+            [
+              92,
+              86
+            ],
+            [
+              60,
+              102
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              92,
+              54
+            ]
+          ],
+          "ink": 1
+        }
+      ],
+      "anchors": [
+        {
+          "points": [
+            [
+              60,
+              38
+            ],
+            [
+              92,
+              54
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              28,
+              54
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              92,
+              86
+            ],
+            [
+              60,
+              102
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              92,
+              54
+            ]
+          ]
+        }
+      ],
+      "uses": "折面定位、書頁層次、版角輪廓；投影面不是等大平面正方形",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"上＋右\" role=\"img\"><polygon points=\"60,38 92,54 60,70 28,54\" fill=\"currentColor\" opacity=\"1\"/><polygon points=\"92,86 60,102 60,70 92,54\" fill=\"currentColor\" opacity=\"1\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"上＋右\" role=\"img\"><polygon points=\"60,38 92,54 60,70 28,54\" fill=\"currentColor\" opacity=\"1\"/><polygon points=\"92,86 60,102 60,70 92,54\" fill=\"currentColor\" opacity=\"1\"/><polygon points=\"60,38 92,54 60,70 28,54\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/><polygon points=\"92,86 60,102 60,70 92,54\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "D06",
+      "name": "左右立面",
+      "why": "同一立方體、同一平行投影；取可見面的子集",
+      "shapes": [
+        {
+          "kind": "poly",
+          "p": [
+            [
+              28,
+              86
+            ],
+            [
+              60,
+              102
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              28,
+              54
+            ]
+          ],
+          "ink": 1
+        },
+        {
+          "kind": "poly",
+          "p": [
+            [
+              92,
+              86
+            ],
+            [
+              60,
+              102
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              92,
+              54
+            ]
+          ],
+          "ink": 1
+        }
+      ],
+      "anchors": [
+        {
+          "points": [
+            [
+              28,
+              86
+            ],
+            [
+              60,
+              102
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              28,
+              54
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              92,
+              86
+            ],
+            [
+              60,
+              102
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              92,
+              54
+            ]
+          ]
+        }
+      ],
+      "uses": "折面定位、書頁層次、版角輪廓；投影面不是等大平面正方形",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"左右立面\" role=\"img\"><polygon points=\"28,86 60,102 60,70 28,54\" fill=\"currentColor\" opacity=\"1\"/><polygon points=\"92,86 60,102 60,70 92,54\" fill=\"currentColor\" opacity=\"1\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"左右立面\" role=\"img\"><polygon points=\"28,86 60,102 60,70 28,54\" fill=\"currentColor\" opacity=\"1\"/><polygon points=\"92,86 60,102 60,70 92,54\" fill=\"currentColor\" opacity=\"1\"/><polygon points=\"28,86 60,102 60,70 28,54\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/><polygon points=\"92,86 60,102 60,70 92,54\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "D07",
+      "name": "三面合體",
+      "why": "同一立方體、同一平行投影；取可見面的子集",
+      "shapes": [
+        {
+          "kind": "poly",
+          "p": [
+            [
+              60,
+              38
+            ],
+            [
+              92,
+              54
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              28,
+              54
+            ]
+          ],
+          "ink": 1
+        },
+        {
+          "kind": "poly",
+          "p": [
+            [
+              28,
+              86
+            ],
+            [
+              60,
+              102
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              28,
+              54
+            ]
+          ],
+          "ink": 1
+        },
+        {
+          "kind": "poly",
+          "p": [
+            [
+              92,
+              86
+            ],
+            [
+              60,
+              102
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              92,
+              54
+            ]
+          ],
+          "ink": 1
+        }
+      ],
+      "anchors": [
+        {
+          "points": [
+            [
+              60,
+              38
+            ],
+            [
+              92,
+              54
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              28,
+              54
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              28,
+              86
+            ],
+            [
+              60,
+              102
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              28,
+              54
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              92,
+              86
+            ],
+            [
+              60,
+              102
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              92,
+              54
+            ]
+          ]
+        }
+      ],
+      "uses": "折面定位、書頁層次、版角輪廓；投影面不是等大平面正方形",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"三面合體\" role=\"img\"><polygon points=\"60,38 92,54 60,70 28,54\" fill=\"currentColor\" opacity=\"1\"/><polygon points=\"28,86 60,102 60,70 28,54\" fill=\"currentColor\" opacity=\"1\"/><polygon points=\"92,86 60,102 60,70 92,54\" fill=\"currentColor\" opacity=\"1\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"三面合體\" role=\"img\"><polygon points=\"60,38 92,54 60,70 28,54\" fill=\"currentColor\" opacity=\"1\"/><polygon points=\"28,86 60,102 60,70 28,54\" fill=\"currentColor\" opacity=\"1\"/><polygon points=\"92,86 60,102 60,70 92,54\" fill=\"currentColor\" opacity=\"1\"/><polygon points=\"60,38 92,54 60,70 28,54\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/><polygon points=\"28,86 60,102 60,70 28,54\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/><polygon points=\"92,86 60,102 60,70 92,54\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "D08",
+      "name": "三面分光",
+      "why": "三個可見面同源，墨量區分",
+      "shapes": [
+        {
+          "kind": "poly",
+          "p": [
+            [
+              60,
+              38
+            ],
+            [
+              92,
+              54
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              28,
+              54
+            ]
+          ],
+          "ink": 0.2
+        },
+        {
+          "kind": "poly",
+          "p": [
+            [
+              28,
+              86
+            ],
+            [
+              60,
+              102
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              28,
+              54
+            ]
+          ],
+          "ink": 0.65
+        },
+        {
+          "kind": "poly",
+          "p": [
+            [
+              92,
+              86
+            ],
+            [
+              60,
+              102
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              92,
+              54
+            ]
+          ],
+          "ink": 1
+        }
+      ],
+      "anchors": [
+        {
+          "points": [
+            [
+              60,
+              38
+            ],
+            [
+              92,
+              54
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              28,
+              54
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              28,
+              86
+            ],
+            [
+              60,
+              102
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              28,
+              54
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              92,
+              86
+            ],
+            [
+              60,
+              102
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              92,
+              54
+            ]
+          ]
+        }
+      ],
+      "uses": "受光前的立體參照",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"三面分光\" role=\"img\"><polygon points=\"60,38 92,54 60,70 28,54\" fill=\"currentColor\" opacity=\"0.2\"/><polygon points=\"28,86 60,102 60,70 28,54\" fill=\"currentColor\" opacity=\"0.65\"/><polygon points=\"92,86 60,102 60,70 92,54\" fill=\"currentColor\" opacity=\"1\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"三面分光\" role=\"img\"><polygon points=\"60,38 92,54 60,70 28,54\" fill=\"currentColor\" opacity=\"0.2\"/><polygon points=\"28,86 60,102 60,70 28,54\" fill=\"currentColor\" opacity=\"0.65\"/><polygon points=\"92,86 60,102 60,70 92,54\" fill=\"currentColor\" opacity=\"1\"/><polygon points=\"60,38 92,54 60,70 28,54\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/><polygon points=\"28,86 60,102 60,70 28,54\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/><polygon points=\"92,86 60,102 60,70 92,54\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "D09",
+      "name": "兩面留一面",
+      "why": "取上、左，右面未著墨",
+      "shapes": [
+        {
+          "kind": "poly",
+          "p": [
+            [
+              60,
+              38
+            ],
+            [
+              92,
+              54
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              28,
+              54
+            ]
+          ],
+          "ink": 1
+        },
+        {
+          "kind": "poly",
+          "p": [
+            [
+              28,
+              86
+            ],
+            [
+              60,
+              102
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              28,
+              54
+            ]
+          ],
+          "ink": 0.58
+        }
+      ],
+      "anchors": [
+        {
+          "points": [
+            [
+              60,
+              38
+            ],
+            [
+              92,
+              54
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              28,
+              54
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              28,
+              86
+            ],
+            [
+              60,
+              102
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              28,
+              54
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              92,
+              86
+            ],
+            [
+              60,
+              102
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              92,
+              54
+            ]
+          ]
+        }
+      ],
+      "uses": "開放立體、折角位置",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"兩面留一面\" role=\"img\"><polygon points=\"60,38 92,54 60,70 28,54\" fill=\"currentColor\" opacity=\"1\"/><polygon points=\"28,86 60,102 60,70 28,54\" fill=\"currentColor\" opacity=\"0.58\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"兩面留一面\" role=\"img\"><polygon points=\"60,38 92,54 60,70 28,54\" fill=\"currentColor\" opacity=\"1\"/><polygon points=\"28,86 60,102 60,70 28,54\" fill=\"currentColor\" opacity=\"0.58\"/><polygon points=\"60,38 92,54 60,70 28,54\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/><polygon points=\"28,86 60,102 60,70 28,54\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/><polygon points=\"92,86 60,102 60,70 92,54\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "D10",
+      "name": "立體邊骨",
+      "why": "只取立方體三個可見面的外緣及交線",
+      "shapes": [
+        {
+          "kind": "line",
+          "p": [
+            [
+              60,
+              38
+            ],
+            [
+              92,
+              54
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              28,
+              54
+            ],
+            [
+              60,
+              38
+            ]
+          ],
+          "w": 3,
+          "ink": 1
+        },
+        {
+          "kind": "line",
+          "p": [
+            [
+              28,
+              86
+            ],
+            [
+              60,
+              102
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              28,
+              54
+            ],
+            [
+              28,
+              86
+            ]
+          ],
+          "w": 3,
+          "ink": 1
+        },
+        {
+          "kind": "line",
+          "p": [
+            [
+              92,
+              86
+            ],
+            [
+              60,
+              102
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              92,
+              54
+            ],
+            [
+              92,
+              86
+            ]
+          ],
+          "w": 3,
+          "ink": 1
+        }
+      ],
+      "anchors": [
+        {
+          "points": [
+            [
+              60,
+              38
+            ],
+            [
+              92,
+              54
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              28,
+              54
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              28,
+              86
+            ],
+            [
+              60,
+              102
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              28,
+              54
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              92,
+              86
+            ],
+            [
+              60,
+              102
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              92,
+              54
+            ]
+          ]
+        }
+      ],
+      "uses": "折線骨架、細節構建",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"立體邊骨\" role=\"img\"><polyline points=\"60,38 92,54 60,70 28,54 60,38\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/><polyline points=\"28,86 60,102 60,70 28,54 28,86\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/><polyline points=\"92,86 60,102 60,70 92,54 92,86\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"立體邊骨\" role=\"img\"><polyline points=\"60,38 92,54 60,70 28,54 60,38\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/><polyline points=\"28,86 60,102 60,70 28,54 28,86\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/><polyline points=\"92,86 60,102 60,70 92,54 92,86\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/><polygon points=\"60,38 92,54 60,70 28,54\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/><polygon points=\"28,86 60,102 60,70 28,54\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/><polygon points=\"92,86 60,102 60,70 92,54\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "E01",
+      "name": "0° 共邊翻折",
+      "why": "同一48單位雙方，固定面與旋轉面沿共同鉸線；斜投影",
+      "shapes": [
+        {
+          "kind": "poly",
+          "p": [
+            [
+              12,
+              36
+            ],
+            [
+              60,
+              36
+            ],
+            [
+              60,
+              84
+            ],
+            [
+              12,
+              84
+            ]
+          ],
+          "ink": 0.85
+        },
+        {
+          "kind": "poly",
+          "p": [
+            [
+              60,
+              36
+            ],
+            [
+              108,
+              36
+            ],
+            [
+              108,
+              84
+            ],
+            [
+              60,
+              84
+            ]
+          ],
+          "ink": 0.5
+        },
+        {
+          "kind": "line",
+          "p": [
+            [
+              60,
+              36
+            ],
+            [
+              60,
+              84
+            ]
+          ],
+          "w": 1.4,
+          "ink": 1
+        }
+      ],
+      "anchors": [
+        {
+          "points": [
+            [
+              12,
+              36
+            ],
+            [
+              60,
+              36
+            ],
+            [
+              60,
+              84
+            ],
+            [
+              12,
+              84
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              60,
+              36
+            ],
+            [
+              108,
+              36
+            ],
+            [
+              108,
+              84
+            ],
+            [
+              60,
+              84
+            ]
+          ]
+        }
+      ],
+      "uses": "經文雙方塊的折疊錨點；正文保持正立",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"0° 共邊翻折\" role=\"img\"><polygon points=\"12,36 60,36 60,84 12,84\" fill=\"currentColor\" opacity=\"0.85\"/><polygon points=\"60,36 108,36 108,84 60,84\" fill=\"currentColor\" opacity=\"0.5\"/><polyline points=\"60,36 60,84\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.4\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"0° 共邊翻折\" role=\"img\"><polygon points=\"12,36 60,36 60,84 12,84\" fill=\"currentColor\" opacity=\"0.85\"/><polygon points=\"60,36 108,36 108,84 60,84\" fill=\"currentColor\" opacity=\"0.5\"/><polyline points=\"60,36 60,84\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.4\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/><polygon points=\"12,36 60,36 60,84 12,84\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/><polygon points=\"60,36 108,36 108,84 60,84\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "E02",
+      "name": "30° 共邊翻折",
+      "why": "同一48單位雙方，固定面與旋轉面沿共同鉸線；斜投影",
+      "shapes": [
+        {
+          "kind": "poly",
+          "p": [
+            [
+              12,
+              36
+            ],
+            [
+              60,
+              36
+            ],
+            [
+              60,
+              84
+            ],
+            [
+              12,
+              84
+            ]
+          ],
+          "ink": 0.85
+        },
+        {
+          "kind": "poly",
+          "p": [
+            [
+              60,
+              36
+            ],
+            [
+              101.56921938165306,
+              24
+            ],
+            [
+              101.56921938165306,
+              72
+            ],
+            [
+              60,
+              84
+            ]
+          ],
+          "ink": 0.4
+        },
+        {
+          "kind": "line",
+          "p": [
+            [
+              60,
+              36
+            ],
+            [
+              60,
+              84
+            ]
+          ],
+          "w": 1.4,
+          "ink": 1
+        }
+      ],
+      "anchors": [
+        {
+          "points": [
+            [
+              12,
+              36
+            ],
+            [
+              60,
+              36
+            ],
+            [
+              60,
+              84
+            ],
+            [
+              12,
+              84
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              60,
+              36
+            ],
+            [
+              101.56921938165306,
+              24
+            ],
+            [
+              101.56921938165306,
+              72
+            ],
+            [
+              60,
+              84
+            ]
+          ]
+        }
+      ],
+      "uses": "經文雙方塊的折疊錨點；正文保持正立",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"30° 共邊翻折\" role=\"img\"><polygon points=\"12,36 60,36 60,84 12,84\" fill=\"currentColor\" opacity=\"0.85\"/><polygon points=\"60,36 101.56921938165306,24 101.56921938165306,72 60,84\" fill=\"currentColor\" opacity=\"0.4\"/><polyline points=\"60,36 60,84\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.4\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"30° 共邊翻折\" role=\"img\"><polygon points=\"12,36 60,36 60,84 12,84\" fill=\"currentColor\" opacity=\"0.85\"/><polygon points=\"60,36 101.56921938165306,24 101.56921938165306,72 60,84\" fill=\"currentColor\" opacity=\"0.4\"/><polyline points=\"60,36 60,84\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.4\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/><polygon points=\"12,36 60,36 60,84 12,84\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/><polygon points=\"60,36 101.56921938165306,24 101.56921938165306,72 60,84\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "E03",
+      "name": "60° 共邊翻折",
+      "why": "同一48單位雙方，固定面與旋轉面沿共同鉸線；斜投影",
+      "shapes": [
+        {
+          "kind": "poly",
+          "p": [
+            [
+              12,
+              36
+            ],
+            [
+              60,
+              36
+            ],
+            [
+              60,
+              84
+            ],
+            [
+              12,
+              84
+            ]
+          ],
+          "ink": 0.85
+        },
+        {
+          "kind": "poly",
+          "p": [
+            [
+              60,
+              36
+            ],
+            [
+              84,
+              15.215390309173472
+            ],
+            [
+              84,
+              63.21539030917347
+            ],
+            [
+              60,
+              84
+            ]
+          ],
+          "ink": 0.4
+        },
+        {
+          "kind": "line",
+          "p": [
+            [
+              60,
+              36
+            ],
+            [
+              60,
+              84
+            ]
+          ],
+          "w": 1.4,
+          "ink": 1
+        }
+      ],
+      "anchors": [
+        {
+          "points": [
+            [
+              12,
+              36
+            ],
+            [
+              60,
+              36
+            ],
+            [
+              60,
+              84
+            ],
+            [
+              12,
+              84
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              60,
+              36
+            ],
+            [
+              84,
+              15.215390309173472
+            ],
+            [
+              84,
+              63.21539030917347
+            ],
+            [
+              60,
+              84
+            ]
+          ]
+        }
+      ],
+      "uses": "經文雙方塊的折疊錨點；正文保持正立",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"60° 共邊翻折\" role=\"img\"><polygon points=\"12,36 60,36 60,84 12,84\" fill=\"currentColor\" opacity=\"0.85\"/><polygon points=\"60,36 84,15.215390309173472 84,63.21539030917347 60,84\" fill=\"currentColor\" opacity=\"0.4\"/><polyline points=\"60,36 60,84\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.4\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"60° 共邊翻折\" role=\"img\"><polygon points=\"12,36 60,36 60,84 12,84\" fill=\"currentColor\" opacity=\"0.85\"/><polygon points=\"60,36 84,15.215390309173472 84,63.21539030917347 60,84\" fill=\"currentColor\" opacity=\"0.4\"/><polyline points=\"60,36 60,84\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.4\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/><polygon points=\"12,36 60,36 60,84 12,84\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/><polygon points=\"60,36 84,15.215390309173472 84,63.21539030917347 60,84\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "E04",
+      "name": "90° 共邊翻折",
+      "why": "同一48單位雙方，固定面與旋轉面沿共同鉸線；斜投影",
+      "shapes": [
+        {
+          "kind": "poly",
+          "p": [
+            [
+              12,
+              36
+            ],
+            [
+              60,
+              36
+            ],
+            [
+              60,
+              84
+            ],
+            [
+              12,
+              84
+            ]
+          ],
+          "ink": 0.85
+        },
+        {
+          "kind": "poly",
+          "p": [
+            [
+              60,
+              36
+            ],
+            [
+              60,
+              12
+            ],
+            [
+              60,
+              60
+            ],
+            [
+              60,
+              84
+            ]
+          ],
+          "ink": 0.4
+        },
+        {
+          "kind": "line",
+          "p": [
+            [
+              60,
+              36
+            ],
+            [
+              60,
+              84
+            ]
+          ],
+          "w": 1.4,
+          "ink": 1
+        }
+      ],
+      "anchors": [
+        {
+          "points": [
+            [
+              12,
+              36
+            ],
+            [
+              60,
+              36
+            ],
+            [
+              60,
+              84
+            ],
+            [
+              12,
+              84
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              60,
+              36
+            ],
+            [
+              60,
+              12
+            ],
+            [
+              60,
+              60
+            ],
+            [
+              60,
+              84
+            ]
+          ]
+        }
+      ],
+      "uses": "經文雙方塊的折疊錨點；正文保持正立",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"90° 共邊翻折\" role=\"img\"><polygon points=\"12,36 60,36 60,84 12,84\" fill=\"currentColor\" opacity=\"0.85\"/><polygon points=\"60,36 60,12 60,60 60,84\" fill=\"currentColor\" opacity=\"0.4\"/><polyline points=\"60,36 60,84\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.4\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"90° 共邊翻折\" role=\"img\"><polygon points=\"12,36 60,36 60,84 12,84\" fill=\"currentColor\" opacity=\"0.85\"/><polygon points=\"60,36 60,12 60,60 60,84\" fill=\"currentColor\" opacity=\"0.4\"/><polyline points=\"60,36 60,84\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.4\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/><polygon points=\"12,36 60,36 60,84 12,84\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/><polygon points=\"60,36 60,12 60,60 60,84\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "E05",
+      "name": "120° 共邊翻折",
+      "why": "同一48單位雙方，固定面與旋轉面沿共同鉸線；斜投影",
+      "shapes": [
+        {
+          "kind": "poly",
+          "p": [
+            [
+              12,
+              36
+            ],
+            [
+              60,
+              36
+            ],
+            [
+              60,
+              84
+            ],
+            [
+              12,
+              84
+            ]
+          ],
+          "ink": 0.85
+        },
+        {
+          "kind": "poly",
+          "p": [
+            [
+              60,
+              36
+            ],
+            [
+              36.000000000000014,
+              15.215390309173472
+            ],
+            [
+              36.000000000000014,
+              63.21539030917347
+            ],
+            [
+              60,
+              84
+            ]
+          ],
+          "ink": 0.4
+        },
+        {
+          "kind": "line",
+          "p": [
+            [
+              60,
+              36
+            ],
+            [
+              60,
+              84
+            ]
+          ],
+          "w": 1.4,
+          "ink": 1
+        }
+      ],
+      "anchors": [
+        {
+          "points": [
+            [
+              12,
+              36
+            ],
+            [
+              60,
+              36
+            ],
+            [
+              60,
+              84
+            ],
+            [
+              12,
+              84
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              60,
+              36
+            ],
+            [
+              36.000000000000014,
+              15.215390309173472
+            ],
+            [
+              36.000000000000014,
+              63.21539030917347
+            ],
+            [
+              60,
+              84
+            ]
+          ]
+        }
+      ],
+      "uses": "經文雙方塊的折疊錨點；正文保持正立",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"120° 共邊翻折\" role=\"img\"><polygon points=\"12,36 60,36 60,84 12,84\" fill=\"currentColor\" opacity=\"0.85\"/><polygon points=\"60,36 36.000000000000014,15.215390309173472 36.000000000000014,63.21539030917347 60,84\" fill=\"currentColor\" opacity=\"0.4\"/><polyline points=\"60,36 60,84\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.4\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"120° 共邊翻折\" role=\"img\"><polygon points=\"12,36 60,36 60,84 12,84\" fill=\"currentColor\" opacity=\"0.85\"/><polygon points=\"60,36 36.000000000000014,15.215390309173472 36.000000000000014,63.21539030917347 60,84\" fill=\"currentColor\" opacity=\"0.4\"/><polyline points=\"60,36 60,84\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.4\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/><polygon points=\"12,36 60,36 60,84 12,84\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/><polygon points=\"60,36 36.000000000000014,15.215390309173472 36.000000000000014,63.21539030917347 60,84\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "E06",
+      "name": "150° 共邊翻折",
+      "why": "同一48單位雙方，固定面與旋轉面沿共同鉸線；斜投影",
+      "shapes": [
+        {
+          "kind": "poly",
+          "p": [
+            [
+              12,
+              36
+            ],
+            [
+              60,
+              36
+            ],
+            [
+              60,
+              84
+            ],
+            [
+              12,
+              84
+            ]
+          ],
+          "ink": 0.85
+        },
+        {
+          "kind": "poly",
+          "p": [
+            [
+              60,
+              36
+            ],
+            [
+              18.430780618346944,
+              24
+            ],
+            [
+              18.430780618346944,
+              72
+            ],
+            [
+              60,
+              84
+            ]
+          ],
+          "ink": 0.4
+        },
+        {
+          "kind": "line",
+          "p": [
+            [
+              60,
+              36
+            ],
+            [
+              60,
+              84
+            ]
+          ],
+          "w": 1.4,
+          "ink": 1
+        }
+      ],
+      "anchors": [
+        {
+          "points": [
+            [
+              12,
+              36
+            ],
+            [
+              60,
+              36
+            ],
+            [
+              60,
+              84
+            ],
+            [
+              12,
+              84
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              60,
+              36
+            ],
+            [
+              18.430780618346944,
+              24
+            ],
+            [
+              18.430780618346944,
+              72
+            ],
+            [
+              60,
+              84
+            ]
+          ]
+        }
+      ],
+      "uses": "經文雙方塊的折疊錨點；正文保持正立",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"150° 共邊翻折\" role=\"img\"><polygon points=\"12,36 60,36 60,84 12,84\" fill=\"currentColor\" opacity=\"0.85\"/><polygon points=\"60,36 18.430780618346944,24 18.430780618346944,72 60,84\" fill=\"currentColor\" opacity=\"0.4\"/><polyline points=\"60,36 60,84\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.4\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"150° 共邊翻折\" role=\"img\"><polygon points=\"12,36 60,36 60,84 12,84\" fill=\"currentColor\" opacity=\"0.85\"/><polygon points=\"60,36 18.430780618346944,24 18.430780618346944,72 60,84\" fill=\"currentColor\" opacity=\"0.4\"/><polyline points=\"60,36 60,84\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.4\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"1\"/><polygon points=\"12,36 60,36 60,84 12,84\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/><polygon points=\"60,36 18.430780618346944,24 18.430780618346944,72 60,84\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "E07",
+      "name": "展開雙面",
+      "why": "立體兩相鄰方形回到實尺平面",
+      "shapes": [
+        {
+          "kind": "rect",
+          "x": 12,
+          "y": 36,
+          "w": 48,
+          "h": 48,
+          "ink": 1
+        },
+        {
+          "kind": "rect",
+          "x": 60,
+          "y": 36,
+          "w": 48,
+          "h": 48,
+          "ink": 0.48
+        },
+        {
+          "kind": "line",
+          "p": [
+            [
+              60,
+              36
+            ],
+            [
+              60,
+              84
+            ]
+          ],
+          "w": 2,
+          "ink": 0.75
+        }
+      ],
+      "anchors": [
+        [
+          12,
+          36,
+          48
+        ],
+        [
+          60,
+          36,
+          48
+        ]
+      ],
+      "uses": "雙頁閱讀、摺線",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"展開雙面\" role=\"img\"><rect x=\"12\" y=\"36\" width=\"48\" height=\"48\" fill=\"currentColor\" opacity=\"1\"/><rect x=\"60\" y=\"36\" width=\"48\" height=\"48\" fill=\"currentColor\" opacity=\"0.48\"/><polyline points=\"60,36 60,84\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"0.75\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"展開雙面\" role=\"img\"><rect x=\"12\" y=\"36\" width=\"48\" height=\"48\" fill=\"currentColor\" opacity=\"1\"/><rect x=\"60\" y=\"36\" width=\"48\" height=\"48\" fill=\"currentColor\" opacity=\"0.48\"/><polyline points=\"60,36 60,84\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"0.75\"/><rect x=\"12\" y=\"36\" width=\"48\" height=\"48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/><rect x=\"60\" y=\"36\" width=\"48\" height=\"48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "E08",
+      "name": "展開三面",
+      "why": "立方體三個相鄰面展平；第三面是派生面",
+      "shapes": [
+        {
+          "kind": "rect",
+          "x": 12,
+          "y": 12,
+          "w": 48,
+          "h": 48,
+          "ink": 1
+        },
+        {
+          "kind": "rect",
+          "x": 60,
+          "y": 12,
+          "w": 48,
+          "h": 48,
+          "ink": 0.55
+        },
+        {
+          "kind": "rect",
+          "x": 12,
+          "y": 60,
+          "w": 48,
+          "h": 48,
+          "ink": 0.32
+        }
+      ],
+      "anchors": [
+        [
+          12,
+          12,
+          48
+        ],
+        [
+          60,
+          12,
+          48
+        ]
+      ],
+      "uses": "大構圖的附加內容位置",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"展開三面\" role=\"img\"><rect x=\"12\" y=\"12\" width=\"48\" height=\"48\" fill=\"currentColor\" opacity=\"1\"/><rect x=\"60\" y=\"12\" width=\"48\" height=\"48\" fill=\"currentColor\" opacity=\"0.55\"/><rect x=\"12\" y=\"60\" width=\"48\" height=\"48\" fill=\"currentColor\" opacity=\"0.32\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"展開三面\" role=\"img\"><rect x=\"12\" y=\"12\" width=\"48\" height=\"48\" fill=\"currentColor\" opacity=\"1\"/><rect x=\"60\" y=\"12\" width=\"48\" height=\"48\" fill=\"currentColor\" opacity=\"0.55\"/><rect x=\"12\" y=\"60\" width=\"48\" height=\"48\" fill=\"currentColor\" opacity=\"0.32\"/><rect x=\"12\" y=\"12\" width=\"48\" height=\"48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/><rect x=\"60\" y=\"12\" width=\"48\" height=\"48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "E09",
+      "name": "雙方階折",
+      "why": "兩個原方垂直轉折後，平面座標保留共角",
+      "shapes": [
+        {
+          "kind": "rect",
+          "x": 12,
+          "y": 12,
+          "w": 48,
+          "h": 48,
+          "ink": 1
+        },
+        {
+          "kind": "rect",
+          "x": 60,
+          "y": 60,
+          "w": 48,
+          "h": 48,
+          "ink": 0.55
+        },
+        {
+          "kind": "line",
+          "p": [
+            [
+              60,
+              12
+            ],
+            [
+              60,
+              60
+            ],
+            [
+              108,
+              60
+            ]
+          ],
+          "w": 2,
+          "ink": 0.6
+        }
+      ],
+      "anchors": [
+        [
+          12,
+          12,
+          48
+        ],
+        [
+          60,
+          60,
+          48
+        ]
+      ],
+      "uses": "折角版式、階梯留白",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"雙方階折\" role=\"img\"><rect x=\"12\" y=\"12\" width=\"48\" height=\"48\" fill=\"currentColor\" opacity=\"1\"/><rect x=\"60\" y=\"60\" width=\"48\" height=\"48\" fill=\"currentColor\" opacity=\"0.55\"/><polyline points=\"60,12 60,60 108,60\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"0.6\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"雙方階折\" role=\"img\"><rect x=\"12\" y=\"12\" width=\"48\" height=\"48\" fill=\"currentColor\" opacity=\"1\"/><rect x=\"60\" y=\"60\" width=\"48\" height=\"48\" fill=\"currentColor\" opacity=\"0.55\"/><polyline points=\"60,12 60,60 108,60\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\" opacity=\"0.6\"/><rect x=\"12\" y=\"12\" width=\"48\" height=\"48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/><rect x=\"60\" y=\"60\" width=\"48\" height=\"48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "F01",
+      "name": "同向受光",
+      "why": "同一立體的可見面按光照方向分墨",
+      "shapes": [
+        {
+          "kind": "poly",
+          "p": [
+            [
+              60,
+              38
+            ],
+            [
+              92,
+              54
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              28,
+              54
+            ]
+          ],
+          "ink": 0.15
+        },
+        {
+          "kind": "poly",
+          "p": [
+            [
+              28,
+              86
+            ],
+            [
+              60,
+              102
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              28,
+              54
+            ]
+          ],
+          "ink": 0.5
+        },
+        {
+          "kind": "poly",
+          "p": [
+            [
+              92,
+              86
+            ],
+            [
+              60,
+              102
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              92,
+              54
+            ]
+          ],
+          "ink": 0.95
+        }
+      ],
+      "anchors": [
+        {
+          "points": [
+            [
+              60,
+              38
+            ],
+            [
+              92,
+              54
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              28,
+              54
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              28,
+              86
+            ],
+            [
+              60,
+              102
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              28,
+              54
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              92,
+              86
+            ],
+            [
+              60,
+              102
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              92,
+              54
+            ]
+          ]
+        }
+      ],
+      "uses": "光照幾何參照，不替換06",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"同向受光\" role=\"img\"><polygon points=\"60,38 92,54 60,70 28,54\" fill=\"currentColor\" opacity=\"0.15\"/><polygon points=\"28,86 60,102 60,70 28,54\" fill=\"currentColor\" opacity=\"0.5\"/><polygon points=\"92,86 60,102 60,70 92,54\" fill=\"currentColor\" opacity=\"0.95\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"同向受光\" role=\"img\"><polygon points=\"60,38 92,54 60,70 28,54\" fill=\"currentColor\" opacity=\"0.15\"/><polygon points=\"28,86 60,102 60,70 28,54\" fill=\"currentColor\" opacity=\"0.5\"/><polygon points=\"92,86 60,102 60,70 92,54\" fill=\"currentColor\" opacity=\"0.95\"/><polygon points=\"60,38 92,54 60,70 28,54\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/><polygon points=\"28,86 60,102 60,70 28,54\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/><polygon points=\"92,86 60,102 60,70 92,54\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "F02",
+      "name": "平面光域",
+      "why": "兩方交域不著墨；不同墨量呈光面而非白色覆蓋",
+      "shapes": [
+        {
+          "kind": "poly",
+          "p": [
+            [
+              18,
+              18
+            ],
+            [
+              78,
+              18
+            ],
+            [
+              78,
+              48
+            ],
+            [
+              48,
+              48
+            ],
+            [
+              48,
+              78
+            ],
+            [
+              18,
+              78
+            ]
+          ],
+          "ink": 0.72
+        },
+        {
+          "kind": "poly",
+          "p": [
+            [
+              78,
+              48
+            ],
+            [
+              108,
+              48
+            ],
+            [
+              108,
+              108
+            ],
+            [
+              48,
+              108
+            ],
+            [
+              48,
+              78
+            ],
+            [
+              78,
+              78
+            ]
+          ],
+          "ink": 0.22
+        }
+      ],
+      "anchors": [
+        [
+          18,
+          18,
+          60
+        ],
+        [
+          48,
+          48,
+          60
+        ]
+      ],
+      "uses": "06 光域構成研究",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"平面光域\" role=\"img\"><polygon points=\"18,18 78,18 78,48 48,48 48,78 18,78\" fill=\"currentColor\" opacity=\"0.72\"/><polygon points=\"78,48 108,48 108,108 48,108 48,78 78,78\" fill=\"currentColor\" opacity=\"0.22\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"平面光域\" role=\"img\"><polygon points=\"18,18 78,18 78,48 48,48 48,78 18,78\" fill=\"currentColor\" opacity=\"0.72\"/><polygon points=\"78,48 108,48 108,108 48,108 48,78 78,78\" fill=\"currentColor\" opacity=\"0.22\"/><rect x=\"18\" y=\"18\" width=\"60\" height=\"60\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/><rect x=\"48\" y=\"48\" width=\"60\" height=\"60\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "F03",
+      "name": "光窗內外",
+      "why": "外方保留墨，內方透出紙色",
+      "shapes": [
+        {
+          "kind": "ring",
+          "x": 15,
+          "y": 15,
+          "w": 90,
+          "t": 23
+        }
+      ],
+      "anchors": [
+        [
+          15,
+          15,
+          90
+        ],
+        [
+          38,
+          38,
+          44
+        ]
+      ],
+      "uses": "光窗負形；非物理光線模擬",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"光窗內外\" role=\"img\"><path d=\"M15 15h90v90h-90Z M38 38h44v44h-44Z\" fill-rule=\"evenodd\" fill=\"currentColor\" opacity=\"1\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"光窗內外\" role=\"img\"><path d=\"M15 15h90v90h-90Z M38 38h44v44h-44Z\" fill-rule=\"evenodd\" fill=\"currentColor\" opacity=\"1\"/><rect x=\"15\" y=\"15\" width=\"90\" height=\"90\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/><rect x=\"38\" y=\"38\" width=\"44\" height=\"44\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "F04",
+      "name": "斜向光面",
+      "why": "立體一個面較亮，其他面為墨，保留面形",
+      "shapes": [
+        {
+          "kind": "poly",
+          "p": [
+            [
+              60,
+              38
+            ],
+            [
+              92,
+              54
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              28,
+              54
+            ]
+          ],
+          "ink": 0.12
+        },
+        {
+          "kind": "poly",
+          "p": [
+            [
+              28,
+              86
+            ],
+            [
+              60,
+              102
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              28,
+              54
+            ]
+          ],
+          "ink": 0.75
+        },
+        {
+          "kind": "poly",
+          "p": [
+            [
+              92,
+              86
+            ],
+            [
+              60,
+              102
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              92,
+              54
+            ]
+          ],
+          "ink": 0.75
+        }
+      ],
+      "anchors": [
+        {
+          "points": [
+            [
+              60,
+              38
+            ],
+            [
+              92,
+              54
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              28,
+              54
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              28,
+              86
+            ],
+            [
+              60,
+              102
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              28,
+              54
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              92,
+              86
+            ],
+            [
+              60,
+              102
+            ],
+            [
+              60,
+              70
+            ],
+            [
+              92,
+              54
+            ]
+          ]
+        }
+      ],
+      "uses": "受光平面取樣",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"斜向光面\" role=\"img\"><polygon points=\"60,38 92,54 60,70 28,54\" fill=\"currentColor\" opacity=\"0.12\"/><polygon points=\"28,86 60,102 60,70 28,54\" fill=\"currentColor\" opacity=\"0.75\"/><polygon points=\"92,86 60,102 60,70 92,54\" fill=\"currentColor\" opacity=\"0.75\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"斜向光面\" role=\"img\"><polygon points=\"60,38 92,54 60,70 28,54\" fill=\"currentColor\" opacity=\"0.12\"/><polygon points=\"28,86 60,102 60,70 28,54\" fill=\"currentColor\" opacity=\"0.75\"/><polygon points=\"92,86 60,102 60,70 92,54\" fill=\"currentColor\" opacity=\"0.75\"/><polygon points=\"60,38 92,54 60,70 28,54\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/><polygon points=\"28,86 60,102 60,70 28,54\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/><polygon points=\"92,86 60,102 60,70 92,54\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "G01",
+      "name": "橫向投影",
+      "why": "實心立方體沿平行光方向投在水平面，取上下方形聯集凸包",
+      "shapes": [
+        {
+          "kind": "poly",
+          "p": [
+            [
+              15,
+              15
+            ],
+            [
+              93,
+              15
+            ],
+            [
+              93,
+              63
+            ],
+            [
+              15,
+              63
+            ]
+          ],
+          "ink": 1
+        }
+      ],
+      "anchors": [
+        [
+          15,
+          15,
+          48
+        ],
+        [
+          45,
+          15,
+          48
+        ]
+      ],
+      "uses": "平面投影輪廓、承影面；實心投影本身無孔",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"橫向投影\" role=\"img\"><polygon points=\"15,15 93,15 93,63 15,63\" fill=\"currentColor\" opacity=\"1\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"橫向投影\" role=\"img\"><polygon points=\"15,15 93,15 93,63 15,63\" fill=\"currentColor\" opacity=\"1\"/><rect x=\"15\" y=\"15\" width=\"48\" height=\"48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/><rect x=\"45\" y=\"15\" width=\"48\" height=\"48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "G02",
+      "name": "縱向投影",
+      "why": "實心立方體沿平行光方向投在水平面，取上下方形聯集凸包",
+      "shapes": [
+        {
+          "kind": "poly",
+          "p": [
+            [
+              15,
+              15
+            ],
+            [
+              63,
+              15
+            ],
+            [
+              63,
+              93
+            ],
+            [
+              15,
+              93
+            ]
+          ],
+          "ink": 1
+        }
+      ],
+      "anchors": [
+        [
+          15,
+          15,
+          48
+        ],
+        [
+          15,
+          45,
+          48
+        ]
+      ],
+      "uses": "平面投影輪廓、承影面；實心投影本身無孔",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"縱向投影\" role=\"img\"><polygon points=\"15,15 63,15 63,93 15,93\" fill=\"currentColor\" opacity=\"1\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"縱向投影\" role=\"img\"><polygon points=\"15,15 63,15 63,93 15,93\" fill=\"currentColor\" opacity=\"1\"/><rect x=\"15\" y=\"15\" width=\"48\" height=\"48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/><rect x=\"15\" y=\"45\" width=\"48\" height=\"48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "G03",
+      "name": "斜向投影",
+      "why": "實心立方體沿平行光方向投在水平面，取上下方形聯集凸包",
+      "shapes": [
+        {
+          "kind": "poly",
+          "p": [
+            [
+              15,
+              15
+            ],
+            [
+              63,
+              15
+            ],
+            [
+              93,
+              45
+            ],
+            [
+              93,
+              93
+            ],
+            [
+              45,
+              93
+            ],
+            [
+              15,
+              63
+            ]
+          ],
+          "ink": 1
+        }
+      ],
+      "anchors": [
+        [
+          15,
+          15,
+          48
+        ],
+        [
+          45,
+          45,
+          48
+        ]
+      ],
+      "uses": "平面投影輪廓、承影面；實心投影本身無孔",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"斜向投影\" role=\"img\"><polygon points=\"15,15 63,15 93,45 93,93 45,93 15,63\" fill=\"currentColor\" opacity=\"1\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"斜向投影\" role=\"img\"><polygon points=\"15,15 63,15 93,45 93,93 45,93 15,63\" fill=\"currentColor\" opacity=\"1\"/><rect x=\"15\" y=\"15\" width=\"48\" height=\"48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/><rect x=\"45\" y=\"45\" width=\"48\" height=\"48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "G04",
+      "name": "低角度投影",
+      "why": "實心立方體沿平行光方向投在水平面，取上下方形聯集凸包",
+      "shapes": [
+        {
+          "kind": "poly",
+          "p": [
+            [
+              15,
+              15
+            ],
+            [
+              63,
+              15
+            ],
+            [
+              107,
+              31
+            ],
+            [
+              107,
+              79
+            ],
+            [
+              59,
+              79
+            ],
+            [
+              15,
+              63
+            ]
+          ],
+          "ink": 1
+        }
+      ],
+      "anchors": [
+        [
+          15,
+          15,
+          48
+        ],
+        [
+          59,
+          31,
+          48
+        ]
+      ],
+      "uses": "平面投影輪廓、承影面；實心投影本身無孔",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"低角度投影\" role=\"img\"><polygon points=\"15,15 63,15 107,31 107,79 59,79 15,63\" fill=\"currentColor\" opacity=\"1\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"低角度投影\" role=\"img\"><polygon points=\"15,15 63,15 107,31 107,79 59,79 15,63\" fill=\"currentColor\" opacity=\"1\"/><rect x=\"15\" y=\"15\" width=\"48\" height=\"48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/><rect x=\"59\" y=\"31\" width=\"48\" height=\"48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "G05",
+      "name": "投影方窗",
+      "why": "在承影輪廓中扣除共同方形；屬平面藝術轉譯，不是實心立方體的物理影子",
+      "shapes": [
+        {
+          "kind": "polycut",
+          "outer": [
+            [
+              15,
+              15
+            ],
+            [
+              63,
+              15
+            ],
+            [
+              93,
+              45
+            ],
+            [
+              93,
+              93
+            ],
+            [
+              45,
+              93
+            ],
+            [
+              15,
+              63
+            ]
+          ],
+          "inner": [
+            45,
+            45,
+            18,
+            18
+          ]
+        }
+      ],
+      "anchors": [
+        [
+          15,
+          15,
+          48
+        ],
+        [
+          45,
+          45,
+          48
+        ]
+      ],
+      "uses": "07 共同負方；保留R154",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"投影方窗\" role=\"img\"><path d=\"M15 15L63 15L93 45L93 93L45 93L15 63Z M45 45h18v18h-18Z\" fill-rule=\"evenodd\" fill=\"currentColor\" opacity=\"1\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"投影方窗\" role=\"img\"><path d=\"M15 15L63 15L93 45L93 93L45 93L15 63Z M45 45h18v18h-18Z\" fill-rule=\"evenodd\" fill=\"currentColor\" opacity=\"1\"/><rect x=\"15\" y=\"15\" width=\"48\" height=\"48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/><rect x=\"45\" y=\"45\" width=\"48\" height=\"48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "G06",
+      "name": "錯位承影",
+      "why": "原方與投影方取不相交部分；中央留白",
+      "shapes": [
+        {
+          "kind": "poly",
+          "p": [
+            [
+              15,
+              15
+            ],
+            [
+              63,
+              15
+            ],
+            [
+              63,
+              45
+            ],
+            [
+              45,
+              45
+            ],
+            [
+              45,
+              63
+            ],
+            [
+              15,
+              63
+            ]
+          ],
+          "ink": 1
+        },
+        {
+          "kind": "poly",
+          "p": [
+            [
+              63,
+              45
+            ],
+            [
+              93,
+              45
+            ],
+            [
+              93,
+              93
+            ],
+            [
+              45,
+              93
+            ],
+            [
+              45,
+              63
+            ],
+            [
+              63,
+              63
+            ]
+          ],
+          "ink": 0.5
+        }
+      ],
+      "anchors": [
+        [
+          15,
+          15,
+          48
+        ],
+        [
+          45,
+          45,
+          48
+        ]
+      ],
+      "uses": "正負投影的平面構圖",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"錯位承影\" role=\"img\"><polygon points=\"15,15 63,15 63,45 45,45 45,63 15,63\" fill=\"currentColor\" opacity=\"1\"/><polygon points=\"63,45 93,45 93,93 45,93 45,63 63,63\" fill=\"currentColor\" opacity=\"0.5\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"錯位承影\" role=\"img\"><polygon points=\"15,15 63,15 63,45 45,45 45,63 15,63\" fill=\"currentColor\" opacity=\"1\"/><polygon points=\"63,45 93,45 93,93 45,93 45,63 63,63\" fill=\"currentColor\" opacity=\"0.5\"/><rect x=\"15\" y=\"15\" width=\"48\" height=\"48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/><rect x=\"45\" y=\"45\" width=\"48\" height=\"48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\" opacity=\".8\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "H01",
+      "name": "正面＋上面",
+      "why": "正面保留完整方形，上面向後退；正文方形與上方內容錨點",
+      "shapes": [
+        {
+          "kind": "poly",
+          "p": [
+            [
+              20,
+              38
+            ],
+            [
+              84,
+              38
+            ],
+            [
+              84,
+              102
+            ],
+            [
+              20,
+              102
+            ]
+          ],
+          "ink": 0.8
+        },
+        {
+          "kind": "poly",
+          "p": [
+            [
+              20,
+              38
+            ],
+            [
+              84,
+              38
+            ],
+            [
+              102,
+              24
+            ],
+            [
+              38,
+              24
+            ]
+          ],
+          "ink": 0.35
+        }
+      ],
+      "anchors": [
+        {
+          "points": [
+            [
+              20,
+              38
+            ],
+            [
+              84,
+              38
+            ],
+            [
+              84,
+              102
+            ],
+            [
+              20,
+              102
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              20,
+              38
+            ],
+            [
+              84,
+              38
+            ],
+            [
+              102,
+              24
+            ],
+            [
+              38,
+              24
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              84,
+              38
+            ],
+            [
+              84,
+              102
+            ],
+            [
+              102,
+              88
+            ],
+            [
+              102,
+              24
+            ]
+          ]
+        }
+      ],
+      "uses": "保留原方形經文比例；由折面確定頁面錨點",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"正面＋上面\" role=\"img\"><polygon points=\"20,38 84,38 84,102 20,102\" fill=\"currentColor\" opacity=\"0.8\"/><polygon points=\"20,38 84,38 102,24 38,24\" fill=\"currentColor\" opacity=\"0.35\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"正面＋上面\" role=\"img\"><polygon points=\"20,38 84,38 84,102 20,102\" fill=\"currentColor\" opacity=\"0.8\"/><polygon points=\"20,38 84,38 102,24 38,24\" fill=\"currentColor\" opacity=\"0.35\"/><polygon points=\"20,38 84,38 84,102 20,102\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/><polygon points=\"20,38 84,38 102,24 38,24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/><polygon points=\"84,38 84,102 102,88 102,24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "H02",
+      "name": "正面＋右面",
+      "why": "正方形保持不變，右側折面承接次要圖版",
+      "shapes": [
+        {
+          "kind": "poly",
+          "p": [
+            [
+              20,
+              38
+            ],
+            [
+              84,
+              38
+            ],
+            [
+              84,
+              102
+            ],
+            [
+              20,
+              102
+            ]
+          ],
+          "ink": 0.8
+        },
+        {
+          "kind": "poly",
+          "p": [
+            [
+              84,
+              38
+            ],
+            [
+              84,
+              102
+            ],
+            [
+              108,
+              90
+            ],
+            [
+              108,
+              26
+            ]
+          ],
+          "ink": 1
+        }
+      ],
+      "anchors": [
+        {
+          "points": [
+            [
+              20,
+              38
+            ],
+            [
+              84,
+              38
+            ],
+            [
+              84,
+              102
+            ],
+            [
+              20,
+              102
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              20,
+              38
+            ],
+            [
+              84,
+              38
+            ],
+            [
+              108,
+              26
+            ],
+            [
+              44,
+              26
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              84,
+              38
+            ],
+            [
+              84,
+              102
+            ],
+            [
+              108,
+              90
+            ],
+            [
+              108,
+              26
+            ]
+          ]
+        }
+      ],
+      "uses": "保留原方形經文比例；由折面確定頁面錨點",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"正面＋右面\" role=\"img\"><polygon points=\"20,38 84,38 84,102 20,102\" fill=\"currentColor\" opacity=\"0.8\"/><polygon points=\"84,38 84,102 108,90 108,26\" fill=\"currentColor\" opacity=\"1\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"正面＋右面\" role=\"img\"><polygon points=\"20,38 84,38 84,102 20,102\" fill=\"currentColor\" opacity=\"0.8\"/><polygon points=\"84,38 84,102 108,90 108,26\" fill=\"currentColor\" opacity=\"1\"/><polygon points=\"20,38 84,38 84,102 20,102\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/><polygon points=\"20,38 84,38 108,26 44,26\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/><polygon points=\"84,38 84,102 108,90 108,26\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "H03",
+      "name": "正面＋上＋右",
+      "why": "主方形不變，另兩面為派生座標",
+      "shapes": [
+        {
+          "kind": "poly",
+          "p": [
+            [
+              20,
+              38
+            ],
+            [
+              84,
+              38
+            ],
+            [
+              84,
+              102
+            ],
+            [
+              20,
+              102
+            ]
+          ],
+          "ink": 0.8
+        },
+        {
+          "kind": "poly",
+          "p": [
+            [
+              20,
+              38
+            ],
+            [
+              84,
+              38
+            ],
+            [
+              108,
+              22
+            ],
+            [
+              44,
+              22
+            ]
+          ],
+          "ink": 0.35
+        },
+        {
+          "kind": "poly",
+          "p": [
+            [
+              84,
+              38
+            ],
+            [
+              84,
+              102
+            ],
+            [
+              108,
+              86
+            ],
+            [
+              108,
+              22
+            ]
+          ],
+          "ink": 1
+        }
+      ],
+      "anchors": [
+        {
+          "points": [
+            [
+              20,
+              38
+            ],
+            [
+              84,
+              38
+            ],
+            [
+              84,
+              102
+            ],
+            [
+              20,
+              102
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              20,
+              38
+            ],
+            [
+              84,
+              38
+            ],
+            [
+              108,
+              22
+            ],
+            [
+              44,
+              22
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              84,
+              38
+            ],
+            [
+              84,
+              102
+            ],
+            [
+              108,
+              86
+            ],
+            [
+              108,
+              22
+            ]
+          ]
+        }
+      ],
+      "uses": "保留原方形經文比例；由折面確定頁面錨點",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"正面＋上＋右\" role=\"img\"><polygon points=\"20,38 84,38 84,102 20,102\" fill=\"currentColor\" opacity=\"0.8\"/><polygon points=\"20,38 84,38 108,22 44,22\" fill=\"currentColor\" opacity=\"0.35\"/><polygon points=\"84,38 84,102 108,86 108,22\" fill=\"currentColor\" opacity=\"1\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"正面＋上＋右\" role=\"img\"><polygon points=\"20,38 84,38 84,102 20,102\" fill=\"currentColor\" opacity=\"0.8\"/><polygon points=\"20,38 84,38 108,22 44,22\" fill=\"currentColor\" opacity=\"0.35\"/><polygon points=\"84,38 84,102 108,86 108,22\" fill=\"currentColor\" opacity=\"1\"/><polygon points=\"20,38 84,38 84,102 20,102\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/><polygon points=\"20,38 84,38 108,22 44,22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/><polygon points=\"84,38 84,102 108,86 108,22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "H04",
+      "name": "上＋右，正面留空",
+      "why": "以同一立體的正面為真正不著墨的方形窗口",
+      "shapes": [
+        {
+          "kind": "poly",
+          "p": [
+            [
+              20,
+              38
+            ],
+            [
+              84,
+              38
+            ],
+            [
+              108,
+              22
+            ],
+            [
+              44,
+              22
+            ]
+          ],
+          "ink": 0.35
+        },
+        {
+          "kind": "poly",
+          "p": [
+            [
+              84,
+              38
+            ],
+            [
+              84,
+              102
+            ],
+            [
+              108,
+              86
+            ],
+            [
+              108,
+              22
+            ]
+          ],
+          "ink": 1
+        }
+      ],
+      "anchors": [
+        {
+          "points": [
+            [
+              20,
+              38
+            ],
+            [
+              84,
+              38
+            ],
+            [
+              84,
+              102
+            ],
+            [
+              20,
+              102
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              20,
+              38
+            ],
+            [
+              84,
+              38
+            ],
+            [
+              108,
+              22
+            ],
+            [
+              44,
+              22
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              84,
+              38
+            ],
+            [
+              84,
+              102
+            ],
+            [
+              108,
+              86
+            ],
+            [
+              108,
+              22
+            ]
+          ]
+        }
+      ],
+      "uses": "保留原方形經文比例；由折面確定頁面錨點",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"上＋右，正面留空\" role=\"img\"><polygon points=\"20,38 84,38 108,22 44,22\" fill=\"currentColor\" opacity=\"0.35\"/><polygon points=\"84,38 84,102 108,86 108,22\" fill=\"currentColor\" opacity=\"1\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"上＋右，正面留空\" role=\"img\"><polygon points=\"20,38 84,38 108,22 44,22\" fill=\"currentColor\" opacity=\"0.35\"/><polygon points=\"84,38 84,102 108,86 108,22\" fill=\"currentColor\" opacity=\"1\"/><polygon points=\"20,38 84,38 84,102 20,102\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/><polygon points=\"20,38 84,38 108,22 44,22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/><polygon points=\"84,38 84,102 108,86 108,22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "H05",
+      "name": "左退折面",
+      "why": "反向視點，主方形保持原比例；不等於新的版塊身份",
+      "shapes": [
+        {
+          "kind": "poly",
+          "p": [
+            [
+              42,
+              38
+            ],
+            [
+              106,
+              38
+            ],
+            [
+              106,
+              102
+            ],
+            [
+              42,
+              102
+            ]
+          ],
+          "ink": 0.8
+        },
+        {
+          "kind": "poly",
+          "p": [
+            [
+              42,
+              38
+            ],
+            [
+              106,
+              38
+            ],
+            [
+              82,
+              22
+            ],
+            [
+              18,
+              22
+            ]
+          ],
+          "ink": 0.35
+        },
+        {
+          "kind": "poly",
+          "p": [
+            [
+              42,
+              38
+            ],
+            [
+              42,
+              102
+            ],
+            [
+              18,
+              86
+            ],
+            [
+              18,
+              22
+            ]
+          ],
+          "ink": 1
+        }
+      ],
+      "anchors": [
+        {
+          "points": [
+            [
+              42,
+              38
+            ],
+            [
+              106,
+              38
+            ],
+            [
+              106,
+              102
+            ],
+            [
+              42,
+              102
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              42,
+              38
+            ],
+            [
+              106,
+              38
+            ],
+            [
+              82,
+              22
+            ],
+            [
+              18,
+              22
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              42,
+              38
+            ],
+            [
+              42,
+              102
+            ],
+            [
+              18,
+              86
+            ],
+            [
+              18,
+              22
+            ]
+          ]
+        }
+      ],
+      "uses": "保留原方形經文比例；由折面確定頁面錨點",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"左退折面\" role=\"img\"><polygon points=\"42,38 106,38 106,102 42,102\" fill=\"currentColor\" opacity=\"0.8\"/><polygon points=\"42,38 106,38 82,22 18,22\" fill=\"currentColor\" opacity=\"0.35\"/><polygon points=\"42,38 42,102 18,86 18,22\" fill=\"currentColor\" opacity=\"1\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"左退折面\" role=\"img\"><polygon points=\"42,38 106,38 106,102 42,102\" fill=\"currentColor\" opacity=\"0.8\"/><polygon points=\"42,38 106,38 82,22 18,22\" fill=\"currentColor\" opacity=\"0.35\"/><polygon points=\"42,38 42,102 18,86 18,22\" fill=\"currentColor\" opacity=\"1\"/><polygon points=\"42,38 106,38 106,102 42,102\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/><polygon points=\"42,38 106,38 82,22 18,22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/><polygon points=\"42,38 42,102 18,86 18,22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "H06",
+      "name": "窄折面",
+      "why": "同一母體、不同投影方向；形成窄側欄及深上沿",
+      "shapes": [
+        {
+          "kind": "poly",
+          "p": [
+            [
+              20,
+              38
+            ],
+            [
+              84,
+              38
+            ],
+            [
+              84,
+              102
+            ],
+            [
+              20,
+              102
+            ]
+          ],
+          "ink": 0.8
+        },
+        {
+          "kind": "poly",
+          "p": [
+            [
+              20,
+              38
+            ],
+            [
+              84,
+              38
+            ],
+            [
+              96,
+              14
+            ],
+            [
+              32,
+              14
+            ]
+          ],
+          "ink": 0.35
+        },
+        {
+          "kind": "poly",
+          "p": [
+            [
+              84,
+              38
+            ],
+            [
+              84,
+              102
+            ],
+            [
+              96,
+              78
+            ],
+            [
+              96,
+              14
+            ]
+          ],
+          "ink": 1
+        }
+      ],
+      "anchors": [
+        {
+          "points": [
+            [
+              20,
+              38
+            ],
+            [
+              84,
+              38
+            ],
+            [
+              84,
+              102
+            ],
+            [
+              20,
+              102
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              20,
+              38
+            ],
+            [
+              84,
+              38
+            ],
+            [
+              96,
+              14
+            ],
+            [
+              32,
+              14
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              84,
+              38
+            ],
+            [
+              84,
+              102
+            ],
+            [
+              96,
+              78
+            ],
+            [
+              96,
+              14
+            ]
+          ]
+        }
+      ],
+      "uses": "保留原方形經文比例；由折面確定頁面錨點",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"窄折面\" role=\"img\"><polygon points=\"20,38 84,38 84,102 20,102\" fill=\"currentColor\" opacity=\"0.8\"/><polygon points=\"20,38 84,38 96,14 32,14\" fill=\"currentColor\" opacity=\"0.35\"/><polygon points=\"84,38 84,102 96,78 96,14\" fill=\"currentColor\" opacity=\"1\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"窄折面\" role=\"img\"><polygon points=\"20,38 84,38 84,102 20,102\" fill=\"currentColor\" opacity=\"0.8\"/><polygon points=\"20,38 84,38 96,14 32,14\" fill=\"currentColor\" opacity=\"0.35\"/><polygon points=\"84,38 84,102 96,78 96,14\" fill=\"currentColor\" opacity=\"1\"/><polygon points=\"20,38 84,38 84,102 20,102\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/><polygon points=\"20,38 84,38 96,14 32,14\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/><polygon points=\"84,38 84,102 96,78 96,14\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "H07",
+      "name": "雙面角折",
+      "why": "水平斜投影，上面退化為邊；可轉成平面雙方的連續關係",
+      "shapes": [
+        {
+          "kind": "poly",
+          "p": [
+            [
+              20,
+              38
+            ],
+            [
+              84,
+              38
+            ],
+            [
+              84,
+              102
+            ],
+            [
+              20,
+              102
+            ]
+          ],
+          "ink": 0.8
+        },
+        {
+          "kind": "poly",
+          "p": [
+            [
+              84,
+              38
+            ],
+            [
+              84,
+              102
+            ],
+            [
+              114,
+              102
+            ],
+            [
+              114,
+              38
+            ]
+          ],
+          "ink": 1
+        }
+      ],
+      "anchors": [
+        {
+          "points": [
+            [
+              20,
+              38
+            ],
+            [
+              84,
+              38
+            ],
+            [
+              84,
+              102
+            ],
+            [
+              20,
+              102
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              20,
+              38
+            ],
+            [
+              84,
+              38
+            ],
+            [
+              114,
+              38
+            ],
+            [
+              50,
+              38
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              84,
+              38
+            ],
+            [
+              84,
+              102
+            ],
+            [
+              114,
+              102
+            ],
+            [
+              114,
+              38
+            ]
+          ]
+        }
+      ],
+      "uses": "保留原方形經文比例；由折面確定頁面錨點",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"雙面角折\" role=\"img\"><polygon points=\"20,38 84,38 84,102 20,102\" fill=\"currentColor\" opacity=\"0.8\"/><polygon points=\"84,38 84,102 114,102 114,38\" fill=\"currentColor\" opacity=\"1\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"雙面角折\" role=\"img\"><polygon points=\"20,38 84,38 84,102 20,102\" fill=\"currentColor\" opacity=\"0.8\"/><polygon points=\"84,38 84,102 114,102 114,38\" fill=\"currentColor\" opacity=\"1\"/><polygon points=\"20,38 84,38 84,102 20,102\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/><polygon points=\"20,38 84,38 114,38 50,38\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/><polygon points=\"84,38 84,102 114,102 114,38\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/></svg>",
+      "status": "geometric_study"
+    },
+    {
+      "id": "H08",
+      "name": "外廓與正方窗口",
+      "why": "保留外緣及完整方形留白，用於正方形內容窗而非立體圖示",
+      "shapes": [
+        {
+          "kind": "poly",
+          "p": [
+            [
+              20,
+              38
+            ],
+            [
+              84,
+              38
+            ],
+            [
+              108,
+              22
+            ],
+            [
+              44,
+              22
+            ]
+          ],
+          "ink": 0.35
+        },
+        {
+          "kind": "poly",
+          "p": [
+            [
+              84,
+              38
+            ],
+            [
+              84,
+              102
+            ],
+            [
+              108,
+              86
+            ],
+            [
+              108,
+              22
+            ]
+          ],
+          "ink": 1
+        },
+        {
+          "kind": "line",
+          "p": [
+            [
+              20,
+              38
+            ],
+            [
+              84,
+              38
+            ],
+            [
+              84,
+              102
+            ],
+            [
+              20,
+              102
+            ],
+            [
+              20,
+              38
+            ]
+          ],
+          "w": 1.4,
+          "ink": 1
+        }
+      ],
+      "anchors": [
+        {
+          "points": [
+            [
+              20,
+              38
+            ],
+            [
+              84,
+              38
+            ],
+            [
+              84,
+              102
+            ],
+            [
+              20,
+              102
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              20,
+              38
+            ],
+            [
+              84,
+              38
+            ],
+            [
+              108,
+              22
+            ],
+            [
+              44,
+              22
+            ]
+          ]
+        },
+        {
+          "points": [
+            [
+              84,
+              38
+            ],
+            [
+              84,
+              102
+            ],
+            [
+              108,
+              86
+            ],
+            [
+              108,
+              22
+            ]
+          ]
+        }
+      ],
+      "uses": "保留原方形經文比例；由折面確定頁面錨點",
+      "svg": "<svg viewBox=\"0 0 132 132\" aria-label=\"外廓與正方窗口\" role=\"img\"><polygon points=\"20,38 84,38 108,22 44,22\" fill=\"currentColor\" opacity=\"0.35\"/><polygon points=\"84,38 84,102 108,86 108,22\" fill=\"currentColor\" opacity=\"1\"/><polyline points=\"20,38 84,38 84,102 20,102 20,38\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.4\"/></svg>",
+      "anchorSvg": "<svg viewBox=\"0 0 132 132\" aria-label=\"外廓與正方窗口\" role=\"img\"><polygon points=\"20,38 84,38 108,22 44,22\" fill=\"currentColor\" opacity=\"0.35\"/><polygon points=\"84,38 84,102 108,86 108,22\" fill=\"currentColor\" opacity=\"1\"/><polyline points=\"20,38 84,38 84,102 20,102 20,38\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.4\"/><polygon points=\"20,38 84,38 84,102 20,102\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/><polygon points=\"20,38 84,38 108,22 44,22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/><polygon points=\"84,38 84,102 108,86 108,22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".9\" stroke-dasharray=\"2 2\"/></svg>",
+      "status": "geometric_study"
+    }
+  ]
+}
