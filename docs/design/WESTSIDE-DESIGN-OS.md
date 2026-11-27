@@ -132,3 +132,6 @@ Editorial Manual §9.10: square-derived geometry and contrasting thick/thin line
 
 
 Editorial Manual §9.11: the six ordinary marks and material fields share geometric behaviour at different scales; do not enlarge/repeat a mark as a background. Journal/Faith is an editorial exception; its former starfield texture is retired at user direction. Preserve historical originals, protected Water and Olive and P2. Compare actual field, crop, small seal and content before promotion.
+
+
+Editorial Manual §9.12 — Architectural origin of the two-square language (user-confirmed): the church's overhead nested-square form, outer building and central courtyard, grounds the site's paired squares, including horizontal and vertical scripture compositions. Treat nested and horizontal/vertical relationships as a common spatial grammar, not generic cards. Preserve existing church architecture, Water/Olive/Faith marks, protected fields, scripture motherforms and P2 motion. No new runtime tokens, no geometry replacement authorized by this clarification.
