@@ -1,0 +1,26 @@
+name: R163 paired-square atlas proof
+on:
+  push:
+    branches: [design/paired-square-construction-atlas-r163-20261127]
+  pull_request:
+    branches: [research/seven-realm-visual-system-r124-20261126]
+permissions:
+  contents: read
+jobs:
+  proof:
+    if: github.event_name == 'push' || github.head_ref == 'design/paired-square-construction-atlas-r163-20261127'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          npm install --no-save --package-lock=false playwright
+          npx playwright install --with-deps chromium
+      - run: |
+          python3 -m http.server 4173 --directory static >/tmp/r163-server.log 2>&1 &
+          node tests/seven-realm-r163.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: seven-realm-r163
+          path: artifacts/r163/
