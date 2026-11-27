@@ -85,3 +85,6 @@ User confirms nested → horizontal → vertical → overlap → volume → illu
 
 ## R152 — planar light and projection; shared identity origin
 User clarifies 06 and 07 must be planar graphic results derived from volume, not cubes. Replace only these two geometric proof plates with a planar tonal field and a planar projected silhouette using a common illustrative displacement. Mark 05 as volume, 06/07 planar. Add an application reference strip of current seal, actual water material, masthead and current W favicon (not a new brand identity). Record §9.17 and update OS, registry, architecture and W authority. Keep all current approved SVG assets and runtime unchanged. No favicon or masthead replacement, no art acceptance, no production merge.
+
+## R153 — interweave before vertical; negative square
+User corrects geometry only, not realm sequence. Stage 03 now interweave and 04 vertical; stage 03 four alternating crossings create a 42×42 negative square, stage 07 planar projected silhouette has a genuine transparent square cutout via evenodd. These are geometric study plates, not approved small seals or physically exact shadow simulation. All actual realm artwork, data bindings, routes, masthead and W remain untouched. Update registry, manual §9.18, OS and architecture; add static/browser assertions for ordered stages and negative figures. No production merge.

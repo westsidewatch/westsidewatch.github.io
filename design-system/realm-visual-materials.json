@@ -299,7 +299,7 @@
         ]
       },
       "sevenStageNarrative": {
-        "authority": "docs/design/WESTSIDE-EDITORIAL-MANUAL.md §9.16",
+        "authority": "docs/design/WESTSIDE-EDITORIAL-MANUAL.md §9.16, §9.18",
         "status": "user-confirmed sequence; preview implementation, not production rollout",
         "stages": [
           {
@@ -322,17 +322,20 @@
             "order": 3,
             "seal": "emmaus",
             "zh": "以馬忤斯",
-            "stage": "平面縱向",
-            "en": "Vertical",
-            "dimension": "planar"
+            "stage": "交織",
+            "en": "Interweave",
+            "dimension": "planar",
+            "designResult": "negative square formed by interwoven orthogonal bands; horizontal-to-vertical transition",
+            "figure": "negative"
           },
           {
             "order": 4,
             "seal": "olive",
             "zh": "橄欖山",
-            "stage": "交疊",
-            "en": "Overlap",
-            "dimension": "planar"
+            "stage": "平面縱向",
+            "en": "Vertical",
+            "dimension": "planar",
+            "figure": "positive"
           },
           {
             "order": 5,
@@ -358,12 +361,13 @@
             "stage": "投影",
             "en": "Projection",
             "dimension": "planar",
-            "designResult": "planar cast projection produced by volume and light"
+            "designResult": "planar projected field with square as negative space; no filled square or cube",
+            "figure": "negative"
           }
         ],
         "scriptureBinding": "Preserve existing scripture.section keys, not display ordinals",
         "proof": "static/experiments/seven-realm-r124/#seven-stages",
-        "narrative": "light falling on the church"
+        "narrative": "light falling on the church; nested → horizontal → interweave → vertical → volume → illumination → projection"
       },
       "unifiedIdentity": {
         "authority": "docs/design/WESTSIDE-EDITORIAL-MANUAL.md §9.17",

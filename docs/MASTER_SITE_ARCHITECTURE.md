@@ -455,3 +455,5 @@ Implementation scope recorded here: P2 removes its 85 ms follow delay, applies i
 See Editorial Manual §9.16: Water, Journal, Emmaus, Olive, Library, Daylight Café, Cinema. The last two are illumination then projection. This is the approved display-order direction; current production route names, data keys and scripture bindings remain stable. Implement and review in the isolated seven-realm proof before production integration.
 
 The seven stages express light falling on the church; 05 is volumetric while 06 and 07 are planar results of illumination and projection. The same origin governs seals, material fields, main masthead and favicon. See Editorial Manual §9.17; existing favicon authority and stable routes remain in force.
+
+Geometry clarification (§9.18): Emmaus is interweave (03), Olive is vertical (04), without changing realm order. Interweave and projection use the square as negative space. The remaining stages and existing route/data identities are unchanged.

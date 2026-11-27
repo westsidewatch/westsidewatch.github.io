@@ -150,3 +150,6 @@ Editorial Manual §9.16 — User-confirmed seven-stage narrative: nested (Water)
 
 
 Editorial Manual §9.17 — One origin: seven stages are the process of light falling on the church. 01–04 planar relations, 05 volume, 06 illumination and 07 projection are planar graphic results of volume and light, not additional cube illustrations. This is the shared rationale for seals, fields (Journal exception), main masthead and favicon. Keep existing W R1 authority, masthead, protected art and scripture unchanged pending specific visual approval. No new palette or fixed lighting direction.
+
+
+Editorial Manual §9.18 supersedes the third/fourth geometry assignments in §9.16: nested, horizontal, interweave, vertical, volume, illumination, projection. Realm order remains Water, Journal, Emmaus, Olive, Library, Daylight, Cinema. The horizontal-to-vertical transition passes through interweaving. Interweave and projection express the square through actual negative space, not filled squares or white overlays. Preserve existing realm IDs, routes, Scripture, accepted artwork and motion until explicit review.
