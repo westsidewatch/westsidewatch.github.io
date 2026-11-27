@@ -1,0 +1,95 @@
+{
+  "version": "R169",
+  "status": "art_candidate",
+  "basis": "R168 a00dfa87d8dc9f06e6f88db8d5691e9d44100bde",
+  "geometry": {
+    "unit": "12 equal horizontal units; vertical units same physical length",
+    "emmaus": {
+      "source": "R165 P03 / R167 E2",
+      "A": [
+        0,
+        0,
+        5
+      ],
+      "B": [
+        7,
+        7,
+        5
+      ],
+      "center": [
+        5.81,
+        5.81,
+        1.38
+      ],
+      "stage": [
+        12,
+        12
+      ],
+      "texture": "18 parallel folded edge cuts on each plate's inner side; width derived from unit; no ink in central opening",
+      "title": [
+        7,
+        0.6,
+        5
+      ],
+      "reading": [
+        0,
+        7.3,
+        5
+      ]
+    },
+    "library": {
+      "source": "R165 V01/V02 / R167 B2",
+      "A": [
+        0,
+        2.5,
+        5
+      ],
+      "B": [
+        7,
+        0,
+        5
+      ],
+      "stage": [
+        12,
+        8.2
+      ],
+      "fold": [
+        [
+          5,
+          2.5
+        ],
+        [
+          7,
+          0
+        ],
+        [
+          7,
+          5
+        ],
+        [
+          5,
+          7.5
+        ]
+      ],
+      "texture": "40 parallel engraved page edges projected between the two unfolded equal square impressions",
+      "title": [
+        0,
+        0,
+        5
+      ],
+      "issue": [
+        7,
+        5.33,
+        5
+      ]
+    }
+  },
+  "rules": {
+    "mobile": "<=740px canvas: unfold both original square impressions vertically; no forced geometric rotation or cropped content; engraving removed if edge loses meaning",
+    "type": "existing OS with actual local Bodoni SC and Chiron 200/900 subset; no font change to OS",
+    "navigation": "reuse existing small marks and crests, destination-labelled links, no arrow",
+    "content": "Luke 24 chapter excerpt and six route entries copied from static/one/luke-21-24.js; Dawn Books original folio heading and catalogue images (not asserted as Jerusalem exhibition titles)",
+    "line": "only fold/edge generated texture and functional separators on editorial extension",
+    "motherform": "original scripture.html copy, only style and body class changed; V18 remains review-only; no production use"
+  }
+}
