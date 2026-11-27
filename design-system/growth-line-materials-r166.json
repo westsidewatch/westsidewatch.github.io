@@ -17,7 +17,7 @@
       "shape": "M8 8h104v104h-104Z M34 34h52v52h-52Z",
       "why": "外方與內方套嵌成為水流的兩側與天井；原有分流刻線不重畫。",
       "use": "只在外圍或開紅海構圖兩側；中央建築、經文及禮拜文字不被紋理侵入。",
-      "ratio": "≤56%（此校樣）",
+      "ratio": "56.3%（構成容許區）",
       "opacity": [
         0.24,
         0.48,
@@ -69,9 +69,9 @@
       "asset": "materials/r127/324943.svg",
       "kind": "new_candidate",
       "shape": "M12 12L76 12L76 44L44 44L44 76L12 76Z M76 44L108 44L108 108L44 108L44 76L76 76Z",
-      "why": "雙方共同方形未著墨，兩個方形家族的刻線沿各自邊折返；交點交替讓位。",
+      "why": "由原方的邊折返，兩族刻線以共同方窗分隔；這是交織的材質裁切，並非再次描畫完整交織小章。",
       "use": "刻線以兩側書頁的外緣進入，正文及共同方窗保留純紙；不是滿版經緯網。",
-      "ratio": "≤43%（此校樣）",
+      "ratio": "42.7%（構成容許區）",
       "opacity": [
         0.18,
         0.35,
@@ -98,7 +98,7 @@
       "shape": "M34 5h52v52h-52Z M34 63h52v52h-52Z",
       "why": "縱向上下雙方形成高差與山勢；保留原有連續等高線的相位，非兩張重複貼圖。",
       "use": "上下連續裁切，人物與講道經文有清晰安全區；不改已確認的卡背或P2地形。",
-      "ratio": "≤38%（此校樣）",
+      "ratio": "37.6%（構成容許區）",
       "opacity": [
         0.22,
         0.45,
@@ -125,7 +125,7 @@
       "shape": "M16 40L40 16L104 16L80 40Z M80 40L104 16L104 80L80 104Z",
       "why": "由前後等大原方的對應邊產生上折面、側折面；刻線像書頁的層疊，不另畫無關花紋。",
       "use": "只在書脊、上沿、側沿及版芯外緣；正視方留給完整書封、同冊圖版、經文。",
-      "ratio": "≤26%（此校樣）",
+      "ratio": "21.3%（構成容許區）",
       "opacity": [
         0.18,
         0.38,
@@ -152,7 +152,7 @@
       "shape": "M12 12L76 12L76 44L44 44L44 76L12 76Z M76 44L108 44L108 108L44 108L44 76L76 76Z",
       "why": "兩個平面光域共用未著墨方形；墨量隨離共同光域的距離變化。",
       "use": "只在光域外緣；大留白供日常生活文字。R154 原藝術不替換。",
-      "ratio": "≤43%（此校樣上限）",
+      "ratio": "42.7%（構成容許區）",
       "opacity": [
         0.12,
         0.26,
@@ -179,7 +179,7 @@
       "shape": "M10 10L74 10L108 44L108 108L44 108L10 74Z M44 44H74V74H44Z",
       "why": "由光向位移生成承影輪廓，再扣去共同方形。沿投影方向以半色調及刻線表達墨影。",
       "use": "只在銀幕外的承影場與幕帳邊緣；影片16:9及字幕全部不著紋。R154 原藝術不替換。",
-      "ratio": "≤43%（此校樣上限）",
+      "ratio": "52.4%（構成容許區）",
       "opacity": [
         0.18,
         0.38,
@@ -202,5 +202,20 @@
     "line": "every rule has parent geometric edge, reading role, width and length; no ornamental untraceable stroke",
     "texture": "derive support, edge, direction, intensity and coverage from growth line; preserve protected masters and no mandatory Journal pattern",
     "approval": "candidate only; user approval before changing OS or production"
+  },
+  "contextProof": {
+    "path": "static/experiments/seven-realm-r124/r166-context.html",
+    "default": "original",
+    "candidate": "opt-in texture layers only on 03/05/06/07, existing content, layout and seals preserved",
+    "comparison": "low/mid/high and hide marks",
+    "protected": [
+      "01",
+      "02",
+      "04",
+      "P2",
+      "W",
+      "masthead",
+      "R154"
+    ]
   }
 }
