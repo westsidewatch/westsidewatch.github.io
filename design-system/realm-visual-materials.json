@@ -307,53 +307,76 @@
             "seal": "water",
             "zh": "活水堂西區",
             "stage": "套嵌",
-            "en": "Nested"
+            "en": "Nested",
+            "dimension": "planar"
           },
           {
             "order": 2,
             "seal": "journal",
             "zh": "西望",
             "stage": "平面橫向",
-            "en": "Horizontal"
+            "en": "Horizontal",
+            "dimension": "planar"
           },
           {
             "order": 3,
             "seal": "emmaus",
             "zh": "以馬忤斯",
             "stage": "平面縱向",
-            "en": "Vertical"
+            "en": "Vertical",
+            "dimension": "planar"
           },
           {
             "order": 4,
             "seal": "olive",
             "zh": "橄欖山",
             "stage": "交疊",
-            "en": "Overlap"
+            "en": "Overlap",
+            "dimension": "planar"
           },
           {
             "order": 5,
             "seal": "library",
             "zh": "黎明書局",
             "stage": "立體",
-            "en": "Volume"
+            "en": "Volume",
+            "dimension": "volume"
           },
           {
             "order": 6,
             "seal": "daylight",
             "zh": "白晝咖啡館",
             "stage": "受光",
-            "en": "Illumination"
+            "en": "Illumination",
+            "dimension": "planar",
+            "designResult": "planar light field produced by illumination of volume"
           },
           {
             "order": 7,
             "seal": "cinema",
             "zh": "天堂電影院",
             "stage": "投影",
-            "en": "Projection"
+            "en": "Projection",
+            "dimension": "planar",
+            "designResult": "planar cast projection produced by volume and light"
           }
         ],
         "scriptureBinding": "Preserve existing scripture.section keys, not display ordinals",
-        "proof": "static/experiments/seven-realm-r124/#seven-stages"
+        "proof": "static/experiments/seven-realm-r124/#seven-stages",
+        "narrative": "light falling on the church"
+      },
+      "unifiedIdentity": {
+        "authority": "docs/design/WESTSIDE-EDITORIAL-MANUAL.md §9.17",
+        "status": "user-confirmed common rationale; artwork remains under review",
+        "applications": [
+          "small seals",
+          "material fields (Journal exception)",
+          "main-site masthead",
+          "favicon"
+        ],
+        "faviconAuthority": "docs/design/WESTSIDE-W-ICON-AUTHORITY.md; preserve static/favicon.svg R1",
+        "proof": "static/experiments/seven-realm-r124/#origin-applications",
+        "principle": "derive independent visual results at each scale; no mandatory logo repetition"
       }
     }
   },

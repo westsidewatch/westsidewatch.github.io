@@ -147,3 +147,6 @@ Editorial Manual §9.15 — Light arriving: user affirms spatial projection and 
 
 
 Editorial Manual §9.16 — User-confirmed seven-stage narrative: nested (Water), horizontal (Journal), vertical (Emmaus), overlap (Olive), volume (Library), illumination (Daylight Café), projection (Cinema). Daylight sixth and Cinema seventh. Presentation order changes, stable realm IDs, scripture section bindings, scope names and URLs do not. Preview the ordered geometric sequence without replacing accepted artwork. Main-site rollout requires integration and acceptance.
+
+
+Editorial Manual §9.17 — One origin: seven stages are the process of light falling on the church. 01–04 planar relations, 05 volume, 06 illumination and 07 projection are planar graphic results of volume and light, not additional cube illustrations. This is the shared rationale for seals, fields (Journal exception), main masthead and favicon. Keep existing W R1 authority, masthead, protected art and scripture unchanged pending specific visual approval. No new palette or fixed lighting direction.
