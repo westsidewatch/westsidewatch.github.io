@@ -1,0 +1,212 @@
+{
+  "version": "R173-D",
+  "basis": "R172 236d472ec21449314db7e74fd85d37cdd288d33a",
+  "status": "scale_experiment_not_approved",
+  "canvas": {
+    "width": 1280,
+    "height": 800,
+    "units": [
+      16,
+      10
+    ],
+    "ratio": "8:5",
+    "note": "Research canvas, not approved universal grid; scale entire canvas for overview only. Responsive variants next."
+  },
+  "directions": {
+    "A": "原比例 4.5 / 25.31%",
+    "B": "擴展 5.5 / 37.81%",
+    "C": "主導 6.5 / 52.81%",
+    "D": "平衡 5.25 / 34.45%"
+  },
+  "realms": [
+    {
+      "id": "journal",
+      "n": "02",
+      "en": "The Journal",
+      "zh": "西望",
+      "scope": "journal",
+      "family": "magazine",
+      "token": "--ws-first-light",
+      "section": "02",
+      "stage": "橫向",
+      "lead": "黑夜已深，白晝將近。",
+      "ref": "Isaiah 62:6",
+      "caption": "守望城",
+      "detail": "卷首 · 專題 · 目錄",
+      "entry": "閱讀西望",
+      "image": "/images/xiwang-poster-a-night-blue-approved-p2.svg",
+      "source": "R165 P01 等大橫向雙方；原粗體信章，無固定底紋。",
+      "A": {
+        "a": [
+          0.8,
+          4.65,
+          4.5
+        ],
+        "b": [
+          5.65,
+          4.65,
+          4.5
+        ],
+        "title": [
+          0.8,
+          0.55,
+          9.3,
+          2.4
+        ],
+        "image": [
+          10.65,
+          0.6,
+          4.55,
+          8.8
+        ],
+        "text": [
+          0.8,
+          3.1,
+          9.3,
+          1.3
+        ],
+        "rule": [
+          0.8,
+          4.48,
+          10.15,
+          4.48
+        ],
+        "why": "R172 A 4.5單位雙印，原方向保留；修正刊頭與資訊分配框重疊，封面仍佔據右側整幅。",
+        "rulewhy": "保留原雙印上沿之前的分欄版線。"
+      },
+      "B": {
+        "a": [
+          0.8,
+          3.85,
+          5.5
+        ],
+        "b": [
+          6.65,
+          3.85,
+          5.5
+        ],
+        "title": [
+          0.8,
+          0.55,
+          11.35,
+          2.9
+        ],
+        "image": [
+          12.5,
+          3.85,
+          2.7,
+          5.5
+        ],
+        "text": [
+          12.5,
+          0.55,
+          2.7,
+          3
+        ],
+        "rule": [
+          0.8,
+          3.65,
+          12.15,
+          3.65
+        ],
+        "why": "雙印放大到5.5，印面上沿形成全局版心基線，封面退到外側，刊頭與短文依不同方緣落位。",
+        "rulewhy": "由A印左緣延至B印右緣，止於雙印總寬，不越入封面。"
+      },
+      "C": {
+        "a": [
+          0.8,
+          3.1,
+          6.5
+        ],
+        "b": [
+          8.7,
+          3.1,
+          6.5
+        ],
+        "title": [
+          0.8,
+          0.35,
+          7.8,
+          2.6
+        ],
+        "image": [
+          12.7,
+          0.35,
+          2.5,
+          2.65
+        ],
+        "text": [
+          9.1,
+          0.35,
+          3.2,
+          2.6
+        ],
+        "rule": [
+          0.8,
+          3,
+          15.2,
+          3
+        ],
+        "why": "雙印放大到6.5，展開為主導雙頁；封面成為卷首圖版，短文在第二方上部，保留中縫。",
+        "rulewhy": "沿兩印共同上沿延展，分離卷首和正文印面。"
+      },
+      "D": {
+        "a": [
+          0.8,
+          3.65,
+          5.25
+        ],
+        "b": [
+          6.4,
+          3.65,
+          5.25
+        ],
+        "title": [
+          0.8,
+          0.6,
+          5.25,
+          2.8
+        ],
+        "leadBox": [
+          6.4,
+          1.35,
+          5.25,
+          1.65
+        ],
+        "image": [
+          12,
+          3.65,
+          3.2,
+          3.2
+        ],
+        "text": [
+          12,
+          7.15,
+          3.2,
+          1.7
+        ],
+        "rule": [
+          12,
+          7,
+          15.2,
+          7
+        ],
+        "why": "從B收斂：兩印共享上沿和底沿；刊頭與短句分別對應A、B左邊；封面以方形原比例對齊印面上沿，策展資訊在封面下。小章貼近版號，保留雙印的主從。",
+        "rulewhy": "短版線與封面同寬，分開卷首圖版與索引；取消無功能的跨雙印長線。"
+      }
+    }
+  ],
+  "locked": "R154 exact HTML/CSS archive; original dependencies remain linked, not new art",
+  "note": "Only Journal scale study; A geometry corrected vs R172. A/B/C same title, OS type, image, content, palette; title and image positions respond to squares. No new artwork, no full site. D is a visual refinement after screenshot review, not approved.",
+  "context": {
+    "source": "r172-masters.html",
+    "unchanged": [
+      "water",
+      "emmaus",
+      "olive",
+      "library",
+      "daylight",
+      "cinema"
+    ]
+  }
+}
