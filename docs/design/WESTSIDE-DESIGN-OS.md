@@ -141,3 +141,6 @@ Editorial Manual §9.13 — Theological foundation (user-confirmed): the inaugur
 
 
 Editorial Manual §9.14 — Paired-square planar/spatial exploration: explore partial overlap as distinct from concentric nesting, preserving recognition of both squares; also explore projection and connection into a cube, in dialogue with Revelation 21:16. Mastercard is a reference for relational geometry, not a source for copied artwork or colors. Horizontal/vertical arrangements remain. No existing logo, protected marks, Scripture forms, architecture or motion replacement without acceptance.
+
+
+Editorial Manual §9.15 — Light arriving: user affirms spatial projection and its symbolism of arriving light. Relate geometric projection and directional cast shadow without conflating them; light, lit/unlit planes and shadow are meaningful spatial expressions of Watch for the Dawn (Romans 13:12; Revelation 21:23). Explore continuity with paired squares, marks, fields and architecture. No mandatory shadow effect, new palette, fixed light direction or replacement of accepted artwork.

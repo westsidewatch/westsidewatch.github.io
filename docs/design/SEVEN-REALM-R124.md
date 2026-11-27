@@ -76,3 +76,6 @@ User identifies inaugural journal special 《守望城》, the fortified city gu
 
 ## R149 — relational and spatial paired-square grammar
 User proposes two overlapping squares analogous to the relational construction of Mastercard's two circles, and a transformation from paired squares into a cube. Record §9.14 and OS/registry authority, differentiating overlap, nesting, interlocking and spatial projection. Existing artwork untouched; no logo redesign authorized or claimed. Further visual studies require isolated comparison.
+
+## R150 — arriving light and spatial projection
+User affirms spatial projection as a sign of arriving light. Record §9.15, OS and registry; distinguish geometric projection from directional illumination and cast shadows. Relate to Watch for the Dawn and scriptural light imagery. No new artwork, motion, palette or production change; further visual exploration remains pending.
