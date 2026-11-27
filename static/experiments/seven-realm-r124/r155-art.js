@@ -1,0 +1,1 @@
+(()=>{const root=document.documentElement,layout=document.getElementById('r155-layout'),unmarked=document.getElementById('r155-unmarked');function apply(){root.classList.toggle('r155-on',layout.checked);root.classList.toggle('r155-unmarked',unmarked.checked)}layout.addEventListener('change',apply);unmarked.addEventListener('change',apply);apply()})();
