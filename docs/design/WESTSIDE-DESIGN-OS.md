@@ -122,3 +122,7 @@ R133 authority correction: journal is the exact R128 bold silhouette, not R129. 
 
 
 R134: Water and Olive are the paired, immutable family references. R126 fine/small/crest originals and R132 yin/yang plates are byte-locked. The bold journal R133 remains a separate locked exception. Only Emmaus, Library, Cinema and Daylight are open for seal redesign. See Editorial Manual §9.8 correction.
+
+
+### Independent small-seal identity
+Editorial Manual §9.9: MIT Media Lab is the primary methodological reference for small-seal family identity. All seven marks must support unlabelled monochrome identification in realistic digital and proposed physical contexts. Test first-impression associations separately from learned recognition; preserve accessible names. Existing locked marks remain protected. Other §9.6 references chiefly inform editorial composition. No new runtime tokens or geometry changes.
