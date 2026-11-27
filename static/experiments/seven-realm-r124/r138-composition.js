@@ -1,0 +1,1 @@
+document.querySelectorAll('[data-geometry]').forEach(x=>x.addEventListener('change',()=>{document.querySelector('#'+x.dataset.geometry+' .folio').dataset.art096=String(x.checked)}));document.querySelectorAll('[data-unmark]').forEach(x=>x.addEventListener('change',()=>{document.querySelector('#'+x.dataset.unmark).classList.toggle('unmarked',x.checked)}));
