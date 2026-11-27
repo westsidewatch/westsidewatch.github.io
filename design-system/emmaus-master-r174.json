@@ -1,0 +1,153 @@
+{
+  "version": "R174",
+  "basis": "R172 236d472; R173 Journal archived",
+  "status": "gate_01_02_scale_candidate",
+  "canvas": {
+    "width": 1280,
+    "height": 800,
+    "units": [
+      16,
+      10
+    ],
+    "ratio": "8:5",
+    "note": "Research canvas, not approved universal grid; scale entire canvas for overview only. Responsive variants next."
+  },
+  "directions": {
+    "A": "4.65 / 27.03%",
+    "B": "5.3 / 35.11%",
+    "C": "5.6 / 39.20%"
+  },
+  "realms": [
+    {
+      "id": "emmaus",
+      "n": "03",
+      "en": "Emmaus",
+      "zh": "以馬忤斯",
+      "scope": "one",
+      "family": "bible",
+      "token": "--ws-pale-gold",
+      "section": "03",
+      "stage": "交織",
+      "lead": "凡經上所指着自己的話，都給他們講解明白了。",
+      "ref": "Luke 24:27",
+      "caption": "Luke 24",
+      "detail": "正當那日，門徒中有兩個人往一個村子去；這村子名叫以馬忤斯，離耶路撒冷約有二十五里。",
+      "entry": "讀經",
+      "source": "R165 P03 交替穿越；R167 E2 刻線（未定稿）。兩真方以閱讀展開表達交織，不冒稱本身交集。",
+      "A": {
+        "a": [
+          0.8,
+          0.65,
+          4.65
+        ],
+        "b": [
+          10.55,
+          4.55,
+          4.65
+        ],
+        "title": [
+          10.55,
+          0.65,
+          4.65,
+          3.4
+        ],
+        "text": [
+          0.8,
+          6.1,
+          5.45,
+          3.1
+        ],
+        "rule": [
+          0.8,
+          5.85,
+          5.45,
+          5.85
+        ],
+        "why": "R172 A 對角展開，印面各4.65；固定兩個閱讀域，經文在原印下沿繼續。",
+        "rulewhy": "A 印底緣的水平平移，止於原印右邊。",
+        "common": [
+          6.4,
+          3.4,
+          3.2
+        ]
+      },
+      "B": {
+        "a": [
+          0.8,
+          0.55,
+          5.3
+        ],
+        "b": [
+          9.9,
+          4.15,
+          5.3
+        ],
+        "title": [
+          9.9,
+          0.55,
+          5.3,
+          3.15
+        ],
+        "text": [
+          0.8,
+          6.15,
+          5.3,
+          3.3
+        ],
+        "rule": [
+          0.8,
+          6,
+          6.1,
+          6
+        ],
+        "common": [
+          6.675,
+          3.675,
+          2.65
+        ],
+        "why": "5.3單位雙印形成較強重力；以各印左邊為刊頭／研讀的固定軸，中央保留由半方尺度推導的空場。原交織關係單獨用構成圖示明，不以展開兩印冒稱相交。",
+        "rulewhy": "左印下沿的延續，與原印等寬，分隔經文大章和實際章節正文。"
+      },
+      "readingReference": "13",
+      "C": {
+        "a": [
+          0.8,
+          0.45,
+          5.6
+        ],
+        "b": [
+          9.6,
+          3.95,
+          5.6
+        ],
+        "title": [
+          9.6,
+          0.45,
+          5.6,
+          3.15
+        ],
+        "text": [
+          0.8,
+          6.25,
+          5.6,
+          3.25
+        ],
+        "rule": [
+          0.8,
+          6.15,
+          6.4,
+          6.15
+        ],
+        "common": [
+          6.6,
+          3.6,
+          2.8
+        ],
+        "why": "最大尺度5.6；保持兩方、文字與負空間不碰撞；驗證放大後是否犧牲刊頭與實際經文的閱讀。",
+        "rulewhy": "與左方等寬的印刷線，不越入中央空場。"
+      }
+    }
+  ],
+  "locked": "R154 exact HTML/CSS archive; original dependencies remain linked, not new art",
+  "note": "Emmaus only. The central void is a reserved square scaled from the original half-square intersection, not a literal intersection of the separated readable impressions. No new texture or seal. Journal reserved for independent issue-based editorial design."
+}
