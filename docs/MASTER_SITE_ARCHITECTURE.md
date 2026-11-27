@@ -449,3 +449,7 @@ Implementation scope recorded here: P2 removes its 85 ms follow delay, applies i
 **Authority and implementation.** This records the agreed visual plan; it does not itself claim that scenes 02–07 are implemented or visually accepted. Keep existing homepage navigation mapping and the single Westside Design OS as authorities. Surface-specific responsive layout belongs in P2-owned scoped CSS/JS; desktop and mobile may differ in composition without creating another design system. Protect typography, source content, existing approved art, the V75 water texture and the Church door sequence. For each scene: inspect current files → implement a coherent scoped change → verify actual desktop/mobile/reduced-motion and reverse-scroll behavior → run existing CI and preview inspection → merge/deploy only after acceptance.
 
 **Separate composition note.** Earlier “P2 Feature Spread” (2/3 main feature plus two stacked side windows) and “P3 Editorial Index” (left 1/3, stacked center, right 1/3) are additional page-level studies. They are **not** replacements for the seven-realm composition map above.
+
+
+### Seven-realm narrative order — design authority (2026-11-27)
+See Editorial Manual §9.16: Water, Journal, Emmaus, Olive, Library, Daylight Café, Cinema. The last two are illumination then projection. This is the approved display-order direction; current production route names, data keys and scripture bindings remain stable. Implement and review in the isolated seven-realm proof before production integration.

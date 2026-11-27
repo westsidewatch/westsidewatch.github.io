@@ -144,3 +144,6 @@ Editorial Manual §9.14 — Paired-square planar/spatial exploration: explore pa
 
 
 Editorial Manual §9.15 — Light arriving: user affirms spatial projection and its symbolism of arriving light. Relate geometric projection and directional cast shadow without conflating them; light, lit/unlit planes and shadow are meaningful spatial expressions of Watch for the Dawn (Romans 13:12; Revelation 21:23). Explore continuity with paired squares, marks, fields and architecture. No mandatory shadow effect, new palette, fixed light direction or replacement of accepted artwork.
+
+
+Editorial Manual §9.16 — User-confirmed seven-stage narrative: nested (Water), horizontal (Journal), vertical (Emmaus), overlap (Olive), volume (Library), illumination (Daylight Café), projection (Cinema). Daylight sixth and Cinema seventh. Presentation order changes, stable realm IDs, scripture section bindings, scope names and URLs do not. Preview the ordered geometric sequence without replacing accepted artwork. Main-site rollout requires integration and acceptance.

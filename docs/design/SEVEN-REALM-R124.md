@@ -79,3 +79,6 @@ User proposes two overlapping squares analogous to the relational construction o
 
 ## R150 — arriving light and spatial projection
 User affirms spatial projection as a sign of arriving light. Record §9.15, OS and registry; distinguish geometric projection from directional illumination and cast shadows. Relate to Watch for the Dawn and scriptural light imagery. No new artwork, motion, palette or production change; further visual exploration remains pending.
+
+## R151 — seven-stage sequence
+User confirms nested → horizontal → vertical → overlap → volume → illumination → projection. Retain existing first five positions; Daylight sixth, Cinema seventh. Add seven linked geometric plates to the isolated preview and reorder navigation, ordered family/impression/field/study strips and actual folios, leaving intentionally mixed recognition proof untouched. Change displayed 06/07 only; scripture source keys and URLs remain stable. Registry has explicit displayOrder and sequence, preserving historical ids. No production merge or P2 change; static sequence, not yet continuous scroll motion.

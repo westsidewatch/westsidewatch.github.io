@@ -297,6 +297,63 @@
           "no invented mandatory light direction or colors",
           "preserve accepted artwork"
         ]
+      },
+      "sevenStageNarrative": {
+        "authority": "docs/design/WESTSIDE-EDITORIAL-MANUAL.md §9.16",
+        "status": "user-confirmed sequence; preview implementation, not production rollout",
+        "stages": [
+          {
+            "order": 1,
+            "seal": "water",
+            "zh": "活水堂西區",
+            "stage": "套嵌",
+            "en": "Nested"
+          },
+          {
+            "order": 2,
+            "seal": "journal",
+            "zh": "西望",
+            "stage": "平面橫向",
+            "en": "Horizontal"
+          },
+          {
+            "order": 3,
+            "seal": "emmaus",
+            "zh": "以馬忤斯",
+            "stage": "平面縱向",
+            "en": "Vertical"
+          },
+          {
+            "order": 4,
+            "seal": "olive",
+            "zh": "橄欖山",
+            "stage": "交疊",
+            "en": "Overlap"
+          },
+          {
+            "order": 5,
+            "seal": "library",
+            "zh": "黎明書局",
+            "stage": "立體",
+            "en": "Volume"
+          },
+          {
+            "order": 6,
+            "seal": "daylight",
+            "zh": "白晝咖啡館",
+            "stage": "受光",
+            "en": "Illumination"
+          },
+          {
+            "order": 7,
+            "seal": "cinema",
+            "zh": "天堂電影院",
+            "stage": "投影",
+            "en": "Projection"
+          }
+        ],
+        "scriptureBinding": "Preserve existing scripture.section keys, not display ordinals",
+        "proof": "static/experiments/seven-realm-r124/#seven-stages"
       }
     }
   },
@@ -335,7 +392,8 @@
         "workchainMode": "reuse_existing",
         "fixedMaster": null,
         "selectionNote": "Preserve established artwork; no new material exploration for ordinary layout. Existing file list is inventory, not authority to interchange assets."
-      }
+      },
+      "displayOrder": 1
     },
     {
       "id": "02",
@@ -374,7 +432,8 @@
           "static/experiments/assets/magazine-starfield-engraving-paper-desktop-v2.svg",
           "static/experiments/assets/magazine-starfield-engraving-paper-mobile-v2.svg"
         ]
-      }
+      },
+      "displayOrder": 2
     },
     {
       "id": "03",
@@ -605,7 +664,8 @@
         "workchainMode": "establish_master",
         "fixedMaster": null,
         "selectionNote": "Current master-selection project only; after acceptance switch to accepted_fixed/reuse_fixed. Do not reopen on every page."
-      }
+      },
+      "displayOrder": 3
     },
     {
       "id": "04",
@@ -643,7 +703,8 @@
         "workchainMode": "reuse_existing",
         "fixedMaster": null,
         "selectionNote": "Preserve established artwork; no new material exploration for ordinary layout. Existing file list is inventory, not authority to interchange assets."
-      }
+      },
+      "displayOrder": 4
     },
     {
       "id": "05",
@@ -687,7 +748,59 @@
         "workchainMode": "establish_master",
         "fixedMaster": null,
         "selectionNote": "Current master-selection project only; after acceptance switch to accepted_fixed/reuse_fixed. Do not reopen on every page."
-      }
+      },
+      "displayOrder": 5
+    },
+    {
+      "id": "07",
+      "scope": "daylight-cafe",
+      "seal": "daylight",
+      "zh": "白晝咖啡館",
+      "grammar": "疏放",
+      "identityToken": "--ws-daylight-mauve",
+      "scripture": {
+        "reference": "Deuteronomy 8:8",
+        "referenceZh": "申命記 8:8",
+        "section": "07"
+      },
+      "identity": {
+        "large": "static/images/section-identity/daylight-fine.svg",
+        "small": "static/images/section-identity/daylight-small.svg",
+        "crest": "static/images/section-identity/daylight-crest.svg",
+        "sourceRef": "04e5d32243b080a9b11606eb79d007ea70b64642",
+        "geometry": "R115 左上單一敞開方窗、低矮六段 3,2,2,1,1,2 窗台，中央右上留日光；兩角相向方案淘汰",
+        "status": "research_source_review_before_promotion"
+      },
+      "texture": {
+        "territory": "日光窗格、織物、生活器物，低重心、不對稱、大留白；植物只能是生活尺度，不重複橄欖山",
+        "status": "missing_mature_svg",
+        "existingAssets": [],
+        "comment": "Generic CSS table rings exists; no dedicated mature SVG found in current inventory",
+        "selectedNewAsset": null,
+        "candidates": [
+          {
+            "title": "Ginkgo leaf pattern",
+            "url": "https://openclipart.org/detail/229466",
+            "state": "discovery_unverified",
+            "nativeSvg": null,
+            "license": null,
+            "sha256": null
+          },
+          {
+            "title": "Nine-square cucoloris",
+            "url": "https://openclipart.org/detail/311749",
+            "state": "discovery_unverified",
+            "nativeSvg": null,
+            "license": null,
+            "sha256": null
+          }
+        ],
+        "selectionRequired": true,
+        "workchainMode": "establish_master",
+        "fixedMaster": null,
+        "selectionNote": "Current master-selection project only; after acceptance switch to accepted_fixed/reuse_fixed. Do not reopen on every page."
+      },
+      "displayOrder": 6
     },
     {
       "id": "06",
@@ -745,57 +858,8 @@
         "workchainMode": "establish_master",
         "fixedMaster": null,
         "selectionNote": "Current master-selection project only; after acceptance switch to accepted_fixed/reuse_fixed. Do not reopen on every page."
-      }
-    },
-    {
-      "id": "07",
-      "scope": "daylight-cafe",
-      "seal": "daylight",
-      "zh": "白晝咖啡館",
-      "grammar": "疏放",
-      "identityToken": "--ws-daylight-mauve",
-      "scripture": {
-        "reference": "Deuteronomy 8:8",
-        "referenceZh": "申命記 8:8",
-        "section": "07"
       },
-      "identity": {
-        "large": "static/images/section-identity/daylight-fine.svg",
-        "small": "static/images/section-identity/daylight-small.svg",
-        "crest": "static/images/section-identity/daylight-crest.svg",
-        "sourceRef": "04e5d32243b080a9b11606eb79d007ea70b64642",
-        "geometry": "R115 左上單一敞開方窗、低矮六段 3,2,2,1,1,2 窗台，中央右上留日光；兩角相向方案淘汰",
-        "status": "research_source_review_before_promotion"
-      },
-      "texture": {
-        "territory": "日光窗格、織物、生活器物，低重心、不對稱、大留白；植物只能是生活尺度，不重複橄欖山",
-        "status": "missing_mature_svg",
-        "existingAssets": [],
-        "comment": "Generic CSS table rings exists; no dedicated mature SVG found in current inventory",
-        "selectedNewAsset": null,
-        "candidates": [
-          {
-            "title": "Ginkgo leaf pattern",
-            "url": "https://openclipart.org/detail/229466",
-            "state": "discovery_unverified",
-            "nativeSvg": null,
-            "license": null,
-            "sha256": null
-          },
-          {
-            "title": "Nine-square cucoloris",
-            "url": "https://openclipart.org/detail/311749",
-            "state": "discovery_unverified",
-            "nativeSvg": null,
-            "license": null,
-            "sha256": null
-          }
-        ],
-        "selectionRequired": true,
-        "workchainMode": "establish_master",
-        "fixedMaster": null,
-        "selectionNote": "Current master-selection project only; after acceptance switch to accepted_fixed/reuse_fixed. Do not reopen on every page."
-      }
+      "displayOrder": 7
     }
   ]
 }
