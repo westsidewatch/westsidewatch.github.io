@@ -1,0 +1,26 @@
+name: R169 original editorial composition proof
+on:
+  push:
+    branches: [design/growth-line-editorial-r169-20261127]
+  pull_request:
+    branches: [research/seven-realm-visual-system-r124-20261126]
+permissions:
+  contents: read
+jobs:
+  proof:
+    if: github.event_name == 'push' || github.head_ref == 'design/growth-line-editorial-r169-20261127'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          npm install --no-save --package-lock=false playwright
+          npx playwright install --with-deps chromium
+      - run: |
+          python3 -m http.server 4173 --directory static >/tmp/r169-server.log 2>&1 &
+          node tests/seven-realm-r169.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: seven-realm-r169
+          path: artifacts/r169/
