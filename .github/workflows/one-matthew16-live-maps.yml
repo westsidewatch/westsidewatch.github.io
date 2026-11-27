@@ -1,0 +1,61 @@
+name: ONE Matthew 16 published maps
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["Deploy Westside Watch", "Deploy Hugo site to Pages"]
+    types: [completed]
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  verify:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install browser
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+      - name: Verify published chapter and original maps
+        run: |
+          node --input-type=module <<'JS'
+          import { chromium } from 'playwright';
+          const browser = await chromium.launch({headless:true});
+          const page = await browser.newPage({viewport:{width:1440,height:1000},reducedMotion:'reduce'});
+          await page.addInitScript(() => {
+            localStorage.setItem('one-progress-v2',JSON.stringify({version:2,profiles:[{id:'qa',name:'ONE',activeBook:40,books:{40:{status:'active',completedChapter:15}},history:[]}],activeProfile:'qa',archives:[]}));
+          });
+          try {
+            for(let attempt=0;attempt<12;attempt++){
+              try {
+                await page.goto('https://westsidewatch.github.io/one/?book=40&chapter=16&mode=study&verify='+Date.now(),{waitUntil:'domcontentloaded',timeout:30000});
+                await page.locator('#chapter-detail[data-book="40"][data-chapter="16"]').waitFor({state:'attached',timeout:15000});
+                for(const id of ['037','071','104']){
+                  const image=page.locator('#chapter-detail .map-reading img[src$="/'+id+'.GIF"]');
+                  await image.waitFor({state:'visible',timeout:15000});
+                  await image.scrollIntoViewIfNeeded();
+                  await image.evaluate(img=>{img.loading='eager';});
+                  await page.waitForFunction(id=>{const img=document.querySelector('#chapter-detail .map-reading img[src$="/'+id+'.GIF"]');return img?.complete&&img.naturalWidth>0;},id,{timeout:25000});
+                  await image.screenshot({path:'map-'+id+'.png'});
+                }
+                if(await page.locator('#chapter-detail .map-reading').count()<4)throw Error('Original map not preserved');
+                console.log('PASS: published Matthew 16 original map plus 037, 071, 104 rendered and decoded');
+                break;
+              }catch(error){
+                console.log('Attempt '+(attempt+1)+': '+error.message);
+                if(attempt===11)throw error;
+                await new Promise(resolve=>setTimeout(resolve,15000));
+              }
+            }
+          }finally{await browser.close();}
+          JS
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: one-matthew16-live-maps
+          path: map-*.png
+          if-no-files-found: ignore
