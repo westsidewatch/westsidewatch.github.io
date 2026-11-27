@@ -135,3 +135,6 @@ Editorial Manual §9.11: the six ordinary marks and material fields share geomet
 
 
 Editorial Manual §9.12 — Architectural origin of the two-square language (user-confirmed): the church's overhead nested-square form, outer building and central courtyard, grounds the site's paired squares, including horizontal and vertical scripture compositions. Treat nested and horizontal/vertical relationships as a common spatial grammar, not generic cards. Preserve existing church architecture, Water/Olive/Faith marks, protected fields, scripture motherforms and P2 motion. No new runtime tokens, no geometry replacement authorized by this clarification.
+
+
+Editorial Manual §9.13 — Theological foundation (user-confirmed): the inaugural Westside Journal special issue is 《守望城》. The city guarded by the LORD and the New Jerusalem are the theological horizon (Psalm 127:1; Isaiah 26:1, 62:6; Revelation 21:1–3,16). The two squares symbolize New Heaven and New Earth; the church's nested square plan symbolizes the New Jerusalem. These are the project's artistic interpretations, not a biblical prescription that heaven and earth are squares. Do not invent a fixed positional/color mapping or alter accepted artwork, scripture or architecture.

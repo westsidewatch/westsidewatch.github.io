@@ -70,3 +70,6 @@ User rejects snake-like Emmaus R145 and unsatisfactory cinema; Daylight B+C is p
 
 ## R147 — architectural origin of the paired squares
 User clarifies that the church viewed from above forms two nested squares and that this architectural relationship is the reason for the site's paired-square grammar, including vertical and horizontal scripture compositions. Record in Manual §9.12, Design OS and registry. This is design authority, not a new construction plan or artwork acceptance. No SVG, material, scripture, folio or production changes.
+
+## R148 — theological origin of the Watch City and two squares
+User identifies inaugural journal special 《守望城》, the fortified city guarded by the LORD, New Heaven and New Earth, New Jerusalem; the church's square form symbolizes the Holy City, and the two squares symbolize New Heaven and New Earth respectively. Record design authority and relevant scriptural passages in Manual §9.13, OS and registry. Distinguish Scripture from symbolic interpretation; no fixed square position/color assignment, no visual or production changes.
