@@ -299,7 +299,7 @@
         ]
       },
       "sevenStageNarrative": {
-        "authority": "docs/design/WESTSIDE-EDITORIAL-MANUAL.md §9.16, §9.18",
+        "authority": "docs/design/WESTSIDE-EDITORIAL-MANUAL.md §9.16, §9.18–9.19",
         "status": "user-confirmed sequence; preview implementation, not production rollout",
         "stages": [
           {
@@ -325,8 +325,9 @@
             "stage": "交織",
             "en": "Interweave",
             "dimension": "planar",
-            "designResult": "negative square formed by interwoven orthogonal bands; horizontal-to-vertical transition",
-            "figure": "negative"
+            "designResult": "candidate from two equal square perimeters on diagonal intermediate centres, alternating interruptions, central shared square negative space; not independent warp/weft lines",
+            "figure": "negative",
+            "artStatus": "R153 rejected; R154 candidate pending review"
           },
           {
             "order": 4,
@@ -352,7 +353,8 @@
             "stage": "受光",
             "en": "Illumination",
             "dimension": "planar",
-            "designResult": "planar light field produced by illumination of volume"
+            "designResult": "planar light fields with shared central square genuinely uninked",
+            "figure": "negative"
           },
           {
             "order": 7,

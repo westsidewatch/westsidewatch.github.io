@@ -153,3 +153,6 @@ Editorial Manual §9.17 — One origin: seven stages are the process of light fa
 
 
 Editorial Manual §9.18 supersedes the third/fourth geometry assignments in §9.16: nested, horizontal, interweave, vertical, volume, illumination, projection. Realm order remains Water, Journal, Emmaus, Olive, Library, Daylight, Cinema. The horizontal-to-vertical transition passes through interweaving. Interweave and projection express the square through actual negative space, not filled squares or white overlays. Preserve existing realm IDs, routes, Scripture, accepted artwork and motion until explicit review.
+
+
+Editorial Manual §9.19: R153 interweave geometry rejected; derive stage 03 from the two squares transitioning horizontal to vertical, not an independent line grid. Stage 06 also has a truly uninked central square. Stages 03,06,07 share negative-square principle but differ in origin. R154 study only; preserve approved artwork and realm order.

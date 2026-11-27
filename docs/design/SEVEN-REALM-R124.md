@@ -88,3 +88,6 @@ User clarifies 06 and 07 must be planar graphic results derived from volume, not
 
 ## R153 — interweave before vertical; negative square
 User corrects geometry only, not realm sequence. Stage 03 now interweave and 04 vertical; stage 03 four alternating crossings create a 42×42 negative square, stage 07 planar projected silhouette has a genuine transparent square cutout via evenodd. These are geometric study plates, not approved small seals or physically exact shadow simulation. All actual realm artwork, data bindings, routes, masthead and W remain untouched. Update registry, manual §9.18, OS and architecture; add static/browser assertions for ordered stages and negative figures. No production merge.
+
+## R154 — two-square derivation and negative light field
+User rejects R153 interweave in this geometric narrative and identifies the central square of illumination as negative space too. Stage 03 candidate uses two equal 76-unit square perimeters displaced by (32,32), with alternating over/under interruptions at the two actual intersections; their shared 44-unit square is negative. Stage 06 uses two planar tonal fields with a 56-unit shared square cut out of both via evenodd. All other stages and artwork preserved. The stage 03 candidate is not declared accepted. Browser review pending.
