@@ -1,0 +1,525 @@
+{
+  "version": "R172",
+  "basis": "R171-A 214f87b265828b7eee3b941a921c2f28014890e5",
+  "status": "gate_0_1_2_candidates",
+  "canvas": {
+    "width": 1280,
+    "height": 800,
+    "units": [
+      16,
+      10
+    ],
+    "ratio": "8:5",
+    "note": "Research canvas, not approved universal grid; scale entire canvas for overview only. Responsive variants next."
+  },
+  "directions": {
+    "A": "內聚／編輯雙頁：形體聚合與非等幅重力",
+    "B": "展開／空間閱讀：由原方移動重組內容重力"
+  },
+  "realms": [
+    {
+      "id": "water",
+      "n": "01",
+      "en": "Living Water",
+      "zh": "活水堂西區",
+      "scope": "church",
+      "family": "water",
+      "token": "--ws-water",
+      "section": "01",
+      "stage": "套嵌",
+      "lead": "敬拜、讀經、禱告，在基督裡彼此建立。",
+      "ref": "John 7:38",
+      "caption": "主日崇拜 · 10:00",
+      "detail": "205 Wilmington Ave., North York",
+      "entry": "認識教會",
+      "image": "/p2-maquette/maquette-fallback.webp",
+      "shape": "M.5 .2H10.1V9.8H.5Z M4.2 3.8H6.4V6H4.2Z",
+      "source": "教會俯視外方與天井；原活水刻線 V10。",
+      "A": {
+        "a": [
+          0.7,
+          0.4,
+          3.5
+        ],
+        "b": [
+          6.4,
+          6.1,
+          3.5
+        ],
+        "title": [
+          10.2,
+          0.6,
+          5.4,
+          2.65
+        ],
+        "image": [
+          10.1,
+          3.45,
+          5.5,
+          3.6
+        ],
+        "text": [
+          10.2,
+          7.25,
+          5.4,
+          2.4
+        ],
+        "rule": [
+          10.2,
+          7.15,
+          15.6,
+          7.15
+        ],
+        "why": "外方中的兩印位於對角外緣，不侵入天井方窗；右側建築與聚會沿外方的邊外展。",
+        "rulewhy": "聚會資訊的起止沿右側內容寬度，分開建築與日程。",
+        "common": [
+          4.2,
+          3.8,
+          2.2
+        ]
+      },
+      "B": {
+        "a": [
+          0.8,
+          4.85,
+          4.3
+        ],
+        "b": [
+          10.9,
+          4.85,
+          4.3
+        ],
+        "title": [
+          0.8,
+          0.55,
+          14.4,
+          2.7
+        ],
+        "image": [
+          5.6,
+          3.65,
+          4.8,
+          3.9
+        ],
+        "text": [
+          5.6,
+          7.7,
+          4.8,
+          2
+        ],
+        "rule": [
+          5.6,
+          7.6,
+          10.4,
+          7.6
+        ],
+        "why": "套嵌關係在閱讀平面展開：兩印分居外側，中央方域保留給建築和聚會。",
+        "rulewhy": "中央方域下沿的延長線，界定建築圖與日程。",
+        "common": [
+          5.3,
+          3.65,
+          5.4
+        ]
+      }
+    },
+    {
+      "id": "journal",
+      "n": "02",
+      "en": "The Journal",
+      "zh": "西望",
+      "scope": "journal",
+      "family": "magazine",
+      "token": "--ws-first-light",
+      "section": "02",
+      "stage": "橫向",
+      "lead": "黑夜已深，白晝將近。",
+      "ref": "Isaiah 62:6",
+      "caption": "守望城",
+      "detail": "卷首 · 專題 · 目錄",
+      "entry": "閱讀西望",
+      "image": "/images/xiwang-poster-a-night-blue-approved-p2.svg",
+      "source": "R165 P01 等大橫向雙方；原粗體信章，無固定底紋。",
+      "A": {
+        "a": [
+          0.8,
+          4.65,
+          4.5
+        ],
+        "b": [
+          5.65,
+          4.65,
+          4.5
+        ],
+        "title": [
+          0.8,
+          0.6,
+          9.3,
+          2.6
+        ],
+        "image": [
+          10.65,
+          0.6,
+          4.55,
+          8.8
+        ],
+        "text": [
+          0.8,
+          3.05,
+          9.3,
+          1.45
+        ],
+        "rule": [
+          0.8,
+          4.48,
+          10.15,
+          4.48
+        ],
+        "why": "橫向雙印形成雙頁；封面與雙頁成不等幅的主從對照。",
+        "rulewhy": "雙印上沿前的版線將卷首短文和印面分開，止於第二印右邊。"
+      },
+      "B": {
+        "a": [
+          0.8,
+          4.85,
+          4.2
+        ],
+        "b": [
+          11,
+          4.85,
+          4.2
+        ],
+        "title": [
+          0.8,
+          0.55,
+          14.4,
+          2.45
+        ],
+        "image": [
+          5.4,
+          3.05,
+          5.2,
+          6.2
+        ],
+        "text": [
+          11,
+          3,
+          4.2,
+          1.6
+        ],
+        "rule": [
+          0.8,
+          4.65,
+          5,
+          4.65
+        ],
+        "why": "兩印同軸分列，封面位於擴張的中縫；不再是普通封面加卡片。",
+        "rulewhy": "左印上沿短線對應版心起點；不跨封面或中縫。"
+      }
+    },
+    {
+      "id": "emmaus",
+      "n": "03",
+      "en": "Emmaus",
+      "zh": "以馬忤斯",
+      "scope": "one",
+      "family": "bible",
+      "token": "--ws-pale-gold",
+      "section": "03",
+      "stage": "交織",
+      "lead": "凡經上所指着自己的話，都給他們講解明白了。",
+      "ref": "Luke 24:27",
+      "caption": "Luke 24",
+      "detail": "祂已經復活了。",
+      "entry": "讀經",
+      "source": "R165 P03 交替穿越；R167 E2 刻線（未定稿）。兩真方以閱讀展開表達交織，不冒稱本身交集。",
+      "A": {
+        "a": [
+          0.8,
+          0.65,
+          4.65
+        ],
+        "b": [
+          10.55,
+          4.55,
+          4.65
+        ],
+        "title": [
+          10.55,
+          0.65,
+          4.65,
+          3.4
+        ],
+        "text": [
+          0.8,
+          6.1,
+          5.45,
+          3.1
+        ],
+        "rule": [
+          0.8,
+          5.85,
+          5.45,
+          5.85
+        ],
+        "why": "兩個對角閱讀場各自沿原方邊落位，中間3.2單位的共同空場不被文字或刻線侵入。",
+        "rulewhy": "A 印底緣的水平平移，止於原印右邊。",
+        "common": [
+          6.4,
+          3.4,
+          3.2
+        ]
+      },
+      "B": {
+        "a": [
+          0.8,
+          4.65,
+          4.55
+        ],
+        "b": [
+          10.65,
+          0.6,
+          4.55
+        ],
+        "title": [
+          0.8,
+          0.6,
+          4.55,
+          3.25
+        ],
+        "text": [
+          10.65,
+          5.4,
+          4.55,
+          3.8
+        ],
+        "rule": [
+          10.65,
+          5.35,
+          15.2,
+          5.35
+        ],
+        "why": "對角展開的反向閱讀重力，刊頭與研讀沿各自原方，保留同一共同空場。",
+        "rulewhy": "B 印底緣向下留出空氣，標明右側研讀場的起點。",
+        "common": [
+          6.4,
+          3.4,
+          3.2
+        ]
+      }
+    },
+    {
+      "id": "olive",
+      "n": "04",
+      "en": "Olive Mountain",
+      "zh": "橄欖山",
+      "scope": "olive",
+      "family": "sermon",
+      "token": "--ws-olive",
+      "section": "04",
+      "stage": "縱向",
+      "lead": "信道是從聽道來的。",
+      "ref": "Romans 10:17",
+      "caption": "講員與講章",
+      "detail": "聆聽 · 研讀",
+      "entry": "聆聽講道",
+      "source": "R165 P04 縱向；原地形母本 V76 與人物圖保護。",
+      "A": {
+        "a": [
+          0.8,
+          0.55,
+          4.25
+        ],
+        "b": [
+          0.8,
+          5.2,
+          4.25
+        ],
+        "title": [
+          6.2,
+          0.55,
+          9,
+          2.7
+        ],
+        "image": [
+          6.2,
+          3.15,
+          9,
+          4.45
+        ],
+        "text": [
+          6.2,
+          7.8,
+          9,
+          1.8
+        ],
+        "rule": [
+          6.2,
+          7.68,
+          15.2,
+          7.68
+        ],
+        "why": "縱向雙印以同軸山勢作閱讀重心；人物沿右側開口排列。",
+        "rulewhy": "沿講員圖像的下緣接講章索引，非全頁分割。"
+      },
+      "B": {
+        "a": [
+          10.95,
+          0.55,
+          4.25
+        ],
+        "b": [
+          10.95,
+          5.2,
+          4.25
+        ],
+        "title": [
+          0.8,
+          0.55,
+          9.2,
+          2.7
+        ],
+        "image": [
+          0.8,
+          3.15,
+          9.2,
+          4.45
+        ],
+        "text": [
+          0.8,
+          7.8,
+          9.2,
+          1.8
+        ],
+        "rule": [
+          0.8,
+          7.68,
+          10,
+          7.68
+        ],
+        "why": "翻轉縱向閱讀重力，人物先於經文，右側兩印形成縱深。",
+        "rulewhy": "人物開口底邊延續至講章索引，不覆臉。"
+      }
+    },
+    {
+      "id": "library",
+      "n": "05",
+      "en": "Dawn Books",
+      "zh": "黎明書局",
+      "scope": "dawn-library",
+      "family": "book",
+      "token": "--ws-harvest",
+      "section": "05",
+      "stage": "立體",
+      "lead": "求你開我的眼睛，使我看出你律法中的奇妙。",
+      "ref": "Psalm 119:18",
+      "caption": "Jerusalem · 3000 Years",
+      "detail": "耶路撒冷三千年",
+      "entry": "進入書局",
+      "source": "R165 V02/V05 前後方及折面；R167 B2 頁緣刻線（未定稿）。",
+      "A": {
+        "a": [
+          0.8,
+          4.7,
+          4.5
+        ],
+        "b": [
+          10.7,
+          0.6,
+          4.5
+        ],
+        "title": [
+          0.8,
+          0.6,
+          4.5,
+          3.7
+        ],
+        "image": [
+          10.7,
+          5.55,
+          4.5,
+          2.6
+        ],
+        "text": [
+          10.7,
+          8.3,
+          4.5,
+          1.5
+        ],
+        "rule": [
+          10.7,
+          8.17,
+          15.2,
+          8.17
+        ],
+        "why": "兩個等大印面的相向垂直邊生成一整個折面，折面沒有刊頭或書封遮斷；左上書名、右下館藏各自沿印面。",
+        "rulewhy": "書封底邊下的書目版線，只佔館藏開口寬度。"
+      },
+      "B": {
+        "a": [
+          0.8,
+          0.6,
+          4.5
+        ],
+        "b": [
+          10.7,
+          4.7,
+          4.5
+        ],
+        "title": [
+          10.7,
+          0.6,
+          4.5,
+          3.7
+        ],
+        "image": [
+          0.8,
+          5.55,
+          4.5,
+          2.6
+        ],
+        "text": [
+          0.8,
+          8.3,
+          4.5,
+          1.5
+        ],
+        "rule": [
+          0.8,
+          8.17,
+          5.3,
+          8.17
+        ],
+        "why": "將前後方的錯位方向翻轉，保留整個相向邊生成的折面；圖文分置兩側閱讀空場。",
+        "rulewhy": "沿左側館藏開口底邊落位，不跨折面。"
+      }
+    },
+    {
+      "id": "daylight",
+      "n": "06",
+      "en": "Daylight Café",
+      "zh": "白晝咖啡館",
+      "scope": "daylight-cafe",
+      "family": "life",
+      "token": "--ws-daylight-mauve",
+      "section": "07",
+      "stage": "受光",
+      "locked": true,
+      "source": "R154 鎖定；兩方向保留同一原版，不以新設計替換。"
+    },
+    {
+      "id": "cinema",
+      "n": "07",
+      "en": "Paradise Cinema",
+      "zh": "天堂電影院",
+      "scope": "cinema",
+      "family": "cinema",
+      "token": "--ws-crimson",
+      "section": "06",
+      "stage": "投影",
+      "locked": true,
+      "source": "R154 鎖定；兩方向保留同一原版，不以新設計替換。"
+    }
+  ],
+  "locked": "R154 exact HTML/CSS archive; original dependencies remain linked, not new art",
+  "note": "Original Scripture Studio copy with CSS anchor positions; V18 validity unresolved. No production updates. The 8:5 canvas is a controlled composition hypothesis. Monochrome view is grayscale, not true same-ink print proof. Actual same-ink proof is a later gate."
+}
