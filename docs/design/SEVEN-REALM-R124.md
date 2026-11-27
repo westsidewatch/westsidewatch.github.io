@@ -105,3 +105,7 @@ User rejects R155 Daylight and Cinema; restore both complete folio HTML sections
 
 ## R156 change-control instruction
 User-directed mandatory change control (2026-11-27): read existing project records, Design OS, Editorial Manual and visual workchain before any design change. Preserve user-confirmed artwork and current comparison baselines; new geometric rationale does not authorize replacement. Develop alternatives separately, compare original and candidate in full editorial context, and require explicit user art approval before replacing existing seals, textures, layout, masthead or icon. Technical tests do not constitute art approval. Daylight and Cinema remain at R154; do not redesign without explicit user direction. No unilateral substitution or removal of existing material. This is a documentation-only change; no artwork, preview HTML, CSS, JS, runtime, or deployment edits.
+
+
+## R156 — restore original display baseline
+Enforce §9.20: R155 alternative composition is opt-in, not the default. Original R154 folio styling and original small seals are displayed by default; preserve candidates for comparison only. The sole HTML edit is removal of the checked attribute; no artwork, style rules, content, layout source, or stage strip is rewritten. Browser assertion requires the original baseline on initial load and after comparison. No production edits.
