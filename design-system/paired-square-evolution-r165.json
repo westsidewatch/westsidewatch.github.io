@@ -1,0 +1,390 @@
+{
+  "version": "R165",
+  "basis": "R164 b39ac8ee65a921f62ef0adb982abf84aced97f26",
+  "status": "research_not_approved",
+  "semantics": "paired squares symbolize New Heaven/New Earth; cube is artistic translation of New Jerusalem; light and shadow continue same geometry without fixed assignment",
+  "geometry": {
+    "front": [
+      16,
+      40,
+      64
+    ],
+    "back": [
+      40,
+      16,
+      64
+    ],
+    "offset": [
+      24,
+      -24
+    ],
+    "frontFace": [
+      [
+        16,
+        40
+      ],
+      [
+        80,
+        40
+      ],
+      [
+        80,
+        104
+      ],
+      [
+        16,
+        104
+      ]
+    ],
+    "backFace": [
+      [
+        40,
+        16
+      ],
+      [
+        104,
+        16
+      ],
+      [
+        104,
+        80
+      ],
+      [
+        40,
+        80
+      ]
+    ],
+    "top": [
+      [
+        16,
+        40
+      ],
+      [
+        80,
+        40
+      ],
+      [
+        104,
+        16
+      ],
+      [
+        40,
+        16
+      ]
+    ],
+    "right": [
+      [
+        80,
+        40
+      ],
+      [
+        80,
+        104
+      ],
+      [
+        104,
+        80
+      ],
+      [
+        104,
+        16
+      ]
+    ],
+    "commonSquare": [
+      40,
+      40,
+      40
+    ]
+  },
+  "entries": [
+    {
+      "id": "P01",
+      "source": "II01",
+      "title": "相遇 · 雙方相接",
+      "art": "<path d=\"M8 32h50v50h-50Z\"/><path d=\"M62 32h50v50h-50Z\"/>",
+      "anchors": [
+        [
+          8,
+          32,
+          50
+        ],
+        [
+          62,
+          32,
+          50
+        ]
+      ],
+      "reason": "原兩方等大，水平起點；不賦予位置神學身份。",
+      "crest": null,
+      "status": "research_not_approved",
+      "svg": "<svg viewBox=\"0 0 120 120\" width=\"120\" height=\"120\" aria-label=\"P01\"><g fill=\"currentColor\"><path d=\"M8 32h50v50h-50Z\"/><path d=\"M62 32h50v50h-50Z\"/></g></svg>",
+      "yang": "<svg viewBox=\"0 0 144 144\" width=\"120\" height=\"120\" aria-label=\"P01 陽文\"><rect x=\"3\" y=\"3\" width=\"138\" height=\"138\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\"/><g transform=\"translate(12 12)\" fill=\"currentColor\"><path d=\"M8 32h50v50h-50Z\"/><path d=\"M62 32h50v50h-50Z\"/></g></svg>",
+      "yin": "<svg viewBox=\"0 0 144 144\" width=\"120\" height=\"120\" aria-label=\"P01 陰文\"><defs><mask id=\"r165-137\" maskUnits=\"userSpaceOnUse\" x=\"0\" y=\"0\" width=\"144\" height=\"144\" style=\"mask-type:luminance\"><rect width=\"144\" height=\"144\" fill=\"white\"/><g color=\"black\" fill=\"black\" transform=\"translate(12 12)\"><path d=\"M8 32h50v50h-50Z\"/><path d=\"M62 32h50v50h-50Z\"/></g></mask></defs><rect x=\"2\" y=\"2\" width=\"140\" height=\"140\" fill=\"currentColor\" mask=\"url(#r165-137)\"/></svg>"
+    },
+    {
+      "id": "P02",
+      "source": "II02",
+      "title": "相遇 · 交集開窗",
+      "art": "<path d=\"M12 12H76V44H44V76H12Z M76 44H108V108H44V76H76Z\"/>",
+      "anchors": [
+        [
+          12,
+          12,
+          64
+        ],
+        [
+          44,
+          44,
+          64
+        ]
+      ],
+      "reason": "等大原方斜向移動，扣除共同32×32方形；不填白。",
+      "crest": "M0 16V0H16V8H32V16Z",
+      "status": "research_not_approved",
+      "svg": "<svg viewBox=\"0 0 120 120\" width=\"120\" height=\"120\" aria-label=\"P02\"><g fill=\"currentColor\"><path d=\"M12 12H76V44H44V76H12Z M76 44H108V108H44V76H76Z\"/></g></svg>",
+      "yang": "<svg viewBox=\"0 0 144 144\" width=\"120\" height=\"120\" aria-label=\"P02 陽文\"><rect x=\"3\" y=\"3\" width=\"138\" height=\"138\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\"/><g transform=\"translate(12 12)\" fill=\"currentColor\"><path d=\"M12 12H76V44H44V76H12Z M76 44H108V108H44V76H76Z\"/></g></svg>",
+      "yin": "<svg viewBox=\"0 0 144 144\" width=\"120\" height=\"120\" aria-label=\"P02 陰文\"><defs><mask id=\"r165-140\" maskUnits=\"userSpaceOnUse\" x=\"0\" y=\"0\" width=\"144\" height=\"144\" style=\"mask-type:luminance\"><rect width=\"144\" height=\"144\" fill=\"white\"/><g color=\"black\" fill=\"black\" transform=\"translate(12 12)\"><path d=\"M12 12H76V44H44V76H12Z M76 44H108V108H44V76H76Z\"/></g></mask></defs><rect x=\"2\" y=\"2\" width=\"140\" height=\"140\" fill=\"currentColor\" mask=\"url(#r165-140)\"/></svg>"
+    },
+    {
+      "id": "P03",
+      "source": "II03",
+      "title": "相遇 · 交替穿越",
+      "art": "<path d=\"M12 12L76 12L76 76L53 76\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\"/><path d=\"M35 76L12 76L12 12\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\"/><path d=\"M44 44L67 44\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\"/><path d=\"M85 44L108 44L108 108L44 108L44 44\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\"/>",
+      "anchors": [
+        [
+          12,
+          12,
+          64
+        ],
+        [
+          44,
+          44,
+          64
+        ]
+      ],
+      "reason": "兩個交點各自連續一方，另一方中斷；相同線重使兩方視覺平等。",
+      "crest": null,
+      "status": "research_not_approved",
+      "svg": "<svg viewBox=\"0 0 120 120\" width=\"120\" height=\"120\" aria-label=\"P03\"><g fill=\"currentColor\"><path d=\"M12 12L76 12L76 76L53 76\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\"/><path d=\"M35 76L12 76L12 12\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\"/><path d=\"M44 44L67 44\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\"/><path d=\"M85 44L108 44L108 108L44 108L44 44\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\"/></g></svg>",
+      "yang": "<svg viewBox=\"0 0 144 144\" width=\"120\" height=\"120\" aria-label=\"P03 陽文\"><rect x=\"3\" y=\"3\" width=\"138\" height=\"138\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\"/><g transform=\"translate(12 12)\" fill=\"currentColor\"><path d=\"M12 12L76 12L76 76L53 76\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\"/><path d=\"M35 76L12 76L12 12\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\"/><path d=\"M44 44L67 44\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\"/><path d=\"M85 44L108 44L108 108L44 108L44 44\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\"/></g></svg>",
+      "yin": "<svg viewBox=\"0 0 144 144\" width=\"120\" height=\"120\" aria-label=\"P03 陰文\"><defs><mask id=\"r165-143\" maskUnits=\"userSpaceOnUse\" x=\"0\" y=\"0\" width=\"144\" height=\"144\" style=\"mask-type:luminance\"><rect width=\"144\" height=\"144\" fill=\"white\"/><g color=\"black\" fill=\"black\" transform=\"translate(12 12)\"><path d=\"M12 12L76 12L76 76L53 76\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\"/><path d=\"M35 76L12 76L12 12\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\"/><path d=\"M44 44L67 44\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\"/><path d=\"M85 44L108 44L108 108L44 108L44 44\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\"/></g></mask></defs><rect x=\"2\" y=\"2\" width=\"140\" height=\"140\" fill=\"currentColor\" mask=\"url(#r165-143)\"/></svg>"
+    },
+    {
+      "id": "P04",
+      "source": "II01",
+      "title": "相遇 · 縱向釋放",
+      "art": "<path d=\"M35 8h50v50h-50Z\"/><path d=\"M35 62h50v50h-50Z\"/>",
+      "anchors": [
+        [
+          35,
+          8,
+          50
+        ],
+        [
+          35,
+          62,
+          50
+        ]
+      ],
+      "reason": "回到等大雙方的縱向構成；對應既定03至04順序。",
+      "crest": null,
+      "status": "research_not_approved",
+      "svg": "<svg viewBox=\"0 0 120 120\" width=\"120\" height=\"120\" aria-label=\"P04\"><g fill=\"currentColor\"><path d=\"M35 8h50v50h-50Z\"/><path d=\"M35 62h50v50h-50Z\"/></g></svg>",
+      "yang": "<svg viewBox=\"0 0 144 144\" width=\"120\" height=\"120\" aria-label=\"P04 陽文\"><rect x=\"3\" y=\"3\" width=\"138\" height=\"138\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\"/><g transform=\"translate(12 12)\" fill=\"currentColor\"><path d=\"M35 8h50v50h-50Z\"/><path d=\"M35 62h50v50h-50Z\"/></g></svg>",
+      "yin": "<svg viewBox=\"0 0 144 144\" width=\"120\" height=\"120\" aria-label=\"P04 陰文\"><defs><mask id=\"r165-146\" maskUnits=\"userSpaceOnUse\" x=\"0\" y=\"0\" width=\"144\" height=\"144\" style=\"mask-type:luminance\"><rect width=\"144\" height=\"144\" fill=\"white\"/><g color=\"black\" fill=\"black\" transform=\"translate(12 12)\"><path d=\"M35 8h50v50h-50Z\"/><path d=\"M35 62h50v50h-50Z\"/></g></mask></defs><rect x=\"2\" y=\"2\" width=\"140\" height=\"140\" fill=\"currentColor\" mask=\"url(#r165-146)\"/></svg>"
+    },
+    {
+      "id": "V01",
+      "source": "III02",
+      "title": "聖城 · 前後雙方",
+      "art": "<path d=\"M16 40L80 40L80 104L16 104L16 40\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"5\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\"/><path d=\"M40 16L104 16L104 80L40 80L40 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"5\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\"/><path d=\"M16 40L40 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\"/><path d=\"M80 40L104 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\"/><path d=\"M80 104L104 80\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\"/><path d=\"M16 104L40 80\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\"/>",
+      "anchors": [
+        [
+          16,
+          40,
+          64
+        ],
+        [
+          40,
+          16,
+          64
+        ]
+      ],
+      "reason": "同一立方體的前後面在斜投影中保持完整等大正方形；連接對應頂點。不是兩個平面本身形成完整立方體。",
+      "crest": null,
+      "status": "research_not_approved",
+      "svg": "<svg viewBox=\"0 0 120 120\" width=\"120\" height=\"120\" aria-label=\"V01\"><g fill=\"currentColor\"><path d=\"M16 40L80 40L80 104L16 104L16 40\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"5\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\"/><path d=\"M40 16L104 16L104 80L40 80L40 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"5\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\"/><path d=\"M16 40L40 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\"/><path d=\"M80 40L104 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\"/><path d=\"M80 104L104 80\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\"/><path d=\"M16 104L40 80\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\"/></g></svg>",
+      "yang": "<svg viewBox=\"0 0 144 144\" width=\"120\" height=\"120\" aria-label=\"V01 陽文\"><rect x=\"3\" y=\"3\" width=\"138\" height=\"138\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\"/><g transform=\"translate(12 12)\" fill=\"currentColor\"><path d=\"M16 40L80 40L80 104L16 104L16 40\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"5\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\"/><path d=\"M40 16L104 16L104 80L40 80L40 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"5\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\"/><path d=\"M16 40L40 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\"/><path d=\"M80 40L104 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\"/><path d=\"M80 104L104 80\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\"/><path d=\"M16 104L40 80\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\"/></g></svg>",
+      "yin": "<svg viewBox=\"0 0 144 144\" width=\"120\" height=\"120\" aria-label=\"V01 陰文\"><defs><mask id=\"r165-149\" maskUnits=\"userSpaceOnUse\" x=\"0\" y=\"0\" width=\"144\" height=\"144\" style=\"mask-type:luminance\"><rect width=\"144\" height=\"144\" fill=\"white\"/><g color=\"black\" fill=\"black\" transform=\"translate(12 12)\"><path d=\"M16 40L80 40L80 104L16 104L16 40\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"5\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\"/><path d=\"M40 16L104 16L104 80L40 80L40 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"5\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\"/><path d=\"M16 40L40 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\"/><path d=\"M80 40L104 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\"/><path d=\"M80 104L104 80\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\"/><path d=\"M16 104L40 80\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\"/></g></mask></defs><rect x=\"2\" y=\"2\" width=\"140\" height=\"140\" fill=\"currentColor\" mask=\"url(#r165-149)\"/></svg>"
+    },
+    {
+      "id": "V02",
+      "source": "III02",
+      "title": "聖城 · 折面留方",
+      "art": "<path d=\"M16 40L80 40L104 16L40 16Z\"/><path d=\"M80 40L80 104L104 80L104 16Z\"/>",
+      "anchors": [
+        [
+          16,
+          40,
+          64
+        ],
+        [
+          40,
+          16,
+          64
+        ]
+      ],
+      "reason": "兩個原方的對應邊形成派生面，正視方不著墨。",
+      "crest": "M0 16V8H8V0H32V16Z",
+      "status": "research_not_approved",
+      "svg": "<svg viewBox=\"0 0 120 120\" width=\"120\" height=\"120\" aria-label=\"V02\"><g fill=\"currentColor\"><path d=\"M16 40L80 40L104 16L40 16Z\"/><path d=\"M80 40L80 104L104 80L104 16Z\"/></g></svg>",
+      "yang": "<svg viewBox=\"0 0 144 144\" width=\"120\" height=\"120\" aria-label=\"V02 陽文\"><rect x=\"3\" y=\"3\" width=\"138\" height=\"138\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\"/><g transform=\"translate(12 12)\" fill=\"currentColor\"><path d=\"M16 40L80 40L104 16L40 16Z\"/><path d=\"M80 40L80 104L104 80L104 16Z\"/></g></svg>",
+      "yin": "<svg viewBox=\"0 0 144 144\" width=\"120\" height=\"120\" aria-label=\"V02 陰文\"><defs><mask id=\"r165-152\" maskUnits=\"userSpaceOnUse\" x=\"0\" y=\"0\" width=\"144\" height=\"144\" style=\"mask-type:luminance\"><rect width=\"144\" height=\"144\" fill=\"white\"/><g color=\"black\" fill=\"black\" transform=\"translate(12 12)\"><path d=\"M16 40L80 40L104 16L40 16Z\"/><path d=\"M80 40L80 104L104 80L104 16Z\"/></g></mask></defs><rect x=\"2\" y=\"2\" width=\"140\" height=\"140\" fill=\"currentColor\" mask=\"url(#r165-152)\"/></svg>"
+    },
+    {
+      "id": "V03",
+      "source": "III03",
+      "title": "聖城 · 外廓雙窗",
+      "art": "<path d=\"M16 40L40 16L104 16L104 80L80 104L16 104Z M16 40h64v64h-64Z M40 16h64v64h-64Z\" fill-rule=\"evenodd\"/>",
+      "anchors": [
+        [
+          16,
+          40,
+          64
+        ],
+        [
+          40,
+          16,
+          64
+        ]
+      ],
+      "reason": "外廓以兩方生成，雙方互相扣形；交集重新著墨。採 evenodd，因此共同交集不是透明。",
+      "crest": null,
+      "status": "research_not_approved",
+      "svg": "<svg viewBox=\"0 0 120 120\" width=\"120\" height=\"120\" aria-label=\"V03\"><g fill=\"currentColor\"><path d=\"M16 40L40 16L104 16L104 80L80 104L16 104Z M16 40h64v64h-64Z M40 16h64v64h-64Z\" fill-rule=\"evenodd\"/></g></svg>",
+      "yang": "<svg viewBox=\"0 0 144 144\" width=\"120\" height=\"120\" aria-label=\"V03 陽文\"><rect x=\"3\" y=\"3\" width=\"138\" height=\"138\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\"/><g transform=\"translate(12 12)\" fill=\"currentColor\"><path d=\"M16 40L40 16L104 16L104 80L80 104L16 104Z M16 40h64v64h-64Z M40 16h64v64h-64Z\" fill-rule=\"evenodd\"/></g></svg>",
+      "yin": "<svg viewBox=\"0 0 144 144\" width=\"120\" height=\"120\" aria-label=\"V03 陰文\"><defs><mask id=\"r165-155\" maskUnits=\"userSpaceOnUse\" x=\"0\" y=\"0\" width=\"144\" height=\"144\" style=\"mask-type:luminance\"><rect width=\"144\" height=\"144\" fill=\"white\"/><g color=\"black\" fill=\"black\" transform=\"translate(12 12)\"><path d=\"M16 40L40 16L104 16L104 80L80 104L16 104Z M16 40h64v64h-64Z M40 16h64v64h-64Z\" fill-rule=\"evenodd\"/></g></mask></defs><rect x=\"2\" y=\"2\" width=\"140\" height=\"140\" fill=\"currentColor\" mask=\"url(#r165-155)\"/></svg>"
+    },
+    {
+      "id": "V04",
+      "source": "III03",
+      "title": "聖城 · 共同空場",
+      "art": "<path d=\"M16 40L40 16L104 16L104 80L80 104L16 104Z M40 40H80V80H40Z\" fill-rule=\"evenodd\"/>",
+      "anchors": [
+        [
+          16,
+          40,
+          64
+        ],
+        [
+          40,
+          16,
+          64
+        ]
+      ],
+      "reason": "同一外廓，只有前後方的交集不著墨；共同方窗為40×40。",
+      "crest": "M0 16V8H8V0H32V16Z",
+      "status": "research_not_approved",
+      "svg": "<svg viewBox=\"0 0 120 120\" width=\"120\" height=\"120\" aria-label=\"V04\"><g fill=\"currentColor\"><path d=\"M16 40L40 16L104 16L104 80L80 104L16 104Z M40 40H80V80H40Z\" fill-rule=\"evenodd\"/></g></svg>",
+      "yang": "<svg viewBox=\"0 0 144 144\" width=\"120\" height=\"120\" aria-label=\"V04 陽文\"><rect x=\"3\" y=\"3\" width=\"138\" height=\"138\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\"/><g transform=\"translate(12 12)\" fill=\"currentColor\"><path d=\"M16 40L40 16L104 16L104 80L80 104L16 104Z M40 40H80V80H40Z\" fill-rule=\"evenodd\"/></g></svg>",
+      "yin": "<svg viewBox=\"0 0 144 144\" width=\"120\" height=\"120\" aria-label=\"V04 陰文\"><defs><mask id=\"r165-158\" maskUnits=\"userSpaceOnUse\" x=\"0\" y=\"0\" width=\"144\" height=\"144\" style=\"mask-type:luminance\"><rect width=\"144\" height=\"144\" fill=\"white\"/><g color=\"black\" fill=\"black\" transform=\"translate(12 12)\"><path d=\"M16 40L40 16L104 16L104 80L80 104L16 104Z M40 40H80V80H40Z\" fill-rule=\"evenodd\"/></g></mask></defs><rect x=\"2\" y=\"2\" width=\"140\" height=\"140\" fill=\"currentColor\" mask=\"url(#r165-158)\"/></svg>"
+    },
+    {
+      "id": "V05",
+      "source": "III04",
+      "title": "聖城 · 邊厚與空間",
+      "art": "<path d=\"M16 40L80 40L104 16L40 16Z\"/><path d=\"M16 40L16 104L80 104L104 80L104 16L40 16L16 40\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"6\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\"/><path d=\"M80 40L104 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\"/>",
+      "anchors": [
+        [
+          16,
+          40,
+          64
+        ],
+        [
+          40,
+          16,
+          64
+        ]
+      ],
+      "reason": "由同一前後方的外緣與折線決定厚薄，避免另畫無關立體符號。",
+      "crest": null,
+      "status": "research_not_approved",
+      "svg": "<svg viewBox=\"0 0 120 120\" width=\"120\" height=\"120\" aria-label=\"V05\"><g fill=\"currentColor\"><path d=\"M16 40L80 40L104 16L40 16Z\"/><path d=\"M16 40L16 104L80 104L104 80L104 16L40 16L16 40\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"6\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\"/><path d=\"M80 40L104 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\"/></g></svg>",
+      "yang": "<svg viewBox=\"0 0 144 144\" width=\"120\" height=\"120\" aria-label=\"V05 陽文\"><rect x=\"3\" y=\"3\" width=\"138\" height=\"138\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\"/><g transform=\"translate(12 12)\" fill=\"currentColor\"><path d=\"M16 40L80 40L104 16L40 16Z\"/><path d=\"M16 40L16 104L80 104L104 80L104 16L40 16L16 40\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"6\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\"/><path d=\"M80 40L104 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\"/></g></svg>",
+      "yin": "<svg viewBox=\"0 0 144 144\" width=\"120\" height=\"120\" aria-label=\"V05 陰文\"><defs><mask id=\"r165-161\" maskUnits=\"userSpaceOnUse\" x=\"0\" y=\"0\" width=\"144\" height=\"144\" style=\"mask-type:luminance\"><rect width=\"144\" height=\"144\" fill=\"white\"/><g color=\"black\" fill=\"black\" transform=\"translate(12 12)\"><path d=\"M16 40L80 40L104 16L40 16Z\"/><path d=\"M16 40L16 104L80 104L104 80L104 16L40 16L16 40\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"6\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\"/><path d=\"M80 40L104 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\" stroke-linejoin=\"miter\" stroke-linecap=\"butt\"/></g></mask></defs><rect x=\"2\" y=\"2\" width=\"140\" height=\"140\" fill=\"currentColor\" mask=\"url(#r165-161)\"/></svg>"
+    },
+    {
+      "id": "L01",
+      "source": "IV01",
+      "title": "光 · 受光面與天井",
+      "art": "<path d=\"M16 40L80 40L104 16L40 16Z\"/><path d=\"M80 40L104 16V80L80 104Z\"/>",
+      "anchors": [
+        [
+          16,
+          40,
+          64
+        ],
+        [
+          40,
+          16,
+          64
+        ]
+      ],
+      "reason": "與V02同形，作未著墨正面之光域參照；不是新的白晝章。",
+      "crest": null,
+      "status": "research_not_approved",
+      "svg": "<svg viewBox=\"0 0 120 120\" width=\"120\" height=\"120\" aria-label=\"L01\"><g fill=\"currentColor\"><path d=\"M16 40L80 40L104 16L40 16Z\"/><path d=\"M80 40L104 16V80L80 104Z\"/></g></svg>",
+      "yang": "<svg viewBox=\"0 0 144 144\" width=\"120\" height=\"120\" aria-label=\"L01 陽文\"><rect x=\"3\" y=\"3\" width=\"138\" height=\"138\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\"/><g transform=\"translate(12 12)\" fill=\"currentColor\"><path d=\"M16 40L80 40L104 16L40 16Z\"/><path d=\"M80 40L104 16V80L80 104Z\"/></g></svg>",
+      "yin": "<svg viewBox=\"0 0 144 144\" width=\"120\" height=\"120\" aria-label=\"L01 陰文\"><defs><mask id=\"r165-164\" maskUnits=\"userSpaceOnUse\" x=\"0\" y=\"0\" width=\"144\" height=\"144\" style=\"mask-type:luminance\"><rect width=\"144\" height=\"144\" fill=\"white\"/><g color=\"black\" fill=\"black\" transform=\"translate(12 12)\"><path d=\"M16 40L80 40L104 16L40 16Z\"/><path d=\"M80 40L104 16V80L80 104Z\"/></g></mask></defs><rect x=\"2\" y=\"2\" width=\"140\" height=\"140\" fill=\"currentColor\" mask=\"url(#r165-164)\"/></svg>"
+    },
+    {
+      "id": "L02",
+      "source": "IV03",
+      "title": "影 · 共同投影方窗",
+      "art": "<path d=\"M16 40L40 16L104 16L104 80L80 104L16 104Z M40 40H80V80H40Z\" fill-rule=\"evenodd\"/>",
+      "anchors": [
+        [
+          16,
+          40,
+          64
+        ],
+        [
+          40,
+          16,
+          64
+        ]
+      ],
+      "reason": "承影面藝術轉譯沿用同一前後方投影座標。實心立方體物理陰影本身無方孔。",
+      "crest": null,
+      "status": "research_not_approved",
+      "svg": "<svg viewBox=\"0 0 120 120\" width=\"120\" height=\"120\" aria-label=\"L02\"><g fill=\"currentColor\"><path d=\"M16 40L40 16L104 16L104 80L80 104L16 104Z M40 40H80V80H40Z\" fill-rule=\"evenodd\"/></g></svg>",
+      "yang": "<svg viewBox=\"0 0 144 144\" width=\"120\" height=\"120\" aria-label=\"L02 陽文\"><rect x=\"3\" y=\"3\" width=\"138\" height=\"138\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\"/><g transform=\"translate(12 12)\" fill=\"currentColor\"><path d=\"M16 40L40 16L104 16L104 80L80 104L16 104Z M40 40H80V80H40Z\" fill-rule=\"evenodd\"/></g></svg>",
+      "yin": "<svg viewBox=\"0 0 144 144\" width=\"120\" height=\"120\" aria-label=\"L02 陰文\"><defs><mask id=\"r165-167\" maskUnits=\"userSpaceOnUse\" x=\"0\" y=\"0\" width=\"144\" height=\"144\" style=\"mask-type:luminance\"><rect width=\"144\" height=\"144\" fill=\"white\"/><g color=\"black\" fill=\"black\" transform=\"translate(12 12)\"><path d=\"M16 40L40 16L104 16L104 80L80 104L16 104Z M40 40H80V80H40Z\" fill-rule=\"evenodd\"/></g></mask></defs><rect x=\"2\" y=\"2\" width=\"140\" height=\"140\" fill=\"currentColor\" mask=\"url(#r165-167)\"/></svg>"
+    },
+    {
+      "id": "L03",
+      "source": "IV04",
+      "title": "影 · 一側刻線",
+      "art": "<defs><mask id=\"LOCAL\" maskUnits=\"userSpaceOnUse\" x=\"0\" y=\"0\" width=\"120\" height=\"120\" style=\"mask-type:luminance\"><rect width=\"120\" height=\"120\" fill=\"white\"/><path d=\"M54 0L-66 120\" stroke=\"black\" stroke-width=\"2.4\"/><path d=\"M63 0L-57 120\" stroke=\"black\" stroke-width=\"2.4\"/><path d=\"M72 0L-48 120\" stroke=\"black\" stroke-width=\"2.4\"/><path d=\"M81 0L-39 120\" stroke=\"black\" stroke-width=\"2.4\"/><path d=\"M90 0L-30 120\" stroke=\"black\" stroke-width=\"2.4\"/></mask></defs><g mask=\"url(#LOCAL)\"><path d=\"M16 40L40 16L104 16L104 80L80 104L16 104Z M40 40H80V80H40Z\" fill-rule=\"evenodd\"/></g>",
+      "anchors": [
+        [
+          16,
+          40,
+          64
+        ],
+        [
+          40,
+          16,
+          64
+        ]
+      ],
+      "reason": "刻線與位移方向平行；只在承影一側疏放，方窗保持真正透明。",
+      "crest": null,
+      "status": "research_not_approved",
+      "svg": "<svg viewBox=\"0 0 120 120\" width=\"120\" height=\"120\" aria-label=\"L03\"><g fill=\"currentColor\"><defs><mask id=\"r165-168-local\" maskUnits=\"userSpaceOnUse\" x=\"0\" y=\"0\" width=\"120\" height=\"120\" style=\"mask-type:luminance\"><rect width=\"120\" height=\"120\" fill=\"white\"/><path d=\"M54 0L-66 120\" stroke=\"black\" stroke-width=\"2.4\"/><path d=\"M63 0L-57 120\" stroke=\"black\" stroke-width=\"2.4\"/><path d=\"M72 0L-48 120\" stroke=\"black\" stroke-width=\"2.4\"/><path d=\"M81 0L-39 120\" stroke=\"black\" stroke-width=\"2.4\"/><path d=\"M90 0L-30 120\" stroke=\"black\" stroke-width=\"2.4\"/></mask></defs><g mask=\"url(#r165-168-local)\"><path d=\"M16 40L40 16L104 16L104 80L80 104L16 104Z M40 40H80V80H40Z\" fill-rule=\"evenodd\"/></g></g></svg>",
+      "yang": "<svg viewBox=\"0 0 144 144\" width=\"120\" height=\"120\" aria-label=\"L03 陽文\"><rect x=\"3\" y=\"3\" width=\"138\" height=\"138\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\"/><g transform=\"translate(12 12)\" fill=\"currentColor\"><defs><mask id=\"r165-169-local\" maskUnits=\"userSpaceOnUse\" x=\"0\" y=\"0\" width=\"120\" height=\"120\" style=\"mask-type:luminance\"><rect width=\"120\" height=\"120\" fill=\"white\"/><path d=\"M54 0L-66 120\" stroke=\"black\" stroke-width=\"2.4\"/><path d=\"M63 0L-57 120\" stroke=\"black\" stroke-width=\"2.4\"/><path d=\"M72 0L-48 120\" stroke=\"black\" stroke-width=\"2.4\"/><path d=\"M81 0L-39 120\" stroke=\"black\" stroke-width=\"2.4\"/><path d=\"M90 0L-30 120\" stroke=\"black\" stroke-width=\"2.4\"/></mask></defs><g mask=\"url(#r165-169-local)\"><path d=\"M16 40L40 16L104 16L104 80L80 104L16 104Z M40 40H80V80H40Z\" fill-rule=\"evenodd\"/></g></g></svg>",
+      "yin": "<svg viewBox=\"0 0 144 144\" width=\"120\" height=\"120\" aria-label=\"L03 陰文\"><defs><mask id=\"r165-170\" maskUnits=\"userSpaceOnUse\" x=\"0\" y=\"0\" width=\"144\" height=\"144\" style=\"mask-type:luminance\"><rect width=\"144\" height=\"144\" fill=\"white\"/><g color=\"black\" fill=\"black\" transform=\"translate(12 12)\"><defs><mask id=\"r165-170-local\" maskUnits=\"userSpaceOnUse\" x=\"0\" y=\"0\" width=\"120\" height=\"120\" style=\"mask-type:luminance\"><rect width=\"120\" height=\"120\" fill=\"white\"/><path d=\"M54 0L-66 120\" stroke=\"black\" stroke-width=\"2.4\"/><path d=\"M63 0L-57 120\" stroke=\"black\" stroke-width=\"2.4\"/><path d=\"M72 0L-48 120\" stroke=\"black\" stroke-width=\"2.4\"/><path d=\"M81 0L-39 120\" stroke=\"black\" stroke-width=\"2.4\"/><path d=\"M90 0L-30 120\" stroke=\"black\" stroke-width=\"2.4\"/></mask></defs><g mask=\"url(#r165-170-local)\"><path d=\"M16 40L40 16L104 16L104 80L80 104L16 104Z M40 40H80V80H40Z\" fill-rule=\"evenodd\"/></g></g></mask></defs><rect x=\"2\" y=\"2\" width=\"140\" height=\"140\" fill=\"currentColor\" mask=\"url(#r165-170)\"/></svg>"
+    }
+  ],
+  "note": "L01/V02 and L02/V04 deliberately share geometry for causal comparison; no claim of twelve distinct topologies. Crest studies are provisional."
+}
