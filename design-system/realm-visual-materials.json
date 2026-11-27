@@ -88,8 +88,7 @@
       "lockedCores": [
         "water",
         "journal:R128-bold",
-        "olive",
-        "library:R135-square"
+        "olive"
       ],
       "status": "confirmed rule; R132 isolated candidate plates not accepted masters",
       "proof": "static/experiments/seven-realm-r124/#seal-impressions",
@@ -105,15 +104,16 @@
         "impressions/olive-yang.svg": "67ca29a258fe608da3e9d96d56a8270e949004dd",
         "impressions/water-yin.svg": "4ba516008eae8407b87b20a09942d32471ba45cc",
         "impressions/olive-yin.svg": "2dfd7939a04a57b14d9da9a03c7cdf0629cecfe0",
-        "library-small.svg": "0d8f647d6a80ddc154e2bd138723ec1703a4c02b",
-        "impressions/library-yang.svg": "fdf4da634ce4c47d91fff8ffe3a6c9cc52b2bf40",
-        "impressions/library-yin.svg": "9b1ad71d61eac9ad66a54b55c597a6b3cef6cc34",
         "journal-small.svg": "0d334ad80bfdbe7cc32579eb50f043a67d97d32b",
         "impressions/journal-yang.svg": "8a8762096890faeab21eeb593b369511fb1bd696",
-        "impressions/journal-yin.svg": "3868c045123f5154e1ff437360212fff8e20a231"
+        "impressions/journal-yin.svg": "3868c045123f5154e1ff437360212fff8e20a231",
+        "r140-archive/library-small.svg": "0d8f647d6a80ddc154e2bd138723ec1703a4c02b",
+        "r140-archive/library-yang.svg": "fdf4da634ce4c47d91fff8ffe3a6c9cc52b2bf40",
+        "r140-archive/library-yin.svg": "9b1ad71d61eac9ad66a54b55c597a6b3cef6cc34"
       },
       "openSealStudies": [
         "emmaus",
+        "library",
         "cinema",
         "daylight"
       ],
@@ -146,6 +146,15 @@
         "physicalContexts": "proposed validation scenarios, not installations",
         "status": "user-confirmed criterion; recognition tests pending",
         "accessibility": "retain accessible names and functional text"
+      },
+      "geometryAuthority": {
+        "authority": "docs/design/WESTSIDE-EDITORIAL-MANUAL.md §9.10",
+        "ordinary": [
+          "square-derived geometry",
+          "contrasting thick/thin lines"
+        ],
+        "exception": "journal:R128-bold",
+        "library": "R135 square-core reference preserved; candidate redesign explicitly reopened"
       }
     }
   },

@@ -126,3 +126,6 @@ R134: Water and Olive are the paired, immutable family references. R126 fine/sma
 
 ### Independent small-seal identity
 Editorial Manual §9.9: MIT Media Lab is the primary methodological reference for small-seal family identity. All seven marks must support unlabelled monochrome identification in realistic digital and proposed physical contexts. Test first-impression associations separately from learned recognition; preserve accessible names. Existing locked marks remain protected. Other §9.6 references chiefly inform editorial composition. No new runtime tokens or geometry changes.
+
+
+Editorial Manual §9.10: square-derived geometry and contrasting thick/thin lines are mandatory for the six ordinary small seals. Bold Faith is the only exception. Library square-core is reopened for study at user direction; preserve exact R135 reference in the archive. Water, Olive and Faith remain locked. No production adoption until review.
