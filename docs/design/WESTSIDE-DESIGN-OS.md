@@ -156,3 +156,6 @@ Editorial Manual §9.18 supersedes the third/fourth geometry assignments in §9.
 
 
 Editorial Manual §9.19: R153 interweave geometry rejected; derive stage 03 from the two squares transitioning horizontal to vertical, not an independent line grid. Stage 06 also has a truly uninked central square. Stages 03,06,07 share negative-square principle but differ in origin. R154 study only; preserve approved artwork and realm order.
+
+
+Editorial Manual §9.20 — User-directed mandatory change control (2026-11-27): read existing project records, Design OS, Editorial Manual and visual workchain before any design change. Preserve user-confirmed artwork and current comparison baselines; new geometric rationale does not authorize replacement. Develop alternatives separately, compare original and candidate in full editorial context, and require explicit user art approval before replacing existing seals, textures, layout, masthead or icon. Technical tests do not constitute art approval. Daylight and Cinema remain at R154; do not redesign without explicit user direction. No unilateral substitution or removal of existing material.

@@ -384,6 +384,17 @@
         "proof": "static/experiments/seven-realm-r124/#origin-applications",
         "principle": "derive independent visual results at each scale; no mandatory logo repetition"
       }
+    },
+    "userDirectedArtChangeControl": {
+      "authority": "docs/design/WESTSIDE-EDITORIAL-MANUAL.md §9.20",
+      "mandatory": true,
+      "rule": "User-directed mandatory change control (2026-11-27): read existing project records, Design OS, Editorial Manual and visual workchain before any design change. Preserve user-confirmed artwork and current comparison baselines; new geometric rationale does not authorize replacement. Develop alternatives separately, compare original and candidate in full editorial context, and require explicit user art approval before replacing existing seals, textures, layout, masthead or icon. Technical tests do not constitute art approval. Daylight and Cinema remain at R154; do not redesign without explicit user direction. No unilateral substitution or removal of existing material.",
+      "lockedRealms": [
+        "daylight",
+        "cinema"
+      ],
+      "baseline": "8065be972b772a96696b63e73d21087ab49e2d43",
+      "promotionRequiresExplicitUserApproval": true
     }
   },
   "realms": [

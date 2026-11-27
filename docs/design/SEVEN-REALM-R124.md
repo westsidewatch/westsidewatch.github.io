@@ -101,3 +101,7 @@ R155 refinement: replace the approximation of the R154 comparison with the exact
 
 ## R156 — user-directed exact R154 restoration of 06/07
 User rejects R155 Daylight and Cinema; restore both complete folio HTML sections byte-for-byte from R154 (8065be972b772a96696b63e73d21087ab49e2d43), remove their R155 CSS overrides and new plate candidates, and show only existing R154 yin/yang artwork. Original stage 06 and 07 are unchanged; all existing assets preserved. Other five folio HTML sections remain byte-identical to R155. No production changes. Add regression assertions against reappearance of R155 fields, contextual marks and plates for 06/07. Do not redesign these two without user direction.
+
+
+## R156 change-control instruction
+User-directed mandatory change control (2026-11-27): read existing project records, Design OS, Editorial Manual and visual workchain before any design change. Preserve user-confirmed artwork and current comparison baselines; new geometric rationale does not authorize replacement. Develop alternatives separately, compare original and candidate in full editorial context, and require explicit user art approval before replacing existing seals, textures, layout, masthead or icon. Technical tests do not constitute art approval. Daylight and Cinema remain at R154; do not redesign without explicit user direction. No unilateral substitution or removal of existing material. This is a documentation-only change; no artwork, preview HTML, CSS, JS, runtime, or deployment edits.
