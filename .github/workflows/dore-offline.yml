@@ -1,0 +1,140 @@
+name: Dore Offline unit checks
+on:
+  pull_request:
+    paths:
+      - 'local/dore-offline/**'
+      - '.github/workflows/dore-offline.yml'
+  workflow_dispatch:
+    inputs:
+      export_usb:
+        description: 'Export a portable USB archive only after the browser gate passes'
+        type: boolean
+        default: false
+permissions:
+  contents: read
+jobs:
+  unit:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.8'
+      - run: python -m unittest discover -s local/dore-offline -p 'test_*.py' -v
+      - run: bash -n local/dore-offline/Launch.command
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.26.x'
+          cache: false
+      - run: go test local/dore-offline/native/main.go local/dore-offline/native/main_test.go
+      - run: bash -n local/dore-offline/Present.command
+      - name: Cross-build both Mac architectures
+        run: |
+          for arch in amd64 arm64; do
+            GOOS=darwin GOARCH=$arch CGO_ENABLED=0 go build -trimpath -o "/tmp/dore-offline-$arch" local/dore-offline/native/main.go
+            file "/tmp/dore-offline-$arch"
+          done
+  site-snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: '0.167.0'
+          extended: true
+      - name: Build a real snapshot from this checkout
+        shell: bash
+        run: |
+          set -euo pipefail
+          home="$RUNNER_TEMP/dore-snapshot"
+          mkdir -p "$home"
+          git clone --no-checkout --local "$GITHUB_WORKSPACE" "$home/source"
+          python3 local/dore-offline/offline.py --home "$home" update "$GITHUB_SHA"
+          python3 local/dore-offline/offline.py --home "$home" verify
+          site="$home/versions/$GITHUB_SHA/site"
+          test -s "$site/p2/church-tour.html"
+          test -s "$site/p2/church-tour.js"
+          test -s "$site/p2/living-water.html"
+          test -s "$site/dawn-library/canonical-index.json"
+          python3 - "$home/versions/$GITHUB_SHA/audit.json" <<'PY'
+          import json,sys
+          from pathlib import Path
+          d=json.loads(Path(sys.argv[1]).read_text())
+          assert d['church_quality']['status']=='configured', d['church_quality']
+          print('Real snapshot validated; external URL hosts:',len(d['external_url_mentions']))
+          PY
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.26.x'
+          cache: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Real portable export and native offline browser gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          home="$RUNNER_TEMP/dore-snapshot"
+          python3 local/dore-offline/offline.py --home "$home" export "$RUNNER_TEMP/USB Presentation"
+          test -s "$RUNNER_TEMP/USB Presentation/runtime/dore-offline-amd64"
+          test -s "$RUNNER_TEMP/USB Presentation/runtime/dore-offline-arm64"
+          go build -o "$RUNNER_TEMP/dore-native" local/dore-offline/native/main.go
+          "$RUNNER_TEMP/dore-native" -no-open -home "$RUNNER_TEMP/USB Presentation/portable-data" > "$RUNNER_TEMP/dore-http.log" 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          for i in $(seq 1 20); do curl -fsS http://127.0.0.1:8765/ -o /dev/null && break; sleep 1; done
+          npm install --no-save --no-package-lock playwright
+          npx playwright install chromium
+          DORE_BROWSER_REPORT="$RUNNER_TEMP/dore-browser.json" node local/dore-offline/browser_gate.cjs
+      - name: Package only on explicit request
+        if: github.event_name == 'workflow_dispatch' && inputs.export_usb == true
+        run: tar -czf "$RUNNER_TEMP/Dore-Offline-USB.tar.gz" -C "$RUNNER_TEMP" 'USB Presentation'
+      - name: Publish requested portable package
+        if: github.event_name == 'workflow_dispatch' && inputs.export_usb == true
+        uses: actions/upload-artifact@v4
+        with:
+          name: Dore-Offline-USB
+          path: ${{ runner.temp }}/Dore-Offline-USB.tar.gz
+          retention-days: 7
+      - name: Preserve audit only (not a site ZIP)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dore-offline-real-snapshot-audit
+          path: |
+            ${{ runner.temp }}/dore-snapshot/versions/*/audit.json
+            ${{ runner.temp }}/dore-browser.json
+            ${{ runner.temp }}/dore-http.log
+          if-no-files-found: warn
+  intel-macos-runtime:
+    runs-on: macos-15-intel
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.26.x'
+          cache: false
+      - name: Run native Intel Mac executable from a simulated USB folder
+        shell: bash
+        run: |
+          set -euo pipefail
+          usb="$RUNNER_TEMP/USB Presentation"
+          sha=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+          site="$usb/portable-data/versions/$sha/site"
+          mkdir -p "$site/one" "$site/olive" "$usb/runtime"
+          printf '%s\n' "$sha" > "$usb/portable-data/current"
+          printf '<h1>Westside Watch</h1>' > "$site/index.html"
+          cp "$site/index.html" "$site/one/index.html"
+          cp "$site/index.html" "$site/olive/index.html"
+          CGO_ENABLED=0 go build -trimpath -o "$usb/runtime/dore-offline-amd64" local/dore-offline/native/main.go
+          file "$usb/runtime/dore-offline-amd64"
+          "$usb/runtime/dore-offline-amd64" -no-open -home "$usb/portable-data" &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          for i in $(seq 1 15); do curl -fsS http://127.0.0.1:8765/ -o "$RUNNER_TEMP/native.html" && break; sleep 1; done
+          grep -q 'Westside Watch' "$RUNNER_TEMP/native.html"
+          curl -fsS http://127.0.0.1:8765/one/ | grep -q 'Westside Watch'
