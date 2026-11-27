@@ -36,9 +36,11 @@ jobs:
                 await page.locator('#chapter-detail[data-book="40"][data-chapter="16"]').waitFor({state:'attached',timeout:15000});
                 for(const id of ['037','071','104']){
                   const image=page.locator('#chapter-detail .map-reading img[src$="/'+id+'.GIF"]');
-                  await image.waitFor({state:'visible',timeout:15000});
-                  await image.scrollIntoViewIfNeeded();
+                  await image.waitFor({state:'attached',timeout:15000});
                   await image.evaluate(img=>{img.loading='eager';});
+                  await page.locator('[data-reading-mode="study"]').click();
+                  await image.waitFor({state:'visible',timeout:25000});
+                  await image.scrollIntoViewIfNeeded();
                   await page.waitForFunction(id=>{const img=document.querySelector('#chapter-detail .map-reading img[src$="/'+id+'.GIF"]');return img?.complete&&img.naturalWidth>0;},id,{timeout:25000});
                   await image.screenshot({path:'map-'+id+'.png'});
                 }
