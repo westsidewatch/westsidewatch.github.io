@@ -118,10 +118,10 @@
         "daylight"
       ],
       "directionAccepted": {
-        "emmaus": "R145 two alternating crossings, simplified orthogonal paths; R130 and R144 references preserved",
+        "emmaus": "R145 snake rejected; R146 perpendicular warp/weft, four alternating crossings, no winding animal contour",
         "library": "controlled square winding; approved method, R142 A remains reference",
-        "daylight": "B+C must combine actual C descending nested square turns and B ascending right returns/low support; R144 not a synthesis; R145 candidate",
-        "cinema": "geometric opening, R144 candidate"
+        "daylight": "R145 B+C promising but needs refinement; preserved current, compare field and controlled alternate",
+        "cinema": "R145 not satisfactory; R146 paired curtain negative aperture and native halftone field"
       },
       "primaryMethodReference": {
         "name": "MIT Media Lab / Pentagram",
@@ -159,6 +159,54 @@
         "exception": "journal:R128-bold",
         "library": "R135 square-core reference preserved; candidate redesign explicitly reopened"
       }
+    },
+    "sealMaterialKinship": {
+      "authority": "docs/design/WESTSIDE-EDITORIAL-MANUAL.md §9.11",
+      "exception": "journal/Faith: no mandatory texture; former starfield retired",
+      "protected": [
+        "water",
+        "olive"
+      ],
+      "principle": "same geometric behaviour at micro/meso/macro; no repeated enlarged logo; existing native artwork crop/scale/density only pending approval",
+      "studies": [
+        {
+          "seal": "water",
+          "verb": "分流",
+          "source": "/experiments/assets/living-water-contour-engraving-v10.svg",
+          "status": "protected reference"
+        },
+        {
+          "seal": "emmaus",
+          "verb": "交織",
+          "source": "materials/r127/324943.svg",
+          "status": "candidate crop; visual and rights acceptance pending"
+        },
+        {
+          "seal": "olive",
+          "verb": "山勢",
+          "source": "/images/p2-realms/v15/04-olive-terrain-continuous-mother-v76.svg",
+          "status": "protected reference"
+        },
+        {
+          "seal": "library",
+          "verb": "卷入",
+          "source": "/images/p2-dawn-letterpress-engraving-v1.svg",
+          "status": "candidate crop; visual and rights acceptance pending"
+        },
+        {
+          "seal": "cinema",
+          "verb": "開啟",
+          "source": "materials/116845.svg",
+          "status": "candidate crop; visual and rights acceptance pending"
+        },
+        {
+          "seal": "daylight",
+          "verb": "光熱",
+          "source": "materials/r135/190229.svg",
+          "status": "candidate crop; visual and rights acceptance pending"
+        }
+      ],
+      "proof": "static/experiments/seven-realm-r124/#material-kinship"
     }
   },
   "realms": [
@@ -219,21 +267,22 @@
         "status": "research_source_review_before_promotion"
       },
       "texture": {
-        "territory": "晨星、天光、夜與紙、星野疏密及編輯折線；不把底紋改作普通波線",
-        "status": "existing_preserve",
-        "existingAssets": [
+        "territory": "西望為多頁編輯刊物，以內容、刊頭、版式與字體構成身份；星光底紋作廢，不設全刊固定大面積底紋",
+        "status": "retired_by_user",
+        "existingAssets": [],
+        "comment": "User explicitly retired starfield; historical files retained, not active material.",
+        "selectedNewAsset": null,
+        "candidates": [],
+        "selectionRequired": false,
+        "workchainMode": "editorial_content_first",
+        "fixedMaster": null,
+        "selectionNote": "Do not introduce a mandatory replacement texture.",
+        "archivedAssets": [
           "static/experiments/assets/magazine-starfield-engraving-night-desktop-v2.svg",
           "static/experiments/assets/magazine-starfield-engraving-night-mobile-v2.svg",
           "static/experiments/assets/magazine-starfield-engraving-paper-desktop-v2.svg",
           "static/experiments/assets/magazine-starfield-engraving-paper-mobile-v2.svg"
-        ],
-        "comment": "Existing assets; no magazine redesign or replacement until requested",
-        "selectedNewAsset": null,
-        "candidates": [],
-        "selectionRequired": false,
-        "workchainMode": "reuse_existing",
-        "fixedMaster": null,
-        "selectionNote": "Preserve established artwork; no new material exploration for ordinary layout."
+        ]
       }
     },
     {

@@ -129,3 +129,6 @@ Editorial Manual §9.9: MIT Media Lab is the primary methodological reference fo
 
 
 Editorial Manual §9.10: square-derived geometry and contrasting thick/thin lines are mandatory for the six ordinary small seals. Bold Faith is the only exception. Library square-core is reopened for study at user direction; preserve exact R135 reference in the archive. Water, Olive and Faith remain locked. No production adoption until review.
+
+
+Editorial Manual §9.11: the six ordinary marks and material fields share geometric behaviour at different scales; do not enlarge/repeat a mark as a background. Journal/Faith is an editorial exception; its former starfield texture is retired at user direction. Preserve historical originals, protected Water and Olive and P2. Compare actual field, crop, small seal and content before promotion.
