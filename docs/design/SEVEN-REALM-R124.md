@@ -113,3 +113,7 @@ Enforce §9.20: R155 alternative composition is opt-in, not the default. Origina
 
 ## R157 — resume the actual 03 construction research without replacing art
 Re-read Manual §9.6–9.20, Design OS, architecture §9, pinned 096/114/115 and R124–R156. Add a separate comparison page beside the existing proof; no changes to existing index, stages, folio composition, seals, textures or OS. Exact R154 02/03/04 stage references; two equal-size squares follow a common deterministic horizontal-to-vertical path with changing center separation and real mask interruptions at alternating intersections. Compare fine and contrasting broad/fine bands; the outline conversion and void size remain candidates, not a confirmed solution. Manual input is reversible without timers. Existing Emmaus fine and yin/yang impressions shown unchanged, link to original full folio. Do not infer approval or promote either option. Browser and deployment review pending.
+
+
+## R158 — award-referenced art direction and seven-realm landing matrix
+Research only. See [R158 art direction](SEVEN-REALM-R158-ART-DIRECTION.md). Adds verified award precedents, per-realm actual application/field targets, acceptance gates and staged work priorities; preserves all R154/R156 artwork and R157 research unchanged. No HTML/CSS/JS, OS, registry, protected assets, runtime or production changes.
