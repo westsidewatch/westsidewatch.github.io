@@ -1,0 +1,53 @@
+name: PARADISO NNYY ad-origin observation
+on:
+  push:
+    branches: ['research/nnyy-ad-forensics-20261126']
+    paths:
+      - '.github/workflows/shupian-nnyy-ad-observe.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  observe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: |
+          pip install playwright
+          python -m playwright install --with-deps chromium
+      - name: Observe episode navigation in independent contexts
+        run: |
+          python - <<'PY'
+          import asyncio,json,sys
+          from pathlib import Path
+          sys.path.insert(0,'scripts/shupian_recovery')
+          from mvffm_live_reverse import inspect
+          url='https://nnyy.in/dongman/20233380.html'
+          async def main():
+              rows=[]
+              for episode in (2,3):
+                  result=await inspect(url,observe_ms=15000,click_selector=f'text=第{episode:02d}集')
+                  rows.append({
+                    'episode':episode,
+                    'navigation_error':any(e.startswith('navigation:') for e in result['errors']),
+                    'selection_error':any(e.startswith('optional-click:') for e in result['errors']),
+                    'summary':result['summary'],
+                    'video_dom':result['video_dom'],
+                    'media_verification':result['media_verification'],
+                    'status':'OBSERVATION_ONLY'
+                  })
+              output={'target':url,'episodes':rows,'note':'No media extraction or ad suppression; no ad-free certification. Cross-origin frames alone are not proof of ads.'}
+              Path('nnyy-observation.json').write_text(json.dumps(output,ensure_ascii=False,indent=2)+'\n')
+              print(json.dumps(output,ensure_ascii=False))
+          asyncio.run(main())
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: nnyy-observation
+          path: nnyy-observation.json
+          if-no-files-found: warn
