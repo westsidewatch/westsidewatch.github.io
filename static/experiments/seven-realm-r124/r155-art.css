@@ -29,3 +29,6 @@
 }
 @media(max-width:850px){.r155-intro{display:grid}.r155-on .realm .folio .r155-field{width:42%;opacity:.15}.r155-on #cinema .r155-field{width:70%;left:15%}}
 @media(max-width:540px){.r155-plates{grid-template-columns:1fr}.r155-relations{grid-template-columns:repeat(2,minmax(0,1fr))}.r155-on .realm .folio .r155-field{width:55%;opacity:.12}.r155-on #daylight .r155-field{opacity:.22}.r155-imprints{gap:.5rem}}
+
+.r155-on .realm.unmarked .r155-context-mark{visibility:hidden!important}
+.r155-on #cinema .r155-context-mark{color:var(--ws-paper)}
