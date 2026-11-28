@@ -44,13 +44,41 @@ function generic(b,c,rows,s){
  if(s?.connections?.length||s?.harmony?.length){const bg=section("background",title("Gospel Harmony","四福音合參")+list(s.harmony,"harmony-list",x=>esc(Array.isArray(x)?x.filter(v=>v!=="—").join(" · "):x)));const con=section("connections",title("Cross References","串珠")+list(s.connections,"refs",x=>'<span class="coord">'+esc(x[0])+'</span><strong>'+esc(x[1])+'</strong><p class="reference-text">'+esc(x[2]||"")+'</p>'));units.push(band("relationships",bg,con))}
  const lib=section("books",title("Scripture","六十六卷聖經"));lib.append(nav());units.push(band("library",lib));
  const result=mk("div","composition canon-composition guided");result.dataset.book=b;result.dataset.chapter=c;result.append(...units);window.EMMAUS_MOTHER.mount(core);const ink=core.querySelector(".field-ink"),ext=core.querySelector(".texture-extension");if(document.getElementById("texture").value==="candidate"){ink.innerHTML=window.EMMAUS_MOTHER.inkPaths();ext.innerHTML=document.getElementById("extension").checked?window.EMMAUS_MOTHER.accentPaths():""}else ext.replaceChildren();
- const draw=()=>{const q=ex.clientWidth/3,depth=ex.clientHeight/q;if(!q||!depth||ex.clientWidth<=850||!document.getElementById("extension").checked||document.getElementById("texture").value!=="candidate"){svg.replaceChildren();return}svg.setAttribute("viewBox","0 0 3 "+depth);const gap=parseFloat(getComputedStyle(ex).paddingTop)/q;svg.innerHTML=Array.from({length:34},(_,i)=>{const o=.018+i*.011,y=gap*(.12+.65*i/33),x=2+.004+i*.0022,end=i<6?depth-.04-i*.018:Math.min(depth,gap+.14+(33-i)*.014);return '<path data-role="study-boundary" d="M'+x+' 0V'+end+'" fill="none" stroke="currentColor" stroke-width="'+(i%6===0?.0022:.0012)+'" opacity="'+(.35-i*.007)+'"/>'+ (i<6?'<path data-role="boundary-accent" d="M'+x+' 0V'+end+'" fill="none" stroke="currentColor" stroke-width="'+(i===0?.0038:.0018)+'" opacity="'+(i===0?.95:.75)+'"/>':'')}).join("")};
+ // R205: switched chapters receive the same editorial sequence as Luke.
+ const whole=document.createElementNS("http://www.w3.org/2000/svg","svg");
+ whole.setAttribute("class","whole-reading-spine");whole.setAttribute("aria-hidden","true");
+ whole.setAttribute("preserveAspectRatio","none");result.prepend(whole);
+ function drawWhole(){
+  const enabled=document.getElementById("extension").checked&&document.getElementById("texture").value==="candidate";
+  result.classList.toggle("guided",enabled);
+  const base=result.getBoundingClientRect(),q=base.width/3;
+  if(!enabled||!q||!base.height){whole.replaceChildren();return}
+  whole.setAttribute("viewBox","0 0 3 "+base.height/q);
+  const bands=[...result.querySelectorAll(".reading-band")],mobile=base.width<=850;
+  const y=e=>(e.getBoundingClientRect().top-base.top)/q;
+  const bottom=e=>(e.getBoundingClientRect().bottom-base.top)/q;
+  const axis=(band,i)=>mobile?(3+i*.8)/q:(band.matches(".relationships")?1:band.matches(".exposition")?2:0)+.009+i*.0046;
+  const paths=[];
+  for(let i=0;i<6;i++){
+   let x=mobile?axis(ex,i):2+.004+i*.0022;
+   let from=mobile?y(ex):bottom(study)-.04-i*.018;
+   let d="M"+x+" "+from;
+   for(const band of bands.slice(1)){
+    const next=axis(band,i),turn=y(band)+.025+i*.006;
+    d+="V"+turn+"H"+next;x=next;
+   }
+   d+="V"+(bottom(bands.at(-1))-.02-i*.009);
+   paths.push('<path data-guide-role="'+(mobile?"mobile-reading":"chapter-continuation")+'" d="'+d+'" fill="none" stroke="'+(i===0?"var(--emmaus-guide)":"currentColor")+'" stroke-width="'+(mobile?(i===0?1:.45)/q:i===0?.0038:.0012)+'" opacity="'+(i===0?.78:.45-i*.045)+'"/>');
+  }
+  whole.innerHTML=paths.join("");
+ }
+ const draw=()=>{drawWhole();const q=ex.clientWidth/3,depth=ex.clientHeight/q;if(!q||!depth||ex.clientWidth<=850||!document.getElementById("extension").checked||document.getElementById("texture").value!=="candidate"){svg.replaceChildren();return}svg.setAttribute("viewBox","0 0 3 "+depth);const gap=parseFloat(getComputedStyle(ex).paddingTop)/q;svg.innerHTML=Array.from({length:34},(_,i)=>{const o=.018+i*.011,y=gap*(.12+.65*i/33),x=2+.004+i*.0022,end=i<6?depth-.04-i*.018:Math.min(depth,gap+.14+(33-i)*.014);return '<path data-role="study-boundary" d="M'+x+' 0V'+end+'" fill="none" stroke="currentColor" stroke-width="'+(i%6===0?.0022:.0012)+'" opacity="'+(.35-i*.007)+'"/>'+ (i<6?'<path data-role="boundary-accent" d="M'+x+' 0V'+end+'" fill="none" stroke="currentColor" stroke-width="'+(i===0?.0038:.0018)+'" opacity="'+(i===0?.95:.75)+'"/>':'')}).join("")};
  return {result,draw,ex};
 }
 let drawActive=null;
 async function choose(b,c,fromIndex=false){if(!canon[b-1]||c<1||c>canon[b-1][3])return;const seq=++sequence;sync(b,c);status.textContent="正在載入 "+canon[b-1][1]+" "+c+"章";
  if(b===42&&c===24){resize?.disconnect();view?.remove();view=null;drawActive=null;original.hidden=false;selected=[b,c];installNav(original);status.textContent="";window.dispatchEvent(new Event("emmaus:chapter"));if(fromIndex)original.querySelector(".reading-cont").scrollIntoView({block:"start",behavior:"auto"});return}
- try{const [data,ctx]=await Promise.all([readBook(b),context().catch(()=>null)]);if(seq!==sequence)return;const rows=data.chapters[c-1].verses,s=findStudy(ctx,b,c);const next=generic(b,c,rows,s);selected=[b,c];next.result.querySelectorAll(".booklist button").forEach(x=>{if(+x.dataset.book===b)x.setAttribute("aria-current","true");else x.removeAttribute("aria-current")});resize?.disconnect();view?.remove();original.hidden=true;view=next.result;workspace.append(view);drawActive=next.draw;resize=new ResizeObserver(next.draw);resize.observe(next.ex);next.draw();status.textContent=canon[b-1][1]+" "+c+"章 · "+rows.length+"個經節位置";window.dispatchEvent(new Event("emmaus:chapter"));if(fromIndex)view.querySelector(".reading-cont").scrollIntoView({block:"start",behavior:"auto"});}
+ try{const [data,ctx]=await Promise.all([readBook(b),context().catch(()=>null)]);if(seq!==sequence)return;const rows=data.chapters[c-1].verses,s=findStudy(ctx,b,c);const next=generic(b,c,rows,s);selected=[b,c];next.result.querySelectorAll(".booklist button").forEach(x=>{if(+x.dataset.book===b)x.setAttribute("aria-current","true");else x.removeAttribute("aria-current")});resize?.disconnect();view?.remove();original.hidden=true;view=next.result;workspace.append(view);drawActive=next.draw;resize=new ResizeObserver(next.draw);resize.observe(next.ex);resize.observe(next.result);for(const band of next.result.querySelectorAll(".reading-band"))resize.observe(band);next.draw();status.textContent=canon[b-1][1]+" "+c+"章 · "+rows.length+"個經節位置";window.dispatchEvent(new Event("emmaus:chapter"));if(fromIndex)view.querySelector(".reading-cont").scrollIntoView({block:"start",behavior:"auto"});}
  catch(e){if(seq!==sequence)return;sync(...selected);status.textContent="此章經文暫未載入，請再試一次。已保留目前閱讀內容。";console.warn(e)}
 }
 bookSelect.addEventListener("change",()=>choose(+bookSelect.value,1));chapterSelect.addEventListener("change",()=>choose(+bookSelect.value,+chapterSelect.value));
