@@ -228,3 +228,20 @@
  .reading-band.geography .geographic:has(.background-list:empty),
  .reading-band.geography .map:not(:has(.source-map,.map-reading-field)){display:none}
 }
+
+/* R206 isolated comparison — unillustrated paper is a quiet counterprint,
+   not an unrelated frame or automatic carousel. Existing engraved paths
+   are reflected across the shared diagonal in the original 3q geometry. */
+.core.mother-left .mother-paper-echo{display:none;pointer-events:none}
+@container(min-width:851px){
+ body:has(#texture option[value="candidate"]:checked) .core.mother-left:not(.mother-art-ready) .mother-paper-echo{
+  display:block;color:var(--ws-pale-gold);opacity:.47;
+ }
+ body:has(#texture option[value="candidate"]:checked) .core.mother-left:not(.mother-art-ready) .mother-gold-engraving{opacity:.56}
+}
+.core.mother-left .note-content .note-empty,
+.core.mother-left .note-content .note-save-state{
+ color:color-mix(in srgb,var(--ws-ink) 70%,var(--ws-paper));
+ font-weight:var(--ws-weight-standard);
+}
+.core.mother-left .note-content .note-save-state{font-size:var(--ws-type-scale-meta)}
