@@ -23,8 +23,11 @@ function route(family,i){
  }
  const v=A.filter((a,k)=>(i+k)%2===1&&b.x>a.start&&b.x<a.x&&a.y>b.start&&a.y<b.y).map(a=>a.y);
  const h=A.filter((a,k)=>(i+k)%2===0&&a.x>b.x&&a.x<b.end&&b.y>a.y&&b.y<a.end).map(a=>a.x);
- const g=f(2.012+i*.0032),gy=f(1.045+i*.005),ge=f(1.965-i*.0015);
- return "M"+g+" "+gy+"V"+ge+" "+segment("v",b.x,b.start,b.y,v)+" "+segment("h",b.y,b.x,b.end,h)
+ // R201: sparse square-fold outline margin. Every lower weaving segment
+ // stays exactly as in R200. One gold fold and two shorter ink folds.
+ const upper={0:[2.020,1.055,1.972],5:[2.046,1.445,1.948],11:[2.073,1.645,1.922]}[i];
+ const margin=upper?"M2.006 "+upper[1]+"H"+upper[0]+"V"+upper[2]+"H2.006 ":"";
+ return margin+segment("v",b.x,b.start,b.y,v)+" "+segment("h",b.y,b.x,b.end,h)
 }
 function inkPaths(){return ["a","b"].flatMap(family=>Array.from({length:17},(_,i)=>'<path data-mother-route="'+family+i+'" data-weave-family="'+family+'" d="'+route(family,i)+'" fill="none" stroke="currentColor" stroke-width="'+(i===0?.0030:i%5===0?.0021:.0012)+'" opacity="'+f(.62-i*.019)+'"/>')).join("")}
 function accentPaths(){return ["a","b"].flatMap(family=>[0,6,12].map((i,k)=>'<path data-junction-accent="'+family+i+'" d="'+route(family,i)+'" fill="none" stroke="currentColor" stroke-width="'+(k===0?.0042:.0026)+'" opacity="'+f(.98-k*.14)+'"/>')).join("")}
