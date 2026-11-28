@@ -19,14 +19,24 @@ function route(family,i){
  if(family==="a"){
   const h=B.filter((b,k)=>(i+k)%2===0&&b.x>a.start&&b.x<a.x&&a.y>b.start&&a.y<b.y).map(b=>b.x);
   const v=B.filter((b,k)=>(i+k)%2===1&&a.x>b.x&&a.x<b.end&&b.y>a.y&&b.y<a.end).map(b=>b.y);
-  return segment("h",a.y,a.start,a.x,h)+" "+segment("v",a.x,a.y,a.end,v)
+  // R203: the three accent folds enter from the lower corner of the
+  // upper-left mother. The shared aperture remains unmarked inside.
+  const entry=i===0?"M1 2H"+a.start+"V"+a.y+" ":
+   i===6||i===12?"M"+a.start+" "+f(2.018+(i/6)*.016)+"V"+a.y+" ":"";
+  return entry+segment("h",a.y,a.start,a.x,h)+" "+segment("v",a.x,a.y,a.end,v)
  }
  const v=A.filter((a,k)=>(i+k)%2===1&&b.x>a.start&&b.x<a.x&&a.y>b.start&&a.y<b.y).map(a=>a.y);
  const h=A.filter((a,k)=>(i+k)%2===0&&a.x>b.x&&a.x<b.end&&b.y>a.y&&b.y<a.end).map(a=>a.x);
- // R201: sparse square-fold outline margin. Every lower weaving segment
- // stays exactly as in R200. One gold fold and two shorter ink folds.
- const upper={0:[2.020,1.055,1.972],5:[2.046,1.445,1.948],11:[2.073,1.645,1.922]}[i];
- const margin=upper?"M2.006 "+upper[1]+"H"+upper[0]+"V"+upper[2]+"H2.006 ":"";
+ // R203: the outline rail turns at the actual lower-right mother
+ // junction. The two subordinate folds have registered open ends;
+ // no stroke enters the shared aperture or the negative impression.
+ const upper={0:[2.020,1.055,2],6:[2.046,1.080,1.965],12:[2.073,1.105,1.938]}[i];
+ let margin="";
+ if(upper){
+  const [x,top,bottom]=upper;
+  margin="M"+x+" "+top+"V"+bottom+"H"+(i===0?b.x:2.006)+" ";
+  margin+=i===0?"M"+b.x+" 2V"+b.start+" ":"M"+f(1.98-(i/6)*.026)+" "+b.start+"H"+b.x+" ";
+ }
  return margin+segment("v",b.x,b.start,b.y,v)+" "+segment("h",b.y,b.x,b.end,h)
 }
 function inkPaths(){return ["a","b"].flatMap(family=>Array.from({length:17},(_,i)=>'<path data-mother-route="'+family+i+'" data-weave-family="'+family+'" d="'+route(family,i)+'" fill="none" stroke="currentColor" stroke-width="'+(i===0?.0030:i%5===0?.0021:.0012)+'" opacity="'+f(.62-i*.019)+'"/>')).join("")}
@@ -60,7 +70,19 @@ function mount(core){
  }
  field.append(g);connect(core,prelude);
  const gold=document.createElementNS(ns,"g");gold.setAttribute("class","mother-gold-engraving");gold.setAttribute("aria-hidden","true");
- for(let i=0;i<7;i++){const inset=f(.012+.008*Math.pow(i,1.35)),p=document.createElementNS(ns,"path");const x=f(2-inset),y=f(1.96-inset),left=f(.018+i*.023),top=f(.02+i*.045);const path=i<3?"M"+left+" "+y+"H"+inset+"V"+inset+"H"+x+"V"+f(.985-i*.025):"M"+f(.50+i*.11)+" "+inset+"H"+x+"V"+f(.985-i*.023)+" M"+inset+" "+top+"V"+y+"H"+f(.98-i*.05);p.setAttribute("d",path);p.setAttribute("fill","none");p.setAttribute("stroke-width",i===0?".0048":i===1?".0032":".0017");p.setAttribute("opacity",String(1-i*.085));gold.append(p)}field.querySelector(".mother-gold-engraving")?.remove();field.append(gold);
+ // Open folds at both exchange corners, rather than seven nested frames.
+ // The primary strokes share the exact start coordinates of A0 and B0.
+ const folds=[
+  "M.018 .04V1.982H1V2",
+  "M.046 .34V1.954H.982V1.985",
+  "M.076 .78V1.924H.955V1.965",
+  "M.46 .018H1.982V1H2.02V1.055",
+  "M.75 .046H1.954V.985",
+  "M1.06 .076H1.924V.965",
+  "M1.35 .108H1.892V.93"
+ ];
+ for(let i=0;i<folds.length;i++){const p=document.createElementNS(ns,"path");p.setAttribute("d",folds[i]);p.setAttribute("fill","none");p.setAttribute("stroke-width",i===0||i===3?".0038":i===1||i===4?".0026":".0015");p.setAttribute("opacity",i===0||i===3?".96":i===1||i===4?".74":".46");gold.append(p)}
+ field.querySelector(".mother-gold-engraving")?.remove();field.append(gold);
  if(!img||!img.getAttribute("src"))return;
  const layer=el("div","mother-art");layer.setAttribute("aria-hidden","true");layer.dataset.artSource=img.getAttribute("src");
  const picture=el("div","mother-art-picture");layer.append(picture);core.insertBefore(layer,core.firstChild);
