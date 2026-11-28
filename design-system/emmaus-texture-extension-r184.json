@@ -210,15 +210,14 @@
     "rule": "Original 34 pairs of L paths, weights, opacity, clip and material mode unchanged. No new texture. Extension uses the same existing path endpoints and stroke rhythm, independent additive layer only, no enclosing frames.",
     "styles": {
       "none": "original texture only",
-      "extension": "continue selected original engraving paths along their existing tangent; stop in safe whitespace at outer q boundary"
+      "extension": "Five selected original parallel engraving cuts continue from their existing endpoints into the neighbouring whitespace only; same stroke and ink. No line over text."
     },
     "indices": [
       0,
-      6,
-      12,
-      18,
-      24,
-      30
+      1,
+      2,
+      3,
+      4
     ]
   }
 }
