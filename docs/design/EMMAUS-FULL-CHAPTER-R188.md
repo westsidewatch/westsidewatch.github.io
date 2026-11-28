@@ -10,3 +10,7 @@
 
 
 R190 全本鏡像補充：固定來源的66卷原文已轉存為 static/one/scripture-text/1.json 至 66.json；保留兩譯本來源blob、原文及節號，不依賴第三方執行時請求。CI逐卷載入檢查1189章、節號單調、非空文字，列出各譯本未單列的座標；另測典型長短章及66卷索引切換。仍不把來源未單列的節號宣稱為已完成校勘。
+
+
+## R191 · 多寫逐節即時貼
+沿用多寫現有 IndexedDB multiwrite-v1 v3/studyDocuments 與 v2 schema，章文檔 emmaus:book:chapter，節節點 verse-NNN，保存 canonical Scripture coordinate。逐節點擊、右側方塊、頁首同源匯總；手機逐節內聯；每次編輯以讀寫 transaction 更新該節，保留其他資料。修正 R190 約翰 map.routes 字串與 selected 早於渲染的問題。驗收以實際筆記文字、方形/避讓、雙向同步、切章及重載為準；不宣稱多寫獨立頁或跨裝置同步已接通。
