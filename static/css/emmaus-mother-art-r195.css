@@ -133,3 +133,26 @@
  .core.mother-left .title{color:var(--ws-ink)}
  .core.mother-left.mother-art-ready .title :is(.name,.zh,.chapter-label,.lead,h2:not(.name)){color:var(--ws-ink)!important}
 }
+
+/* R199 — reunite the lower-right mother field through its actual junction.
+   The upper-right impression and lower-left chapter use the same paper mix
+   as the unchanged Scripture Studio positive impression. */
+.core.mother-left .outer-coordinate{background:color-mix(in srgb,var(--ws-first-light) 13%,var(--ws-paper))}
+.core.mother-left .core-field .field-b{fill:var(--ws-pale-gold);opacity:.26}
+.core.mother-left .field-ink{clip-path:none}
+.core.mother-left .field-ink[data-unused]{display:none}
+.core.mother-left .core-field .mother-art-outline [data-mother-edge="b"]{stroke:var(--emmaus-guide-soft);stroke-width:.002}
+.core.mother-left .core-field .mother-art-outline [data-mother-edge="joint-b"]{stroke:var(--emmaus-guide);stroke-width:.002}
+.core.mother-left .texture-extension{z-index:-1;clip-path:polygon(66.6667% 33.3333%,70% 33.3333%,70% 66.6667%,66.6667% 66.6667%,66.6667% 100%,33.3333% 100%,33.3333% 66.6667%,66.6667% 66.6667%);}
+.core.mother-left .core-field .field-ink{clip-path:polygon(66.6667% 33.3333%,70% 33.3333%,70% 66.6667%,66.6667% 66.6667%,66.6667% 100%,33.3333% 100%,33.3333% 66.6667%,66.6667% 66.6667%);}
+.core.mother-left .mother-gold-engraving{stroke:var(--emmaus-guide)}
+.core.mother-left>.prints{z-index:0}
+.chapter-prelude{isolation:isolate;padding-top:clamp(28px,3vw,46px)}
+.chapter-prelude:before{display:none}
+.chapter-prelude .mother-prelude-spine{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;color:var(--ws-ink)}
+.chapter-prelude>.unit,.chapter-prelude .mother-art-credit-strip{z-index:1}
+.chapter-prelude .study-intro{border-left:0}
+@container(min-width:851px){
+ .core.mother-left .scripture{padding-left:clamp(38px,3.8vw,58px)}
+}
+@container(max-width:850px){.chapter-prelude{padding-top:0}.chapter-prelude .mother-prelude-spine{display:none}}
