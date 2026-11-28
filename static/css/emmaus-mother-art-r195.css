@@ -1,0 +1,230 @@
+
+/* R195 — the image is a material plane, not another card.
+   Preserve the shared unpainted q and the two fixed Scripture plates. */
+.core .mother-art{position:absolute;inset:auto 0 0 auto;width:66.6666667%;height:66.6666667%;z-index:-1;pointer-events:none;clip-path:polygon(50% 0,100% 0,100% 100%,0 100%,0 50%,50% 50%);display:none}
+.core.mother-art-ready .mother-art{display:block;background:var(--ws-pale-gold)}
+.core .mother-art-picture{position:absolute;inset:0;background-size:cover;background-position:50% 42%;background-repeat:no-repeat;filter:grayscale(1);mix-blend-mode:multiply;opacity:.88}
+.core .core-field .field-a{fill:var(--ws-paper);opacity:.66}
+.core .core-field .field-b{fill:var(--ws-pale-gold);opacity:.30}
+.core .core-field .mother-art-outline{stroke:var(--emmaus-guide-soft);stroke-width:.004;stroke-linejoin:miter;opacity:.85}
+.core .core-field .mother-art-outline [data-mother-edge^="joint"]{stroke:var(--emmaus-guide);stroke-width:.003;opacity:.8}
+.core .mother-art-open{font-size:var(--ws-type-scale-meta);font-weight:var(--ws-weight-standard);font-family:var(--ws-type-display-zh);border:0;border-bottom:1px solid var(--emmaus-guide);align-self:flex-start;padding:.2em 0;color:var(--ws-ink);background:none}
+.core .mother-art-open:disabled{display:none}
+.core .mother-art-dialog{max-width:min(92vw,900px);max-height:94vh;padding:clamp(14px,2vw,28px);border:1px solid var(--emmaus-guide);background:var(--ws-paper);color:var(--ws-ink);overflow:auto}
+.core .mother-art-dialog::backdrop{background:color-mix(in srgb,var(--ws-ink) 80%,transparent)}
+.core .mother-art-full{display:block;max-width:100%;max-height:78vh;object-fit:contain;margin:1em auto}
+.core .mother-art-close{display:block;margin-left:auto}
+.core .mother-art-credit{font-size:var(--ws-type-scale-meta);margin-top:.65em}
+@container(min-width:851px){
+ .core.mother-art-ready .illustration figure{position:relative;padding:0;justify-content:flex-end;gap:0}
+ .core.mother-art-ready .illustration figure>img{position:absolute;inset:0;width:100%;height:100%;opacity:0;pointer-events:none}
+ .core.mother-art-ready .illustration figure figcaption{position:relative;margin:0;padding:.6em clamp(10px,1.4vw,20px) .2em;background:var(--ws-paper)}
+ .core.mother-art-ready .illustration .mother-art-open{position:relative;align-self:stretch;text-align:left;padding:.2em clamp(10px,1.4vw,20px) .6em;background:var(--ws-paper);border-color:var(--emmaus-guide)}
+ /* The lower arm is still the same image plane. Ink text stays on a readable
+    papyrus field, with the bottom of the illustration revealed as an actual crop. */
+ .core.mother-art-ready .study-intro{justify-content:flex-start;background:linear-gradient(to bottom,var(--ws-papyrus) 0 78%,transparent 100%);padding-bottom:20%}
+ .core.mother-art-ready .study-intro>p{position:relative}
+}
+@container(max-width:850px){
+ .core .mother-art{display:none!important}
+ .core .illustration figure{padding:0}
+ .core .illustration figure>img{max-height:70vh;object-fit:contain;opacity:1}
+}
+
+/* R196 — structural revision. No editorial panel or plate may occupy the
+   three exposed cells of the illustration square. The plates remain true q
+   squares, with the second impression in the outside lower-left cell. */
+.core .core-field .field-a{fill:var(--ws-paper);opacity:.92}
+.core.mother-art-ready .core-field .field-b{fill:transparent;opacity:0}
+.core .mother-art-picture{opacity:1;mix-blend-mode:normal;background-position:50% 42%}
+.core .mother-art-outline [data-mother-edge="a"]{stroke:var(--emmaus-guide-soft);stroke-width:.004}
+.core .mother-art-outline [data-mother-edge="b"]{stroke:var(--emmaus-guide);stroke-width:.007}
+.core .mother-art-outline [data-mother-edge^="joint"]{stroke:var(--emmaus-guide);stroke-width:.004}
+.chapter-prelude{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));padding-block:clamp(24px,3.2vw,48px) 0;align-items:start}
+.chapter-prelude>.unit{position:relative;min-width:0;padding:clamp(16px,2.2vw,34px);margin:0}
+.chapter-prelude .reading-bridge{grid-column:1/3!important;grid-row:1!important;max-width:none}
+.chapter-prelude .study-intro{grid-column:3!important;grid-row:1!important;padding-left:clamp(36px,4vw,58px);background:color-mix(in srgb,var(--ws-pale-gold) 19%,transparent)}
+.chapter-prelude .reading-bridge h3,.chapter-prelude .study-intro h3{margin-bottom:.7em}
+.chapter-prelude .chapter-questions-scroll{overflow:visible}
+.chapter-prelude .chapter-questions{max-width:42em;font-size:var(--ws-type-scale-reading)}
+.chapter-prelude .chapter-questions li{padding:.75em 0}
+.chapter-prelude:before{content:"";position:absolute;top:0;left:calc(66.666667% + 3px);height:100%;width:1px;background:var(--emmaus-guide);pointer-events:none}
+@container(min-width:851px){
+ .core.mother-art-ready .illustration{grid-column:3!important;grid-row:3!important;align-items:flex-end;justify-content:flex-end;pointer-events:none}
+ .core.mother-art-ready .illustration figure{height:auto;width:auto;max-width:90%;padding:0;display:block;pointer-events:auto;align-self:flex-end;margin:0}
+ .core.mother-art-ready .illustration figure>img{position:absolute;inset:0;opacity:0;width:100%;height:100%;pointer-events:none}
+ .core.mother-art-ready .illustration figure figcaption{display:block;max-width:100%;padding:.45em .8em .1em;background:var(--ws-paper)}
+ .core.mother-art-ready .illustration .mother-art-open{display:block;width:100%;padding:.2em .8em .45em}
+ .core.mother-art-ready .illustration .mother-art-open:disabled{display:none}
+ .core .mother-art{z-index:-1}
+ .core .core-field{z-index:-1}
+ .core .outer-coordinate{grid-column:3;grid-row:1}
+ .core .core-field .mother-art-outline{opacity:1}
+}
+@container(max-width:850px){
+ .chapter-prelude{display:block;padding-top:0}
+ .chapter-prelude:before{display:none}
+ .chapter-prelude .study-intro{padding-left:clamp(16px,2.2vw,34px)}
+ .chapter-prelude>.unit{margin-bottom:1rem}
+ .core.mother-art-ready .illustration figure{height:auto}
+}
+
+/* R197: white writing aperture, quiet material field, credit outside the artwork.
+   The image clip remains an actual absent quadrant; only the writing surface
+   beneath that aperture is paper white. */
+.core .note,.core .note-family{background-color:var(--ws-paper)}
+.core .core-field .field-a{fill:color-mix(in srgb,var(--ws-papyrus) 86%,var(--ws-paper));opacity:1}
+.core .mother-art-picture{background-position:var(--mother-art-focus,50% 42%);transform:scale(1.015);transform-origin:50% 50%}
+.core.mother-art-has-credit .illustration figure figcaption{display:none}
+.chapter-prelude{padding-top:0}
+.chapter-prelude::before{display:none}
+.chapter-prelude .mother-art-credit-strip{grid-column:2/4;grid-row:1;display:flex;align-items:baseline;justify-content:flex-end;flex-wrap:wrap;gap:.35em 1em;padding:clamp(8px,1vw,14px) 0 clamp(16px,2vw,28px);background:transparent;color:var(--ws-ink);font:var(--ws-weight-standard) var(--ws-type-scale-meta)/1.5 var(--ws-type-display-zh);text-align:right;min-width:0}
+.mother-art-caption-copy{min-width:0;max-width:100%;overflow-wrap:anywhere}
+.mother-art-caption-copy [lang=en]{font-family:var(--ws-type-display-en-sc);font-synthesis:none}
+.chapter-prelude .mother-art-open{font:var(--ws-weight-standard) var(--ws-type-scale-meta)/1.5 var(--ws-type-display-zh);background:none;color:var(--ws-ink);border:0;border-bottom:1px solid var(--emmaus-guide);padding:0;white-space:nowrap;flex:none}
+.chapter-prelude .mother-art-open:disabled{display:none}
+.chapter-prelude .reading-bridge,.chapter-prelude .study-intro{grid-row:2!important}
+.chapter-prelude .study-intro{border-left:1px solid var(--emmaus-guide)}
+@container(min-width:851px){
+ .core.mother-art-ready.mother-art-has-credit .illustration{pointer-events:none}
+ .core.mother-art-ready.mother-art-has-credit .illustration figure{display:none}
+ .core.mother-art-ready .mother-art-picture{opacity:1}
+}
+@container(max-width:850px){
+ .chapter-prelude .mother-art-credit-strip{justify-content:flex-start;text-align:left;padding-inline:0}
+ .chapter-prelude .study-intro{border-left:0}
+ .core.mother-art-has-credit .illustration figure{height:auto}
+}
+
+/* R198: left upper image mother; gold perimeter, no engraving over type. */
+.core.mother-left .mother-art{inset:0 auto auto 0;width:66.6666667%;height:66.6666667%;clip-path:inset(0);z-index:-2}
+.core.mother-left .mother-art-picture{transform:none;background-position:var(--mother-art-focus,50% 35%)}
+.core.mother-left .core-field{z-index:-1}
+.core.mother-left .core-field .field-a{fill:color-mix(in srgb,var(--ws-papyrus) 86%,var(--ws-paper));opacity:1}
+.core.mother-left.mother-art-ready .core-field .field-a{fill:none;opacity:0}
+.core.mother-left .core-field .field-b{fill:var(--ws-pale-gold);opacity:.26}
+.core.mother-left .mother-gold-engraving{stroke:var(--emmaus-guide);stroke-linejoin:miter}
+.core.mother-left .mother-art-outline [data-mother-edge="a"],.core.mother-left .mother-art-outline [data-mother-edge="joint-a"]{stroke:var(--emmaus-guide);stroke-width:.006}
+.core.mother-left .mother-art-outline [data-mother-edge="b"],.core.mother-left .mother-art-outline [data-mother-edge="joint-b"]{stroke:var(--emmaus-guide-soft);stroke-width:.002;opacity:.65}
+.core.mother-left .field-ink{clip-path:polygon(0 0,67% 0,67% 32%,64% 32%,64% 3%,3% 3%,3% 65%,0 65%);}
+.core.mother-left .texture-extension{color:var(--emmaus-guide);z-index:0}
+.core.mother-left .note{background:none}
+.core.mother-left .note-family{background-color:var(--ws-paper)}
+.core.mother-left.mother-art-ready .note-family{background-color:color-mix(in srgb,var(--ws-paper) 95%,transparent)}
+.core.mother-left .note-content,.core.mother-left .note-caption{color:var(--ws-ink)}
+.chapter-prelude:before{display:block;left:0.4%;width:1px;background:var(--emmaus-guide);height:100%;top:0}
+.chapter-prelude .mother-art-credit-strip{grid-column:1/3;justify-content:flex-start;text-align:left;padding-left:clamp(16px,2.2vw,34px)}
+@container(min-width:851px){
+ .core.mother-left .title{grid-column:2!important;grid-row:1!important;align-self:stretch;isolation:isolate;padding:clamp(18px,2.5vw,38px)}
+ .core.mother-left.mother-art-ready .title{color:var(--ws-paper)}
+ .core.mother-left.mother-art-ready .title::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 64% 27%,color-mix(in srgb,var(--ws-ink) 94%,transparent) 0%,color-mix(in srgb,var(--ws-ink) 78%,transparent) 37%,color-mix(in srgb,var(--ws-ink) 35%,transparent) 68%,transparent 100%);z-index:-1;pointer-events:none}
+ .core.mother-left.mother-art-ready .title :is(.name,.zh,.chapter-label,.lead,h2:not(.name)){color:var(--ws-paper)!important}
+ .core.mother-left .scripture{grid-column:3!important;grid-row:2!important}
+ .core.mother-left .outer-coordinate{grid-column:1;grid-row:3;align-items:flex-start;justify-content:flex-end;padding:clamp(18px,2.5vw,38px)}
+ .core.mother-left .outer-coordinate .chapter-index{color:var(--emmaus-identity)}
+ .core.mother-left .illustration{grid-column:1!important;grid-row:2!important;pointer-events:none}
+ .core.mother-left.mother-art-ready .illustration figure{display:none}
+ .core.mother-left:not(.mother-art-ready) .illustration{visibility:hidden}
+ .core.mother-left .note-family{isolation:isolate}
+}
+@container(max-width:850px){
+ .core.mother-left .note-family{background:var(--ws-paper)}
+ .core.mother-left .title::after,.chapter-prelude:before{display:none!important}
+ .core.mother-left .title{color:var(--ws-ink)}
+ .core.mother-left.mother-art-ready .title :is(.name,.zh,.chapter-label,.lead,h2:not(.name)){color:var(--ws-ink)!important}
+}
+
+/* R199 — reunite the lower-right mother field through its actual junction.
+   The upper-right impression and lower-left chapter use the same paper mix
+   as the unchanged Scripture Studio positive impression. */
+.core.mother-left .outer-coordinate{background:color-mix(in srgb,var(--ws-first-light) 13%,var(--ws-paper))}
+.core.mother-left .core-field .field-b{fill:var(--ws-pale-gold);opacity:.26}
+.core.mother-left .field-ink{clip-path:none}
+.core.mother-left .field-ink[data-unused]{display:none}
+.core.mother-left .core-field .mother-art-outline [data-mother-edge="b"]{stroke:var(--emmaus-guide-soft);stroke-width:.002}
+.core.mother-left .core-field .mother-art-outline [data-mother-edge="joint-b"]{stroke:var(--emmaus-guide);stroke-width:.002}
+.core.mother-left .texture-extension{z-index:-1;clip-path:polygon(66.6667% 33.3333%,70% 33.3333%,70% 66.6667%,66.6667% 66.6667%,66.6667% 100%,33.3333% 100%,33.3333% 66.6667%,66.6667% 66.6667%);}
+.core.mother-left .core-field .field-ink{clip-path:polygon(66.6667% 33.3333%,70% 33.3333%,70% 66.6667%,66.6667% 66.6667%,66.6667% 100%,33.3333% 100%,33.3333% 66.6667%,66.6667% 66.6667%);}
+.core.mother-left .mother-gold-engraving{stroke:var(--emmaus-guide)}
+.core.mother-left>.prints{z-index:0}
+.chapter-prelude{isolation:isolate;padding-top:clamp(28px,3vw,46px)}
+.chapter-prelude:before{display:none}
+.chapter-prelude .mother-prelude-spine{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;color:var(--ws-ink)}
+.chapter-prelude>.unit,.chapter-prelude .mother-art-credit-strip{z-index:1}
+.chapter-prelude .study-intro{border-left:0}
+@container(min-width:851px){
+ .core.mother-left .scripture{padding-left:clamp(38px,3.8vw,58px)}
+}
+@container(max-width:850px){.chapter-prelude{padding-top:0}.chapter-prelude .mother-prelude-spine{display:none}}
+
+/* R200 — interwoven square-fold material, real underpasses, no clipped comb. */
+.core.mother-left .core-field .field-ink,.core.mother-left .texture-extension{clip-path:none}
+.core.mother-left .core-field .field-b{opacity:.20}
+.core.mother-left .core-field .field-ink{color:var(--ws-ink)}
+.core.mother-left .texture-extension{color:var(--emmaus-guide);z-index:-1}
+.core.mother-left .core-field .mother-art-outline{opacity:.72}
+.core.mother-left .core-field .mother-art-outline [data-mother-edge="a"]{stroke-width:.004}
+.core.mother-left .core-field .mother-art-outline [data-mother-edge="joint-b"]{opacity:.44}
+.chapter-prelude{padding-top:clamp(52px,5vw,78px)}
+@container(min-width:851px){.core.mother-left .scripture{padding-left:clamp(44px,4.2vw,66px)}.core.mother-left .core-field{overflow:hidden}}
+@container(max-width:850px){.chapter-prelude{padding-top:0}}
+
+/* R202 — silhouette first: the two 2q mothers, not nine UI tiles.
+   The right-hand L is one continuous ink/material plane, keyed to the
+   existing inverse impression. 8% paper lifts its reading contrast.
+   The two outside q cells and the common writing aperture keep their
+   previous material and typography. No change to either impression. */
+@container(min-width:851px){
+ .core.mother-left{
+  --emmaus-mother-b-paper:color-mix(in srgb,var(--ws-first-light) 92%,var(--ws-paper));
+ }
+ .core.mother-left .core-field .field-a{fill:var(--ws-paper);opacity:1}
+ .core.mother-left.mother-art-ready .core-field .field-a{fill:none;opacity:0}
+ .core.mother-left .core-field .field-b{fill:var(--emmaus-mother-b-paper);opacity:1}
+ .core.mother-left .scripture{background:transparent;color:var(--ws-ink)}
+ .core.mother-left .scripture .outline-range{color:var(--ws-ink)}
+ .core.mother-left .scripture .chapter-outline li{border-color:color-mix(in srgb,var(--ws-ink) 45%,transparent)}
+ .core.mother-left .core-field .mother-art-outline [data-mother-edge="b"],
+ .core.mother-left .core-field .mother-art-outline [data-mother-edge="joint-b"]{stroke:var(--ws-first-light);stroke-width:.004;opacity:1}
+ .core.mother-left .core-field .field-ink{color:var(--ws-ink)}
+ .core.mother-left .texture-extension{color:var(--ws-pale-gold)}
+}
+
+/* R204 — content-adaptive geography. Preserve the 2q source image;
+   text flows around it, then uses the released page width. No empty
+   reserved sidebar below the map, no invented filler, no hidden legend. */
+@container(min-width:851px){
+ .reading-band.geography{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:clamp(18px,2.2vw,34px)}
+ .reading-band.geography .geographic{
+  grid-column:1/4!important;padding:0 clamp(16px,2.2vw,34px) clamp(16px,2.2vw,34px);
+  background:transparent;
+ }
+ .guided .reading-band.geography .geographic{
+  background:transparent;padding-left:clamp(36px,4vw,58px);
+ }
+ .reading-band.geography .geographic .background-list{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,18em),1fr));
+  gap:clamp(16px,2.2vw,34px);
+ }
+ .reading-band.geography .geographic .background-list li+li{margin-top:0}
+ .reading-band.geography .map{
+  grid-column:1/4!important;display:flow-root;min-width:0;
+  padding:0 clamp(16px,2.2vw,34px);
+ }
+ .guided .reading-band.geography .map{padding-left:clamp(36px,4vw,58px)}
+ .reading-band.geography .map .source-map{
+  float:right;width:66.666667%;max-width:none;
+  margin:0 0 clamp(16px,2.2vw,34px) clamp(16px,2.2vw,34px);
+ }
+ .reading-band.geography .map .map-reading-field{display:block}
+ .reading-band.geography .map .map-chapter-context,
+ .reading-band.geography .map .map-legend-section{display:contents}
+ .reading-band.geography .map .map-reading-field :is(h4,p,li){
+  display:flow-root;overflow-wrap:anywhere;max-width:100%;
+ }
+ .reading-band.geography .map .map-reading-field :is(ol,ul){margin-inline:0;padding-inline:0}
+ .reading-band.geography .map .map-reading-field li{break-inside:avoid}
+ .reading-band.geography .map .map-legend-section h4{margin-top:1.2em}
+ .reading-band.geography .geographic:has(.background-list:empty),
+ .reading-band.geography .map:not(:has(.source-map,.map-reading-field)){display:none}
+}

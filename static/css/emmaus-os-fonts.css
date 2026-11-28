@@ -1,0 +1,7 @@
+/* Approved Design OS faces — mirrored from pinned upstream revisions.
+   Existing tokens retain all semantic authority; this stylesheet only supplies fonts. */
+@import url("/fonts/os-emmaus/chiron/css/vf.css");
+@font-face{font-family:"Bodoni Moda SC";src:url("/fonts/scripture-studio/BodoniModaSC-VF.ttf") format("truetype");font-style:normal;font-weight:400 900;font-display:swap}
+@font-face{font-family:"Bodoni Moda";src:url("/fonts/os-emmaus/BodoniModa-VF.ttf") format("truetype");font-style:normal;font-weight:400;font-display:swap}
+@font-face{font-family:"Bodoni Moda";src:url("/fonts/os-emmaus/BodoniModa-Italic-VF.ttf") format("truetype");font-style:italic;font-weight:400;font-display:swap}
+@font-face{font-family:"Noto Serif TC";src:url("/fonts/os-emmaus/NotoSerifTC-VF.woff2") format("woff2");font-style:normal;font-weight:400 600;font-display:swap}

@@ -1,0 +1,17 @@
+
+/* R192: scope consumes the Design OS roles, never browser-native typography. */
+body[data-ws-scope="one"] :is(button,input,select,option,textarea){font-family:var(--ws-type-display-zh);font-synthesis:none}
+body[data-ws-scope="one"] :is(button,select,option,label){font-weight:var(--ws-weight-standard)}
+body[data-ws-scope="one"] :is(.note-coordinate,.sticky-reference,.note-save-state,.note-count,.note-caption,.verse-note-trigger,.sticky-delete,.canon-status,.edition,.unit figcaption,.caption,.verse-gap){font-family:var(--ws-type-display-zh);font-synthesis:none}
+body[data-ws-scope="one"] :is(.unit h3 small,.chapter-pericope>h4 small,.study-note h4 small){font-family:var(--ws-type-display-zh);font-weight:var(--ws-weight-air)}
+body[data-ws-scope="one"] :is(.lead,.study-reflection h4){font-family:var(--ws-type-display-zh);font-synthesis:none}
+body[data-ws-scope="one"] :is(.route-list,.refs,.harmony-list,.background-list,.map-legend) li{font-family:var(--ws-type-reading-zh);font-weight:var(--ws-weight-standard)}
+body[data-ws-scope="one"] :is(.route-list,.refs,.harmony-list,.background-list,.map-legend) li strong{font-family:var(--ws-type-display-zh);font-weight:var(--ws-weight-anchor)}
+body[data-ws-scope="one"] :is(.route-list .coord,.refs .coord){font-family:var(--ws-type-display-zh);font-weight:var(--ws-weight-standard)}
+body[data-ws-scope="one"] :is(.note-ref,.note-caption,.edition,.coord,.unit figcaption,.note-coordinate,.sticky-reference,.booklist button) [lang="en"]{font-family:var(--ws-type-display-en-sc);font-weight:var(--ws-weight-standard);font-variant-caps:normal;font-synthesis:none}
+body[data-ws-scope="one"] :is(.note-ref,.note-caption,.edition,.coord,.unit figcaption,.note-coordinate,.sticky-reference,.booklist button) [lang="zh-Hant"]{font-family:var(--ws-type-display-zh);font-synthesis:none}
+body[data-ws-scope="one"] .english{font-family:var(--ws-type-display-en)!important}
+body[data-ws-scope="one"] .verse b{font-family:var(--ws-type-display-en);font-style:italic;font-synthesis:none}
+body[data-ws-scope="one"] .verse-gap{font-family:var(--ws-type-display-zh);font-style:normal}
+body[data-ws-scope="one"] .booklist button[aria-current]{font-weight:var(--ws-weight-section)}
+body[data-ws-scope="one"] :is(.summary-note-editor,.verse-note-editor){font-family:var(--ws-type-display-zh);font-weight:var(--ws-weight-standard);font-synthesis:none}

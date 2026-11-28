@@ -1,0 +1,34 @@
+
+/* R194. Emmaus identity color is a reading cue, not a replacement for the ink engraving.
+   All tones derive from the canonical OS palette. No new realm colors or geometry. */
+.workspace[data-ws-color-family="bible"]{
+ --emmaus-identity:var(--ws-scope-identity);
+ --emmaus-guide:var(--ws-scope-identity);
+ --emmaus-readable-accent:color-mix(in srgb,var(--ws-scope-identity) 42%,var(--ws-ink));
+ --emmaus-guide-soft:color-mix(in srgb,var(--ws-scope-identity) 76%,var(--ws-ink));
+}
+.workspace .chapter-head .seal{display:block;background-color:var(--emmaus-identity);mask:url("/experiments/seven-realm-r124/seals/impressions/emmaus-yang.svg") center/contain no-repeat;-webkit-mask:url("/experiments/seven-realm-r124/seals/impressions/emmaus-yang.svg") center/contain no-repeat}
+.workspace .note-caption .crest{display:inline-block;width:28px;aspect-ratio:5/1;vertical-align:middle;margin-right:6px;background-color:var(--emmaus-identity);mask:url("/experiments/seven-realm-r124/seals/emmaus-crest.svg") center/contain no-repeat;-webkit-mask:url("/experiments/seven-realm-r124/seals/emmaus-crest.svg") center/contain no-repeat}
+.workspace .chapter-index,.workspace .event-number{color:var(--emmaus-identity)}
+.workspace .outline-range,.workspace .pericope-range,.workspace .chapter-questions li::before,.workspace .booklist button>span[lang="en"]{color:var(--emmaus-readable-accent)}
+.workspace .chapter-outline li,.workspace .chapter-questions li,.workspace .scripture-continuation,.workspace .map-reading-field .map-legend li,.workspace .map-reading-field .chapter-map-routes li{border-color:var(--emmaus-guide)}
+.workspace .canon-controls,.workspace .summary-note,.workspace .sticky-heading{border-color:var(--emmaus-guide)}
+.workspace .verse-sticky{border-color:var(--emmaus-guide);background:var(--ws-paper)}
+.workspace .verse-note-trigger[aria-expanded="true"]{color:var(--emmaus-readable-accent)}
+.workspace .reading-band.places .timeline .route-list{border-left-color:var(--emmaus-guide)}
+.workspace .reading-band.places .timeline .route-list li::after{background:var(--emmaus-guide)}
+.workspace .reading-band .route-list .coord::before{background:var(--emmaus-guide)}
+/* Only semantic line roles receive gold. Original 34-path engraving and ink underlay stay unmodified. */
+.workspace .reading-extension [data-role="boundary-accent"],.workspace .reading-extension [data-role="verse-branch"]{stroke:var(--emmaus-guide-soft)}
+.workspace .reading-extension [data-role="boundary-accent"]:first-of-type{stroke:var(--emmaus-guide)}
+.workspace .whole-reading-spine [data-guide-role]{stroke:var(--ws-ink)}
+.workspace .whole-reading-spine [data-guide-role="study-to-chronology"]:nth-of-type(1),
+.workspace .whole-reading-spine [data-guide-role="chronology-to-geography"]:nth-of-type(2),
+.workspace .whole-reading-spine [data-guide-role="geography-to-crossrefs"]:nth-of-type(3),
+.workspace .whole-reading-spine [data-guide-role="crossrefs-to-books"]:nth-of-type(4),
+.workspace .whole-reading-spine [data-guide-role="timeline-fold"]:nth-of-type(5),
+.workspace .whole-reading-spine [data-guide-role="mobile-reading"]:first-child{stroke:var(--emmaus-guide);opacity:1}
+@container(min-width:851px){
+.workspace .chapter-verse.has-verse-note::after{content:"";position:absolute;left:100%;top:1.25em;width:max(0px,calc(var(--sticky-x,100%) - 100%));height:1px;background:var(--emmaus-guide);pointer-events:none;z-index:2}
+}
+@media (prefers-contrast:more){.workspace .chapter-index,.workspace .event-number{color:var(--emmaus-readable-accent)}}
