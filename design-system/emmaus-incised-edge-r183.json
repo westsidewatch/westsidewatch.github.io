@@ -320,7 +320,13 @@
       "mask": "M0 0H1V1H0Z M1 0H2V.052H1Z M1.95 .052H2V1H1.95Z M0 1H.05V2H0Z M.93 1H1V2H.93Z M0 1.94H.93V2H0Z M2 1H2.065V2H2Z M2.95 1H3V2H2.95Z M2.065 1H2.95V1.05H2.065Z M1 2H2V2.06H1Z M1 2.06H1.065V3H1Z M1.94 2.06H2V3H1.94Z M2 2H3V3H2Z",
       "maskReason": "retain print field and perimeter bands on both L shapes; keep intersection, reading bridge, body and image interiors free of ink",
       "density": "Fine lines widen from the original edge then converge toward its end, varying individual width and density. Two opposing L turns have stronger tone near crossing. Preserve real central void and readable content.",
-      "reference": "R181 texture preserved as a comparison mode; original V5 retained as independent mode"
+      "reference": "R181 texture preserved as a comparison mode; original V5 retained as independent mode",
+      "broadField": {
+        "mask": "M1.02 .73H1.94V.97H1.02Z M2.02 1.06H2.18V1.81H2.02Z M2.83 1.06H2.98V1.81H2.83Z M1.02 2.02H1.98V2.15H1.02Z M1.02 2.88H1.98V2.98H1.02Z",
+        "source": "V5 full original vector as material reference at opacity 1, combined with new variable pressure curves in the same safe field",
+        "areaQ2": 0.6740999999999999,
+        "rule": "Independent of selected construction line; broad material areas preserved alongside edge engravings; no reduction of material alpha when line changes; current Luke 24 sample only, verify actual text and illustration clearance."
+      }
     },
     "incised": {
       "D": {
