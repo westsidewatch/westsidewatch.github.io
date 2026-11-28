@@ -21,6 +21,19 @@ function rowsFrom(z,e){const m=new Map(z.map(v=>[v.number,v.text])),n=new Map(e.
 async function json(url){const r=await fetch(url);if(!r.ok)throw Error("HTTP "+r.status);return r.json()}
 async function readBook(b){if(cache.has(b))return cache.get(b);const task=(async()=>{const data=await json("/one/scripture-text/"+b+".json");if(data.book!==b||data.source!==pin||data.chapters.length!==canon[b-1][3]||data.chapters.some((c,i)=>c.chapter!==i+1||!c.verses.length||c.verses.some((v,j)=>!Number.isInteger(v.n)||(j&&v.n<=c.verses[j-1].n)||v.zh==null&&v.en==null)))throw Error("invalid Scripture source");return data})();cache.set(b,task);try{return await task}catch(e){cache.delete(b);throw e}}
 async function context(){if(!contextPromise)contextPromise=(async()=>{for(const file of studyScripts){await new Promise((resolve,reject)=>{const el=document.createElement("script");el.src="/one/"+file;el.onload=resolve;el.onerror=()=>reject(Error(file));document.head.append(el)})}return window.ONE_DATA})();try{return await contextPromise}catch(e){contextPromise=null;throw e}}
+let coversPromise;
+async function covers(){
+ if(window.ONE_COVER_POLICY?.getCover)return window.ONE_COVER_POLICY;
+ if(!coversPromise)coversPromise=(async()=>{
+  await context().catch(()=>null);
+  for(const file of ["one-dore-round3-maps.js","one-studio-assets.js","one-cover-policy.js"]){
+   await new Promise((resolve,reject)=>{const script=document.createElement("script");script.src="/one/"+file;if(file==="one-cover-policy.js")script.dataset.coverResolverOnly="true";script.onload=resolve;script.onerror=()=>reject(Error(file));document.head.append(script)});
+  }
+  if(!window.ONE_COVER_POLICY?.getCover)throw Error("ONE cover resolver unavailable");
+  return window.ONE_COVER_POLICY;
+ })();
+ try{return await coversPromise}catch(e){coversPromise=null;throw e}
+}
 function findStudy(data,b,c){const key=({1:"genesis",19:"psalms",40:"matthew",41:"mark",42:"luke",43:"john",66:"revelation"})[b];return data?.studyBooks?.[String(b)]?.chapterStudies?.[String(c)]||(key&&data?.[key]?.chapterStudies?.[String(c)])||null}
 const missing='<span class="verse-gap">此譯本來源未單列此節</span>';
 function verse(v){return '<div class="chapter-verse" data-verse="'+v.n+'"><p class="verse"><b>'+v.n+'</b>'+(v.zh==null?missing:esc(v.zh))+'</p><p class="english" lang="en">'+(v.en==null?missing:esc(v.en))+'</p></div>'}
@@ -33,7 +46,13 @@ function generic(b,c,rows,s){
  core.querySelector(".outer-coordinate").innerHTML='<span class="eyebrow">'+esc(meta[2])+'</span><span class="chapter-index">'+c+'</span>';
  core.querySelector(".note-content").replaceChildren();core.querySelector(".note-content").dataset.noteState="empty";core.querySelector(".note-caption").innerHTML='<span class="crest" aria-hidden="true"></span>'+esc(reference)+" · 多寫";
  prelude.querySelector(".study-intro").innerHTML=title("Study","本章研讀")+'<p>'+esc(s?.position||"")+'</p>';
- const ill=core.querySelector(".illustration");ill.replaceChildren();if(s?.illustration?.src){const f=mk("figure","",'<img src="'+esc(s.illustration.src)+'" alt="'+esc(s.illustration.alt||s.illustration.title||"")+'"><figcaption>'+esc(s.illustration.title||"")+'</figcaption>');ill.append(f)}
+ const ill=core.querySelector(".illustration");ill.replaceChildren();
+ const art=window.ONE_COVER_POLICY?.getCover(b,c);
+ core.dataset.coverState=art?.src?"assigned":window.ONE_COVER_POLICY?.getCover?"unassigned":"resolver-unavailable";
+ if(art?.src){
+  const f=mk("figure","",'<img src="'+esc(art.src)+'" alt="'+esc(art.alt||art.title||"")+'"><figcaption>'+esc(art.title||"")+(art.artist?' · '+esc(art.artist):"")+(art.source?' · <a href="'+esc(art.source)+'" target="_blank" rel="noopener">圖版來源</a>':"")+'</figcaption>');
+  if(art.doreId)f.dataset.doreId=art.doreId;if(art.studioAssetId)f.dataset.studioAssetId=art.studioAssetId;ill.append(f);
+ }
  const print=core.querySelector(".prints iframe");if(print)print.title="以馬忤斯版塊主題經文 · 路加福音24:27（固定雙印）";
  const rd=section("reading-cont",title("Scripture",label)+'<div class="scripture-continuation"><span class="eyebrow">'+esc(reference)+'</span><p class="edition">和合本（繁體，上帝版） · King James Version</p>'+rows.map(verse).join("")+'</div>');rd.id="canon-chapter-reading";rd.tabIndex=-1;
  const study=section("study",title("Study","本章研讀")+(s?'<div class="study-story"><p>'+esc(s.story||"")+'</p></div><div class="study-reflection"><p>'+esc(s.position||"")+'</p>'+'</div>':'<div class="study-story"><p>本章研讀資料暫未載入。</p></div>'));
@@ -78,7 +97,7 @@ function generic(b,c,rows,s){
 let drawActive=null;
 async function choose(b,c,fromIndex=false){if(!canon[b-1]||c<1||c>canon[b-1][3])return;const seq=++sequence;sync(b,c);status.textContent="正在載入 "+canon[b-1][1]+" "+c+"章";
  if(b===42&&c===24){resize?.disconnect();view?.remove();view=null;drawActive=null;original.hidden=false;selected=[b,c];installNav(original);status.textContent="";window.dispatchEvent(new Event("emmaus:chapter"));if(fromIndex)original.querySelector(".reading-cont").scrollIntoView({block:"start",behavior:"auto"});return}
- try{const [data,ctx]=await Promise.all([readBook(b),context().catch(()=>null)]);if(seq!==sequence)return;const rows=data.chapters[c-1].verses,s=findStudy(ctx,b,c);const next=generic(b,c,rows,s);selected=[b,c];next.result.querySelectorAll(".booklist button").forEach(x=>{if(+x.dataset.book===b)x.setAttribute("aria-current","true");else x.removeAttribute("aria-current")});resize?.disconnect();view?.remove();original.hidden=true;view=next.result;workspace.append(view);drawActive=next.draw;resize=new ResizeObserver(next.draw);resize.observe(next.ex);resize.observe(next.result);for(const band of next.result.querySelectorAll(".reading-band"))resize.observe(band);next.draw();status.textContent=canon[b-1][1]+" "+c+"章 · "+rows.length+"個經節位置";window.dispatchEvent(new Event("emmaus:chapter"));if(fromIndex)view.querySelector(".reading-cont").scrollIntoView({block:"start",behavior:"auto"});}
+ try{const [data,ctx]=await Promise.all([readBook(b),context().catch(()=>null),covers().catch(e=>{console.warn(e);return null})]);if(seq!==sequence)return;const rows=data.chapters[c-1].verses,s=findStudy(ctx,b,c);const next=generic(b,c,rows,s);selected=[b,c];next.result.querySelectorAll(".booklist button").forEach(x=>{if(+x.dataset.book===b)x.setAttribute("aria-current","true");else x.removeAttribute("aria-current")});resize?.disconnect();view?.remove();original.hidden=true;view=next.result;workspace.append(view);drawActive=next.draw;resize=new ResizeObserver(next.draw);resize.observe(next.ex);resize.observe(next.result);for(const band of next.result.querySelectorAll(".reading-band"))resize.observe(band);next.draw();status.textContent=canon[b-1][1]+" "+c+"章 · "+rows.length+"個經節位置";window.dispatchEvent(new Event("emmaus:chapter"));if(fromIndex)view.querySelector(".reading-cont").scrollIntoView({block:"start",behavior:"auto"});}
  catch(e){if(seq!==sequence)return;sync(...selected);status.textContent="此章經文暫未載入，請再試一次。已保留目前閱讀內容。";console.warn(e)}
 }
 bookSelect.addEventListener("change",()=>choose(+bookSelect.value,1));chapterSelect.addEventListener("change",()=>choose(+bookSelect.value,+chapterSelect.value));
