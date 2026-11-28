@@ -223,12 +223,12 @@
   },
   "readingWidth": {
     "core": "preserve 3q square composition, prints and central note; first cell is chapter excerpt",
-    "chapter": "two q reading columns in total width, continuous Chinese and English per verse, OS reading-lg for Scripture; chapter preview only, full chapter link uses existing ONE",
+    "chapter": "two q reading field; all 53 bilingual verses visible inline, no chapter link",
     "study": "one q column with continuous story, position and reflection",
     "readingOrder": "core excerpt, wide chapter reading, contextual study"
   },
   "functionalFields": {
-    "scope": "first core to reading/study transition only; further bands remain R185",
+    "scope": "entire full chapter and study transition",
     "roles": {
       "reading": {
         "width": "2q",
@@ -290,6 +290,34 @@
       "KJV"
     ],
     "rule": "All 53 verses in canonical order, bilingual per verse, uncollapsed and visible in current page; no external or internal jump required for scripture; core excerpt remains cover quotation; related sections remain in document flow.",
-    "layout": "Retain two-q reading width and original texture; long chapter drives actual layout height, not artificial fixed height."
-  }
+    "layout": "Retain two-q reading width and original texture; long chapter drives actual layout height, not artificial fixed height.",
+    "divisions": [
+      [
+        1,
+        12
+      ],
+      [
+        13,
+        27
+      ],
+      [
+        28,
+        35
+      ],
+      [
+        36,
+        43
+      ],
+      [
+        44,
+        49
+      ],
+      [
+        50,
+        53
+      ]
+    ],
+    "marginalia": "Existing route summaries aligned to narrative divisions; no invented study data. Existing story and four questions remain. On narrow screens study follows chapter; six source-family lines continue in reserved left gutter. Four existing quoted cross references visible without disclosure."
+  },
+  "revision": "R189"
 }
