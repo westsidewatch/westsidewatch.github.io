@@ -1,0 +1,24 @@
+name: R187 Emmaus whole reading guidance proof
+on:
+  pull_request:
+    branches: [design/emmaus-functional-fields-r186-20261127]
+permissions:
+  contents: read
+jobs:
+  proof:
+    if: github.head_ref == 'design/emmaus-full-reading-guidance-r187-20261127'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          npm install --no-save --package-lock=false playwright
+          npx playwright install --with-deps chromium
+      - run: |
+          python3 -m http.server 4173 --directory static >/tmp/r187-server.log 2>&1 &
+          node tests/seven-realm-r187.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: seven-realm-r187
+          path: artifacts/r187/
