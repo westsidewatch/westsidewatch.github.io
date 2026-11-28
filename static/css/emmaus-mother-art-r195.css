@@ -189,3 +189,42 @@
  .core.mother-left .core-field .field-ink{color:var(--ws-ink)}
  .core.mother-left .texture-extension{color:var(--ws-pale-gold)}
 }
+
+/* R204 — content-adaptive geography. Preserve the 2q source image;
+   text flows around it, then uses the released page width. No empty
+   reserved sidebar below the map, no invented filler, no hidden legend. */
+@container(min-width:851px){
+ .reading-band.geography{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:clamp(18px,2.2vw,34px)}
+ .reading-band.geography .geographic{
+  grid-column:1/4!important;padding:0 clamp(16px,2.2vw,34px) clamp(16px,2.2vw,34px);
+  background:transparent;
+ }
+ .guided .reading-band.geography .geographic{
+  background:transparent;padding-left:clamp(36px,4vw,58px);
+ }
+ .reading-band.geography .geographic .background-list{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,18em),1fr));
+  gap:clamp(16px,2.2vw,34px);
+ }
+ .reading-band.geography .geographic .background-list li+li{margin-top:0}
+ .reading-band.geography .map{
+  grid-column:1/4!important;display:flow-root;min-width:0;
+  padding:0 clamp(16px,2.2vw,34px);
+ }
+ .guided .reading-band.geography .map{padding-left:clamp(36px,4vw,58px)}
+ .reading-band.geography .map .source-map{
+  float:right;width:66.666667%;max-width:none;
+  margin:0 0 clamp(16px,2.2vw,34px) clamp(16px,2.2vw,34px);
+ }
+ .reading-band.geography .map .map-reading-field{display:block}
+ .reading-band.geography .map .map-chapter-context,
+ .reading-band.geography .map .map-legend-section{display:contents}
+ .reading-band.geography .map .map-reading-field :is(h4,p,li){
+  display:flow-root;overflow-wrap:anywhere;max-width:100%;
+ }
+ .reading-band.geography .map .map-reading-field :is(ol,ul){margin-inline:0;padding-inline:0}
+ .reading-band.geography .map .map-reading-field li{break-inside:avoid}
+ .reading-band.geography .map .map-legend-section h4{margin-top:1.2em}
+ .reading-band.geography .geographic:has(.background-list:empty),
+ .reading-band.geography .map:not(:has(.source-map,.map-reading-field)){display:none}
+}
