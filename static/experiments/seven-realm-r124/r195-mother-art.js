@@ -10,7 +10,7 @@ function mount(core){
  core.querySelectorAll(".mother-art,.mother-art-dialog,.mother-art-open").forEach(e=>e.remove());
  const prelude=core.nextElementSibling?.classList.contains("chapter-prelude")?core.nextElementSibling:null;
  prelude?.querySelectorAll(".mother-art-credit-strip").forEach(e=>e.remove());
- core.classList.remove("mother-art-has-credit");
+ core.classList.remove("mother-art-has-credit");core.classList.add("mother-left");
  core.classList.remove("mother-art-ready","mother-art-available");
  const field=core.querySelector(".core-field"),figure=core.querySelector(".illustration figure"),img=figure?.querySelector("img");
  if(!field)return;
@@ -18,16 +18,18 @@ function mount(core){
  const g=document.createElementNS(ns,"g");g.setAttribute("class","mother-art-outline");g.setAttribute("aria-hidden","true");
  // Two exposed L fields, with the central shared square not filled or covered.
  // Corner continuation remains aligned to the original 3q lattice.
- for(const [role,path] of [["a","M0 2V0H2V1 M0 2H1"],["b","M2 1H3V3H1V2"],["joint-a","M1 1V2H0"],["joint-b","M2 0V1H3"]]){
+ for(const [role,path] of [["a","M.008 1.992V.008H1.992V1"],["b","M2.008 1.008H2.992V2.992H1.008V2"],["joint-a","M.008 1.992H1"],["joint-b","M2 1H1V2"]]){
   const p=document.createElementNS(ns,"path");p.setAttribute("data-mother-edge",role);p.setAttribute("d",path);p.setAttribute("fill","none");g.append(p)
  }
  field.append(g);
+ const gold=document.createElementNS(ns,"g");gold.setAttribute("class","mother-gold-engraving");gold.setAttribute("aria-hidden","true");
+ for(let i=0;i<7;i++){const inset=.018+i*.008,p=document.createElementNS(ns,"path");p.setAttribute("d","M"+inset+" 1.94 V"+inset+" H"+(2-inset)+" V"+(.92-i*.008));p.setAttribute("fill","none");p.setAttribute("stroke-width",i===0?".0038":".0017");p.setAttribute("opacity",String(1-i*.075));gold.append(p)}field.querySelector(".mother-gold-engraving")?.remove();field.append(gold);
  if(!img||!img.getAttribute("src"))return;
  const layer=el("div","mother-art");layer.setAttribute("aria-hidden","true");layer.dataset.artSource=img.getAttribute("src");
  const picture=el("div","mother-art-picture");layer.append(picture);core.insertBefore(layer,core.firstChild);
  // Initial focal offsets are explicit chapter-specific art-direction candidates.
  const parent=core.closest(".composition"),chapter=parent?.dataset.book?parent.dataset.book+":"+parent.dataset.chapter:"42:24";
- const focus={"42:24":"50% 0%","40:17":"50% 28%"}[chapter]||"50% 42%";
+ const focus={"42:24":"50% 18%","40:17":"50% 14%"}[chapter]||"50% 35%";
  picture.style.setProperty("--mother-art-focus",focus);layer.dataset.focus=focus;
  const caption=figure.querySelector("figcaption");const open=el("button","mother-art-open");open.type="button";open.textContent="觀看完整圖版";open.setAttribute("aria-label","觀看完整圖版："+(img.alt||caption?.textContent||""));if(prelude){const strip=el("div","mother-art-credit-strip"),copy=el("div","mother-art-caption-copy");if(caption){for(const node of caption.childNodes){if(node.nodeName==="BR")copy.append(document.createTextNode(" · "));else copy.append(node.cloneNode(true))}}else copy.textContent=img.alt;strip.append(copy,open);prelude.prepend(strip);core.classList.add("mother-art-has-credit")}else figure.append(open);
  const dialog=el("dialog","mother-art-dialog");dialog.id="mother-art-"+(++serial);dialog.setAttribute("aria-label",img.alt||"完整圖版");open.setAttribute("aria-controls",dialog.id);
