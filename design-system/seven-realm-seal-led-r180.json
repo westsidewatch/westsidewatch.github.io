@@ -1,0 +1,87 @@
+{
+  "version": "R180",
+  "base": "R179 3ce7a5b0",
+  "stage": "02",
+  "status": "candidate",
+  "rules": {
+    "leading": "original small seal",
+    "identity": "English OS title-sm / Bodoni Moda SC 400; Chinese OS UI / Chiron 900",
+    "number": "hide redundant folio number in local identity, keep realm order",
+    "scope": "identity only; no global OS rewrite",
+    "default": "original",
+    "journal": "compact portal identity only, issue cover and issue-specific palette unchanged",
+    "daylightCinema": "R154 artwork locked, isolated identity-only alternative authorized by user; no seal, texture, screen/light geometry or print replacement"
+  },
+  "realms": [
+    {
+      "id": "water",
+      "zh": "活水堂西區",
+      "en": "Living Water",
+      "shape": "套嵌",
+      "anchor": "water-clearing",
+      "reference": "r172-reference.html",
+      "candidate": "r180-heading-reference.html?realm=water&heading=seal",
+      "lock": false
+    },
+    {
+      "id": "journal",
+      "zh": "西望",
+      "en": "The Journal",
+      "shape": "橫向",
+      "anchor": "journal-name",
+      "reference": "r172-reference.html",
+      "candidate": "r180-heading-reference.html?realm=journal&heading=seal",
+      "lock": false
+    },
+    {
+      "id": "emmaus",
+      "zh": "以馬忤斯",
+      "en": "Emmaus",
+      "shape": "交織",
+      "anchor": "emmaus-word",
+      "reference": "r172-reference.html",
+      "candidate": "r180-heading-reference.html?realm=emmaus&heading=seal",
+      "lock": false
+    },
+    {
+      "id": "olive",
+      "zh": "橄欖山",
+      "en": "Olive Mountain",
+      "shape": "縱向",
+      "anchor": "olive-name",
+      "reference": "r172-reference.html",
+      "candidate": "r180-heading-reference.html?realm=olive&heading=seal",
+      "lock": false
+    },
+    {
+      "id": "library",
+      "zh": "黎明書局",
+      "en": "Dawn Books",
+      "shape": "立體",
+      "anchor": "library-leaf",
+      "reference": "r172-reference.html",
+      "candidate": "r180-heading-reference.html?realm=library&heading=seal",
+      "lock": false
+    },
+    {
+      "id": "daylight",
+      "zh": "白晝咖啡館",
+      "en": "Daylight Café",
+      "shape": "受光",
+      "anchor": "daylight-name",
+      "reference": "r172-reference.html",
+      "candidate": "r180-heading-reference.html?realm=daylight&heading=seal",
+      "lock": true
+    },
+    {
+      "id": "cinema",
+      "zh": "天堂電影院",
+      "en": "Paradise Cinema",
+      "shape": "投影",
+      "anchor": "cinema-head",
+      "reference": "r172-reference.html",
+      "candidate": "r180-heading-reference.html?realm=cinema&heading=seal",
+      "lock": true
+    }
+  ]
+}
