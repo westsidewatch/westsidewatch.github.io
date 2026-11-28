@@ -1,0 +1,24 @@
+name: R185 Emmaus chapter reading width proof
+on:
+  pull_request:
+    branches: [design/emmaus-texture-extension-r184-20261127]
+permissions:
+  contents: read
+jobs:
+  proof:
+    if: github.head_ref == 'design/emmaus-reading-width-r185-20261127'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          npm install --no-save --package-lock=false playwright
+          npx playwright install --with-deps chromium
+      - run: |
+          python3 -m http.server 4173 --directory static >/tmp/r185-server.log 2>&1 &
+          node tests/seven-realm-r185.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: seven-realm-r185
+          path: artifacts/r185/
