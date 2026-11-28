@@ -1,12 +1,14 @@
 name: R188 Emmaus full chapter proof
 on:
+  push:
+    branches: [design/emmaus-material-r206-20261128]
   pull_request:
     branches: [design/emmaus-full-reading-guidance-r187-20261127]
 permissions:
   contents: read
 jobs:
   proof:
-    if: github.head_ref == 'design/emmaus-full-chapter-r188-20261127'
+    if: github.head_ref == 'design/emmaus-full-chapter-r188-20261127' || github.ref == 'refs/heads/design/emmaus-material-r206-20261128'
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
