@@ -75,6 +75,15 @@ function mount(core){
  for(const [role,path] of [["a","M.008 1.992V.008H1.992V1"],["b","M2.008 1.008H2.992V2.992H1.008V2"],["joint-a","M.008 1.992H1"],["joint-b","M2 1H1V2"]]){
   const p=document.createElementNS(ns,"path");p.setAttribute("data-mother-edge",role);p.setAttribute("d",path);p.setAttribute("fill","none");g.append(p)
  }
+ // R206 isolated material proof: reuse the existing engraving, reflected
+ // across the shared square's diagonal. No new line family or raster asset.
+ field.querySelector(".mother-paper-echo")?.remove();
+ const echo=document.createElementNS(ns,"g");
+ echo.setAttribute("class","mother-paper-echo");
+ echo.setAttribute("aria-hidden","true");
+ echo.setAttribute("transform","matrix(0 -1 -1 0 3 3)");
+ echo.innerHTML=inkPaths().replaceAll("data-mother-route=","data-paper-route=").replaceAll("data-weave-family=","data-paper-family=");
+ field.append(echo);
  field.append(g);connect(core,prelude);
  const gold=document.createElementNS(ns,"g");gold.setAttribute("class","mother-gold-engraving");gold.setAttribute("aria-hidden","true");
  // Open folds at both exchange corners, rather than seven nested frames.
