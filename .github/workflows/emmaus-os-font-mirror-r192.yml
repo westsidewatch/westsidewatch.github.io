@@ -1,0 +1,53 @@
+name: R192 Emmaus OS font mirror
+on:
+  push:
+    branches: [design/emmaus-full-chapter-r188-20261127]
+    paths: [scripts/build_emmaus_os_fonts.py]
+permissions:
+  contents: write
+concurrency:
+  group: emmaus-r192-font-mirror
+  cancel-in-progress: false
+jobs:
+  mirror:
+    if: github.ref == 'refs/heads/design/emmaus-full-chapter-r188-20261127'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    outputs:
+      sha: ${{ steps.commit.outputs.sha }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 -m pip install fonttools==4.56.0 brotli==1.1.0
+      - run: python3 scripts/build_emmaus_os_fonts.py
+      - name: Commit verified fonts to this isolated preview branch only
+        id: commit
+        run: |
+          git config user.name 'Westside OS font mirror'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add static/fonts/os-emmaus static/css/emmaus-os-fonts.css
+          if ! git diff --cached --quiet; then
+            git commit -m "R192: mirror pinned canonical OS fonts for Emmaus"
+            git push origin HEAD:refs/heads/design/emmaus-full-chapter-r188-20261127
+          fi
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+  proof:
+    needs: mirror
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.mirror.outputs.sha }}
+      - run: |
+          npm install --no-save --package-lock=false playwright
+          npx playwright install --with-deps chromium
+      - run: |
+          python3 -m http.server 4173 --directory static >/tmp/r192-server.log 2>&1 &
+          node tests/seven-realm-r188.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: seven-realm-r192
+          path: artifacts/r188/
