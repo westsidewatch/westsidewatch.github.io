@@ -633,3 +633,7 @@ R199因多路徑共用同一拐點、裁切造成梳齒狀斷裂，未達02構�
 
 #### R205｜從真實底紋出口延續至全章
 R204實圖審評：路加24、馬太17、約翰1史地幾何通過，圖說無碰撞與水平溢出；CI原圖未載入，不能批准有圖藝術。R204首幅以下仍將A族17條出口重複成34條；改為a0/a3/a6/a9/a12/a16六個真實出口，折點錯落、對接研讀邊界；不重畫首幅。切章原本無全頁spine，現按存在的真實內容帶重算六條延伸，缺欄不強建；切換底紋、尺寸及內容高度須更新。參照原作者 Experimental Jetset The Whitney Tapes（https://www.jetset.nl/archive/the-whitney-tapes）：線形回應內容尺寸，而不是固定圖形或裝飾；轉譯為固定來源與變動功能區錨點，不抄W。研究採公開原作者資料，未運行獨立多雷引擎。驗收新增六個獨立源點精確銜接及約翰1全章導讀路徑；新實圖未完成，不批准第02關。原圖及母印來源驗收仍為既有阻塞。
+
+
+#### R206–R207｜無圖淡印與原畫資產恢復
+使用者同意同版淡印並要求補足多雷插圖。保留R205原版，候選分支R206以現有刻線反射至左上母方，無圖以淡金、載入原畫後退出；中央筆記提示及儲存說明淡化，實際書寫不淡化。R207查明切章只讀s.illustration，未使用ONE_COVER_POLICY；現復用唯一getCover分配器及既有Studio資產，新增可選唯讀resolver模式，不改既有預設applyAll。依Wikimedia Commons Doré's Bible Illustrations（https://commons.wikimedia.org/wiki/Dor%C3%A9%27s_Bible_Illustrations）及241庫內檔名，增加20卷86項精確事件映射候選；原canonical、歷史、平行及預表映射不被覆蓋。約21既有223恢復；出19原畫039對應Ex19:9–24（https://commons.wikimedia.org/wiki/File:038.The_Giving_of_the_Law_on_Mount_Sinai.jpg）。禁止通用輪播、模糊補圖或把Studio作品標成多雷原畫。新增1189章映射盤點及實際渲染驗收，區分已分配/未分配/載入失敗；映射並非圖像已載入。未取得新實圖，未合併主站。
