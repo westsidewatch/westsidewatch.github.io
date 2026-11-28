@@ -1,0 +1,32 @@
+
+/* R195 — the image is a material plane, not another card.
+   Preserve the shared unpainted q and the two fixed Scripture plates. */
+.core .mother-art{position:absolute;inset:auto 0 0 auto;width:66.6666667%;height:66.6666667%;z-index:-1;pointer-events:none;clip-path:polygon(50% 0,100% 0,100% 100%,0 100%,0 50%,50% 50%);display:none}
+.core.mother-art-ready .mother-art{display:block;background:var(--ws-pale-gold)}
+.core .mother-art-picture{position:absolute;inset:0;background-size:cover;background-position:50% 42%;background-repeat:no-repeat;filter:grayscale(1);mix-blend-mode:multiply;opacity:.88}
+.core .core-field .field-a{fill:var(--ws-paper);opacity:.66}
+.core .core-field .field-b{fill:var(--ws-pale-gold);opacity:.30}
+.core .core-field .mother-art-outline{stroke:var(--emmaus-guide-soft);stroke-width:.004;stroke-linejoin:miter;opacity:.85}
+.core .core-field .mother-art-outline [data-mother-edge^="joint"]{stroke:var(--emmaus-guide);stroke-width:.003;opacity:.8}
+.core .mother-art-open{font-size:var(--ws-type-scale-meta);font-weight:var(--ws-weight-standard);font-family:var(--ws-type-display-zh);border:0;border-bottom:1px solid var(--emmaus-guide);align-self:flex-start;padding:.2em 0;color:var(--ws-ink);background:none}
+.core .mother-art-open:disabled{display:none}
+.core .mother-art-dialog{max-width:min(92vw,900px);max-height:94vh;padding:clamp(14px,2vw,28px);border:1px solid var(--emmaus-guide);background:var(--ws-paper);color:var(--ws-ink);overflow:auto}
+.core .mother-art-dialog::backdrop{background:color-mix(in srgb,var(--ws-ink) 80%,transparent)}
+.core .mother-art-full{display:block;max-width:100%;max-height:78vh;object-fit:contain;margin:1em auto}
+.core .mother-art-close{display:block;margin-left:auto}
+.core .mother-art-credit{font-size:var(--ws-type-scale-meta);margin-top:.65em}
+@container(min-width:851px){
+ .core.mother-art-ready .illustration figure{position:relative;padding:0;justify-content:flex-end;gap:0}
+ .core.mother-art-ready .illustration figure>img{position:absolute;inset:0;width:100%;height:100%;opacity:0;pointer-events:none}
+ .core.mother-art-ready .illustration figure figcaption{position:relative;margin:0;padding:.6em clamp(10px,1.4vw,20px) .2em;background:var(--ws-paper)}
+ .core.mother-art-ready .illustration .mother-art-open{position:relative;align-self:stretch;text-align:left;padding:.2em clamp(10px,1.4vw,20px) .6em;background:var(--ws-paper);border-color:var(--emmaus-guide)}
+ /* The lower arm is still the same image plane. Ink text stays on a readable
+    papyrus field, with the bottom of the illustration revealed as an actual crop. */
+ .core.mother-art-ready .study-intro{justify-content:flex-start;background:linear-gradient(to bottom,var(--ws-papyrus) 0 78%,transparent 100%);padding-bottom:20%}
+ .core.mother-art-ready .study-intro>p{position:relative}
+}
+@container(max-width:850px){
+ .core .mother-art{display:none!important}
+ .core .illustration figure{padding:0}
+ .core .illustration figure>img{max-height:70vh;object-fit:contain;opacity:1}
+}
