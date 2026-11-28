@@ -1,0 +1,102 @@
+{
+  "version": "R176",
+  "base": "R175 5d880f4",
+  "stage": "02",
+  "status": "candidate_relation_study",
+  "book": 42,
+  "chapter": 24,
+  "source": {
+    "chapter": "/one/luke-21-24.js",
+    "books": "/one/one-data.js",
+    "map": "/one/one-map-catalog.js",
+    "art": "/one/one-dore-assets-241.js",
+    "artId": 212,
+    "oldTexture": "/images/p2-emmaus-scroll-micro-engraving-v5.svg",
+    "cloth": "/images/p2-emmaus-binding-cloth-v1.svg"
+  },
+  "geometry": {
+    "unit": "q = 1/3 of core width",
+    "originalA": [
+      0,
+      0,
+      2,
+      2
+    ],
+    "originalB": [
+      1,
+      1,
+      2,
+      2
+    ],
+    "intersection": [
+      1,
+      1,
+      1,
+      1
+    ],
+    "cells": {
+      "printZh": [
+        0,
+        0
+      ],
+      "title": [
+        1,
+        0
+      ],
+      "scripture": [
+        0,
+        1
+      ],
+      "note": [
+        1,
+        1
+      ],
+      "illustration": [
+        2,
+        1
+      ],
+      "studyIntro": [
+        1,
+        2
+      ],
+      "printEn": [
+        2,
+        2
+      ]
+    },
+    "outside": [
+      [
+        2,
+        0
+      ],
+      [
+        0,
+        2
+      ]
+    ],
+    "note": "Original print pair is laid on two opposite non-intersecting cells; shared square is full writable area and initially uninked. Parent fields are actually clipped to exclude note."
+  },
+  "directions": {
+    "A": {
+      "name": "連續交織",
+      "description": "完整真方組成閱讀／研讀兩個L形場，中央交集給即時貼；由其共同邊緣展開後續內容。"
+    }
+  },
+  "note": {
+    "states": [
+      "empty",
+      "sample"
+    ],
+    "anchor": "LUK.24.27",
+    "sample": "從摩西和眾先知起，整本聖經如何指向基督？",
+    "source": "Illustrative editorial sample, not user data; no storage, editing, or new tool backend."
+  },
+  "limitations": [
+    "R174 source Scripture Studio validity unresolved",
+    "Map 111 is passion-week original; does not assert Emmaus site",
+    "Existing remote map/illustration load must be verified",
+    "Texture study only; protected cloth unchanged",
+    "No actual Doré Folio integration yet",
+    "R176 focuses on relation, not full content or functional note editing. Same sample chapter as R175."
+  ]
+}
