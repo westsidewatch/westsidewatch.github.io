@@ -1,0 +1,460 @@
+{
+  "version": "R183",
+  "base": "R182 79caa84",
+  "stage": "02",
+  "status": "candidate_relation_study",
+  "book": 42,
+  "chapter": 24,
+  "source": {
+    "chapter": "/one/luke-21-24.js",
+    "books": "/one/one-data.js",
+    "map": "/one/one-map-catalog.js",
+    "art": "/one/one-dore-assets-241.js",
+    "artId": 212,
+    "oldTexture": "/images/p2-emmaus-scroll-micro-engraving-v5.svg",
+    "cloth": "/images/p2-emmaus-binding-cloth-v1.svg"
+  },
+  "geometry": {
+    "unit": "q = 1/3 of core width",
+    "originalA": [
+      0,
+      0,
+      2,
+      2
+    ],
+    "originalB": [
+      1,
+      1,
+      2,
+      2
+    ],
+    "intersection": [
+      1,
+      1,
+      1,
+      1
+    ],
+    "cells": {
+      "printZh": [
+        0,
+        0
+      ],
+      "title": [
+        1,
+        0
+      ],
+      "scripture": [
+        0,
+        1
+      ],
+      "note": [
+        1,
+        1
+      ],
+      "illustration": [
+        2,
+        1
+      ],
+      "studyIntro": [
+        1,
+        2
+      ],
+      "printEn": [
+        2,
+        2
+      ]
+    },
+    "outside": [
+      [
+        2,
+        0
+      ],
+      [
+        0,
+        2
+      ]
+    ],
+    "note": "Original print pair is laid on two opposite non-intersecting cells; shared square is full writable area and initially uninked. Parent fields are actually clipped to exclude note."
+  },
+  "directions": {
+    "A": {
+      "name": "連續交織",
+      "description": "交織首幅以經節為閱讀軸：13–15節沿左方閱讀，27節在左下外場轉入研讀及即時貼；右下原英文大章回應經文。"
+    }
+  },
+  "note": {
+    "states": [
+      "empty",
+      "sample"
+    ],
+    "anchor": "LUK.24.27",
+    "sample": "從摩西和眾先知起，整本聖經如何指向基督？",
+    "source": "Illustrative editorial sample, not user data; no storage, editing, or new tool backend."
+  },
+  "limitations": [
+    "R174 source Scripture Studio validity unresolved",
+    "Map 111 is passion-week original; does not assert Emmaus site",
+    "Existing remote map/illustration load must be verified",
+    "Texture study only; protected cloth unchanged",
+    "No actual Doré Folio integration yet",
+    "R176 focuses on relation, not full content or functional note editing. Same sample chapter as R175."
+  ],
+  "continuation": {
+    "module": "q=core width/3",
+    "joints": [
+      {
+        "from": "core outer lower-left",
+        "to": "reading",
+        "edge": "x=0,q",
+        "reason": "閱讀從原方左臂下行；續文先於研讀"
+      },
+      {
+        "from": "reading",
+        "to": "journey",
+        "edge": "x=q",
+        "reason": "以經節為共用定位，六段事件沿同一折線，不依地圖是否載入"
+      },
+      {
+        "from": "journey",
+        "to": "relationships",
+        "edge": "x=2q",
+        "reason": "對向研讀場轉入經文關係；串珠及合參不同欄寬"
+      },
+      {
+        "from": "relationships",
+        "to": "books",
+        "edge": "x=q,2q",
+        "reason": "全書卷索引由三個原模組展開"
+      }
+    ],
+    "texture": "R176 remains the comparison basis; new lower accents only in non-text margins, not texture final",
+    "sourceMap": "111 remote unavailable in R176; original link and complete legend preserved, schematic narrative route is not a map"
+  },
+  "contextFields": {
+    "module": "same q",
+    "reading": [
+      "scripture-continuation",
+      "chapter-story",
+      "chapter-position and questions"
+    ],
+    "journey": [
+      {
+        "event": 0,
+        "harmony": 0,
+        "background": 0
+      },
+      {
+        "event": 1,
+        "harmony": 1,
+        "background": 1
+      },
+      {
+        "event": 2,
+        "harmony": null,
+        "background": null
+      },
+      {
+        "event": 3,
+        "harmony": 2,
+        "background": null
+      },
+      {
+        "event": 4,
+        "harmony": null,
+        "background": 2
+      },
+      {
+        "event": 5,
+        "harmony": 3,
+        "background": 3
+      }
+    ],
+    "geography": [
+      "original map111 and full legend",
+      "background 0,1"
+    ],
+    "theology": [
+      "background 2,3",
+      "all 4 cross references"
+    ],
+    "line": "timeline guides event reading only; other boundaries expressed by shared field and white space, not floating rules",
+    "note": "R177 first core unchanged; note prototype remains sample, not storage."
+  },
+  "heading": {
+    "rule": "Seal-led identity; chapter theme dominates, English identity uses existing title-sm token and Chinese identity UI scale.",
+    "seal": "seals/impressions/emmaus-yang.svg unchanged",
+    "anchors": "same title q cell; seal and identity horizontal group, chapter label and theme below; all align to left inset",
+    "textureExclusion": "title cell [1,0,1,1] removed from ink clip only; field shape unchanged",
+    "scope": "Emmaus pilot only"
+  },
+  "readingBridge": {
+    "cell": [
+      0,
+      2,
+      1,
+      1
+    ],
+    "source": "Luke 24:27, existing Chinese excerpt and KJV public-domain wording",
+    "reading": [
+      13,
+      14,
+      15
+    ],
+    "noteAnchor": "LUK.24.27 unchanged",
+    "function": "outer paper remains uninked; bridge is text, not a new filled square; continues reading into study and below",
+    "texture": "candidate ink only in margins of scripture, art and study cells; original reference retained; not mature texture"
+  },
+  "lineLanguage": {
+    "origin": "R181 q grid; two equal 2q squares offset q diagonally; alternating gaps at (2,1) and (1,2)",
+    "material": "Emmaus V5 engraving: changing fine line weight, spacing and length, not generic grid. V5 candidate only; P2 cloth unchanged.",
+    "safety": "no path through the central shared open square interior, text, or image interior; outer paths on cell boundaries, secondary lines restricted to outside margins; no fill",
+    "default": "D",
+    "styles": {
+      "none": [],
+      "A": [
+        {
+          "d": "M.004 1.996V.004H1.996V.94 M1.996 1.06V1.996H.004",
+          "w": 0.0018,
+          "o": 0.6,
+          "role": "A perimeter; interrupted at upper-right crossing"
+        },
+        {
+          "d": "M1.004 1.004H2.996V2.996H1.004V2.06 M1.004 1.94V1.004",
+          "w": 0.0018,
+          "o": 0.6,
+          "role": "B perimeter; interrupted at lower-left crossing"
+        }
+      ],
+      "B": [
+        {
+          "d": "M.004 1.996V.004H1.996V.94 M1.996 1.06V1.996H.004",
+          "w": 0.0028,
+          "o": 0.76,
+          "role": "A perimeter; interrupted at upper-right crossing"
+        },
+        {
+          "d": "M1.004 1.004H2.996V2.996H1.004V2.06 M1.004 1.94V1.004",
+          "w": 0.0028,
+          "o": 0.76,
+          "role": "B perimeter; interrupted at lower-left crossing"
+        },
+        {
+          "d": "M2.013 1.085V2.013H1.085",
+          "w": 0.0014,
+          "o": 0.5,
+          "role": "outside common void, engraved A turn"
+        },
+        {
+          "d": "M.987 1.915V.987H1.915",
+          "w": 0.0014,
+          "o": 0.5,
+          "role": "outside common void, engraved B turn"
+        }
+      ],
+      "C": [
+        {
+          "d": "M.004 1.996V.004H1.996V.94 M1.996 1.06V1.996H.004",
+          "w": 0.0036,
+          "o": 0.82,
+          "role": "A perimeter; interrupted at upper-right crossing"
+        },
+        {
+          "d": "M1.004 1.004H2.996V2.996H1.004V2.06 M1.004 1.94V1.004",
+          "w": 0.0036,
+          "o": 0.82,
+          "role": "B perimeter; interrupted at lower-left crossing"
+        },
+        {
+          "d": "M2.014 1.690V2.014H1.690",
+          "w": 0.0026,
+          "o": 0.54,
+          "role": "A engraved corner, taper by length"
+        },
+        {
+          "d": "M0.986 1.310V0.986H1.310",
+          "w": 0.0026,
+          "o": 0.54,
+          "role": "B engraved corner, taper by length"
+        },
+        {
+          "d": "M2.023 1.740V2.023H1.740",
+          "w": 0.0012,
+          "o": 0.46,
+          "role": "A engraved corner, taper by length"
+        },
+        {
+          "d": "M0.977 1.260V0.977H1.260",
+          "w": 0.0012,
+          "o": 0.46,
+          "role": "B engraved corner, taper by length"
+        },
+        {
+          "d": "M2.032 1.790V2.032H1.790",
+          "w": 0.0012,
+          "o": 0.38,
+          "role": "A engraved corner, taper by length"
+        },
+        {
+          "d": "M0.968 1.210V0.968H1.210",
+          "w": 0.0012,
+          "o": 0.38,
+          "role": "B engraved corner, taper by length"
+        },
+        {
+          "d": "M2.041 1.840V2.041H1.840",
+          "w": 0.0012,
+          "o": 0.30000000000000004,
+          "role": "A engraved corner, taper by length"
+        },
+        {
+          "d": "M0.959 1.160V0.959H1.160",
+          "w": 0.0012,
+          "o": 0.30000000000000004,
+          "role": "B engraved corner, taper by length"
+        }
+      ]
+    },
+    "limits": "Desktop core only; mobile stacked flow retains no false interweave; needs later mobile design",
+    "textureRelationship": {
+      "rule": "Default D with coordinated engraved edge bands; compare E, R182 B and original V5 independently; texture never toggled by line style.",
+      "mask": "M0 0H1V1H0Z M1 0H2V.052H1Z M1.95 .052H2V1H1.95Z M0 1H.05V2H0Z M.93 1H1V2H.93Z M0 1.94H.93V2H0Z M2 1H2.065V2H2Z M2.95 1H3V2H2.95Z M2.065 1H2.95V1.05H2.065Z M1 2H2V2.06H1Z M1 2.06H1.065V3H1Z M1.94 2.06H2V3H1.94Z M2 2H3V3H2Z",
+      "maskReason": "retain print field and perimeter bands on both L shapes; keep intersection, reading bridge, body and image interiors free of ink",
+      "density": "Fine lines widen from the original edge then converge toward its end, varying individual width and density. Two opposing L turns have stronger tone near crossing. Preserve real central void and readable content.",
+      "reference": "R181 texture preserved as a comparison mode; original V5 retained as independent mode"
+    },
+    "incised": {
+      "D": {
+        "name": "刻刀 · 主線與收鋒",
+        "description": "Four selectively visible square-edge paths, variable width taper at ends, alternating interrupted crossing",
+        "paths": [
+          [
+            [
+              1.05,
+              0.008
+            ],
+            [
+              1.994,
+              0.008
+            ],
+            [
+              1.994,
+              0.92
+            ]
+          ],
+          [
+            [
+              2.006,
+              1.08
+            ],
+            [
+              2.006,
+              2.006
+            ],
+            [
+              0.1,
+              2.006
+            ]
+          ],
+          [
+            [
+              0.994,
+              1.92
+            ],
+            [
+              0.994,
+              0.994
+            ],
+            [
+              2.992,
+              0.994
+            ],
+            [
+              2.992,
+              1.52
+            ]
+          ],
+          [
+            [
+              1.006,
+              2.08
+            ],
+            [
+              1.006,
+              2.992
+            ],
+            [
+              1.92,
+              2.992
+            ]
+          ]
+        ]
+      },
+      "E": {
+        "name": "展卷 · 疏密收鋒",
+        "description": "Same crossing order, shorter dominant paths and nested engravings that curl toward the edge, not framed panels",
+        "paths": [
+          [
+            [
+              1.52,
+              0.008
+            ],
+            [
+              1.994,
+              0.008
+            ],
+            [
+              1.994,
+              0.92
+            ]
+          ],
+          [
+            [
+              2.006,
+              1.08
+            ],
+            [
+              2.006,
+              2.006
+            ],
+            [
+              0.42,
+              2.006
+            ]
+          ],
+          [
+            [
+              0.994,
+              1.92
+            ],
+            [
+              0.994,
+              0.994
+            ],
+            [
+              2.992,
+              0.994
+            ],
+            [
+              2.992,
+              1.3
+            ]
+          ],
+          [
+            [
+              1.006,
+              2.08
+            ],
+            [
+              1.006,
+              2.992
+            ],
+            [
+              1.48,
+              2.992
+            ]
+          ]
+        ]
+      }
+    }
+  }
+}
