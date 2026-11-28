@@ -8,6 +8,9 @@ const el=(tag,cls)=>{const e=document.createElement(tag);e.className=cls;return 
 function mount(core){
  if(!core)return;
  core.querySelectorAll(".mother-art,.mother-art-dialog,.mother-art-open").forEach(e=>e.remove());
+ const prelude=core.nextElementSibling?.classList.contains("chapter-prelude")?core.nextElementSibling:null;
+ prelude?.querySelectorAll(".mother-art-credit-strip").forEach(e=>e.remove());
+ core.classList.remove("mother-art-has-credit");
  core.classList.remove("mother-art-ready","mother-art-available");
  const field=core.querySelector(".core-field"),figure=core.querySelector(".illustration figure"),img=figure?.querySelector("img");
  if(!field)return;
@@ -22,7 +25,11 @@ function mount(core){
  if(!img||!img.getAttribute("src"))return;
  const layer=el("div","mother-art");layer.setAttribute("aria-hidden","true");layer.dataset.artSource=img.getAttribute("src");
  const picture=el("div","mother-art-picture");layer.append(picture);core.insertBefore(layer,core.firstChild);
- const caption=figure.querySelector("figcaption");const open=el("button","mother-art-open");open.type="button";open.textContent="觀看完整圖版";open.setAttribute("aria-label","觀看完整圖版："+(img.alt||caption?.textContent||""));figure.append(open);
+ // Initial focal offsets are explicit chapter-specific art-direction candidates.
+ const parent=core.closest(".composition"),chapter=parent?.dataset.book?parent.dataset.book+":"+parent.dataset.chapter:"42:24";
+ const focus={"42:24":"50% 0%","40:17":"50% 28%"}[chapter]||"50% 42%";
+ picture.style.setProperty("--mother-art-focus",focus);layer.dataset.focus=focus;
+ const caption=figure.querySelector("figcaption");const open=el("button","mother-art-open");open.type="button";open.textContent="觀看完整圖版";open.setAttribute("aria-label","觀看完整圖版："+(img.alt||caption?.textContent||""));if(prelude){const strip=el("div","mother-art-credit-strip"),copy=el("div","mother-art-caption-copy");if(caption){for(const node of caption.childNodes){if(node.nodeName==="BR")copy.append(document.createTextNode(" · "));else copy.append(node.cloneNode(true))}}else copy.textContent=img.alt;strip.append(copy,open);prelude.prepend(strip);core.classList.add("mother-art-has-credit")}else figure.append(open);
  const dialog=el("dialog","mother-art-dialog");dialog.id="mother-art-"+(++serial);dialog.setAttribute("aria-label",img.alt||"完整圖版");open.setAttribute("aria-controls",dialog.id);
  const close=el("button","mother-art-close");close.type="button";close.textContent="關閉";
  const full=el("img","mother-art-full");full.alt=img.alt;const credit=el("p","mother-art-credit");credit.textContent=caption?.textContent||img.alt;

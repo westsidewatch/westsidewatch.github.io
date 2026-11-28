@@ -68,3 +68,30 @@
  .chapter-prelude>.unit{margin-bottom:1rem}
  .core.mother-art-ready .illustration figure{height:auto}
 }
+
+/* R197: white writing aperture, quiet material field, credit outside the artwork.
+   The image clip remains an actual absent quadrant; only the writing surface
+   beneath that aperture is paper white. */
+.core .note,.core .note-family{background-color:var(--ws-paper)}
+.core .core-field .field-a{fill:color-mix(in srgb,var(--ws-papyrus) 86%,var(--ws-paper));opacity:1}
+.core .mother-art-picture{background-position:var(--mother-art-focus,50% 42%);transform:scale(1.015);transform-origin:50% 50%}
+.core.mother-art-has-credit .illustration figure figcaption{display:none}
+.chapter-prelude{padding-top:0}
+.chapter-prelude::before{display:none}
+.chapter-prelude .mother-art-credit-strip{grid-column:2/4;grid-row:1;display:flex;align-items:baseline;justify-content:flex-end;flex-wrap:wrap;gap:.35em 1em;padding:clamp(8px,1vw,14px) 0 clamp(16px,2vw,28px);background:transparent;color:var(--ws-ink);font:var(--ws-weight-standard) var(--ws-type-scale-meta)/1.5 var(--ws-type-display-zh);text-align:right;min-width:0}
+.mother-art-caption-copy{min-width:0;max-width:100%;overflow-wrap:anywhere}
+.mother-art-caption-copy [lang=en]{font-family:var(--ws-type-display-en-sc);font-synthesis:none}
+.chapter-prelude .mother-art-open{font:var(--ws-weight-standard) var(--ws-type-scale-meta)/1.5 var(--ws-type-display-zh);background:none;color:var(--ws-ink);border:0;border-bottom:1px solid var(--emmaus-guide);padding:0;white-space:nowrap;flex:none}
+.chapter-prelude .mother-art-open:disabled{display:none}
+.chapter-prelude .reading-bridge,.chapter-prelude .study-intro{grid-row:2!important}
+.chapter-prelude .study-intro{border-left:1px solid var(--emmaus-guide)}
+@container(min-width:851px){
+ .core.mother-art-ready.mother-art-has-credit .illustration{pointer-events:none}
+ .core.mother-art-ready.mother-art-has-credit .illustration figure{display:none}
+ .core.mother-art-ready .mother-art-picture{opacity:1}
+}
+@container(max-width:850px){
+ .chapter-prelude .mother-art-credit-strip{justify-content:flex-start;text-align:left;padding-inline:0}
+ .chapter-prelude .study-intro{border-left:0}
+ .core.mother-art-has-credit .illustration figure{height:auto}
+}
