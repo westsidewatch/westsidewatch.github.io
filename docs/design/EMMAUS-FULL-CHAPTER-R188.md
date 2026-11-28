@@ -14,3 +14,7 @@ R190 全本鏡像補充：固定來源的66卷原文已轉存為 static/one/scri
 
 ## R191 · 多寫逐節即時貼
 沿用多寫現有 IndexedDB multiwrite-v1 v3/studyDocuments 與 v2 schema，章文檔 emmaus:book:chapter，節節點 verse-NNN，保存 canonical Scripture coordinate。逐節點擊、右側方塊、頁首同源匯總；手機逐節內聯；每次編輯以讀寫 transaction 更新該節，保留其他資料。修正 R190 約翰 map.routes 字串與 selected 早於渲染的問題。驗收以實際筆記文字、方形/避讓、雙向同步、切章及重載為準；不宣稱多寫獨立頁或跨裝置同步已接通。
+
+
+## R193 · 去除重複正文，放大地圖
+保留原 q 格和雙印、筆記、底紋，以 ONE route/questions 填入兩個原本重複正文的方塊。完整中英經文僅保留整章閱讀區。地圖按原兩方寬度、無高度上限、原比例，圖下並排本章史地與完整編號圖說。馬太17對應109號圖，15條原圖圖說；路加24的111號圖僅為受難時期耶路撒冷背景，不聲稱涵蓋以馬忤斯往返。外部地圖原始資源未改動。
