@@ -39,9 +39,8 @@ def mirror(repo, revision, path, dest, expected=None):
 def main():
     ROOT.mkdir(parents=True, exist_ok=True)
     # Pin the official tree and verify every webfont against its Git blob.
-    tree = json.loads(fetch(f"https://api.github.com/repos/{CHIRON}/git/trees/{CHIRON_REV}?recursive=1"))
-    if tree.get("truncated"): raise RuntimeError("upstream tree incomplete")
-    shas = {x["path"]:x["sha"] for x in tree["tree"] if x["type"]=="blob"}
+    shas = json.loads(pathlib.Path("scripts/emmaus-chiron-pinned-blobs.json").read_text())
+    if len(shas)!=146: raise RuntimeError("pinned upstream manifest incomplete")
     prefix = "WOFF2_TTF/"
     css_path = prefix+"css/vf.css"
     css_dest = ROOT/"chiron/css/vf.css"
