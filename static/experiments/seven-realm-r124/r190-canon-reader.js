@@ -25,20 +25,20 @@ function findStudy(data,b,c){const key=({1:"genesis",19:"psalms",40:"matthew",41
 const missing='<span class="verse-gap">此譯本來源未單列此節</span>';
 function verse(v){return '<div class="chapter-verse" data-verse="'+v.n+'"><p class="verse"><b>'+v.n+'</b>'+(v.zh==null?missing:esc(v.zh))+'</p><p class="english" lang="en">'+(v.en==null?missing:esc(v.en))+'</p></div>'}
 function generic(b,c,rows,s){
- const meta=canon[b-1],label=meta[1]+" "+c,reference=meta[2]+" "+c,core=original.querySelector(".core").cloneNode(true);
+ const meta=canon[b-1],label=meta[1]+" "+c,reference=meta[2]+" "+c,core=original.querySelector(".core").cloneNode(true),prelude=original.querySelector(".chapter-prelude").cloneNode(true);
  core.querySelectorAll("[id]").forEach(e=>{const id=e.id;e.id="canon-"+id;core.querySelectorAll('[clip-path="url(#'+id+')"]').forEach(x=>x.setAttribute("clip-path","url(#canon-"+id+")"))});
  core.querySelector(".chapter-label").textContent=reference;core.querySelector(".title h2:not(.name)").textContent=s?.title||label;core.querySelector(".title .lead").textContent=s?.movement||"";
  core.querySelector(".scripture").innerHTML=window.EMMAUS_EDITORIAL.structure(s,label,rows);
- core.querySelector(".reading-bridge").innerHTML=window.EMMAUS_EDITORIAL.questions(s);
+ prelude.querySelector(".reading-bridge").innerHTML=window.EMMAUS_EDITORIAL.questions(s);
  core.querySelector(".outer-coordinate").innerHTML='<span class="eyebrow">'+esc(meta[2])+'</span><span class="chapter-index">'+c+'</span>';
  core.querySelector(".note-content").replaceChildren();core.querySelector(".note-content").dataset.noteState="empty";core.querySelector(".note-caption").innerHTML='<span class="crest" aria-hidden="true"></span>'+esc(reference)+" · 多寫";
- core.querySelector(".study-intro").innerHTML=title("Study","本章研讀")+'<p>'+esc(s?.position||"")+'</p>';
+ prelude.querySelector(".study-intro").innerHTML=title("Study","本章研讀")+'<p>'+esc(s?.position||"")+'</p>';
  const ill=core.querySelector(".illustration");ill.replaceChildren();if(s?.illustration?.src){const f=mk("figure","",'<img src="'+esc(s.illustration.src)+'" alt="'+esc(s.illustration.alt||s.illustration.title||"")+'"><figcaption>'+esc(s.illustration.title||"")+'</figcaption>');ill.append(f)}
  const print=core.querySelector(".prints iframe");if(print)print.title="以馬忤斯版塊主題經文 · 路加福音24:27（固定雙印）";
  const rd=section("reading-cont",title("Scripture",label)+'<div class="scripture-continuation"><span class="eyebrow">'+esc(reference)+'</span><p class="edition">和合本（繁體，上帝版） · King James Version</p>'+rows.map(verse).join("")+'</div>');rd.id="canon-chapter-reading";rd.tabIndex=-1;
  const study=section("study",title("Study","本章研讀")+(s?'<div class="study-story"><p>'+esc(s.story||"")+'</p></div><div class="study-reflection"><p>'+esc(s.position||"")+'</p>'+'</div>':'<div class="study-story"><p>本章研讀資料暫未載入。</p></div>'));
  const ex=band("exposition",rd,study),svg=document.createElementNS("http://www.w3.org/2000/svg","svg");svg.setAttribute("class","reading-extension");svg.setAttribute("aria-hidden","true");svg.setAttribute("preserveAspectRatio","none");ex.prepend(svg);
- const units=[core,ex];
+ const units=[core,prelude,ex];
  if(s?.route?.length){const timeline=section("timeline",title("Chronology","本章時間軸")+'<ul class="route-list">'+s.route.map((x,i)=>'<li data-event="'+(i+1)+'"><span class="event-number">'+String(i+1).padStart(2,"0")+'</span><span class="coord">'+esc(x[0])+'</span><strong>'+esc(x[1])+'</strong></li>').join("")+'</ul>');units.push(band("places",timeline))}
  if(s?.background?.length||s?.map){const geo=section("geographic",title("People & Places","人物、地點與背景")+list(s.background,"background-list",x=>'<strong>'+esc(x[0])+'</strong><p>'+esc(x[1])+'</p><p>'+esc(x[2])+'</p>'));const mapEl=section("map",window.EMMAUS_EDITORIAL.geography(s.map));units.push(band("geography",geo,mapEl))}
  if(s?.connections?.length||s?.harmony?.length){const bg=section("background",title("Gospel Harmony","四福音合參")+list(s.harmony,"harmony-list",x=>esc(Array.isArray(x)?x.filter(v=>v!=="—").join(" · "):x)));const con=section("connections",title("Cross References","串珠")+list(s.connections,"refs",x=>'<span class="coord">'+esc(x[0])+'</span><strong>'+esc(x[1])+'</strong><p class="reference-text">'+esc(x[2]||"")+'</p>'));units.push(band("relationships",bg,con))}
