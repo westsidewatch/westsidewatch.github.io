@@ -156,3 +156,15 @@
  .core.mother-left .scripture{padding-left:clamp(38px,3.8vw,58px)}
 }
 @container(max-width:850px){.chapter-prelude{padding-top:0}.chapter-prelude .mother-prelude-spine{display:none}}
+
+/* R200 — interwoven square-fold material, real underpasses, no clipped comb. */
+.core.mother-left .core-field .field-ink,.core.mother-left .texture-extension{clip-path:none}
+.core.mother-left .core-field .field-b{opacity:.20}
+.core.mother-left .core-field .field-ink{color:var(--ws-ink)}
+.core.mother-left .texture-extension{color:var(--emmaus-guide);z-index:-1}
+.core.mother-left .core-field .mother-art-outline{opacity:.72}
+.core.mother-left .core-field .mother-art-outline [data-mother-edge="a"]{stroke-width:.004}
+.core.mother-left .core-field .mother-art-outline [data-mother-edge="joint-b"]{opacity:.44}
+.chapter-prelude{padding-top:clamp(52px,5vw,78px)}
+@container(min-width:851px){.core.mother-left .scripture{padding-left:clamp(44px,4.2vw,66px)}.core.mother-left .core-field{overflow:hidden}}
+@container(max-width:850px){.chapter-prelude{padding-top:0}}

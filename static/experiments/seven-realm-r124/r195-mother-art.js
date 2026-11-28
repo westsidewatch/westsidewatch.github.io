@@ -5,16 +5,36 @@
 let serial=0;
 const ns="http://www.w3.org/2000/svg";
 const el=(tag,cls)=>{const e=document.createElement(tag);e.className=cls;return e};
-const junctionPath=i=>{const n=.018+i*.011,x=2+.004+i*.0016,y=1.99-i*.0009;return "M"+x+" 1.025V"+y+"H2V"+(2+n)+"H"+(1+n)+"V3"};
-function inkPaths(){return Array.from({length:34},(_,i)=>'<path data-mother-route="'+i+'" d="'+junctionPath(i)+'" fill="none" stroke="currentColor" stroke-width="'+(i%6===0?.0022:.0012)+'" opacity="'+(.46-i*.008)+'"/>').join("")}
-function accentPaths(){return Array.from({length:6},(_,i)=>'<path data-junction-accent="'+i+'" d="'+junctionPath(i)+'" fill="none" stroke="currentColor" stroke-width="'+(i===0?.0038:.0017)+'" opacity="'+(.92-i*.085)+'"/>').join("")}
+// R200 — nested square-fold families with real alternating underpasses.
+const f=v=>Number(v.toFixed(5));
+const A=Array.from({length:17},(_,i)=>{const u=i/16;return{x:f(1.18+.69*Math.pow(u,1.28)),y:f(2.055+.45*Math.pow(u,1.44)),start:f(1.018+.02*(1-u)),end:3}});
+const B=Array.from({length:17},(_,i)=>{const u=i/16;return{x:f(1.045+.58*Math.pow(u,1.35)),y:f(2.35+.60*Math.pow(u,1.16)),start:f(2.018+.015*u),end:1.985}});
+function segment(axis,constant,from,to,gaps){
+ const cuts=gaps.filter(x=>x>from+.004&&x<to-.004).sort((a,b)=>a-b),parts=[];let p=from;
+ const draw=(s,e)=>{if(e-s<.001)return;parts.push(axis==="h"?"M"+f(s)+" "+f(constant)+"H"+f(e):"M"+f(constant)+" "+f(s)+"V"+f(e))};
+ for(const x of cuts){draw(p,x-.0027);p=Math.max(p,x+.0027)}draw(p,to);return parts.join(" ");
+}
+function route(family,i){
+ const a=A[i],b=B[i];
+ if(family==="a"){
+  const h=B.filter((b,k)=>(i+k)%2===0&&b.x>a.start&&b.x<a.x&&a.y>b.start&&a.y<b.y).map(b=>b.x);
+  const v=B.filter((b,k)=>(i+k)%2===1&&a.x>b.x&&a.x<b.end&&b.y>a.y&&b.y<a.end).map(b=>b.y);
+  return segment("h",a.y,a.start,a.x,h)+" "+segment("v",a.x,a.y,a.end,v)
+ }
+ const v=A.filter((a,k)=>(i+k)%2===1&&b.x>a.start&&b.x<a.x&&a.y>b.start&&a.y<b.y).map(a=>a.y);
+ const h=A.filter((a,k)=>(i+k)%2===0&&a.x>b.x&&a.x<b.end&&b.y>a.y&&b.y<a.end).map(a=>a.x);
+ const g=f(2.012+i*.0032),gy=f(1.045+i*.005),ge=f(1.965-i*.0015);
+ return "M"+g+" "+gy+"V"+ge+" "+segment("v",b.x,b.start,b.y,v)+" "+segment("h",b.y,b.x,b.end,h)
+}
+function inkPaths(){return ["a","b"].flatMap(family=>Array.from({length:17},(_,i)=>'<path data-mother-route="'+family+i+'" data-weave-family="'+family+'" d="'+route(family,i)+'" fill="none" stroke="currentColor" stroke-width="'+(i===0?.0030:i%5===0?.0021:.0012)+'" opacity="'+f(.62-i*.019)+'"/>')).join("")}
+function accentPaths(){return ["a","b"].flatMap(family=>[0,6,12].map((i,k)=>'<path data-junction-accent="'+family+i+'" d="'+route(family,i)+'" fill="none" stroke="currentColor" stroke-width="'+(k===0?.0042:.0026)+'" opacity="'+f(.98-k*.14)+'"/>')).join("")}
 function connect(core,prelude){
  if(!prelude)return;
  prelude.querySelector(".mother-prelude-spine")?.remove();
  const s=document.createElementNS(ns,"svg");s.setAttribute("class","mother-prelude-spine");s.setAttribute("aria-hidden","true");s.setAttribute("preserveAspectRatio","none");prelude.prepend(s);
  const draw=()=>{if(!core.isConnected||!prelude.isConnected)return;const q=core.clientWidth/3,depth=prelude.clientHeight/q;if(!q||!depth||core.clientWidth<=850||!document.getElementById("extension")?.checked||document.getElementById("texture")?.value!=="candidate"){s.replaceChildren();return}
  s.setAttribute("viewBox","0 0 3 "+depth);
- s.innerHTML=Array.from({length:34},(_,i)=>{const n=.018+i*.011,x=2+.004+i*.0022,y=.014+i*.00125;return '<path data-prelude-route="'+i+'" d="M'+(1+n)+' 0V'+y+'H'+x+'V'+depth+'" fill="none" stroke="'+(i<6?'var(--emmaus-guide)':'currentColor')+'" stroke-width="'+(i===0?.0038:i%6===0?.0022:.0012)+'" opacity="'+(i<6?.9-i*.08:.46-i*.008)+'"/>'}).join("")};
+ s.innerHTML=Array.from({length:34},(_,i)=>{const source=A[i%17].x,x=2+.004+i*.0022,y=f(.025+.068*Math.pow(i/33,1.6));return '<path data-prelude-route="'+i+'" d="M'+source+' 0V'+y+'H'+x+'V'+depth+'" fill="none" stroke="'+(i<6?'var(--emmaus-guide)':'currentColor')+'" stroke-width="'+(i===0?.0038:i%6===0?.0022:.0012)+'" opacity="'+(i<6?.9-i*.08:.46-i*.008)+'"/>'}).join("")};
  const observer=new ResizeObserver(()=>{if(!core.isConnected||!prelude.isConnected){observer.disconnect();return}draw()});observer.observe(core);observer.observe(prelude);
  for(const id of ["texture","extension"]){const control=document.getElementById(id);const onChange=()=>{if(!core.isConnected){control.removeEventListener("change",onChange);return}draw()};control?.addEventListener("change",onChange)}
  requestAnimationFrame(draw)
@@ -37,7 +57,7 @@ function mount(core){
  }
  field.append(g);connect(core,prelude);
  const gold=document.createElementNS(ns,"g");gold.setAttribute("class","mother-gold-engraving");gold.setAttribute("aria-hidden","true");
- for(let i=0;i<7;i++){const inset=.018+i*.008,p=document.createElementNS(ns,"path");p.setAttribute("d","M"+inset+" 1.94 V"+inset+" H"+(2-inset)+" V"+(.92-i*.008));p.setAttribute("fill","none");p.setAttribute("stroke-width",i===0?".0038":".0017");p.setAttribute("opacity",String(1-i*.075));gold.append(p)}field.querySelector(".mother-gold-engraving")?.remove();field.append(gold);
+ for(let i=0;i<7;i++){const inset=f(.012+.008*Math.pow(i,1.35)),p=document.createElementNS(ns,"path");const x=f(2-inset),y=f(1.96-inset),left=f(.018+i*.023),top=f(.02+i*.045);const path=i<3?"M"+left+" "+y+"H"+inset+"V"+inset+"H"+x+"V"+f(.985-i*.025):"M"+f(.50+i*.11)+" "+inset+"H"+x+"V"+f(.985-i*.023)+" M"+inset+" "+top+"V"+y+"H"+f(.98-i*.05);p.setAttribute("d",path);p.setAttribute("fill","none");p.setAttribute("stroke-width",i===0?".0048":i===1?".0032":".0017");p.setAttribute("opacity",String(1-i*.085));gold.append(p)}field.querySelector(".mother-gold-engraving")?.remove();field.append(gold);
  if(!img||!img.getAttribute("src"))return;
  const layer=el("div","mother-art");layer.setAttribute("aria-hidden","true");layer.dataset.artSource=img.getAttribute("src");
  const picture=el("div","mother-art-picture");layer.append(picture);core.insertBefore(layer,core.firstChild);
