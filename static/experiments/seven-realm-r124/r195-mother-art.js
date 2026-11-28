@@ -47,7 +47,14 @@ function connect(core,prelude){
  const s=document.createElementNS(ns,"svg");s.setAttribute("class","mother-prelude-spine");s.setAttribute("aria-hidden","true");s.setAttribute("preserveAspectRatio","none");prelude.prepend(s);
  const draw=()=>{if(!core.isConnected||!prelude.isConnected)return;const q=core.clientWidth/3,depth=prelude.clientHeight/q;if(!q||!depth||core.clientWidth<=850||!document.getElementById("extension")?.checked||document.getElementById("texture")?.value!=="candidate"){s.replaceChildren();return}
  s.setAttribute("viewBox","0 0 3 "+depth);
- s.innerHTML=Array.from({length:34},(_,i)=>{const source=A[i%17].x,x=2+.004+i*.0022,y=f(.025+.068*Math.pow(i/33,1.6));return '<path data-prelude-route="'+i+'" d="M'+source+' 0V'+y+'H'+x+'V'+depth+'" fill="none" stroke="'+(i<6?'var(--emmaus-guide)':'currentColor')+'" stroke-width="'+(i===0?.0038:i%6===0?.0022:.0012)+'" opacity="'+(i<6?.9-i*.08:.46-i*.008)+'"/>'}).join("")};
+ // R205: six actual exits from the A-family; no duplicate 17+17
+ // sources. Reverse turn heights keep the six folds parallel, then
+ // register to the six long study-edge rails in the next reading band.
+ const exits=[0,3,6,9,12,16];
+ s.innerHTML=exits.map((sourceIndex,i)=>{
+  const source=A[sourceIndex].x,x=f(2+.004+i*.0022),y=f(.105-i*.014);
+  return '<path data-prelude-route="'+i+'" data-source-route="a'+sourceIndex+'" d="M'+source+' 0V'+y+'H'+x+'V'+depth+'" fill="none" stroke="'+(i===0?'var(--emmaus-guide)':'currentColor')+'" stroke-width="'+(i===0?.0038:i===3?.0022:.0012)+'" opacity="'+(i===0?.92:.54-i*.055)+'"/>';
+ }).join("")};
  const observer=new ResizeObserver(()=>{if(!core.isConnected||!prelude.isConnected){observer.disconnect();return}draw()});observer.observe(core);observer.observe(prelude);
  for(const id of ["texture","extension"]){const control=document.getElementById(id);const onChange=()=>{if(!core.isConnected){control.removeEventListener("change",onChange);return}draw()};control?.addEventListener("change",onChange)}
  requestAnimationFrame(draw)
