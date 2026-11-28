@@ -168,3 +168,24 @@
 .chapter-prelude{padding-top:clamp(52px,5vw,78px)}
 @container(min-width:851px){.core.mother-left .scripture{padding-left:clamp(44px,4.2vw,66px)}.core.mother-left .core-field{overflow:hidden}}
 @container(max-width:850px){.chapter-prelude{padding-top:0}}
+
+/* R202 — silhouette first: the two 2q mothers, not nine UI tiles.
+   The right-hand L is one continuous ink/material plane, keyed to the
+   existing inverse impression. 8% paper lifts its reading contrast.
+   The two outside q cells and the common writing aperture keep their
+   previous material and typography. No change to either impression. */
+@container(min-width:851px){
+ .core.mother-left{
+  --emmaus-mother-b-paper:color-mix(in srgb,var(--ws-first-light) 92%,var(--ws-paper));
+ }
+ .core.mother-left .core-field .field-a{fill:var(--ws-paper);opacity:1}
+ .core.mother-left.mother-art-ready .core-field .field-a{fill:none;opacity:0}
+ .core.mother-left .core-field .field-b{fill:var(--emmaus-mother-b-paper);opacity:1}
+ .core.mother-left .scripture{background:transparent;color:var(--ws-ink)}
+ .core.mother-left .scripture .outline-range{color:var(--ws-ink)}
+ .core.mother-left .scripture .chapter-outline li{border-color:color-mix(in srgb,var(--ws-ink) 45%,transparent)}
+ .core.mother-left .core-field .mother-art-outline [data-mother-edge="b"],
+ .core.mother-left .core-field .mother-art-outline [data-mother-edge="joint-b"]{stroke:var(--ws-first-light);stroke-width:.004;opacity:1}
+ .core.mother-left .core-field .field-ink{color:var(--ws-ink)}
+ .core.mother-left .texture-extension{color:var(--ws-pale-gold)}
+}
