@@ -314,6 +314,13 @@
         }
       ]
     },
-    "limits": "Desktop core only; mobile stacked flow retains no false interweave; needs later mobile design"
+    "limits": "Desktop core only; mobile stacked flow retains no false interweave; needs later mobile design",
+    "textureRelationship": {
+      "rule": "Lines and texture coexist; independent comparison controls; default B plus coordinated engraving, never remove texture because a line is present.",
+      "mask": "M0 0H1V1H0Z M1 0H2V.052H1Z M1.95 .052H2V1H1.95Z M0 1H.05V2H0Z M.93 1H1V2H.93Z M0 1.94H.93V2H0Z M2 1H2.065V2H2Z M2.95 1H3V2H2.95Z M2.065 1H2.95V1.05H2.065Z M1 2H2V2.06H1Z M1 2.06H1.065V3H1Z M1.94 2.06H2V3H1.94Z M2 2H3V3H2Z",
+      "maskReason": "retain print field and perimeter bands on both L shapes; keep intersection, reading bridge, body and image interiors free of ink",
+      "density": "12 offset cuts, varied spacing, tapered lengths and ink; texture follows both turns, not a separate grid",
+      "reference": "R181 texture preserved as a comparison mode; original V5 retained as independent mode"
+    }
   }
 }
