@@ -1,0 +1,283 @@
+{
+  "version": "R187",
+  "base": "R186 8597542",
+  "stage": "02",
+  "status": "candidate_relation_study",
+  "book": 42,
+  "chapter": 24,
+  "source": {
+    "chapter": "/one/luke-21-24.js",
+    "books": "/one/one-data.js",
+    "map": "/one/one-map-catalog.js",
+    "art": "/one/one-dore-assets-241.js",
+    "artId": 212,
+    "oldTexture": "/images/p2-emmaus-scroll-micro-engraving-v5.svg",
+    "cloth": "/images/p2-emmaus-binding-cloth-v1.svg"
+  },
+  "geometry": {
+    "unit": "q = 1/3 of core width",
+    "originalA": [
+      0,
+      0,
+      2,
+      2
+    ],
+    "originalB": [
+      1,
+      1,
+      2,
+      2
+    ],
+    "intersection": [
+      1,
+      1,
+      1,
+      1
+    ],
+    "cells": {
+      "printZh": [
+        0,
+        0
+      ],
+      "title": [
+        1,
+        0
+      ],
+      "scripture": [
+        0,
+        1
+      ],
+      "note": [
+        1,
+        1
+      ],
+      "illustration": [
+        2,
+        1
+      ],
+      "studyIntro": [
+        1,
+        2
+      ],
+      "printEn": [
+        2,
+        2
+      ]
+    },
+    "outside": [
+      [
+        2,
+        0
+      ],
+      [
+        0,
+        2
+      ]
+    ],
+    "note": "Original print pair is laid on two opposite non-intersecting cells; shared square is full writable area and initially uninked. Parent fields are actually clipped to exclude note."
+  },
+  "directions": {
+    "A": {
+      "name": "連續交織",
+      "description": "交織首幅以經節為閱讀軸：13–15節沿左方閱讀，27節在左下外場轉入研讀及即時貼；右下原英文大章回應經文。"
+    }
+  },
+  "note": {
+    "states": [
+      "empty",
+      "sample"
+    ],
+    "anchor": "LUK.24.27",
+    "sample": "從摩西和眾先知起，整本聖經如何指向基督？",
+    "source": "Illustrative editorial sample, not user data; no storage, editing, or new tool backend."
+  },
+  "limitations": [
+    "R174 source Scripture Studio validity unresolved",
+    "Map 111 is passion-week original; does not assert Emmaus site",
+    "Existing remote map/illustration load must be verified",
+    "Texture study only; protected cloth unchanged",
+    "No actual Doré Folio integration yet",
+    "R176 focuses on relation, not full content or functional note editing. Same sample chapter as R175."
+  ],
+  "continuation": {
+    "module": "q=core width/3",
+    "joints": [
+      {
+        "from": "core outer lower-left",
+        "to": "reading",
+        "edge": "x=0,q",
+        "reason": "閱讀從原方左臂下行；續文先於研讀"
+      },
+      {
+        "from": "reading",
+        "to": "journey",
+        "edge": "x=q",
+        "reason": "以經節為共用定位，六段事件沿同一折線，不依地圖是否載入"
+      },
+      {
+        "from": "journey",
+        "to": "relationships",
+        "edge": "x=2q",
+        "reason": "對向研讀場轉入經文關係；串珠及合參不同欄寬"
+      },
+      {
+        "from": "relationships",
+        "to": "books",
+        "edge": "x=q,2q",
+        "reason": "全書卷索引由三個原模組展開"
+      }
+    ],
+    "texture": "R176 remains the comparison basis; new lower accents only in non-text margins, not texture final",
+    "sourceMap": "111 remote unavailable in R176; original link and complete legend preserved, schematic narrative route is not a map"
+  },
+  "contextFields": {
+    "module": "same q",
+    "reading": [
+      "scripture-continuation",
+      "chapter-story",
+      "chapter-position and questions"
+    ],
+    "journey": [
+      {
+        "event": 0,
+        "harmony": 0,
+        "background": 0
+      },
+      {
+        "event": 1,
+        "harmony": 1,
+        "background": 1
+      },
+      {
+        "event": 2,
+        "harmony": null,
+        "background": null
+      },
+      {
+        "event": 3,
+        "harmony": 2,
+        "background": null
+      },
+      {
+        "event": 4,
+        "harmony": null,
+        "background": 2
+      },
+      {
+        "event": 5,
+        "harmony": 3,
+        "background": 3
+      }
+    ],
+    "geography": [
+      "original map111 and full legend",
+      "background 0,1"
+    ],
+    "theology": [
+      "background 2,3",
+      "all 4 cross references"
+    ],
+    "line": "timeline guides event reading only; other boundaries expressed by shared field and white space, not floating rules",
+    "note": "R177 first core unchanged; note prototype remains sample, not storage."
+  },
+  "heading": {
+    "rule": "Seal-led identity; chapter theme dominates, English identity uses existing title-sm token and Chinese identity UI scale.",
+    "seal": "seals/impressions/emmaus-yang.svg unchanged",
+    "anchors": "same title q cell; seal and identity horizontal group, chapter label and theme below; all align to left inset",
+    "textureExclusion": "title cell [1,0,1,1] removed from ink clip only; field shape unchanged",
+    "scope": "Emmaus pilot only"
+  },
+  "readingBridge": {
+    "cell": [
+      0,
+      2,
+      1,
+      1
+    ],
+    "source": "Luke 24:27, existing Chinese excerpt and KJV public-domain wording",
+    "reading": [
+      13,
+      14,
+      15
+    ],
+    "noteAnchor": "LUK.24.27 unchanged",
+    "function": "outer paper remains uninked; bridge is text, not a new filled square; continues reading into study and below",
+    "texture": "candidate ink only in margins of scripture, art and study cells; original reference retained; not mature texture"
+  },
+  "textureExtension": {
+    "source": "r178-context-fields.html, commit 158eb75dd4aa824a2bbcb1cfd44502159e0c0e76",
+    "mask": "<clipPath id=\"field-mask\"><path d=\"M0 0H2V1H1V2H0Z M2 1H3V3H1V2H2Z\"/></clipPath>",
+    "rule": "Original 34 pairs of L paths, weights, opacity, clip and material mode unchanged. No new texture. Extension uses the same existing path endpoints and stroke rhythm, independent additive layer only, no enclosing frames.",
+    "styles": {
+      "none": "original texture only",
+      "extension": "Six source paths continue through outer whitespace to next q boundary, turn along its edge; selected cut weights and length vary. Original paths, clip, opacity unchanged. Lower band seam continues from the original bottom starts, turns into chapter/study boundary."
+    },
+    "indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ]
+  },
+  "readingWidth": {
+    "core": "preserve 3q square composition, prints and central note; first cell is chapter excerpt",
+    "chapter": "two q reading columns in total width, continuous Chinese and English per verse, OS reading-lg for Scripture; chapter preview only, full chapter link uses existing ONE",
+    "study": "one q column with continuous story, position and reflection",
+    "readingOrder": "core excerpt, wide chapter reading, contextual study"
+  },
+  "functionalFields": {
+    "scope": "first core to reading/study transition only; further bands remain R185",
+    "roles": {
+      "reading": {
+        "width": "2q",
+        "ground": "existing paper",
+        "rule": "the reading field is open, with no extra box"
+      },
+      "study": {
+        "width": "q",
+        "ground": "reuse core field B existing pale gold 19%",
+        "rule": "continuous tinted field; engraved seam follows its actual left edge"
+      },
+      "note": {
+        "width": "q",
+        "ground": "unchanged uninked shared square",
+        "rule": "do not fill or reframe"
+      },
+      "texture": "exact original R178 source and mask; original bottom edge endpoints (1+offset,3) continue into header gap and toward x=2q; six strokes turn down at boundary, additional same-source family in header and gutter; no separate grid or arbitrary border",
+      "safety": "all new strokes are in actual header gap or study-side gutter, no new strokes over text"
+    },
+    "status": "candidate; unverified"
+  },
+  "guidance": {
+    "source": "Original R178 34-path engraving; R186 study seam",
+    "rule": "One continuous reading spine from study boundary to chronological route, geographic field, fulfilment/cross references, book index. Extend source stroke family, no new texture or change to source.",
+    "stages": [
+      {
+        "role": "places",
+        "entry": "study lower edge",
+        "axis": "left outer edge",
+        "function": "chronological reading and harmony, two row route turns"
+      },
+      {
+        "role": "geography",
+        "axis": "q shared boundary",
+        "function": "people and places to source map"
+      },
+      {
+        "role": "relationships",
+        "axis": "q shared boundary",
+        "function": "fulfilment to cross references"
+      },
+      {
+        "role": "library",
+        "axis": "outer left edge",
+        "function": "book navigation; ends at final index"
+      }
+    ],
+    "safety": "actual band top whitespace and reserved gutters; no text crossovers; full source unchanged; mobile retains flow without desktop overlay",
+    "links": "section IDs and reciprocal verse anchor links; existing book links retained",
+    "status": "candidate"
+  }
+}
